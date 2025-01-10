@@ -1,0 +1,47 @@
+[tool.poetry]
+name = "python_sample_03_08_2023"
+version = "0.1.2"
+description = "template python project to get started"
+authors = ["Soliton"]
+readme = "README.md"
+packages = [{ include = "*", from = "src" }]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.6.1"
+flake8 = "^6.1.0"
+pydocstyle = "^6.3.0"
+tox = "^4.11.4"
+poetry-audit-plugin = "^0.3.0"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.4.3"
+pytest-html = "^4.0.2"
+pytest-cov = "^4.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[tool.flake8]
+max-line-length = 100
+extend-ignore = "W503"
+
+[tool.pytest.ini_options]
+addopts = [
+        "--verbose",
+        "--cov=python_sample_03_08_2023",
+        "--cov-report=html:.pytest_results/coverage_report",
+        "--cov-report=xml:.pytest_results/coverage_report/coverage.xml",
+        "--html=.pytest_results/test_report.html",
+        "--self-contained-html"
+    ]
+markers = [
+        "multiply: tests to validate multiplication",
+        "zerodivision: tests to validate division"
+    ]

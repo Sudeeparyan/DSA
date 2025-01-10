@@ -1,0 +1,32 @@
+name: Build and Publish to Internal PyPI
+run-name: ${{ github.actor }} is building and publishing the package to Internal PyPI 🚀
+
+on:
+  push:
+    branches:
+      - build_publish_internal
+
+jobs:
+  Build-Publish-to-Internal-PyPI:
+    runs-on: self-hosted
+    timeout-minutes: 60
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Python 3.9, 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: |
+            3.10
+            3.9
+      - name: Set up Poetry and Tox
+        run: python -m pip install poetry tox
+      - name: Run tox
+        run: tox --parallel=auto --parallel-no-spinner
+      - name: Build wheel files
+        run: |
+          poetry build -f wheel
+      - name: Publish to Internal PyPI
+        run: |
+          poetry config --local repositories.internal_pypi http://CBE-DLT-467.solitontech.local:8090/
+          poetry publish --repository internal_pypi

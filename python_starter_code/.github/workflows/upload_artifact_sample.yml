@@ -1,0 +1,28 @@
+name: Build Package
+run-name: ${{ github.actor }} is building package 🚀
+
+on:
+  workflow_dispatch:
+
+jobs:
+  Build-Python-Package:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Setup Poetry
+        run: |
+          python -m pip install poetry
+      - name: Build wheel files
+        run: |
+          poetry build -f wheel
+      - uses: actions/upload-artifact@v3
+        with:
+          name: build-artifact
+          path: dist/**
+          if-no-files-found: error
+          retention-days: 30

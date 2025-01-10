@@ -1,0 +1,20 @@
+trigger:
+  branches:
+    include:
+      - "main"
+  paths:
+    include:
+      - Templates/Python/python_starter_code
+
+pool:
+  vmImage: "ubuntu-latest"
+
+variables:
+  workingDirectory: "Templates/Python/python_starter_code"
+  pythonVersion: "3.9"
+
+stages:
+  - template: ../../../BuildTools/Pipeline/Templates/python_ci_pipeline_template.yml
+    parameters:
+      workingDir: ${{variables.workingDirectory}}
+      pythonVersion: ${{variables.pythonVersion}}
