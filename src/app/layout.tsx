@@ -30,20 +30,20 @@ const mono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NeetCode 150 Missions",
+  title: "NeetCode 150 Play",
   description:
-    "Playable missions that teach every NeetCode 150 problem — build the idea, simulate the algorithm, unseal the blueprint.",
+    "Teacher-led animated lessons for every NeetCode 150 problem — watch the puzzle, explode the idea like a rocket, play the algorithm.",
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
-    title: "NC150 Missions",
+    title: "NC150 Play",
   },
 };
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#e7eef5" },
-    { media: "(prefers-color-scheme: dark)", color: "#070b12" },
+    { media: "(prefers-color-scheme: light)", color: "#070b09" },
+    { media: "(prefers-color-scheme: dark)", color: "#070b09" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -63,14 +63,16 @@ export default function RootLayout({
           <ServiceWorkerRegister />
           <SiteHeader />
           <main>{children}</main>
-          <footer className="mx-auto max-w-6xl px-4 py-12 text-sm text-muted">
-            <div className="brand-font text-base text-foreground">
-              NeetCode<span className="text-accent">150</span> Missions
+          <footer className="border-t border-white/10 bg-[#070b09] px-4 py-10 text-sm text-white/45">
+            <div className="mx-auto max-w-6xl">
+              <div className="brand-font text-base text-white">
+                NeetCode<span className="text-accent">150</span> Play
+              </div>
+              <p className="mt-2 max-w-xl">
+                Offline-friendly animated classroom for Google interview prep.
+                Not affiliated with NeetCode or LeetCode.
+              </p>
             </div>
-            <p className="mt-2 max-w-xl">
-              Offline-friendly mission hangar for Google interview prep. Not
-              affiliated with NeetCode or LeetCode.
-            </p>
           </footer>
         </ThemeProvider>
       </body>

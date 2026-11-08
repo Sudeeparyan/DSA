@@ -1,8 +1,8 @@
 "use client";
 
 import type { Problem } from "@/lib/schema";
-import { MissionFlow } from "@/components/mission/MissionFlow";
+import { LessonTheater } from "@/components/theater/LessonTheater";
 
 export function ProblemView({ problem }: { problem: Problem }) {
-  return <MissionFlow problem={problem} />;
+  return <LessonTheater problem={problem} />;
 }

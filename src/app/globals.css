@@ -514,3 +514,144 @@ h3,
     scroll-behavior: auto !important;
   }
 }
+
+/* —— Lesson theater —— */
+.theater-root {
+  position: relative;
+  min-height: calc(100vh - 4rem);
+  color: #f3efe6;
+  background: #070b09;
+  overflow: hidden;
+}
+
+.theater-sky {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(900px 480px at 15% 10%, rgba(46, 196, 168, 0.16), transparent 55%),
+    radial-gradient(700px 420px at 85% 0%, rgba(255, 138, 61, 0.12), transparent 50%),
+    radial-gradient(600px 500px at 50% 100%, rgba(232, 185, 35, 0.06), transparent 45%),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 27px,
+      rgba(255, 255, 255, 0.02) 28px
+    );
+}
+
+.theater-panel {
+  border-radius: 1.35rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(13, 21, 18, 0.82);
+  backdrop-filter: blur(10px);
+}
+
+.puzzle-block {
+  display: flex;
+  height: 4.5rem;
+  width: 4.5rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1.1rem;
+  border: 2px solid;
+  background: rgba(255, 255, 255, 0.04);
+  color: white;
+}
+
+@media (min-width: 640px) {
+  .puzzle-block {
+    height: 5.25rem;
+    width: 5.25rem;
+  }
+}
+
+.split-panel {
+  width: 100%;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(16, 24, 20, 0.9);
+  padding: 1.35rem 1.5rem;
+}
+
+.explode-card {
+  border-radius: 1.35rem;
+  border: 1px solid rgba(255, 212, 59, 0.35);
+  background: linear-gradient(
+    160deg,
+    rgba(255, 138, 61, 0.14),
+    rgba(13, 21, 18, 0.92)
+  );
+  padding: 1.25rem 1.4rem;
+}
+
+.teacher-bar {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(5, 9, 7, 0.92);
+  backdrop-filter: blur(16px);
+  position: sticky;
+  bottom: 0;
+}
+
+.teacher-avatar {
+  display: flex;
+  height: 2.75rem;
+  width: 2.75rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #04110e;
+  font-family: var(--font-brand), sans-serif;
+  font-weight: 800;
+}
+
+.play-fab {
+  min-height: 2.75rem;
+  border-radius: 999px;
+  background: var(--accent);
+  padding: 0 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: white;
+  box-shadow: 0 0 28px -8px var(--accent);
+}
+
+.play-chip {
+  min-height: 2.5rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.orbit-core {
+  border-radius: 999px;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.orbit-chip {
+  display: flex;
+  height: 2.75rem;
+  width: 5.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid;
+  background: rgba(10, 16, 14, 0.92);
+  color: white;
+}
+
+.home-demo-stage {
+  border-radius: 1.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(13, 21, 18, 0.75);
+  padding: 1.5rem 1.25rem 1.35rem;
+  box-shadow: 0 30px 80px -40px rgba(46, 196, 168, 0.45);
+}
