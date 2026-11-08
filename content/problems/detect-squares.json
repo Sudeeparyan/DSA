@@ -1,0 +1,131 @@
+{
+  "id": 143,
+  "leetcodeNumber": 2013,
+  "title": "Detect Squares",
+  "slug": "detect-squares",
+  "category": "math-geometry",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/detect-squares/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Story version: The key idea is to group points by their x-coordinates and then use these groups to efficiently find potential square corners. (We will slow down and draw it.)",
+  "plainProblem": "LeetCode 2013: Detect Squares. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Detect Squares)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Detect Squares)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Detect Squares, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "The key idea is to group points by their x-coordinates and then use these groups to efficiently find potential square corners."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Math / matrix geometry",
+    "whenToSpot": "Rotate, spiral, primes, counting bits of structure."
+  },
+  "solutions": {
+    "python": "# Detect Squares\n# Idea: The key idea is to group points by their x-coordinates and then use these groups to efficiently find potential square corners.\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nfrom collections import defaultdict\nfrom typing import List\n\n\nclass DetectSquares:\n    def __init__(self):\n        self.points = defaultdict(lambda: defaultdict(int))\n\n    def add(self, point: List[int]) -> None:\n        x, y = point\n        self.points[x][y] += 1\n\n    def count(self, point: List[int]) -> int:\n        x, y = point\n        count = 0\n\n        for y2 in self.points[x]:\n            if y2 != y:\n                side_length = abs(y2 - y)\n\n                for x2 in (x + side_length, x - side_length):\n                    if x2 in self.points and y in self.points[x2]:\n                        count += (\n                            self.points[x2][y]\n                            * self.points[x2][y2]\n                            * self.points[x][y2]\n                        )\n\n        return count\n\n\n# Your DetectSquares object will be instantiated and called as such:\n# obj = DetectSquares()\n# obj.add(point)\n# param_2 = obj.count(point)\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "See code",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Math / matrix geometry.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "array",
+    "tracerId": "generic-array-scan",
+    "defaultInput": [
+      1,
+      2,
+      3
+    ],
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving detect squares using the array view.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "multiply-strings"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Detect Squares is the usual interview target: clear math / matrix geometry with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

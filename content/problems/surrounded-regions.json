@@ -1,0 +1,125 @@
+{
+  "id": 84,
+  "leetcodeNumber": 130,
+  "title": "Surrounded Regions",
+  "slug": "surrounded-regions",
+  "category": "graphs",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/surrounded-regions/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Story version: The problem is to capture 'O' cells that are not surrounded by 'X' cells in a given board. To solve this, we can use Depth-First Search (DFS) starting from the boundary 'O' cells. All the 'O' cells that are reachable from the boundary will be retained, and the rest will be changed to 'X'. (We will slow down and draw it.)",
+  "plainProblem": "LeetCode 130: Surrounded Regions. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Surrounded Regions)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Surrounded Regions)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Surrounded Regions, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "The problem is to capture 'O' cells that are not surrounded by 'X' cells in a given board. To solve this, we can use Depth-First Search (DFS) starting from the boundary 'O' cells. All the 'O' cells that are reachable from the boundary will be retained, and the rest will be changed to 'X'."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Graph BFS / DFS",
+    "whenToSpot": "Islands, rooms, or connections on a grid/graph."
+  },
+  "solutions": {
+    "python": "# Surrounded Regions\n# Idea: The problem is to capture 'O' cells that are not surrounded by 'X' cells in a given board. To solve this, we can use Depth-First Search (DFS) starting from the boundary 'O' cells. All the 'O' cells that are reachable fro\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def solve(self, board: List[List[str]]) -> None:\n        \"\"\"\n        Do not return anything, modify board in-place instead.\n        \"\"\"\n\n        def dfs(row, col):\n            if (\n                row < 0\n                or row >= len(board)\n                or col < 0\n                or col >= len(board[0])\n                or board[row][col] != \"O\"\n            ):\n                return\n\n            board[row][col] = \"E\"  # Mark as visited but not surrounded\n\n            # Check adjacent cells\n            dfs(row + 1, col)  # Check down\n            dfs(row - 1, col)  # Check up\n            dfs(row, col + 1)  # Check right\n            dfs(row, col - 1)  # Check left\n\n        # Traverse the boundary and mark connected 'O' cells as 'E'\n        for row in range(len(board)):\n            if board[row][0] == \"O\":\n                dfs(row, 0)\n            if board[row][len(board[0]) - 1] == \"O\":\n                dfs(row, len(board[0]) - 1)\n\n        for col in range(len(board[0])):\n            if board[0][col] == \"O\":\n                dfs(0, col)\n            if board[len(board) - 1][col] == \"O\":\n                dfs(len(board) - 1, col)\n\n        # Mark internal 'O' cells as 'X' and restore 'E' cells to 'O'\n        for row in range(len(board)):\n            for col in range(len(board[0])):\n                if board[row][col] == \"O\":\n                    board[row][col] = \"X\"\n                elif board[row][col] == \"E\":\n                    board[row][col] = \"O\"\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "See code",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Graph BFS / DFS.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "grid",
+    "tracerId": "generic-array-scan",
+    "defaultInput": {
+      "demo": true
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving surrounded regions using the grid view.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "pacific-atlantic-water-flow",
+    "rotting-oranges",
+    "walls-and-gates"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Surrounded Regions is the usual interview target: clear graph bfs / dfs with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

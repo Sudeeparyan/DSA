@@ -1,0 +1,125 @@
+{
+  "id": 100,
+  "leetcodeNumber": 746,
+  "title": "Min Cost Climbing Stairs",
+  "slug": "min-cost-climbing-stairs",
+  "category": "1d-dp",
+  "difficulty": "Easy",
+  "leetcodeUrl": "https://leetcode.com/problems/min-cost-climbing-stairs/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Story version: To find the minimum cost to reach the top of the stairs, we can use dynamic programming. We start by creating a list dp where dp[i] represents the minimum cost to reach the i-th stair. We initialize dp[0] and dp[1] to the costs of the 0-th and 1-st stairs, as there's no cost to reach them. Then, we iterate from the 2-nd stair to the top, and for each stair i, we calculate dp[i] as the minimum of either reaching it from dp[i-1] (one step) or dp[i-2] (two steps), plus the cost of the current stair. The minimum cost to reach the top will be either dp[n-1] or dp[n-2], where n is the number of stairs, as we can reach the top by either taking one step from the last stair or two steps from the second-to-last stair. (We will slow down and draw it.)",
+  "plainProblem": "LeetCode 746: Min Cost Climbing Stairs. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Min Cost Climbing Stairs)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Min Cost Climbing Stairs)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Min Cost Climbing Stairs, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To find the minimum cost to reach the top of the stairs, we can use dynamic programming. We start by creating a list dp where dp[i] represents the minimum cost to reach the i-th stair. We initialize dp[0] and dp[1] to the costs of the 0-th and 1-st stairs, as there's no cost to reach them. Then, we iterate from the 2-nd stair to the top, and for each stair i, we calculate dp[i] as the minimum of either reaching it from dp[i-1] (one step) or dp[i-2] (two steps), plus the cost of the current stair. The minimum cost to reach the top will be either dp[n-1] or dp[n-2], where n is the number of stairs, as we can reach the top by either taking one step from the last stair or two steps from the second-to-last stair."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "1-D dynamic programming",
+    "whenToSpot": "Answer depends on smaller answers along one line."
+  },
+  "solutions": {
+    "python": "# Min Cost Climbing Stairs\n# Idea: To find the minimum cost to reach the top of the stairs, we can use dynamic programming. We start by creating a list dp where dp[i] represents the minimum cost to reach the i-th stair. We initialize dp[0] and dp[1] to th\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def minCostClimbingStairs(self, cost: List[int]) -> int:\n        n = len(cost)\n        if n <= 1:\n            return 0  # No cost if there are 0 or 1 stairs\n\n        # Table of answers to smaller problems (DP)\n\n        dp = [0] * n  # Initialize a list to store minimum costs\n\n        # Base cases\n        dp[0] = cost[0]\n        dp[1] = cost[1]\n\n        for i in range(2, n):\n            dp[i] = min(dp[i - 1], dp[i - 2]) + cost[i]\n\n        return min(dp[n - 1], dp[n - 2])\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "O(n)",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like 1-D dynamic programming.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, O(n) space, and why."
+  ],
+  "animation": {
+    "visualType": "dp",
+    "tracerId": "generic-array-scan",
+    "defaultInput": {
+      "demo": true
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving min cost climbing stairs using the dp view.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "climbing-stairs",
+    "house-robber",
+    "house-robber-ii"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Min Cost Climbing Stairs is the usual interview target: clear 1-d dynamic programming with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

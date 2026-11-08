@@ -1,0 +1,125 @@
+{
+  "id": 96,
+  "leetcodeNumber": 778,
+  "title": "Swim in Rising Water",
+  "slug": "swim-in-rising-water",
+  "category": "advanced-graphs",
+  "difficulty": "Hard",
+  "leetcodeUrl": "https://leetcode.com/problems/swim-in-rising-water/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Story version: The problem can be approached using a binary search along with depth-first search (DFS). We can perform a binary search on the range of possible time values, from the minimum value (0) to the maximum value (N * N). For each time value, we perform a DFS to check if it's possible to reach the bottom-right cell from the top-left cell without encountering cells with heights greater than the current time value. If a valid path exists, we narrow down the search to the left half of the time range; otherwise, we search in the right half. (We will slow down and draw it.)",
+  "plainProblem": "LeetCode 778: Swim in Rising Water. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Swim in Rising Water)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Swim in Rising Water)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Swim in Rising Water, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "The problem can be approached using a binary search along with depth-first search (DFS). We can perform a binary search on the range of possible time values, from the minimum value (0) to the maximum value (N * N). For each time value, we perform a DFS to check if it's possible to reach the bottom-right cell from the top-left cell without encountering cells with heights greater than the current time value. If a valid path exists, we narrow down the search to the left half of the time range; otherwise, we search in the right half."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Dijkstra / topological sort",
+    "whenToSpot": "Weighted shortest paths or course-order constraints."
+  },
+  "solutions": {
+    "python": "# Swim in Rising Water\n# Idea: The problem can be approached using a binary search along with depth-first search (DFS). We can perform a binary search on the range of possible time values, from the minimum value (0) to the maximum value (N * N). For e\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def swimInWater(self, grid: List[List[int]]) -> int:\n        def dfs(i, j, visited, time):\n            if i < 0 or i >= N or j < 0 or j >= N or visited[i][j] or grid[i][j] > time:\n                return False\n            if i == N - 1 and j == N - 1:\n                return True\n            visited[i][j] = True\n            return (\n                dfs(i + 1, j, visited, time)\n                or dfs(i - 1, j, visited, time)\n                or dfs(i, j + 1, visited, time)\n                or dfs(i, j - 1, visited, time)\n            )\n\n        N = len(grid)\n        left, right = 0, N * N\n\n        while left < right:\n            mid = (left + right) // 2\n            # Cells/nodes we already explored\n            visited = [[False] * N for _ in range(N)]\n            if dfs(0, 0, visited, mid):\n                right = mid\n            else:\n                left = mid + 1\n\n        return left\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "See code",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Dijkstra / topological sort.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "graph",
+    "tracerId": "generic-array-scan",
+    "defaultInput": {
+      "demo": true
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving swim in rising water using the graph view.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "network-delay-time",
+    "alien-dictionary",
+    "cheapest-flights-within-k-stops"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Swim in Rising Water is the usual interview target: clear dijkstra / topological sort with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

@@ -1,0 +1,124 @@
+{
+  "id": 35,
+  "leetcodeNumber": 206,
+  "title": "Reverse Linked List",
+  "slug": "reverse-linked-list",
+  "category": "linked-list",
+  "difficulty": "Easy",
+  "leetcodeUrl": "https://leetcode.com/problems/reverse-linked-list/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Story version: To reverse a singly linked list, we need to reverse the direction of the pointers while traversing the list. We maintain three pointers: 'prev' (to keep track of the previous node), 'current' (to keep track of the current node), and 'next_node' (to keep track of the next node in the original list). In each iteration, we update the 'current.next' pointer to point to the 'prev' node, and then move 'prev' and 'current' pointers one step forward. We repeat this process until we reach the end of the original list, and the 'prev' pointer will be pointing to the new head of the reversed list. (We will slow down and draw it.)",
+  "plainProblem": "LeetCode 206: Reverse Linked List. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Reverse Linked List)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Reverse Linked List)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Reverse Linked List, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To reverse a singly linked list, we need to reverse the direction of the pointers while traversing the list. We maintain three pointers: 'prev' (to keep track of the previous node), 'current' (to keep track of the current node), and 'next_node' (to keep track of the next node in the original list). In each iteration, we update the 'current.next' pointer to point to the 'prev' node, and then move 'prev' and 'current' pointers one step forward. We repeat this process until we reach the end of the original list, and the 'prev' pointer will be pointing to the new head of the reversed list."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Pointer rewriting on a linked list",
+    "whenToSpot": "Nodes with next pointers; reverse, merge, cycle."
+  },
+  "solutions": {
+    "python": "# Reverse Linked List\n# Idea: To reverse a singly linked list, we need to reverse the direction of the pointers while traversing the list. We maintain three pointers: 'prev' (to keep track of the previous node), 'current' (to keep track of the curren\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\n# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\n\n\nclass Solution:\n    def reverseList(self, head: ListNode) -> ListNode:\n        prev = None\n        current = head\n\n        while current:\n            next_node = current.next\n            current.next = prev\n            prev = current\n            current = next_node\n\n        return prev\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(n)",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "O(1)",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Pointer rewriting on a linked list.'",
+    "Narrate one example before typing.",
+    "Close with complexity: O(n) time, O(1) space, and why."
+  ],
+  "animation": {
+    "visualType": "linkedList",
+    "tracerId": "generic-array-scan",
+    "defaultInput": {
+      "demo": true
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving reverse linked list using the linkedList view.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "merge-two-sorted-lists",
+    "reorder-list"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Reverse Linked List is the usual interview target: clear pointer rewriting on a linked list with competitive complexity (O(n) time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

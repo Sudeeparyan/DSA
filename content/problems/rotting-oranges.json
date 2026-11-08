@@ -1,0 +1,125 @@
+{
+  "id": 85,
+  "leetcodeNumber": 994,
+  "title": "Rotting Oranges",
+  "slug": "rotting-oranges",
+  "category": "graphs",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/rotting-oranges/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Story version: The problem is to determine the minimum time needed for all oranges to become rotten, considering that rotten oranges can also infect adjacent fresh oranges in each minute. We can model this problem using Breadth-First Search (BFS), where each minute corresponds to a level of the BFS traversal. (We will slow down and draw it.)",
+  "plainProblem": "LeetCode 994: Rotting Oranges. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Rotting Oranges)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Rotting Oranges)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Rotting Oranges, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "The problem is to determine the minimum time needed for all oranges to become rotten, considering that rotten oranges can also infect adjacent fresh oranges in each minute. We can model this problem using Breadth-First Search (BFS), where each minute corresponds to a level of the BFS traversal."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Graph BFS / DFS",
+    "whenToSpot": "Islands, rooms, or connections on a grid/graph."
+  },
+  "solutions": {
+    "python": "# Rotting Oranges\n# Idea: The problem is to determine the minimum time needed for all oranges to become rotten, considering that rotten oranges can also infect adjacent fresh oranges in each minute. We can model this problem using Breadth-First S\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def orangesRotting(self, grid: List[List[int]]) -> int:\n        if not grid:\n            return -1\n\n        rows, cols = len(grid), len(grid[0])\n        fresh_count = 0  # Count of fresh oranges\n        rotten = deque()  # Queue to store coordinates of rotten oranges\n        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]  # Possible adjacent cells\n\n        # Initialize the queue with coordinates of rotten oranges\n        for row in range(rows):\n            for col in range(cols):\n                if grid[row][col] == 2:\n                    rotten.append((row, col))\n                elif grid[row][col] == 1:\n                    fresh_count += 1\n\n        minutes = 0  # Timer\n\n        while rotten:\n            level_size = len(rotten)\n\n            for _ in range(level_size):\n                row, col = rotten.popleft()\n\n                for dr, dc in directions:\n                    new_row, new_col = row + dr, col + dc\n\n                    # Check if the new cell is within bounds and has a fresh orange\n                    if (\n                        0 <= new_row < rows\n                        and 0 <= new_col < cols\n                        and grid[new_row][new_col] == 1\n                    ):\n                        grid[new_row][new_col] = 2  # Infect the fresh orange\n                        fresh_count -= 1\n                        rotten.append((new_row, new_col))\n\n            if rotten:\n                minutes += 1\n\n        # If there are fresh oranges left, return -1; otherwise, return the elapsed minutes\n        return minutes if fresh_count == 0 else -1\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "See code",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Graph BFS / DFS.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "grid",
+    "tracerId": "generic-array-scan",
+    "defaultInput": {
+      "demo": true
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving rotting oranges using the grid view.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "surrounded-regions",
+    "walls-and-gates",
+    "course-schedule"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Rotting Oranges is the usual interview target: clear graph bfs / dfs with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

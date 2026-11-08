@@ -1,0 +1,133 @@
+{
+  "id": 7,
+  "leetcodeNumber": 36,
+  "title": "Valid Sudoku",
+  "slug": "valid-sudoku",
+  "category": "arrays-hashing",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/valid-sudoku/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "A Sudoku page. Every row, every column, and every 3\u00d73 box may show each digit at most once. Empty cells are fine.",
+  "plainProblem": "Determine if a 9\u00d79 board is valid Sudoku so far (not necessarily solvable). '.' means empty.",
+  "examples": [
+    {
+      "input": "board with one duplicate in a row",
+      "output": "false",
+      "explanation": "A repeated digit breaks validity."
+    },
+    {
+      "input": "partial valid board",
+      "output": "true",
+      "explanation": "No conflicts yet."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For each filled cell, scan its row, column, and box."
+    },
+    {
+      "title": "Aha insight",
+      "body": "Keep three families of hash sets: rows, cols, boxes."
+    },
+    {
+      "title": "Better idea",
+      "body": "One pass: if a digit already sits in that row/col/box set, invalid; else add it."
+    },
+    {
+      "title": "Box index trick",
+      "body": "box = (r // 3) * 3 + (c // 3) labels the nine boxes."
+    }
+  ],
+  "pattern": {
+    "name": "Hash set / hash map for seen items",
+    "whenToSpot": "You need fast lookups of values you already saw."
+  },
+  "solutions": {
+    "python": "# Valid Sudoku \u2014 interview-friendly solution from NeetCode 150 repo\n# Comments explain the idea; logic is unchanged.\n\nclass Solution:\n    def isValidSudoku(self, board: List[List[str]]) -> bool:\n        seen = set()\n\n        for i in range(9):\n            for j in range(9):\n                if board[i][j] != \".\":\n                    num = board[i][j]\n                    if (\n                        (i, num) in seen\n                        or (num, j) in seen\n                        or (i // 3, j // 3, num) in seen\n                    ):\n                        return False\n                    seen.add((i, num))\n                    seen.add((num, j))\n                    seen.add((i // 3, j // 3, num))\n\n        return True\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(1)",
+    "timeReason": "The board is fixed 9\u00d79, so work is constant (or O(n\u00b2) for an n\u00d7n generalization).",
+    "space": "O(1)",
+    "spaceReason": "At most 9\u00d79 entries across the sets for a standard board."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Name the pattern: Hash set / hash map for seen items.",
+    "Walk example 1 aloud before coding.",
+    "State O(1) time and O(1) space at the end."
+  ],
+  "animation": {
+    "visualType": "hash",
+    "tracerId": "generic-array-scan",
+    "defaultInput": [
+      1,
+      2,
+      3
+    ],
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving valid sudoku using the hash view.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "product-of-array-except-self",
+    "encode-and-decode-strings",
+    "longest-consecutive-sequence"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "Hash sets per row/col/box is the clear interview solution. Mention the box index formula out loud."
+}

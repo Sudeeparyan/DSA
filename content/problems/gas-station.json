@@ -1,0 +1,133 @@
+{
+  "id": 125,
+  "leetcodeNumber": 134,
+  "title": "Gas Station",
+  "slug": "gas-station",
+  "category": "greedy",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/gas-station/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Story version: We can solve this problem using a greedy approach. The idea is to keep track of the total gas available and the current gas needed as we iterate through the stations. If the current gas becomes negative, we reset the starting station to the next station and reset the current gas needed. At the end, if the total gas available is greater than or equal to the current gas needed, then the starting station is a valid solution. (We will slow down and draw it.)",
+  "plainProblem": "LeetCode 134: Gas Station. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Gas Station)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Gas Station)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Gas Station, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "We can solve this problem using a greedy approach. The idea is to keep track of the total gas available and the current gas needed as we iterate through the stations. If the current gas becomes negative, we reset the starting station to the next station and reset the current gas needed. At the end, if the total gas available is greater than or equal to the current gas needed, then the starting station is a valid solution."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Greedy choice",
+    "whenToSpot": "Local best pick that still works globally."
+  },
+  "solutions": {
+    "python": "# Gas Station\n# Idea: We can solve this problem using a greedy approach. The idea is to keep track of the total gas available and the current gas needed as we iterate through the stations. If the current gas becomes negative, we reset the sta\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:\n        total_gas = 0\n        current_gas = 0\n        start_station = 0\n\n        for i in range(len(gas)):\n            total_gas += gas[i] - cost[i]\n            current_gas += gas[i] - cost[i]\n\n            if current_gas < 0:\n                start_station = i + 1\n                current_gas = 0\n\n        return start_station if total_gas >= 0 else -1\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "See code",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Greedy choice.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "array",
+    "tracerId": "generic-array-scan",
+    "defaultInput": [
+      1,
+      2,
+      3
+    ],
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving gas station using the array view.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "jump-game-ii",
+    "hand-of-straights",
+    "merge-triplets-to-form-target-triplet"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Gas Station is the usual interview target: clear greedy choice with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

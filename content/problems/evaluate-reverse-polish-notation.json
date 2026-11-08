@@ -1,0 +1,117 @@
+{
+  "id": 23,
+  "leetcodeNumber": 150,
+  "title": "Evaluate Reverse Polish Notation",
+  "slug": "evaluate-reverse-polish-notation",
+  "category": "stack",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/evaluate-reverse-polish-notation/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Tokens in RPN: numbers wait on a stack; an operator pops two, computes, pushes back.",
+  "plainProblem": "LeetCode 150: Evaluate Reverse Polish Notation. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Evaluate Reverse Polish Notation)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Evaluate Reverse Polish Notation)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Evaluate Reverse Polish Notation, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To evaluate a given reverse Polish notation expression, we can use a stack data structure. We iterate through the tokens in the expression, and for each token, if it is a number, we push it onto the stack. If it is an operator ('+', '-', '*', '/'), we pop the top two elements from the stack, apply the operator to them, and push the result back onto the stack. At the end, the top element of the stack will be the final result of the expression."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Stack (last-in, first-out pile)",
+    "whenToSpot": "Matching brackets, next greater element, undo order."
+  },
+  "solutions": {
+    "python": "# Evaluate Reverse Polish Notation\n# Idea: To evaluate a given reverse Polish notation expression, we can use a stack data structure. We iterate through the tokens in the expression, and for each token, if it is a number, we push it onto the stack. If it is an op\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def evalRPN(self, tokens: List[str]) -> int:\n        # Last-in-first-out pile (stack)\n        stack = []\n\n        for token in tokens:\n            if token.isdigit() or (token[0] == \"-\" and token[1:].isdigit()):\n                stack.append(int(token))\n            else:\n                num2 = stack.pop()\n                num1 = stack.pop()\n                if token == \"+\":\n                    stack.append(num1 + num2)\n                elif token == \"-\":\n                    stack.append(num1 - num2)\n                elif token == \"*\":\n                    stack.append(num1 * num2)\n                elif token == \"/\":\n                    stack.append(int(num1 / num2))\n\n        return stack[0]\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(n)",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "O(n)",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Stack (last-in, first-out pile).'",
+    "Narrate one example before typing.",
+    "Close with complexity: O(n) time, O(n) space, and why."
+  ],
+  "animation": {
+    "visualType": "stack",
+    "tracerId": "generic-array-scan",
+    "defaultInput": "()[]{}",
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving evaluate reverse polish notation using the stack view.",
+        "state": {
+          "input": "()[]{}",
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": "()[]{}",
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": "()[]{}",
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "min-stack",
+    "generate-parentheses",
+    "daily-temperatures"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Evaluate Reverse Polish Notation is the usual interview target: clear stack (last-in, first-out pile) with competitive complexity (O(n) time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

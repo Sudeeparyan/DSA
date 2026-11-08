@@ -1,0 +1,125 @@
+{
+  "id": 107,
+  "leetcodeNumber": 152,
+  "title": "Maximum Product Subarray",
+  "slug": "maximum-product-subarray",
+  "category": "1d-dp",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/maximum-product-subarray/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Story version: The key idea is to use dynamic programming to keep track of the maximum and minimum product ending at each position in the array. Since multiplying a negative number by a negative number results in a positive number, we need to keep track of both the maximum and minimum products to handle negative numbers. (We will slow down and draw it.)",
+  "plainProblem": "LeetCode 152: Maximum Product Subarray. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Maximum Product Subarray)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Maximum Product Subarray)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Maximum Product Subarray, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "The key idea is to use dynamic programming to keep track of the maximum and minimum product ending at each position in the array. Since multiplying a negative number by a negative number results in a positive number, we need to keep track of both the maximum and minimum products to handle negative numbers."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "1-D dynamic programming",
+    "whenToSpot": "Answer depends on smaller answers along one line."
+  },
+  "solutions": {
+    "python": "# Maximum Product Subarray\n# Idea: The key idea is to use dynamic programming to keep track of the maximum and minimum product ending at each position in the array. Since multiplying a negative number by a negative number results in a positive number, we \u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def maxProduct(self, nums: List[int]) -> int:\n        # Initialize variables to keep track of the maximum and minimum product ending at the current position.\n        max_product = min_product = result = nums[0]\n\n        # Iterate through the array starting from the second element.\n        for i in range(1, len(nums)):\n            # If the current element is negative, swap max_product and min_product\n            # because multiplying a negative number can turn the maximum into the minimum.\n            if nums[i] < 0:\n                max_product, min_product = min_product, max_product\n\n            # Update max_product and min_product based on the current element.\n            max_product = max(nums[i], max_product * nums[i])\n            min_product = min(nums[i], min_product * nums[i])\n\n            # Update the overall result with the maximum product found so far.\n            result = max(result, max_product)\n\n        return result\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "O(1)",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like 1-D dynamic programming.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, O(1) space, and why."
+  ],
+  "animation": {
+    "visualType": "dp",
+    "tracerId": "generic-array-scan",
+    "defaultInput": {
+      "demo": true
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving maximum product subarray using the dp view.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "coin-change",
+    "word-break",
+    "longest-increasing-subsequence"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Maximum Product Subarray is the usual interview target: clear 1-d dynamic programming with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

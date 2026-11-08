@@ -1,0 +1,131 @@
+{
+  "id": 70,
+  "leetcodeNumber": 295,
+  "title": "Find Median from Data Stream",
+  "slug": "find-median-from-data-stream",
+  "category": "heap-priority-queue",
+  "difficulty": "Hard",
+  "leetcodeUrl": "https://leetcode.com/problems/find-median-from-data-stream/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Story version: To find the median from a stream of data, we can use two heaps: a max-heap to store the lower half of the data and a min-heap to store the upper half of the data. The max-heap will contain the smaller elements, and the min-heap will contain the larger elements. To maintain the balance of the heaps, we ensure that the size difference between the two heaps is at most 1. The median will be the average of the top elements of both heaps if the total number of elements is even, or the top element of the larger heap if the total number of elements is odd. (We will slow down and draw it.)",
+  "plainProblem": "LeetCode 295: Find Median from Data Stream. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Find Median from Data Stream)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Find Median from Data Stream)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Find Median from Data Stream, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To find the median from a stream of data, we can use two heaps: a max-heap to store the lower half of the data and a min-heap to store the upper half of the data. The max-heap will contain the smaller elements, and the min-heap will contain the larger elements. To maintain the balance of the heaps, we ensure that the size difference between the two heaps is at most 1. The median will be the average of the top elements of both heaps if the total number of elements is even, or the top element of the larger heap if the total number of elements is odd."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Heap / priority queue",
+    "whenToSpot": "Repeatedly need min or max quickly."
+  },
+  "solutions": {
+    "python": "# Find Median from Data Stream\n# Idea: To find the median from a stream of data, we can use two heaps: a max-heap to store the lower half of the data and a min-heap to store the upper half of the data. The max-heap will contain the smaller elements, and the m\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nimport heapq\n\n\nclass MedianFinder:\n    def __init__(self):\n        self.min_heap = []  # To store larger elements\n        self.max_heap = []  # To store smaller elements\n\n    def addNum(self, num: int) -> None:\n        if not self.max_heap or num <= -self.max_heap[0]:\n            # Heap ops keep min/max ready\n            heapq.heappush(self.max_heap, -num)\n        else:\n            heapq.heappush(self.min_heap, num)\n\n        # Balance the heaps\n        if len(self.max_heap) > len(self.min_heap) + 1:\n            heapq.heappush(self.min_heap, -heapq.heappop(self.max_heap))\n        elif len(self.min_heap) > len(self.max_heap):\n            heapq.heappush(self.max_heap, -heapq.heappop(self.min_heap))\n\n    def findMedian(self) -> float:\n        if len(self.max_heap) == len(self.min_heap):\n            return (-self.max_heap[0] + self.min_heap[0]) / 2\n        else:\n            return -self.max_heap[0]\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "See code",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Heap / priority queue.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "heap",
+    "tracerId": "generic-array-scan",
+    "defaultInput": [
+      1,
+      2,
+      3
+    ],
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving find median from data stream using the heap view.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "design-twitter"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Find Median from Data Stream is the usual interview target: clear heap / priority queue with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

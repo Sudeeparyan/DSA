@@ -1,0 +1,123 @@
+{
+  "id": 79,
+  "leetcodeNumber": 51,
+  "title": "N-Queens",
+  "slug": "n-queens",
+  "category": "backtracking",
+  "difficulty": "Hard",
+  "leetcodeUrl": "https://leetcode.com/problems/n-queens/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Story version: To solve the N-Queens problem, we can use backtracking. Starting from each row, we try placing a queen in each column of that row and recursively move on to the next row. If a valid placement is found, we continue the process. We keep track of the board state and the positions of the queens to avoid conflicts. (We will slow down and draw it.)",
+  "plainProblem": "LeetCode 51: N-Queens. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for N-Queens)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for N-Queens)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For N-Queens, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To solve the N-Queens problem, we can use backtracking. Starting from each row, we try placing a queen in each column of that row and recursively move on to the next row. If a valid placement is found, we continue the process. We keep track of the board state and the positions of the queens to avoid conflicts."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Backtracking (try \u2192 explore \u2192 undo)",
+    "whenToSpot": "Build all combinations / permutations / placements."
+  },
+  "solutions": {
+    "python": "# N-Queens\n# Idea: To solve the N-Queens problem, we can use backtracking. Starting from each row, we try placing a queen in each column of that row and recursively move on to the next row. If a valid placement is found, we continue the pr\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def solveNQueens(self, n: int) -> List[List[str]]:\n        def is_safe(row, col):\n            # Check for conflicts with previous rows\n            for prev_row in range(row):\n                if board[prev_row][col] == \"Q\":\n                    return False\n                if (\n                    col - (row - prev_row) >= 0\n                    and board[prev_row][col - (row - prev_row)] == \"Q\"\n                ):\n                    return False\n                if (\n                    col + (row - prev_row) < n\n                    and board[prev_row][col + (row - prev_row)] == \"Q\"\n                ):\n                    return False\n            return True\n\n        def place_queen(row):\n            if row == n:\n                result.append([\"\".join(row) for row in board])\n                return\n\n            for col in range(n):\n                if is_safe(row, col):\n                    board[row][col] = \"Q\"\n                    place_queen(row + 1)\n                    board[row][col] = \".\"\n\n        board = [[\".\" for _ in range(n)] for _ in range(n)]\n        result = []\n        place_queen(0)\n        return result\n\n\n# class Solution:\n#     def solveNQueens(self, n: int) -> List[List[str]]:\n#         result = []  # List to store solutions\n#         board = [['.'] * n for _ in range(n)]  # Chessboard representation\n#         left_diagonal = [False] * (2 * n - 1)  # Left diagonals availability\n#         right_diagonal = [False] * (2 * n - 1)  # Right diagonals availability\n#         column = [False] * n  # Columns availability\n\n#         def backtrack(row):\n#             if row == n:\n#                 solution = [\"\".join(row) for row in board]  # Convert the board to a solution format\n#                 result.append(solution)\n#                 return\n\n#             for col in range(n):\n#                 # Check if placing a queen in the current position is valid\n#                 if column[col] or left_diagonal[row - col] or right_diagonal[row + col]:\n#                     continue\n\n#                 # Place a queen and mark unavailable positions\n#                 board[row][col] = 'Q'\n#                 column[col] = left_diagonal[row - col] = right_diagonal[row + col] = True\n\n#                 # Move to the next row\n#                 backtrack(row + 1)\n\n#                 # Backtrack: Reset the board and availability\n#                 board[row][col] = '.'\n#                 column[col] = left_diagonal[row - col] = right_diagonal[row + col] = False\n\n#         backtrack(0)  # Start the backtracking process from the first row\n#         return result\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "See code",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Backtracking (try \u2192 explore \u2192 undo).'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "backtracking",
+    "tracerId": "generic-array-scan",
+    "defaultInput": {
+      "demo": true
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving n queens using the backtracking view.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "letter-combinations-of-a-phone-number"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for N-Queens is the usual interview target: clear backtracking (try \u2192 explore \u2192 undo) with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

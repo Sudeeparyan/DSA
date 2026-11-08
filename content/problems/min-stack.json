@@ -1,0 +1,117 @@
+{
+  "id": 22,
+  "leetcodeNumber": 155,
+  "title": "Min Stack",
+  "slug": "min-stack",
+  "category": "stack",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/min-stack/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Build a stack that also answers 'what is the smallest value right now?' in constant time.",
+  "plainProblem": "LeetCode 155: Min Stack. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Min Stack)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Min Stack)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Min Stack, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To implement a stack that supports finding the minimum element in constant time, we can use two stacks: one for storing the actual elements (stack) and another for keeping track of the minimum elements (min_stack). The min_stack will always have the current minimum element at the top. When pushing an element onto the stack, we compare it with the top element of the min_stack and push the smaller element onto the min_stack. When popping an element from the stack, we check if the element being popped is the same as the top element of the min_stack. If it is, we also pop the element from the min_stack. This way, the top element of the min_stack will always be the minimum element in the stack."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Stack (last-in, first-out pile)",
+    "whenToSpot": "Matching brackets, next greater element, undo order."
+  },
+  "solutions": {
+    "python": "# Min Stack\n# Idea: To implement a stack that supports finding the minimum element in constant time, we can use two stacks: one for storing the actual elements (stack) and another for keeping track of the minimum elements (min_stack). The m\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass MinStack:\n    def __init__(self):\n        self.stack = []\n        self.min_stack = []\n\n    def push(self, val: int) -> None:\n        self.stack.append(val)\n        if not self.min_stack or val <= self.min_stack[-1]:\n            self.min_stack.append(val)\n\n    def pop(self) -> None:\n        if self.stack:\n            if self.stack[-1] == self.min_stack[-1]:\n                self.min_stack.pop()\n            self.stack.pop()\n\n    def top(self) -> int:\n        if self.stack:\n            return self.stack[-1]\n\n    def getMin(self) -> int:\n        if self.min_stack:\n            return self.min_stack[-1]\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "O(n)",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Stack (last-in, first-out pile).'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, O(n) space, and why."
+  ],
+  "animation": {
+    "visualType": "stack",
+    "tracerId": "generic-array-scan",
+    "defaultInput": "()[]{}",
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving min stack using the stack view.",
+        "state": {
+          "input": "()[]{}",
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": "()[]{}",
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": "()[]{}",
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "valid-parentheses",
+    "evaluate-reverse-polish-notation",
+    "generate-parentheses"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Min Stack is the usual interview target: clear stack (last-in, first-out pile) with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

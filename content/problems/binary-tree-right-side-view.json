@@ -1,0 +1,125 @@
+{
+  "id": 54,
+  "leetcodeNumber": 199,
+  "title": "Binary Tree Right Side View",
+  "slug": "binary-tree-right-side-view",
+  "category": "trees",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/binary-tree-right-side-view/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Imagine 'Binary Tree Right Side View' as a puzzle game. We are in the trees world. First we invent any correct plan, then we upgrade it with the pattern for this family, so a 10-year-old could retell the steps.",
+  "plainProblem": "LeetCode 199: Binary Tree Right Side View. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Binary Tree Right Side View)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Binary Tree Right Side View)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Binary Tree Right Side View, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To obtain the right side view of a binary tree, we can perform a level order traversal using a breadth-first search (BFS) approach. For each level, we add the last node's value to the result list. This way, we capture the rightmost nodes at each level."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Tree DFS / BFS recursion",
+    "whenToSpot": "Hierarchical nodes with left/right children."
+  },
+  "solutions": {
+    "python": "# Binary Tree Right Side View\n# Idea: To obtain the right side view of a binary tree, we can perform a level order traversal using a breadth-first search (BFS) approach. For each level, we add the last node's value to the result list. This way, we capture th\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\n# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\n\nclass Solution:\n    def rightSideView(self, root: TreeNode) -> List[int]:\n        if not root:\n            return []\n\n        result = []\n        queue = [root]\n\n        while queue:\n            level_size = len(queue)\n\n            for i in range(level_size):\n                node = queue.pop(0)\n                if i == level_size - 1:\n                    result.append(node.val)\n                if node.left:\n                    queue.append(node.left)\n                if node.right:\n                    queue.append(node.right)\n\n        return result\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(n)",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "O(w)",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Tree DFS / BFS recursion.'",
+    "Narrate one example before typing.",
+    "Close with complexity: O(n) time, O(w) space, and why."
+  ],
+  "animation": {
+    "visualType": "tree",
+    "tracerId": "generic-array-scan",
+    "defaultInput": {
+      "demo": true
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving binary tree right side view using the tree view.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "binary-tree-level-order-traversal",
+    "count-good-nodes-in-binary-tree",
+    "validate-binary-search-tree"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Binary Tree Right Side View is the usual interview target: clear tree dfs / bfs recursion with competitive complexity (O(n) time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

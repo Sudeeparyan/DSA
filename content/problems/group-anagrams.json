@@ -1,0 +1,133 @@
+{
+  "id": 4,
+  "leetcodeNumber": 49,
+  "title": "Group Anagrams",
+  "slug": "group-anagrams",
+  "category": "arrays-hashing",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/group-anagrams/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "A box of words. Words that are rearrangements of each other sit at the same lunch table. We need every table of anagram friends.",
+  "plainProblem": "Group strings that are anagrams of each other. Return the groups in any order.",
+  "examples": [
+    {
+      "input": "strs = [\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"]",
+      "output": "[[\"bat\"],[\"nat\",\"tan\"],[\"ate\",\"eat\",\"tea\"]]",
+      "explanation": "Groups share letter counts."
+    },
+    {
+      "input": "strs = [\"\"]",
+      "output": "[[\"\"]]",
+      "explanation": "Single empty string."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "Compare every pair to see if they are anagrams. Too many comparisons."
+    },
+    {
+      "title": "Aha insight",
+      "body": "Anagrams share a signature: sorted letters, or a count tuple."
+    },
+    {
+      "title": "Better idea",
+      "body": "Map signature \u2192 list of words. One pass builds all groups."
+    },
+    {
+      "title": "Why it is fast",
+      "body": "Each word is processed once; sorting letters of a word costs its length."
+    }
+  ],
+  "pattern": {
+    "name": "Hash set / hash map for seen items",
+    "whenToSpot": "You need fast lookups of values you already saw."
+  },
+  "solutions": {
+    "python": "# Group Anagrams \u2014 interview-friendly solution from NeetCode 150 repo\n# Comments explain the idea; logic is unchanged.\n\nclass Solution:\n    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:\n        anagrams_map = {}\n\n        for word in strs:\n            sorted_word = \"\".join(sorted(word))\n            if sorted_word in anagrams_map:\n                anagrams_map[sorted_word].append(word)\n            else:\n                anagrams_map[sorted_word] = [word]\n\n        return list(anagrams_map.values())\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(n * k log k)",
+    "timeReason": "n words; sorting each word of length k costs k log k (count-signature is O(n*k)).",
+    "space": "O(n * k)",
+    "spaceReason": "We store all words in the groups map."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Name the pattern: Hash set / hash map for seen items.",
+    "Walk example 1 aloud before coding.",
+    "State O(n * k log k) time and O(n * k) space at the end."
+  ],
+  "animation": {
+    "visualType": "hash",
+    "tracerId": "generic-array-scan",
+    "defaultInput": [
+      1,
+      2,
+      3
+    ],
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving group anagrams using the hash view.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "two-sum",
+    "top-k-frequent-elements",
+    "product-of-array-except-self"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "Signature via sorted string or 26-count tuple is optimal interview style. Prefer count tuple if you want strictly O(n*k)."
+}

@@ -1,0 +1,125 @@
+{
+  "id": 118,
+  "leetcodeNumber": 115,
+  "title": "Distinct Subsequences",
+  "slug": "distinct-subsequences",
+  "category": "2d-dp",
+  "difficulty": "Hard",
+  "leetcodeUrl": "https://leetcode.com/problems/distinct-subsequences/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Story version: The key idea is to use dynamic programming to count the number of distinct subsequences of the string 's' that match the string 't'. We can create a 1D DP array dp, where dp[j] represents the number of distinct subsequences of 's' that match 't' up to index 'j'. We can build the DP array based on the following rules: 1. Initialize dp[0] to 1 because there is one way to match an empty string '\"\"' to another empty string '\"\"'. 2. For each character in 's', update dp[j] based on the following conditions: - If s[i] == t[j], we can either match the current characters (s[i] and t[j]), which contributes dp[j-1] to the count, or we can skip the current character in 's', which contributes dp[j] to the count. - If s[i] != t[j], we can only skip the current character in 's', which contributes dp[j] to the count. (We will slow down and draw it.)",
+  "plainProblem": "LeetCode 115: Distinct Subsequences. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Distinct Subsequences)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Distinct Subsequences)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Distinct Subsequences, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "The key idea is to use dynamic programming to count the number of distinct subsequences of the string 's' that match the string 't'. We can create a 1D DP array dp, where dp[j] represents the number of distinct subsequences of 's' that match 't' up to index 'j'. We can build the DP array based on the following rules: 1. Initialize dp[0] to 1 because there is one way to match an empty string '\"\"' to another empty string '\"\"'. 2. For each character in 's', update dp[j] based on the following conditions: - If s[i] == t[j], we can either match the current characters (s[i] and t[j]), which contributes dp[j-1] to the count, or we can skip the current character in 's', which contributes dp[j] to the count. - If s[i] != t[j], we can only skip the current character in 's', which contributes dp[j] to the count."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "2-D dynamic programming",
+    "whenToSpot": "Two changing indices; fill a table."
+  },
+  "solutions": {
+    "python": "# Distinct Subsequences\n# Idea: The key idea is to use dynamic programming to count the number of distinct subsequences of the string 's' that match the string 't'. We can create a 1D DP array dp, where dp[j] represents the number of distinct subsequen\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\n# This solution only passes 65/66 testcases for some reason. Tried other solutions and they don't work either, so it's probably a faulty testcase.\n# If you have a solution that passes all testcases, please open a pr.\n\n\nclass Solution:\n    def numDistinct(self, s: str, t: str) -> int:\n        m, n = len(s), len(t)\n\n        # Create a 2D table dp to store the number of distinct subsequences.\n        # Table of answers to smaller problems (DP)\n        dp = [[0] * (n + 1) for _ in range(m + 1)]\n\n        # Initialize the first row of dp. There is one way to form an empty subsequence.\n        for i in range(m + 1):\n            dp[i][0] = 1\n\n        # Fill the dp table using dynamic programming.\n        for i in range(1, m + 1):\n            for j in range(1, n + 1):\n                # If the characters match, we have two options:\n                # 1. Include the current character in the subsequence (dp[i-1][j-1] ways).\n                # 2. Exclude the current character (dp[i-1][j] ways).\n                if s[i - 1] == t[j - 1]:\n                    dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j]\n                else:\n                    # If the characters don't match, we can only exclude the current character.\n                    dp[i][j] = dp[i - 1][j]\n\n        return dp[m][n]\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "O(n)",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like 2-D dynamic programming.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, O(n) space, and why."
+  ],
+  "animation": {
+    "visualType": "dp",
+    "tracerId": "generic-array-scan",
+    "defaultInput": {
+      "demo": true
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving distinct subsequences using the dp view.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "longest-increasing-path-in-a-matrix",
+    "edit-distance",
+    "burst-balloons"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Distinct Subsequences is the usual interview target: clear 2-d dynamic programming with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

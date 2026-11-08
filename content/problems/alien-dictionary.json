@@ -1,0 +1,124 @@
+{
+  "id": 97,
+  "leetcodeNumber": 269,
+  "title": "Alien Dictionary",
+  "slug": "alien-dictionary",
+  "category": "advanced-graphs",
+  "difficulty": "Hard",
+  "leetcodeUrl": "https://leetcode.com/problems/alien-dictionary/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Alien words in sorted order. Recover the alphabet order (topological sort) if possible.",
+  "plainProblem": "LeetCode 269: Alien Dictionary. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Alien Dictionary)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Alien Dictionary)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Alien Dictionary, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "The problem can be solved using topological sorting. The given words can be thought of as directed edges between characters of adjacent words. We can build a graph where each character is a node, and the edges represent the order between characters. Then, we can perform topological sorting to find the correct order of characters."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Dijkstra / topological sort",
+    "whenToSpot": "Weighted shortest paths or course-order constraints."
+  },
+  "solutions": {
+    "python": "# Alien Dictionary\n# Idea: The problem can be solved using topological sorting. The given words can be thought of as directed edges between characters of adjacent words. We can build a graph where each character is a node, and the edges represent \u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nfrom collections import defaultdict, deque\n\n\nclass Solution:\n    def alienOrder(self, words: List[str]) -> str:\n        graph = defaultdict(list)\n        in_degree = defaultdict(int)\n\n        for i in range(len(words) - 1):\n            word1, word2 = words[i], words[i + 1]\n            for j in range(min(len(word1), len(word2))):\n                if word1[j] != word2[j]:\n                    graph[word1[j]].append(word2[j])\n                    in_degree[word2[j]] += 1\n                    break\n\n        queue = deque(char for char, indeg in in_degree.items() if indeg == 0)\n        result = []\n\n        while queue:\n            char = queue.popleft()\n            result.append(char)\n            for neighbor in graph[char]:\n                in_degree[neighbor] -= 1\n                if in_degree[neighbor] == 0:\n                    queue.append(neighbor)\n\n        if len(result) < len(in_degree):\n            return \"\"\n        return \"\".join(result)\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "See code",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Dijkstra / topological sort.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "graph",
+    "tracerId": "generic-array-scan",
+    "defaultInput": {
+      "demo": true
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving alien dictionary using the graph view.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "swim-in-rising-water",
+    "cheapest-flights-within-k-stops"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Alien Dictionary is the usual interview target: clear dijkstra / topological sort with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

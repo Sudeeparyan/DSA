@@ -1,0 +1,125 @@
+{
+  "id": 52,
+  "leetcodeNumber": 235,
+  "title": "Lowest Common Ancestor Of A Binary Search Tree",
+  "slug": "lowest-common-ancestor-of-a-binary-search-tree",
+  "category": "trees",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Imagine 'Lowest Common Ancestor Of A Binary Search Tree' as a puzzle game. We are in the trees world. First we invent any correct plan, then we upgrade it with the pattern for this family, so a 10-year-old could retell the steps.",
+  "plainProblem": "LeetCode 235: Lowest Common Ancestor Of A Binary Search Tree. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Lowest Common Ancestor Of A Binary Search Tree)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Lowest Common Ancestor Of A Binary Search Tree)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Lowest Common Ancestor Of A Binary Search Tree, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To find the lowest common ancestor (LCA) of two nodes in a binary search tree (BST), we can use a recursive approach. We compare the values of the two nodes with the current node's value. If both nodes are in the left subtree, we move to the left child. If both nodes are in the right subtree, we move to the right child. If one node is in the left subtree and the other is in the right subtree, we've found the LCA."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Tree DFS / BFS recursion",
+    "whenToSpot": "Hierarchical nodes with left/right children."
+  },
+  "solutions": {
+    "python": "# Lowest Common Ancestor Of A Binary Search Tree\n# Idea: To find the lowest common ancestor (LCA) of two nodes in a binary search tree (BST), we can use a recursive approach. We compare the values of the two nodes with the current node's value. If both nodes are in the left su\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\n# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, x):\n#         self.val = x\n#         self.left = None\n#         self.right = None\n\n\nclass Solution:\n    def lowestCommonAncestor(\n        self, root: TreeNode, p: TreeNode, q: TreeNode\n    ) -> TreeNode:\n        if root.val > p.val and root.val > q.val:\n            return self.lowestCommonAncestor(root.left, p, q)\n        elif root.val < p.val and root.val < q.val:\n            return self.lowestCommonAncestor(root.right, p, q)\n        else:\n            return root\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(h)",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "O(h)",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Tree DFS / BFS recursion.'",
+    "Narrate one example before typing.",
+    "Close with complexity: O(h) time, O(h) space, and why."
+  ],
+  "animation": {
+    "visualType": "tree",
+    "tracerId": "generic-array-scan",
+    "defaultInput": {
+      "demo": true
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving lowest common ancestor of a binary search tree using the tree view.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "subtree-of-another-tree",
+    "binary-tree-level-order-traversal",
+    "binary-tree-right-side-view"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Lowest Common Ancestor Of A Binary Search Tree is the usual interview target: clear tree dfs / bfs recursion with competitive complexity (O(h) time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

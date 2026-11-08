@@ -1,0 +1,132 @@
+{
+  "id": 33,
+  "leetcodeNumber": 981,
+  "title": "Time Based Key-Value Store",
+  "slug": "time-based-key-value-store",
+  "category": "binary-search",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/time-based-key-value-store/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Remember values with timestamps. Ask for a key at time t: latest value not after t.",
+  "plainProblem": "LeetCode 981: Time Based Key-Value Store. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Time Based Key-Value Store)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Time Based Key-Value Store)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Time Based Key-Value Store, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To implement a time-based key-value store, we can use a dictionary to store the values associated with each key. For each key, we store a list of tuples representing the timestamp and the corresponding value. When querying a key at a specific timestamp, we perform binary search on the list of timestamps associated with that key to find the largest timestamp less than or equal to the given timestamp."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Binary search (halving the range)",
+    "whenToSpot": "Sorted data or a monotonic yes/no answer."
+  },
+  "solutions": {
+    "python": "# Time Based Key-Value Store\n# Idea: To implement a time-based key-value store, we can use a dictionary to store the values associated with each key. For each key, we store a list of tuples representing the timestamp and the corresponding value. When queryi\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass TimeMap:\n    def __init__(self):\n        self.data = defaultdict(list)\n\n    def set(self, key: str, value: str, timestamp: int) -> None:\n        self.data[key].append((timestamp, value))\n\n    def get(self, key: str, timestamp: int) -> str:\n        values = self.data[key]\n        left, right = 0, len(values) - 1\n\n        while left <= right:\n            mid = left + (right - left) // 2\n            if values[mid][0] == timestamp:\n                return values[mid][1]\n            elif values[mid][0] < timestamp:\n                left = mid + 1\n            else:\n                right = mid - 1\n\n        if right >= 0:\n            return values[right][1]\n        return \"\"\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "O(n)",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Binary search (halving the range).'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, O(n) space, and why."
+  ],
+  "animation": {
+    "visualType": "array",
+    "tracerId": "generic-array-scan",
+    "defaultInput": [
+      1,
+      2,
+      3
+    ],
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving time based key value store using the array view.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "search-in-rotated-sorted-array",
+    "median-of-two-sorted-arrays"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Time Based Key-Value Store is the usual interview target: clear binary search (halving the range) with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

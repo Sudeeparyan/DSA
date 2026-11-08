@@ -1,0 +1,131 @@
+{
+  "id": 150,
+  "leetcodeNumber": 7,
+  "title": "Reverse Integer",
+  "slug": "reverse-integer",
+  "category": "bit-manipulation",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/reverse-integer/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Imagine 'Reverse Integer' as a puzzle game. We are in the bit manipulation world. First we invent any correct plan, then we upgrade it with the pattern for this family, so a 10-year-old could retell the steps.",
+  "plainProblem": "LeetCode 7: Reverse Integer. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Reverse Integer)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Reverse Integer)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Reverse Integer, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To reverse an integer, we can use integer arithmetic. We repeatedly extract the last digit of the number using the modulo operator (%) and add it to the reversed number after multiplying by 10. We then update the original number by integer division (//) to remove the last digit. We continue this process until the original number becomes 0."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Bit tricks (AND/OR/XOR)",
+    "whenToSpot": "Flags, uniqueness, or power-of-two checks."
+  },
+  "solutions": {
+    "python": "# Reverse Integer\n# Idea: To reverse an integer, we can use integer arithmetic. We repeatedly extract the last digit of the number using the modulo operator (%) and add it to the reversed number after multiplying by 10. We then update the origina\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def reverse(self, x: int) -> int:\n        INT_MAX = 2**31 - 1\n        INT_MIN = -(2**31)\n\n        reversed_num = 0\n        sign = 1 if x > 0 else -1\n        x = abs(x)\n\n        while x != 0:\n            pop = x % 10\n            x //= 10\n\n            if reversed_num > (INT_MAX - pop) // 10:\n                return 0\n\n            reversed_num = reversed_num * 10 + pop\n\n        return reversed_num * sign\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "See code",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Bit tricks (AND/OR/XOR).'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "bits",
+    "tracerId": "generic-array-scan",
+    "defaultInput": [
+      1,
+      2,
+      3
+    ],
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving reverse integer using the bits view.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "sum-of-two-integers"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Reverse Integer is the usual interview target: clear bit tricks (and/or/xor) with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

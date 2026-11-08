@@ -1,0 +1,133 @@
+{
+  "id": 5,
+  "leetcodeNumber": 347,
+  "title": "Top K Frequent Elements",
+  "slug": "top-k-frequent-elements",
+  "category": "arrays-hashing",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/top-k-frequent-elements/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Numbers shout how often they appear. You only want the k loudest voices on the podium.",
+  "plainProblem": "Return the k most frequent elements in the array. Order among the top-k does not matter.",
+  "examples": [
+    {
+      "input": "nums = [1,1,1,2,2,3], k = 2",
+      "output": "[1,2]",
+      "explanation": "1 appears thrice, 2 twice."
+    },
+    {
+      "input": "nums = [1], k = 1",
+      "output": "[1]",
+      "explanation": "Only one element."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "Count frequencies, sort all unique numbers by count, take k."
+    },
+    {
+      "title": "Why sorting works",
+      "body": "Simple, O(m log m) for m unique values."
+    },
+    {
+      "title": "Aha insight",
+      "body": "Bucket sort by frequency: index = count, values = numbers with that count."
+    },
+    {
+      "title": "Better idea",
+      "body": "Fill frequency buckets, then walk from high frequency down until you collect k numbers."
+    }
+  ],
+  "pattern": {
+    "name": "Hash set / hash map for seen items",
+    "whenToSpot": "You need fast lookups of values you already saw."
+  },
+  "solutions": {
+    "python": "# Top K Frequent Elements \u2014 interview-friendly solution from NeetCode 150 repo\n# Comments explain the idea; logic is unchanged.\n\nimport heapq\n\n\nclass Solution:\n    def topKFrequent(self, nums: List[int], k: int) -> List[int]:\n        frequency_map = {}\n        for num in nums:\n            frequency_map[num] = frequency_map.get(num, 0) + 1\n\n        min_heap = []\n        for num, frequency in frequency_map.items():\n            heapq.heappush(min_heap, (frequency, num))\n            if len(min_heap) > k:\n                heapq.heappop(min_heap)\n\n        return [num for frequency, num in min_heap]\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(n)",
+    "timeReason": "Counting is O(n); bucket walk is O(n) because total bucket entries equal n.",
+    "space": "O(n)",
+    "spaceReason": "Frequency map and buckets store up to n items."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Name the pattern: Hash set / hash map for seen items.",
+    "Walk example 1 aloud before coding.",
+    "State O(n) time and O(n) space at the end."
+  ],
+  "animation": {
+    "visualType": "hash",
+    "tracerId": "generic-array-scan",
+    "defaultInput": [
+      1,
+      2,
+      3
+    ],
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving top k frequent elements using the hash view.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "group-anagrams",
+    "product-of-array-except-self",
+    "valid-sudoku"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "Bucket sort by frequency is the NeetCode favorite and impresses more than sorting when you explain why it is linear. Heap of size k is also acceptable O(n log k)."
+}

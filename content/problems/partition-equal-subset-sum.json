@@ -1,0 +1,123 @@
+{
+  "id": 110,
+  "leetcodeNumber": 416,
+  "title": "Partition Equal Subset Sum",
+  "slug": "partition-equal-subset-sum",
+  "category": "1d-dp",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/partition-equal-subset-sum/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Imagine 'Partition Equal Subset Sum' as a puzzle game. We are in the 1d dp world. First we invent any correct plan, then we upgrade it with the pattern for this family, so a 10-year-old could retell the steps.",
+  "plainProblem": "LeetCode 416: Partition Equal Subset Sum. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Partition Equal Subset Sum)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Partition Equal Subset Sum)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Partition Equal Subset Sum, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "The key idea is to use dynamic programming to determine if it's possible to partition the input array into two subsets with equal sums. We create a dynamic programming array dp, where dp[i][j] represents whether it's possible to form a subset with a sum of 'j' using the first 'i' elements of the input array."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "1-D dynamic programming",
+    "whenToSpot": "Answer depends on smaller answers along one line."
+  },
+  "solutions": {
+    "python": "# Partition Equal Subset Sum\n# Idea: The key idea is to use dynamic programming to determine if it's possible to partition the input array into two subsets with equal sums. We create a dynamic programming array dp, where dp[i][j] represents whether it's pos\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def canPartition(self, nums: List[int]) -> bool:\n        total_sum = sum(nums)\n\n        # If the total sum is odd, it's impossible to partition into two equal subsets.\n        if total_sum % 2 != 0:\n            return False\n\n        target_sum = total_sum // 2\n\n        # Initialize a dynamic programming array dp with all values set to False.\n        # Table of answers to smaller problems (DP)\n        dp = [False] * (target_sum + 1)\n\n        # It's always possible to achieve a sum of 0 using an empty subset.\n        dp[0] = True\n\n        for num in nums:\n            for i in range(target_sum, num - 1, -1):\n                # If it's possible to achieve a sum of 'i - num' using a subset,\n                # then it's also possible to achieve a sum of 'i' using a subset.\n                dp[i] = dp[i] or dp[i - num]\n\n        return dp[target_sum]\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "O(n * sum(nums)",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like 1-D dynamic programming.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, O(n * sum(nums) space, and why."
+  ],
+  "animation": {
+    "visualType": "dp",
+    "tracerId": "generic-array-scan",
+    "defaultInput": {
+      "demo": true
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving partition equal subset sum using the dp view.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "longest-increasing-subsequence"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Partition Equal Subset Sum is the usual interview target: clear 1-d dynamic programming with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

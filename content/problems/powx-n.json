@@ -1,0 +1,133 @@
+{
+  "id": 141,
+  "leetcodeNumber": 50,
+  "title": "Pow(x, n)",
+  "slug": "powx-n",
+  "category": "math-geometry",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/powx-n/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Story version: The problem is to calculate x raised to the power n. We can solve this problem using the concept of exponentiation by squaring. If n is even, we can compute x^n as (x^(n//2)) * (x^(n//2)). If n is odd, we can compute x^n as x * (x^(n//2)) * (x^(n//2)). (We will slow down and draw it.)",
+  "plainProblem": "LeetCode 50: Pow(x, n). Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Pow(x, n))",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Pow(x, n))",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Pow(x, n), first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "The problem is to calculate x raised to the power n. We can solve this problem using the concept of exponentiation by squaring. If n is even, we can compute x^n as (x^(n//2)) * (x^(n//2)). If n is odd, we can compute x^n as x * (x^(n//2)) * (x^(n//2))."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Math / matrix geometry",
+    "whenToSpot": "Rotate, spiral, primes, counting bits of structure."
+  },
+  "solutions": {
+    "python": "# Pow(x, n)\n# Idea: The problem is to calculate x raised to the power n. We can solve this problem using the concept of exponentiation by squaring. If n is even, we can compute x^n as (x^(n//2)) * (x^(n//2)). If n is odd, we can compute x^n\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def myPow(self, x: float, n: int) -> float:\n        def helper(base, exp):\n            if exp == 0:\n                return 1.0\n            temp = helper(base, exp // 2)\n            if exp % 2 == 0:\n                return temp * temp\n            else:\n                return base * temp * temp\n\n        if n < 0:\n            x = 1 / x\n            n = -n\n\n        return helper(x, n)\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "See code",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Math / matrix geometry.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "array",
+    "tracerId": "generic-array-scan",
+    "defaultInput": [
+      1,
+      2,
+      3
+    ],
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving powx n using the array view.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "plus-one",
+    "multiply-strings",
+    "detect-squares"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Pow(x, n) is the usual interview target: clear math / matrix geometry with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

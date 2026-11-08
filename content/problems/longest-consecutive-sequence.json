@@ -1,0 +1,131 @@
+{
+  "id": 9,
+  "leetcodeNumber": 128,
+  "title": "Longest Consecutive Sequence",
+  "slug": "longest-consecutive-sequence",
+  "category": "arrays-hashing",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/longest-consecutive-sequence/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Numbered beads in a bag. Ignore the bag order. What is the longest run of neighbors like 3\u20134\u20135\u20136?",
+  "plainProblem": "Return the length of the longest consecutive elements sequence. Aim for O(n).",
+  "examples": [
+    {
+      "input": "nums = [100,4,200,1,3,2]",
+      "output": "4",
+      "explanation": "1,2,3,4 is length 4."
+    },
+    {
+      "input": "nums = [0,3,7,2,5,8,4,6,0,1]",
+      "output": "9",
+      "explanation": "0 through 8."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "Sort, then scan streaks. O(n log n)."
+    },
+    {
+      "title": "Aha insight",
+      "body": "Put numbers in a hash set. A streak should start only when num-1 is missing."
+    },
+    {
+      "title": "Better idea",
+      "body": "For each start, walk num+1, num+2\u2026 while present, tracking the best length."
+    },
+    {
+      "title": "Why O(n)",
+      "body": "Each number is visited a constant number of times across all walks."
+    }
+  ],
+  "pattern": {
+    "name": "Hash set / hash map for seen items",
+    "whenToSpot": "You need fast lookups of values you already saw."
+  },
+  "solutions": {
+    "python": "# Longest Consecutive Sequence \u2014 interview-friendly solution from NeetCode 150 repo\n# Comments explain the idea; logic is unchanged.\n\nclass Solution:\n    def longestConsecutive(self, nums: List[int]) -> int:\n        num_set = set(nums)\n        max_length = 0\n\n        for num in num_set:\n            if num - 1 not in num_set:\n                current_num = num\n                current_length = 1\n\n                while current_num + 1 in num_set:\n                    current_num += 1\n                    current_length += 1\n\n                max_length = max(max_length, current_length)\n\n        return max_length\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(n)",
+    "timeReason": "Set builds in O(n); consecutive walks amortize to O(n).",
+    "space": "O(n)",
+    "spaceReason": "The hash set stores unique numbers."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Name the pattern: Hash set / hash map for seen items.",
+    "Walk example 1 aloud before coding.",
+    "State O(n) time and O(n) space at the end."
+  ],
+  "animation": {
+    "visualType": "hash",
+    "tracerId": "generic-array-scan",
+    "defaultInput": [
+      1,
+      2,
+      3
+    ],
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving longest consecutive sequence using the hash view.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "encode-and-decode-strings"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "Hash-set start-of-streak method is the O(n) interview target. Sorting is the honest fallback if hashing is disallowed."
+}

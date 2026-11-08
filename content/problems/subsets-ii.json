@@ -1,0 +1,125 @@
+{
+  "id": 74,
+  "leetcodeNumber": 90,
+  "title": "Subsets II",
+  "slug": "subsets-ii",
+  "category": "backtracking",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/subsets-ii/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Story version: To generate all possible subsets of a given list of integers, accounting for duplicates, we can use a backtracking approach. Similar to the previous subset problem, we explore all possible choices for each element: either include it in the current subset or exclude it. To handle duplicates, we skip adding the same element if it has already been processed at the same depth level. (We will slow down and draw it.)",
+  "plainProblem": "LeetCode 90: Subsets II. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Subsets II)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Subsets II)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Subsets II, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To generate all possible subsets of a given list of integers, accounting for duplicates, we can use a backtracking approach. Similar to the previous subset problem, we explore all possible choices for each element: either include it in the current subset or exclude it. To handle duplicates, we skip adding the same element if it has already been processed at the same depth level."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Backtracking (try \u2192 explore \u2192 undo)",
+    "whenToSpot": "Build all combinations / permutations / placements."
+  },
+  "solutions": {
+    "python": "# Subsets II\n# Idea: To generate all possible subsets of a given list of integers, accounting for duplicates, we can use a backtracking approach. Similar to the previous subset problem, we explore all possible choices for each element: eithe\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:\n        def backtrack(start, subset):\n            subsets.append(subset[:])  # Append a copy of the current subset\n\n            for i in range(start, len(nums)):\n                if i > start and nums[i] == nums[i - 1]:\n                    continue  # Skip duplicates at the same depth level\n                subset.append(nums[i])\n                backtrack(i + 1, subset)\n                subset.pop()  # Backtrack\n\n        nums.sort()  # Sort the input to handle duplicates\n        subsets = []\n        backtrack(0, [])\n        return subsets\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "See code",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Backtracking (try \u2192 explore \u2192 undo).'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "backtracking",
+    "tracerId": "generic-array-scan",
+    "defaultInput": {
+      "demo": true
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving subsets ii using the backtracking view.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "permutations",
+    "combination-sum-ii",
+    "word-search"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Subsets II is the usual interview target: clear backtracking (try \u2192 explore \u2192 undo) with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

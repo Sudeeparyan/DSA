@@ -1,0 +1,125 @@
+{
+  "id": 117,
+  "leetcodeNumber": 329,
+  "title": "Longest Increasing Path in a Matrix",
+  "slug": "longest-increasing-path-in-a-matrix",
+  "category": "2d-dp",
+  "difficulty": "Hard",
+  "leetcodeUrl": "https://leetcode.com/problems/longest-increasing-path-in-a-matrix/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Story version: The key idea is to use dynamic programming to find the longest increasing path in a matrix. We can start from each cell and perform a depth-first search (DFS) to explore the neighboring cells with larger values. (We will slow down and draw it.)",
+  "plainProblem": "LeetCode 329: Longest Increasing Path in a Matrix. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Longest Increasing Path in a Matrix)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Longest Increasing Path in a Matrix)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Longest Increasing Path in a Matrix, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "The key idea is to use dynamic programming to find the longest increasing path in a matrix. We can start from each cell and perform a depth-first search (DFS) to explore the neighboring cells with larger values."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "2-D dynamic programming",
+    "whenToSpot": "Two changing indices; fill a table."
+  },
+  "solutions": {
+    "python": "# Longest Increasing Path in a Matrix\n# Idea: The key idea is to use dynamic programming to find the longest increasing path in a matrix. We can start from each cell and perform a depth-first search (DFS) to explore the neighboring cells with larger values.\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def longestIncreasingPath(self, matrix: List[List[int]]) -> int:\n        if not matrix:\n            return 0\n\n        # Define directions for moving to neighboring cells: up, down, left, right.\n        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]\n\n        # Function to perform DFS from a given cell (i, j).\n        def dfs(i, j):\n            # If the result for this cell is already calculated, return it.\n            if dp[i][j] != -1:\n                return dp[i][j]\n\n            # Initialize the result for this cell to 1 (counting itself).\n            dp[i][j] = 1\n\n            # Explore the four neighboring cells.\n            for dx, dy in directions:\n                x, y = i + dx, j + dy\n                if 0 <= x < m and 0 <= y < n and matrix[x][y] > matrix[i][j]:\n                    # If the neighboring cell has a larger value, perform DFS.\n                    dp[i][j] = max(dp[i][j], 1 + dfs(x, y))\n\n            return dp[i][j]\n\n        m, n = len(matrix), len(matrix[0])\n        # Table of answers to smaller problems (DP)\n        dp = [[-1] * n for _ in range(m)]  # Memoization table to store results.\n        max_path = 0\n\n        # Start DFS from each cell in the matrix.\n        for i in range(m):\n            for j in range(n):\n                max_path = max(max_path, dfs(i, j))\n\n        return max_path\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "O(m * n)",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like 2-D dynamic programming.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, O(m * n) space, and why."
+  ],
+  "animation": {
+    "visualType": "dp",
+    "tracerId": "generic-array-scan",
+    "defaultInput": {
+      "demo": true
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving longest increasing path in a matrix using the dp view.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "interleaving-string",
+    "distinct-subsequences",
+    "edit-distance"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Longest Increasing Path in a Matrix is the usual interview target: clear 2-d dynamic programming with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

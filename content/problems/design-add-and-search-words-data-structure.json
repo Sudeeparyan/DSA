@@ -1,0 +1,124 @@
+{
+  "id": 62,
+  "leetcodeNumber": 211,
+  "title": "Design Add and Search Words Data Structure",
+  "slug": "design-add-and-search-words-data-structure",
+  "category": "tries",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/design-add-and-search-words-data-structure/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Story version: To design a data structure that supports adding and searching words, we can use a Trie (prefix tree) with a special character '.' to represent any character. When searching, we traverse the Trie and recursively search in all child nodes for matching characters or '.'. (We will slow down and draw it.)",
+  "plainProblem": "LeetCode 211: Design Add and Search Words Data Structure. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Design Add and Search Words Data Structure)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Design Add and Search Words Data Structure)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Design Add and Search Words Data Structure, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To design a data structure that supports adding and searching words, we can use a Trie (prefix tree) with a special character '.' to represent any character. When searching, we traverse the Trie and recursively search in all child nodes for matching characters or '.'."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Trie (prefix tree)",
+    "whenToSpot": "Many words sharing prefixes; autocomplete."
+  },
+  "solutions": {
+    "python": "# Design Add and Search Words Data Structure\n# Idea: To design a data structure that supports adding and searching words, we can use a Trie (prefix tree) with a special character '.' to represent any character. When searching, we traverse the Trie and recursively search in\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass TrieNode:\n    def __init__(self):\n        self.children = {}\n        self.is_end = False\n\n\nclass WordDictionary:\n    def __init__(self):\n        self.root = TrieNode()\n\n    def addWord(self, word: str) -> None:\n        node = self.root\n        for char in word:\n            if char not in node.children:\n                node.children[char] = TrieNode()\n            node = node.children[char]\n        node.is_end = True\n\n    def search(self, word: str) -> bool:\n        def search_in_node(node, word):\n            for i, char in enumerate(word):\n                if char not in node.children:\n                    if char == \".\":\n                        for child in node.children:\n                            if search_in_node(node.children[child], word[i + 1 :]):\n                                return True\n                    return False\n                else:\n                    node = node.children[char]\n            return node.is_end\n\n        return search_in_node(self.root, word)\n\n\n# Your WordDictionary object will be instantiated and called as such:\n# obj = WordDictionary()\n# obj.addWord(word)\n# param_2 = obj.search(word)\n\n# class WordDictionary:\n\n#     def __init__(self):\n#         self.word_set = set()\n\n#     def addWord(self, word: str) -> None:\n#         self.word_set.add(word)\n#         for i in range(len(word)):\n#             # Add all possible variations with a '.' in each position\n#             self.word_set.add(word[:i] + '.' + word[i + 1:])\n\n#     def search(self, word: str) -> bool:\n#         if word in self.word_set:\n#             return True\n\n#         # Check if the word contains a '.'\n#         if '.' not in word:\n#             return False\n\n#         # Split the word into two parts at the first occurrence of '.'\n#         first_part, rest_part = word.split('.', 1)\n\n#         # Iterate over lowercase letters and create variations to search\n#         for char in 'abcdefghijklmnopqrstuvwxyz':\n#             new_word = first_part + char + rest_part\n#             if new_word in self.word_set:\n#                 return True\n\n#         return False\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "See code",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Trie (prefix tree).'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "trie",
+    "tracerId": "generic-array-scan",
+    "defaultInput": {
+      "demo": true
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving design add and search words data structure using the trie view.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "implement-trie-prefix-tree",
+    "word-search-ii"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Design Add and Search Words Data Structure is the usual interview target: clear trie (prefix tree) with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

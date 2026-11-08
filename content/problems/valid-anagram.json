@@ -1,0 +1,132 @@
+{
+  "id": 2,
+  "leetcodeNumber": 242,
+  "title": "Valid Anagram",
+  "slug": "valid-anagram",
+  "category": "arrays-hashing",
+  "difficulty": "Easy",
+  "leetcodeUrl": "https://leetcode.com/problems/valid-anagram/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Two piles of letter tiles. If you can rearrange pile A to look exactly like pile B, they are anagrams \u2014 same letters, same counts, maybe different order.",
+  "plainProblem": "Given two strings s and t, return true if t is an anagram of s (same characters with the same frequencies).",
+  "examples": [
+    {
+      "input": "s = \"anagram\", t = \"nagaram\"",
+      "output": "true",
+      "explanation": "Same letters rearranged."
+    },
+    {
+      "input": "s = \"rat\", t = \"car\"",
+      "output": "false",
+      "explanation": "Different letters."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "Sort both strings and compare. Easy to understand."
+    },
+    {
+      "title": "Why sorting may be enough",
+      "body": "Sorting is O(n log n). Fine for interviews, but counting can be linear."
+    },
+    {
+      "title": "Aha insight",
+      "body": "Anagrams have identical character counts. A hash map (or 26 counters) remembers frequencies."
+    },
+    {
+      "title": "Better idea",
+      "body": "Count letters in s, subtract letters in t (or compare two maps). If all counts end at zero, they match."
+    }
+  ],
+  "pattern": {
+    "name": "Hash set / hash map for seen items",
+    "whenToSpot": "You need fast lookups of values you already saw."
+  },
+  "solutions": {
+    "python": "class Solution:\n    def isAnagram(self, s: str, t: str) -> bool:\n        # Different lengths can never be anagrams\n        if len(s) != len(t):\n            return False\n\n        # Count letters in each string (hash maps)\n        countS, countT = {}, {}\n\n        for i in range(len(s)):\n            # Add one for this letter in s\n            countS[s[i]] = 1 + countS.get(s[i], 0)\n            # Add one for this letter in t\n            countT[t[i]] = 1 + countT.get(t[i], 0)\n        # Compare the two notebooks of counts\n        return countS == countT\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(n)",
+    "timeReason": "We scan each string once; map updates are average O(1).",
+    "space": "O(1)",
+    "spaceReason": "If we only use lowercase English letters, 26 counters are constant space (or O(k) for alphabet size)."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Name the pattern: Hash set / hash map for seen items.",
+    "Walk example 1 aloud before coding.",
+    "State O(n) time and O(1) space at the end."
+  ],
+  "animation": {
+    "visualType": "hash",
+    "tracerId": "generic-array-scan",
+    "defaultInput": [
+      "anagram",
+      "nagaram"
+    ],
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving valid anagram using the hash view.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "contains-duplicate",
+    "two-sum",
+    "group-anagrams"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "Counting with a hash map (or 26-length array) is the classic O(n) interview answer. Mention sorting as a clear alternative."
+}

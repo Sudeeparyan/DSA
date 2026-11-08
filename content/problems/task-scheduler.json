@@ -1,0 +1,133 @@
+{
+  "id": 68,
+  "leetcodeNumber": 621,
+  "title": "Task Scheduler",
+  "slug": "task-scheduler",
+  "category": "heap-priority-queue",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/task-scheduler/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Story version: To schedule tasks with maximum cooling time, we can use a greedy approach. We first count the frequency of each task and sort them in descending order. We then iterate through the tasks and use a cooldown counter to keep track of the remaining time until the next valid task can be scheduled. During each iteration, we schedule the task with the highest frequency that is not on cooldown. If there are no available tasks, we simply wait. (We will slow down and draw it.)",
+  "plainProblem": "LeetCode 621: Task Scheduler. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Task Scheduler)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Task Scheduler)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Task Scheduler, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To schedule tasks with maximum cooling time, we can use a greedy approach. We first count the frequency of each task and sort them in descending order. We then iterate through the tasks and use a cooldown counter to keep track of the remaining time until the next valid task can be scheduled. During each iteration, we schedule the task with the highest frequency that is not on cooldown. If there are no available tasks, we simply wait."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Heap / priority queue",
+    "whenToSpot": "Repeatedly need min or max quickly."
+  },
+  "solutions": {
+    "python": "# Task Scheduler\n# Idea: To schedule tasks with maximum cooling time, we can use a greedy approach. We first count the frequency of each task and sort them in descending order. We then iterate through the tasks and use a cooldown counter to keep\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nimport heapq\nfrom collections import Counter\n\n\nclass Solution:\n    def leastInterval(self, tasks: List[str], n: int) -> int:\n        task_counts = Counter(tasks)\n        max_heap = [-count for count in task_counts.values()]\n        # Heap ops keep min/max ready\n        heapq.heapify(max_heap)\n\n        cooldown = 0\n        while max_heap:\n            temp = []\n            for _ in range(n + 1):\n                if max_heap:\n                    temp.append(heapq.heappop(max_heap) + 1)\n\n            for count in temp:\n                if count < 0:\n                    heapq.heappush(max_heap, count)\n\n            if max_heap:\n                cooldown += n + 1\n            else:\n                cooldown += len(temp)\n\n        return cooldown\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "See code",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Heap / priority queue.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "heap",
+    "tracerId": "generic-array-scan",
+    "defaultInput": [
+      1,
+      2,
+      3
+    ],
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving task scheduler using the heap view.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "kth-largest-element-in-an-array",
+    "design-twitter",
+    "find-median-from-data-stream"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Task Scheduler is the usual interview target: clear heap / priority queue with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

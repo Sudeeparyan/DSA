@@ -1,0 +1,132 @@
+{
+  "id": 69,
+  "leetcodeNumber": 355,
+  "title": "Design Twitter",
+  "slug": "design-twitter",
+  "category": "heap-priority-queue",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/design-twitter/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Story version: To design a simplified version of Twitter, we can use a combination of data structures. We maintain a dictionary to map users to their tweets, and a set of followees for each user. When a user posts a tweet, we add it to their tweet list. When a user wants to retrieve their news feed, we merge their own tweets and the tweets of their followees, and then sort them based on timestamps. (We will slow down and draw it.)",
+  "plainProblem": "LeetCode 355: Design Twitter. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Design Twitter)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Design Twitter)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Design Twitter, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To design a simplified version of Twitter, we can use a combination of data structures. We maintain a dictionary to map users to their tweets, and a set of followees for each user. When a user posts a tweet, we add it to their tweet list. When a user wants to retrieve their news feed, we merge their own tweets and the tweets of their followees, and then sort them based on timestamps."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Heap / priority queue",
+    "whenToSpot": "Repeatedly need min or max quickly."
+  },
+  "solutions": {
+    "python": "# Design Twitter\n# Idea: To design a simplified version of Twitter, we can use a combination of data structures. We maintain a dictionary to map users to their tweets, and a set of followees for each user. When a user posts a tweet, we add it to\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nimport heapq\n\n\nclass Tweet:\n    def __init__(self, tweet_id, timestamp):\n        self.tweet_id = tweet_id\n        self.timestamp = timestamp\n\n\nclass Twitter:\n    def __init__(self):\n        self.user_tweets = {}  # User ID -> List of Tweet objects\n        self.user_followees = {}  # User ID -> Set of followees\n        self.timestamp = 0\n\n    def postTweet(self, userId: int, tweetId: int) -> None:\n        self.timestamp += 1\n        if userId not in self.user_tweets:\n            self.user_tweets[userId] = []\n        self.user_tweets[userId].append(Tweet(tweetId, self.timestamp))\n\n    def getNewsFeed(self, userId: int) -> List[int]:\n        tweets = []\n\n        if userId in self.user_tweets:\n            tweets.extend(self.user_tweets[userId])\n\n        if userId in self.user_followees:\n            for followee in self.user_followees[userId]:\n                if followee in self.user_tweets:\n                    tweets.extend(self.user_tweets[followee])\n\n        tweets.sort(key=lambda x: x.timestamp, reverse=True)\n        return [tweet.tweet_id for tweet in tweets[:10]]\n\n    def follow(self, followerId: int, followeeId: int) -> None:\n        if followerId != followeeId:\n            if followerId not in self.user_followees:\n                self.user_followees[followerId] = set()\n            self.user_followees[followerId].add(followeeId)\n\n    def unfollow(self, followerId: int, followeeId: int) -> None:\n        if (\n            followerId in self.user_followees\n            and followeeId in self.user_followees[followerId]\n        ):\n            self.user_followees[followerId].remove(followeeId)\n\n\n# Your Twitter object will be instantiated and called as such:\n# obj = Twitter()\n# obj.postTweet(userId,tweetId)\n# param_2 = obj.getNewsFeed(userId)\n# obj.follow(followerId,followeeId)\n# obj.unfollow(followerId,followeeId)\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "See code",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Heap / priority queue.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "heap",
+    "tracerId": "generic-array-scan",
+    "defaultInput": [
+      1,
+      2,
+      3
+    ],
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving design twitter using the heap view.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "task-scheduler",
+    "find-median-from-data-stream"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Design Twitter is the usual interview target: clear heap / priority queue with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

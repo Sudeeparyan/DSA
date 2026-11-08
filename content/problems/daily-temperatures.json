@@ -1,0 +1,117 @@
+{
+  "id": 25,
+  "leetcodeNumber": 739,
+  "title": "Daily Temperatures",
+  "slug": "daily-temperatures",
+  "category": "stack",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/daily-temperatures/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "For each day, how many days until a warmer day? Use a stack of colder days waiting for heat.",
+  "plainProblem": "LeetCode 739: Daily Temperatures. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Daily Temperatures)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Daily Temperatures)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Daily Temperatures, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To find the daily temperatures that are warmer in the input array 'temperatures', we can use a stack. We iterate through the temperatures in reverse order, and for each temperature, we pop elements from the stack while they are smaller than the current temperature. This indicates that the current temperature is the first warmer temperature for the popped elements. We keep track of the indices of these warmer temperatures in the result array. Then, we push the current temperature's index onto the stack. At the end, the result array will contain the number of days until the next warmer temperature for each day."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Stack (last-in, first-out pile)",
+    "whenToSpot": "Matching brackets, next greater element, undo order."
+  },
+  "solutions": {
+    "python": "# Daily Temperatures\n# Idea: To find the daily temperatures that are warmer in the input array 'temperatures', we can use a stack. We iterate through the temperatures in reverse order, and for each temperature, we pop elements from the stack while t\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:\n        # Last-in-first-out pile (stack)\n        stack = []\n        result = [0] * len(temperatures)\n\n        for i in range(len(temperatures) - 1, -1, -1):\n            while stack and temperatures[i] >= temperatures[stack[-1]]:\n                stack.pop()\n            if stack:\n                result[i] = stack[-1] - i\n            stack.append(i)\n\n        return result\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(n)",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "O(n)",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Stack (last-in, first-out pile).'",
+    "Narrate one example before typing.",
+    "Close with complexity: O(n) time, O(n) space, and why."
+  ],
+  "animation": {
+    "visualType": "stack",
+    "tracerId": "generic-array-scan",
+    "defaultInput": "()[]{}",
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving daily temperatures using the stack view.",
+        "state": {
+          "input": "()[]{}",
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": "()[]{}",
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": "()[]{}",
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "generate-parentheses",
+    "car-fleet",
+    "largest-rectangle-in-histogram"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Daily Temperatures is the usual interview target: clear stack (last-in, first-out pile) with competitive complexity (O(n) time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

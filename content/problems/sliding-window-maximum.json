@@ -1,0 +1,131 @@
+{
+  "id": 20,
+  "leetcodeNumber": 239,
+  "title": "Sliding Window Maximum",
+  "slug": "sliding-window-maximum",
+  "category": "sliding-window",
+  "difficulty": "Hard",
+  "leetcodeUrl": "https://leetcode.com/problems/sliding-window-maximum/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "A window of width k slides across an array. Report the max in every window position.",
+  "plainProblem": "LeetCode 239: Sliding Window Maximum. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Sliding Window Maximum)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Sliding Window Maximum)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Sliding Window Maximum, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To find the maximum sliding window of size 'k' in the input array 'nums', we can use a deque (double-ended queue). The deque will store the indices of elements in 'nums' such that the elements at these indices are in decreasing order. As we traverse the array 'nums', we add the current element to the deque, but before adding, we remove elements from the back of the deque that are smaller than the current element. This ensures that the front element of the deque will always be the maximum element in the window. At each step, we check if the front element's index is within the valid range of the current window. If it is not, we remove the front element from the deque. As we traverse the array, we can build the maximum sliding window using the elements stored in the deque."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Sliding window",
+    "whenToSpot": "Longest/shortest subarray or substring with a condition."
+  },
+  "solutions": {
+    "python": "# Sliding Window Maximum\n# Idea: To find the maximum sliding window of size 'k' in the input array 'nums', we can use a deque (double-ended queue). The deque will store the indices of elements in 'nums' such that the elements at these indices are in dec\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nfrom collections import deque\n\n\nclass Solution:\n    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:\n        if not nums or k <= 0:\n            return []\n\n        result = []\n        window = deque()\n\n        for i, num in enumerate(nums):\n            while window and nums[window[-1]] < num:\n                window.pop()\n\n            window.append(i)\n\n            if i - window[0] >= k:\n                window.popleft()\n\n            if i >= k - 1:\n                result.append(nums[window[0]])\n\n        return result\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(n)",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "O(k)",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Sliding window.'",
+    "Narrate one example before typing.",
+    "Close with complexity: O(n) time, O(k) space, and why."
+  ],
+  "animation": {
+    "visualType": "array",
+    "tracerId": "generic-array-scan",
+    "defaultInput": [
+      1,
+      2,
+      3
+    ],
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving sliding window maximum using the array view.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "minimum-window-substring"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Sliding Window Maximum is the usual interview target: clear sliding window with competitive complexity (O(n) time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

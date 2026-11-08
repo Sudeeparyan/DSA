@@ -1,0 +1,133 @@
+{
+  "id": 137,
+  "leetcodeNumber": 54,
+  "title": "Spiral Matrix",
+  "slug": "spiral-matrix",
+  "category": "math-geometry",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/spiral-matrix/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Story version: To traverse a matrix in a spiral order, we can iterate through each layer of the matrix and extract the elements in the desired order: top row, right column, bottom row, and left column. We update the boundaries of each layer as we traverse. (We will slow down and draw it.)",
+  "plainProblem": "LeetCode 54: Spiral Matrix. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Spiral Matrix)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Spiral Matrix)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Spiral Matrix, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To traverse a matrix in a spiral order, we can iterate through each layer of the matrix and extract the elements in the desired order: top row, right column, bottom row, and left column. We update the boundaries of each layer as we traverse."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Math / matrix geometry",
+    "whenToSpot": "Rotate, spiral, primes, counting bits of structure."
+  },
+  "solutions": {
+    "python": "# Spiral Matrix\n# Idea: To traverse a matrix in a spiral order, we can iterate through each layer of the matrix and extract the elements in the desired order: top row, right column, bottom row, and left column. We update the boundaries of each \u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:\n        if not matrix:\n            return []\n\n        rows, cols = len(matrix), len(matrix[0])\n        result = []\n\n        # Define the boundaries of the current layer\n        top, bottom, left, right = 0, rows - 1, 0, cols - 1\n\n        while top <= bottom and left <= right:\n            # Traverse the top row\n            for j in range(left, right + 1):\n                result.append(matrix[top][j])\n            top += 1\n\n            # Traverse the right column\n            for i in range(top, bottom + 1):\n                result.append(matrix[i][right])\n            right -= 1\n\n            # Traverse the bottom row\n            if top <= bottom:  # Avoid duplicate traversal\n                for j in range(right, left - 1, -1):\n                    result.append(matrix[bottom][j])\n                bottom -= 1\n\n            # Traverse the left column\n            if left <= right:  # Avoid duplicate traversal\n                for i in range(bottom, top - 1, -1):\n                    result.append(matrix[i][left])\n                left += 1\n\n        return result\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "See code",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Math / matrix geometry.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "array",
+    "tracerId": "generic-array-scan",
+    "defaultInput": [
+      1,
+      2,
+      3
+    ],
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving spiral matrix using the array view.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "rotate-image",
+    "set-matrix-zeroes",
+    "happy-number"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Spiral Matrix is the usual interview target: clear math / matrix geometry with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

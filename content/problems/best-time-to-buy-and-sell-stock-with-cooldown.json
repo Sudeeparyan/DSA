@@ -1,0 +1,125 @@
+{
+  "id": 113,
+  "leetcodeNumber": 309,
+  "title": "Best Time to Buy and Sell Stock with Cooldown",
+  "slug": "best-time-to-buy-and-sell-stock-with-cooldown",
+  "category": "2d-dp",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Story version: The key idea is to use dynamic programming to keep track of the maximum profit we can obtain at each day 'i', considering the actions we can take: buy, sell, or do nothing (cooldown). (We will slow down and draw it.)",
+  "plainProblem": "LeetCode 309: Best Time to Buy and Sell Stock with Cooldown. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Best Time to Buy and Sell Stock with Cooldown)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Best Time to Buy and Sell Stock with Cooldown)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Best Time to Buy and Sell Stock with Cooldown, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "The key idea is to use dynamic programming to keep track of the maximum profit we can obtain at each day 'i', considering the actions we can take: buy, sell, or do nothing (cooldown)."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "2-D dynamic programming",
+    "whenToSpot": "Two changing indices; fill a table."
+  },
+  "solutions": {
+    "python": "# Best Time to Buy and Sell Stock with Cooldown\n# Idea: The key idea is to use dynamic programming to keep track of the maximum profit we can obtain at each day 'i', considering the actions we can take: buy, sell, or do nothing (cooldown).\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def maxProfit(self, prices: List[int]) -> int:\n        if not prices:\n            return 0\n\n        # Initialize variables to represent the maximum profit after each action.\n        buy = -prices[\n            0\n        ]  # Maximum profit after buying on day 0 (negative because we spend money).\n        sell = 0  # Maximum profit after selling on day 0 (no profit yet).\n        cooldown = 0  # Maximum profit after cooldown on day 0 (no profit yet).\n\n        for i in range(1, len(prices)):\n            # To maximize profit on day 'i', we can either:\n\n            # 1. Buy on day 'i'. We subtract the price of the stock from the maximum profit after cooldown on day 'i-2'.\n            new_buy = max(buy, cooldown - prices[i])\n\n            # 2. Sell on day 'i'. We add the price of the stock to the maximum profit after buying on day 'i-1'.\n            new_sell = buy + prices[i]\n\n            # 3. Do nothing (cooldown) on day 'i'. We take the maximum of the maximum profit after cooldown on day 'i-1' and after selling on day 'i-1'.\n            new_cooldown = max(cooldown, sell)\n\n            # Update the variables for the next iteration.\n            buy, sell, cooldown = new_buy, new_sell, new_cooldown\n\n        # The maximum profit will be the maximum of the profit after selling on the last day and the profit after cooldown on the last day.\n        return max(sell, cooldown)\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "O(1)",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like 2-D dynamic programming.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, O(1) space, and why."
+  ],
+  "animation": {
+    "visualType": "dp",
+    "tracerId": "generic-array-scan",
+    "defaultInput": {
+      "demo": true
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving best time to buy and sell stock with cooldown using the dp view.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "longest-common-subsequence",
+    "coin-change-ii",
+    "target-sum"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Best Time to Buy and Sell Stock with Cooldown is the usual interview target: clear 2-d dynamic programming with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

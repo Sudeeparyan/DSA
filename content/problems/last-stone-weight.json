@@ -1,0 +1,133 @@
+{
+  "id": 65,
+  "leetcodeNumber": 1046,
+  "title": "Last Stone Weight",
+  "slug": "last-stone-weight",
+  "category": "heap-priority-queue",
+  "difficulty": "Easy",
+  "leetcodeUrl": "https://leetcode.com/problems/last-stone-weight/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Story version: To simulate the process of smashing stones, we can use a max-heap (priority queue) to keep track of the stone weights. At each step, we pop the two largest stones from the heap, smash them together, and push the resulting weight back into the heap. We repeat this process until there is only one stone left in the heap, which will be the last stone weight. (We will slow down and draw it.)",
+  "plainProblem": "LeetCode 1046: Last Stone Weight. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Last Stone Weight)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Last Stone Weight)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Last Stone Weight, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To simulate the process of smashing stones, we can use a max-heap (priority queue) to keep track of the stone weights. At each step, we pop the two largest stones from the heap, smash them together, and push the resulting weight back into the heap. We repeat this process until there is only one stone left in the heap, which will be the last stone weight."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Heap / priority queue",
+    "whenToSpot": "Repeatedly need min or max quickly."
+  },
+  "solutions": {
+    "python": "# Last Stone Weight\n# Idea: To simulate the process of smashing stones, we can use a max-heap (priority queue) to keep track of the stone weights. At each step, we pop the two largest stones from the heap, smash them together, and push the resultin\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nimport heapq\n\n\nclass Solution:\n    def lastStoneWeight(self, stones: List[int]) -> int:\n        max_heap = [-stone for stone in stones]  # Use negative values for max-heap\n\n        # Heap ops keep min/max ready\n\n        heapq.heapify(max_heap)\n\n        while len(max_heap) > 1:\n            x = -heapq.heappop(max_heap)  # Extract the largest stone\n            y = -heapq.heappop(max_heap)  # Extract the second largest stone\n\n            if x != y:\n                heapq.heappush(max_heap, -(x - y))  # Push the remaining weight\n\n        return -max_heap[0] if max_heap else 0\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "See code",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Heap / priority queue.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "heap",
+    "tracerId": "generic-array-scan",
+    "defaultInput": [
+      1,
+      2,
+      3
+    ],
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving last stone weight using the heap view.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "kth-largest-element-in-a-stream",
+    "k-closest-points-to-origin",
+    "kth-largest-element-in-an-array"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Last Stone Weight is the usual interview target: clear heap / priority queue with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

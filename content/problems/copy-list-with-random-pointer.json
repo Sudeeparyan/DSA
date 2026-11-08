@@ -1,0 +1,125 @@
+{
+  "id": 39,
+  "leetcodeNumber": 138,
+  "title": "Copy List with Random Pointer",
+  "slug": "copy-list-with-random-pointer",
+  "category": "linked-list",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/copy-list-with-random-pointer/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Clone a list where each node also points somewhere random \u2014 copy both kinds of arrows.",
+  "plainProblem": "LeetCode 138: Copy List with Random Pointer. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Copy List with Random Pointer)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Copy List with Random Pointer)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Copy List with Random Pointer, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To create a deep copy of a linked list with random pointers, we can follow a three-step approach. First, we duplicate each node in the original list and insert the duplicates right after their corresponding original nodes. Second, we update the random pointers of the duplicate nodes to point to the correct nodes. Finally, we split the combined list into two separate lists: the original list and the duplicated list."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Pointer rewriting on a linked list",
+    "whenToSpot": "Nodes with next pointers; reverse, merge, cycle."
+  },
+  "solutions": {
+    "python": "# Copy List with Random Pointer\n# Idea: To create a deep copy of a linked list with random pointers, we can follow a three-step approach. First, we duplicate each node in the original list and insert the duplicates right after their corresponding original node\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\n# Definition for a Node.\n# class Node:\n#     def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):\n#         self.val = int(x)\n#         self.next = next\n#         self.random = random\n\n\nclass Solution:\n    def copyRandomList(self, head: \"Node\") -> \"Node\":\n        if not head:\n            return None\n\n        # Step 1: Duplicate nodes and insert them in between the original nodes\n        current = head\n        while current:\n            duplicate = Node(current.val)\n            duplicate.next = current.next\n            current.next = duplicate\n            current = duplicate.next\n\n        # Step 2: Update random pointers for the duplicate nodes\n        current = head\n        while current:\n            if current.random:\n                current.next.random = current.random.next\n            current = current.next.next\n\n        # Step 3: Split the combined list into two separate lists\n        original = head\n        duplicate_head = head.next\n        current = duplicate_head\n        while original:\n            original.next = original.next.next\n            if current.next:\n                current.next = current.next.next\n            original = original.next\n            current = current.next\n\n        return duplicate_head\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(n)",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "O(n)",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Pointer rewriting on a linked list.'",
+    "Narrate one example before typing.",
+    "Close with complexity: O(n) time, O(n) space, and why."
+  ],
+  "animation": {
+    "visualType": "linkedList",
+    "tracerId": "generic-array-scan",
+    "defaultInput": {
+      "demo": true
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving copy list with random pointer using the linkedList view.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "remove-nth-node-from-end-of-list",
+    "add-two-numbers",
+    "linked-list-cycle"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Copy List with Random Pointer is the usual interview target: clear pointer rewriting on a linked list with competitive complexity (O(n) time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

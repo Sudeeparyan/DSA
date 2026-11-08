@@ -1,0 +1,132 @@
+{
+  "id": 122,
+  "leetcodeNumber": 53,
+  "title": "Maximum Subarray",
+  "slug": "maximum-subarray",
+  "category": "greedy",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/maximum-subarray/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Story version: We can solve this problem using the Kadane's algorithm. The idea is to iterate through the array and keep track of two variables: `max_sum` which stores the maximum sum ending at the current index, and `current_sum` which stores the maximum sum of subarray ending at the current index. For each element, we update `current_sum` by taking the maximum of the current element itself or adding it to the `current_sum` of the previous index. If `current_sum` becomes negative, we reset it to 0. Meanwhile, we update `max_sum` with the maximum of `max_sum` and `current_sum` at each step. After iterating through the entire array, `max_sum` will hold the maximum subarray sum. (We will slow down and draw it.)",
+  "plainProblem": "LeetCode 53: Maximum Subarray. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Maximum Subarray)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Maximum Subarray)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Maximum Subarray, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "We can solve this problem using the Kadane's algorithm. The idea is to iterate through the array and keep track of two variables: `max_sum` which stores the maximum sum ending at the current index, and `current_sum` which stores the maximum sum of subarray ending at the current index. For each element, we update `current_sum` by taking the maximum of the current element itself or adding it to the `current_sum` of the previous index. If `current_sum` becomes negative, we reset it to 0. Meanwhile, we update `max_sum` with the maximum of `max_sum` and `current_sum` at each step. After iterating through the entire array, `max_sum` will hold the maximum subarray sum."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Greedy choice",
+    "whenToSpot": "Local best pick that still works globally."
+  },
+  "solutions": {
+    "python": "# Maximum Subarray\n# Idea: We can solve this problem using the Kadane's algorithm. The idea is to iterate through the array and keep track of two variables: `max_sum` which stores the maximum sum ending at the current index, and `current_sum` whic\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def maxSubArray(self, nums: List[int]) -> int:\n        max_sum = float(\"-inf\")\n        current_sum = 0\n\n        for num in nums:\n            current_sum = max(num, current_sum + num)\n            max_sum = max(max_sum, current_sum)\n\n        return max_sum\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "See code",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Greedy choice.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "array",
+    "tracerId": "generic-array-scan",
+    "defaultInput": [
+      1,
+      2,
+      3
+    ],
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving maximum subarray using the array view.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "jump-game",
+    "jump-game-ii"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Maximum Subarray is the usual interview target: clear greedy choice with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

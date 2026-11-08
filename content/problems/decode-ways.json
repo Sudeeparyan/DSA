@@ -1,0 +1,125 @@
+{
+  "id": 105,
+  "leetcodeNumber": 91,
+  "title": "Decode Ways",
+  "slug": "decode-ways",
+  "category": "1d-dp",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/decode-ways/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Story version: The key idea for solving this problem is to use dynamic programming to count the number of ways to decode the given string. We will create a DP array where dp[i] represents the number of ways to decode the string s[:i] (the first i characters of the string). (We will slow down and draw it.)",
+  "plainProblem": "LeetCode 91: Decode Ways. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Decode Ways)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Decode Ways)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Decode Ways, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "The key idea for solving this problem is to use dynamic programming to count the number of ways to decode the given string. We will create a DP array where dp[i] represents the number of ways to decode the string s[:i] (the first i characters of the string)."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "1-D dynamic programming",
+    "whenToSpot": "Answer depends on smaller answers along one line."
+  },
+  "solutions": {
+    "python": "# Decode Ways\n# Idea: The key idea for solving this problem is to use dynamic programming to count the number of ways to decode the given string. We will create a DP array where dp[i] represents the number of ways to decode the string s[:i] (\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def numDecodings(self, s: str) -> int:\n        n = len(s)\n\n        # Initialize a DP array to store the number of ways to decode substrings.\n        # Table of answers to smaller problems (DP)\n        dp = [0] * (n + 1)\n\n        # Base cases:\n        dp[0] = 1  # An empty string can be decoded in one way.\n        dp[1] = (\n            1 if s[0] != \"0\" else 0\n        )  # The first character can be decoded in one way if it's not '0'.\n\n        # Fill in the DP array.\n        for i in range(2, n + 1):\n            # Check the one-digit and two-digit possibilities.\n            one_digit = int(s[i - 1])\n            two_digits = int(s[i - 2 : i])\n\n            # If the one-digit is not '0', it can be decoded in the same way as dp[i-1].\n            if one_digit != 0:\n                dp[i] += dp[i - 1]\n\n            # If the two-digit is between 10 and 26, it can be decoded in the same way as dp[i-2].\n            if 10 <= two_digits <= 26:\n                dp[i] += dp[i - 2]\n\n        return dp[n]\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "O(n)",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like 1-D dynamic programming.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, O(n) space, and why."
+  ],
+  "animation": {
+    "visualType": "dp",
+    "tracerId": "generic-array-scan",
+    "defaultInput": {
+      "demo": true
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving decode ways using the dp view.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "palindromic-substrings",
+    "coin-change",
+    "maximum-product-subarray"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Decode Ways is the usual interview target: clear 1-d dynamic programming with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

@@ -1,0 +1,116 @@
+{
+  "id": 26,
+  "leetcodeNumber": 853,
+  "title": "Car Fleet",
+  "slug": "car-fleet",
+  "category": "stack",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/car-fleet/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Cars race toward a destination. Faster cars stuck behind slower ones form fleets.",
+  "plainProblem": "LeetCode 853: Car Fleet. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Car Fleet)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Car Fleet)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Car Fleet, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To determine the number of car fleets that can reach the target destination in the input arrays 'target' and 'position', we can simulate the car movements and calculate the time it takes for each car to reach the target. We can then sort the cars based on their positions and iterate through them. For each car, we calculate its time to reach the target and compare it with the previous car. If the time for the current car is greater, it means the previous car cannot catch up to it, so we consider the current car as a new fleet. Otherwise, the previous car can catch up to the current car, so they form a fleet together."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Stack (last-in, first-out pile)",
+    "whenToSpot": "Matching brackets, next greater element, undo order."
+  },
+  "solutions": {
+    "python": "# Car Fleet\n# Idea: To determine the number of car fleets that can reach the target destination in the input arrays 'target' and 'position', we can simulate the car movements and calculate the time it takes for each car to reach the target.\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:\n        cars = sorted(zip(position, speed), reverse=True)\n        fleets = 0\n        prev_time = -1.0\n\n        for pos, spd in cars:\n            time = (target - pos) / spd\n            if time > prev_time:\n                fleets += 1\n                prev_time = time\n\n        return fleets\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(n log n)",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "O(n)",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Stack (last-in, first-out pile).'",
+    "Narrate one example before typing.",
+    "Close with complexity: O(n log n) time, O(n) space, and why."
+  ],
+  "animation": {
+    "visualType": "stack",
+    "tracerId": "generic-array-scan",
+    "defaultInput": "()[]{}",
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving car fleet using the stack view.",
+        "state": {
+          "input": "()[]{}",
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": "()[]{}",
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": "()[]{}",
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "daily-temperatures",
+    "largest-rectangle-in-histogram"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Car Fleet is the usual interview target: clear stack (last-in, first-out pile) with competitive complexity (O(n log n) time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

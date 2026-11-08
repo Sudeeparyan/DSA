@@ -1,0 +1,125 @@
+{
+  "id": 102,
+  "leetcodeNumber": 213,
+  "title": "House Robber II",
+  "slug": "house-robber-ii",
+  "category": "1d-dp",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/house-robber-ii/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Story version: The key idea for solving this problem is to recognize that it's an extension of the House Robber I problem (LeetCode 198). Since we cannot rob adjacent houses, we have two scenarios: 1. Rob the first house and exclude the last house. 2. Exclude the first house and consider robbing the last house. We calculate the maximum amount for both scenarios using the House Robber I algorithm and return the maximum of the two results. (We will slow down and draw it.)",
+  "plainProblem": "LeetCode 213: House Robber II. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for House Robber II)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for House Robber II)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For House Robber II, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "The key idea for solving this problem is to recognize that it's an extension of the House Robber I problem (LeetCode 198). Since we cannot rob adjacent houses, we have two scenarios: 1. Rob the first house and exclude the last house. 2. Exclude the first house and consider robbing the last house. We calculate the maximum amount for both scenarios using the House Robber I algorithm and return the maximum of the two results."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "1-D dynamic programming",
+    "whenToSpot": "Answer depends on smaller answers along one line."
+  },
+  "solutions": {
+    "python": "# House Robber II\n# Idea: The key idea for solving this problem is to recognize that it's an extension of the House Robber I problem (LeetCode 198). Since we cannot rob adjacent houses, we have two scenarios: 1. Rob the first house and exclude th\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def rob(self, nums: List[int]) -> int:\n        def houseRobber(nums: List[int]) -> int:\n            n = len(nums)\n            if n == 0:\n                return 0\n            if n == 1:\n                return nums[0]\n\n            prev = 0\n            curr = 0\n\n            for num in nums:\n                temp = curr\n                curr = max(prev + num, curr)\n                prev = temp\n\n            return curr\n\n        if len(nums) == 1:\n            return nums[0]\n\n        # Rob first house and exclude the last house, or exclude the first house and rob the last house.\n        return max(houseRobber(nums[1:]), houseRobber(nums[:-1]))\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "O(1)",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like 1-D dynamic programming.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, O(1) space, and why."
+  ],
+  "animation": {
+    "visualType": "dp",
+    "tracerId": "generic-array-scan",
+    "defaultInput": {
+      "demo": true
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving house robber ii using the dp view.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "house-robber",
+    "longest-palindromic-substring",
+    "palindromic-substrings"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for House Robber II is the usual interview target: clear 1-d dynamic programming with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

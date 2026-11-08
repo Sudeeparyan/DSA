@@ -1,0 +1,123 @@
+{
+  "id": 63,
+  "leetcodeNumber": 212,
+  "title": "Word Search II",
+  "slug": "word-search-ii",
+  "category": "tries",
+  "difficulty": "Hard",
+  "leetcodeUrl": "https://leetcode.com/problems/word-search-ii/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Story version: To find all the words from a given list that can be formed by a 2D board of characters, we can use a Trie (prefix tree) to efficiently search for words while traversing the board. We start by building a Trie from the given list of words. Then, we perform a depth-first search (DFS) on the board, checking if the current path forms a valid prefix in the Trie. If it does, we continue the DFS until we find words or reach dead ends. (We will slow down and draw it.)",
+  "plainProblem": "LeetCode 212: Word Search II. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Word Search II)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Word Search II)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Word Search II, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To find all the words from a given list that can be formed by a 2D board of characters, we can use a Trie (prefix tree) to efficiently search for words while traversing the board. We start by building a Trie from the given list of words. Then, we perform a depth-first search (DFS) on the board, checking if the current path forms a valid prefix in the Trie. If it does, we continue the DFS until we find words or reach dead ends."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Trie (prefix tree)",
+    "whenToSpot": "Many words sharing prefixes; autocomplete."
+  },
+  "solutions": {
+    "python": "# Word Search II\n# Idea: To find all the words from a given list that can be formed by a 2D board of characters, we can use a Trie (prefix tree) to efficiently search for words while traversing the board. We start by building a Trie from the giv\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nfrom collections import Counter\nfrom itertools import chain, product\nfrom typing import List\n\n\nclass TrieNode:\n    def __init__(self):\n        self.children = {}  # Store child nodes for each character\n        self.refcnt = 0  # Count of references to this node\n        self.is_word = False  # Flag to indicate if a complete word ends at this node\n        self.is_rev = False  # Flag to indicate if a word should be reversed\n\n\nclass Trie:\n    def __init__(self):\n        self.root = TrieNode()  # Initialize the root of the trie\n\n    def insert(self, word, rev):\n        node = self.root\n        for c in word:\n            node = node.children.setdefault(c, TrieNode())\n            node.refcnt += 1\n        node.is_word = True\n        node.is_rev = rev\n\n    def remove(self, word):\n        node = self.root\n        for i, c in enumerate(word):\n            parent = node\n            node = node.children[c]\n\n            if node.refcnt == 1:\n                path = [(parent, c)]\n                for c in word[i + 1 :]:\n                    path.append((node, c))\n                    node = node.children[c]\n                for parent, c in path:\n                    parent.children.pop(c)\n                return\n            node.refcnt -= 1\n        node.is_word = False\n\n\nclass Solution:\n    def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:\n        res = []\n        n, m = len(board), len(board[0])\n        trie = Trie()\n\n        # Count characters on the board\n        boardcnt = Counter(chain(*board))\n\n        # Insert words into trie with appropriate orientation\n        for w, wrdcnt in ((w, Counter(w)) for w in words):\n            if any(wrdcnt[c] > boardcnt[c] for c in wrdcnt):\n                continue  # Skip if the word cannot be formed from the board\n            if wrdcnt[w[0]] < wrdcnt[w[-1]]:\n                trie.insert(w, False)\n            else:\n                trie.insert(w[::-1], True)\n\n        def dfs(r, c, parent) -> None:\n            if not (node := parent.children.get(board[r][c])):\n                return\n            path.append(board[r][c])\n            board[r][c] = \"#\"  # Mark visited cell\n\n            if node.is_word:\n                word = \"\".join(path)\n                res.append(word[::-1] if node.is_rev else word)\n                trie.remove(word)\n\n            # Explore neighboring cells\n            if r > 0:\n                dfs(r - 1, c, node)\n            if r < n - 1:\n                dfs(r + 1, c, node)\n            if c > 0:\n                dfs(r, c - 1, node)\n            if c < m - 1:\n                dfs(r, c + 1, node)\n\n            board[r][c] = path.pop()  # Backtrack and unmark cell\n\n        path = []\n        for r, c in product(range(n), range(m)):\n            dfs(r, c, trie.root)\n        return res\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "See code",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Trie (prefix tree).'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "trie",
+    "tracerId": "generic-array-scan",
+    "defaultInput": {
+      "demo": true
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving word search ii using the trie view.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "design-add-and-search-words-data-structure"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Word Search II is the usual interview target: clear trie (prefix tree) with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

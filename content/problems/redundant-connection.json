@@ -1,0 +1,125 @@
+{
+  "id": 89,
+  "leetcodeNumber": 684,
+  "title": "Redundant Connection",
+  "slug": "redundant-connection",
+  "category": "graphs",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/redundant-connection/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Story version: This problem can be solved using the Union-Find (Disjoint Set Union) algorithm. We initialize each node as its own parent and iterate through the given edges. For each edge, we check if the nodes have the same parent. If they do, that means adding this edge will create a cycle, and it's the redundant edge. If they don't have the same parent, we merge their sets by updating one's parent to be the other. (We will slow down and draw it.)",
+  "plainProblem": "LeetCode 684: Redundant Connection. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Redundant Connection)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Redundant Connection)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Redundant Connection, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "This problem can be solved using the Union-Find (Disjoint Set Union) algorithm. We initialize each node as its own parent and iterate through the given edges. For each edge, we check if the nodes have the same parent. If they do, that means adding this edge will create a cycle, and it's the redundant edge. If they don't have the same parent, we merge their sets by updating one's parent to be the other."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Graph BFS / DFS",
+    "whenToSpot": "Islands, rooms, or connections on a grid/graph."
+  },
+  "solutions": {
+    "python": "# Redundant Connection\n# Idea: This problem can be solved using the Union-Find (Disjoint Set Union) algorithm. We initialize each node as its own parent and iterate through the given edges. For each edge, we check if the nodes have the same parent. If\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:\n        n = len(edges)\n        parent = list(range(n + 1))  # Initialize each node as its own parent\n\n        def find(x):\n            if parent[x] != x:\n                parent[x] = find(parent[x])  # Path compression\n            return parent[x]\n\n        def union(x, y):\n            parent[find(x)] = find(y)\n\n        for edge in edges:\n            u, v = edge\n            if find(u) == find(v):\n                return edge\n            union(u, v)\n\n        return []\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "See code",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Graph BFS / DFS.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "grid",
+    "tracerId": "generic-array-scan",
+    "defaultInput": {
+      "demo": true
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving redundant connection using the grid view.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "course-schedule-ii",
+    "number-of-connected-components-in-an-undirected-graph",
+    "graph-valid-tree"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Redundant Connection is the usual interview target: clear graph bfs / dfs with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

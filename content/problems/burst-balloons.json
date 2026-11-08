@@ -1,0 +1,124 @@
+{
+  "id": 120,
+  "leetcodeNumber": 312,
+  "title": "Burst Balloons",
+  "slug": "burst-balloons",
+  "category": "2d-dp",
+  "difficulty": "Hard",
+  "leetcodeUrl": "https://leetcode.com/problems/burst-balloons/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Story version: The key idea is to use dynamic programming to calculate the maximum coins that can be obtained by bursting balloons in a certain order. We create a 2D table 'dp' where dp[i][j] represents the maximum coins obtained by bursting balloons from 'i' to 'j' (exclusive). We iterate through different balloon ranges and choose the best order to burst the balloons. (We will slow down and draw it.)",
+  "plainProblem": "LeetCode 312: Burst Balloons. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Burst Balloons)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Burst Balloons)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Burst Balloons, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "The key idea is to use dynamic programming to calculate the maximum coins that can be obtained by bursting balloons in a certain order. We create a 2D table 'dp' where dp[i][j] represents the maximum coins obtained by bursting balloons from 'i' to 'j' (exclusive). We iterate through different balloon ranges and choose the best order to burst the balloons."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "2-D dynamic programming",
+    "whenToSpot": "Two changing indices; fill a table."
+  },
+  "solutions": {
+    "python": "# Burst Balloons\n# Idea: The key idea is to use dynamic programming to calculate the maximum coins that can be obtained by bursting balloons in a certain order. We create a 2D table 'dp' where dp[i][j] represents the maximum coins obtained by bu\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def maxCoins(self, nums: List[int]) -> int:\n        n = len(nums)\n\n        # Add virtual balloons at the beginning and end with a value of 1.\n        nums = [1] + nums + [1]\n\n        # Create a 2D table dp to store the maximum coins.\n        # Table of answers to smaller problems (DP)\n        dp = [[0] * (n + 2) for _ in range(n + 2)]\n\n        # Iterate through different balloon ranges.\n        for length in range(2, n + 2):\n            for left in range(0, n + 2 - length):\n                right = left + length\n                for k in range(left + 1, right):\n                    # Choose the best order to burst balloons in the range [left, right].\n                    dp[left][right] = max(\n                        dp[left][right],\n                        nums[left] * nums[k] * nums[right] + dp[left][k] + dp[k][right],\n                    )\n\n        return dp[0][n + 1]\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "O(n^2)",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like 2-D dynamic programming.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, O(n^2) space, and why."
+  ],
+  "animation": {
+    "visualType": "dp",
+    "tracerId": "generic-array-scan",
+    "defaultInput": {
+      "demo": true
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving burst balloons using the dp view.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": {
+            "demo": true
+          },
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "edit-distance",
+    "regular-expression-matching"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Burst Balloons is the usual interview target: clear 2-d dynamic programming with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

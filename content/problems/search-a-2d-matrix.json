@@ -1,0 +1,133 @@
+{
+  "id": 29,
+  "leetcodeNumber": 74,
+  "title": "Search a 2D Matrix",
+  "slug": "search-a-2d-matrix",
+  "category": "binary-search",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/search-a-2d-matrix/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "A matrix where each row is sorted and rows increase. Treat it like one long sorted list.",
+  "plainProblem": "LeetCode 74: Search a 2D Matrix. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "examples": [
+    {
+      "input": "(open LeetCode example 1 for Search a 2D Matrix)",
+      "output": "(match the official output)",
+      "explanation": "Pause the animation on each caption and predict the next variable change."
+    },
+    {
+      "input": "(open LeetCode example 2 for Search a 2D Matrix)",
+      "output": "(match the official output)",
+      "explanation": "After watching, close the site and redraw the data structure from memory."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For Search a 2D Matrix, first describe a slow but correct approach (often nested loops or rescanning)."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+    },
+    {
+      "title": "Aha insight",
+      "body": "Since both the rows and columns in the input 2D matrix are sorted, we can treat the matrix as a one-dimensional sorted array and perform binary search to find the target element. We can map the 2D indices to the corresponding index in the 1D array and then apply binary search to locate the target element."
+    },
+    {
+      "title": "Better idea",
+      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+    }
+  ],
+  "pattern": {
+    "name": "Binary search (halving the range)",
+    "whenToSpot": "Sorted data or a monotonic yes/no answer."
+  },
+  "solutions": {
+    "python": "# Search a 2D Matrix\n# Idea: Since both the rows and columns in the input 2D matrix are sorted, we can treat the matrix as a one-dimensional sorted array and perform binary search to find the target element. We can map the 2D indices to the correspo\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:\n        if not matrix or not matrix[0]:\n            return False\n\n        rows, cols = len(matrix), len(matrix[0])\n        left, right = 0, rows * cols - 1\n\n        while left <= right:\n            mid = left + (right - left) // 2\n            num = matrix[mid // cols][mid % cols]\n\n            if num == target:\n                return True\n            elif num < target:\n                left = mid + 1\n            else:\n                right = mid - 1\n\n        return False\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(log(m*n)",
+    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "space": "O(1)",
+    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Binary search (halving the range).'",
+    "Narrate one example before typing.",
+    "Close with complexity: O(log(m*n) time, O(1) space, and why."
+  ],
+  "animation": {
+    "visualType": "array",
+    "tracerId": "generic-array-scan",
+    "defaultInput": [
+      1,
+      2,
+      3
+    ],
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving search a 2d matrix using the array view.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "binary-search",
+    "koko-eating-bananas",
+    "find-minimum-in-rotated-sorted-array"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Search a 2D Matrix is the usual interview target: clear binary search (halving the range) with competitive complexity (O(log(m*n) time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

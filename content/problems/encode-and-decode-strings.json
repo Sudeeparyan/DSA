@@ -1,0 +1,132 @@
+{
+  "id": 8,
+  "leetcodeNumber": 271,
+  "title": "Encode and Decode Strings",
+  "slug": "encode-and-decode-strings",
+  "category": "arrays-hashing",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/encode-and-decode-strings/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Pack many postcards into one suitcase string, then unpack them later without mixing \u2014 even if a postcard contains commas or weird marks.",
+  "plainProblem": "Design encode/decode for a list of strings so encode(decode(strs)) restores the original list.",
+  "examples": [
+    {
+      "input": "[\"lint\",\"code\",\"love\",\"you\"]",
+      "output": "[\"lint\",\"code\",\"love\",\"you\"]",
+      "explanation": "Round-trip must be perfect."
+    },
+    {
+      "input": "[\"we\",\"say\",\":\",\"yes\"]",
+      "output": "[\"we\",\"say\",\":\",\"yes\"]",
+      "explanation": "Delimiters inside strings must not break parsing."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Naive delimiter",
+      "body": "Joining with commas fails if a string contains commas."
+    },
+    {
+      "title": "Aha insight",
+      "body": "Store length prefixes: 4#lint4#code \u2026 so you always know how many characters to read."
+    },
+    {
+      "title": "Better idea",
+      "body": "Encode walks strings appending len + '#' + body. Decode reads numbers until '#', then slices."
+    },
+    {
+      "title": "Why interviewers like it",
+      "body": "Shows careful parsing and edge-case thinking."
+    }
+  ],
+  "pattern": {
+    "name": "Hash set / hash map for seen items",
+    "whenToSpot": "You need fast lookups of values you already saw."
+  },
+  "solutions": {
+    "python": "# Encode and Decode Strings \u2014 interview-friendly solution from NeetCode 150 repo\n# Comments explain the idea; logic is unchanged.\n\nclass Codec:\n    def encode(self, strs: List[str]) -> str:\n        encoded = \"\"\n        for s in strs:\n            encoded += str(len(s)) + \"#\" + s\n        return encoded\n\n    def decode(self, s: str) -> List[str]:\n        decoded = []\n        i = 0\n        while i < len(s):\n            delimiter_pos = s.find(\"#\", i)\n            size = int(s[i:delimiter_pos])\n            start_pos = delimiter_pos + 1\n            end_pos = start_pos + size\n            decoded.append(s[start_pos:end_pos])\n            i = end_pos\n        return decoded\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(n)",
+    "timeReason": "We read and write each character a constant number of times.",
+    "space": "O(n)",
+    "spaceReason": "The encoded string and decoded list hold all character data."
+  },
+  "edgeCases": [
+    "Empty or minimal input.",
+    "Already-best or already-worst arrangement.",
+    "Duplicates and boundary values from the constraints."
+  ],
+  "commonMistakes": [
+    "Coding before stating the pattern and complexity.",
+    "Off-by-one errors on indices or window edges.",
+    "Mutating data structures while iterating carelessly."
+  ],
+  "interviewTips": [
+    "Name the pattern: Hash set / hash map for seen items.",
+    "Walk example 1 aloud before coding.",
+    "State O(n) time and O(n) space at the end."
+  ],
+  "animation": {
+    "visualType": "hash",
+    "tracerId": "generic-array-scan",
+    "defaultInput": [
+      1,
+      2,
+      3
+    ],
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Start solving encode and decode strings using the hash view.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "state": {
+          "input": [
+            1,
+            2,
+            3
+          ],
+          "result": "see-leetcode",
+          "highlights": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "valid-sudoku",
+    "longest-consecutive-sequence"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "Length-prefix encoding is the standard robust answer. Do not invent escaping schemes that are hard to prove correct under pressure."
+}
