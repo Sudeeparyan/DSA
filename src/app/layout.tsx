@@ -30,13 +30,13 @@ const mono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NeetCode 150 Learn",
+  title: "NeetCode 150 Missions",
   description:
-    "Kid-simple animated explanations of all NeetCode 150 problems for Google interview prep.",
+    "Playable missions that teach every NeetCode 150 problem — build the idea, simulate the algorithm, unseal the blueprint.",
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
-    title: "NC150 Learn",
+    title: "NC150 Missions",
   },
 };
 
@@ -65,10 +65,10 @@ export default function RootLayout({
           <main>{children}</main>
           <footer className="mx-auto max-w-6xl px-4 py-12 text-sm text-muted">
             <div className="brand-font text-base text-foreground">
-              NeetCode<span className="text-accent">150</span> Learn
+              NeetCode<span className="text-accent">150</span> Missions
             </div>
             <p className="mt-2 max-w-xl">
-              Offline-friendly study companion for Google interview prep. Not
+              Offline-friendly mission hangar for Google interview prep. Not
               affiliated with NeetCode or LeetCode.
             </p>
           </footer>

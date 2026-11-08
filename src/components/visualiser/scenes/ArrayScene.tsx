@@ -28,20 +28,37 @@ export function ArrayScene({
       <div className="flex flex-wrap justify-center gap-2">
         {values.map((v, i) => {
           const h = highlights[String(i)] as Highlight | undefined;
-          const inWindow =
-            window && i >= window.left && i <= window.right;
+          const inWindow = window && i >= window.left && i <= window.right;
           return (
             <motion.div
               key={i}
               layout
+              initial={{ scale: 0.92, opacity: 0.7 }}
+              animate={{
+                scale: h === "current" || h === "matched" ? 1.08 : 1,
+                opacity: 1,
+                y: h === "current" ? -6 : 0,
+              }}
+              transition={{ type: "spring", stiffness: 320, damping: 22 }}
               className="relative flex h-14 w-14 flex-col items-center justify-center rounded-xl border-2 bg-card text-sm font-semibold"
               style={{
-                borderColor: h ? color[h] : inWindow ? "var(--accent)" : "var(--border)",
-                background: h ? `color-mix(in oklab, ${color[h]} 25%, transparent)` : undefined,
+                borderColor: h
+                  ? color[h]
+                  : inWindow
+                    ? "var(--accent)"
+                    : "var(--border)",
+                background: h
+                  ? `color-mix(in oklab, ${color[h]} 28%, transparent)`
+                  : undefined,
+                boxShadow: h
+                  ? `0 10px 24px -14px ${color[h]}`
+                  : undefined,
               }}
             >
               <span>{String(v)}</span>
-              <span className="absolute -bottom-5 text-[10px] text-muted">{i}</span>
+              <span className="absolute -bottom-5 text-[10px] text-muted">
+                {i}
+              </span>
             </motion.div>
           );
         })}

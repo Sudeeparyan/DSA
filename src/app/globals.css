@@ -1,45 +1,49 @@
 @import "tailwindcss";
 
 :root {
-  --background: #e7eef5;
-  --foreground: #0b1220;
-  --muted: #5a6b7d;
-  --card: rgba(255, 255, 255, 0.72);
-  --border: rgba(15, 30, 50, 0.12);
-  --accent: #0f8f86;
-  --accent-2: #e85d04;
-  --accent-soft: rgba(15, 143, 134, 0.14);
-  --ink: #071018;
-  --panel: #0b1220;
-  --panel-fg: #e8f1f7;
-  --current: #f4c430;
+  --background: #ebe6dc;
+  --foreground: #14110f;
+  --muted: #5c534a;
+  --card: rgba(255, 252, 247, 0.78);
+  --border: rgba(30, 22, 14, 0.12);
+  --accent: #0b7a6f;
+  --accent-2: #d4550a;
+  --accent-soft: rgba(11, 122, 111, 0.14);
+  --ink: #0c1210;
+  --panel: #101814;
+  --panel-fg: #f3efe6;
+  --current: #e8b923;
   --matched: #1f9d55;
-  --rejected: #e03131;
-  --remembered: #1c7ed6;
-  --glow: rgba(15, 143, 134, 0.22);
-  --hero-glow: rgba(232, 93, 4, 0.16);
-  --grid: rgba(11, 18, 32, 0.05);
+  --rejected: #d64545;
+  --remembered: #2b7bbf;
+  --glow: rgba(11, 122, 111, 0.18);
+  --hero-glow: rgba(212, 85, 10, 0.14);
+  --grid: rgba(20, 17, 15, 0.045);
+  --hangar: #121a16;
+  --copper: #c87941;
 }
 
 .dark {
-  --background: #070b12;
-  --foreground: #e8f1f7;
-  --muted: #93a4b8;
-  --card: rgba(16, 24, 38, 0.82);
-  --border: rgba(232, 241, 247, 0.1);
-  --accent: #2ec4b6;
-  --accent-2: #ff7b29;
-  --accent-soft: rgba(46, 196, 182, 0.16);
-  --ink: #e8f1f7;
-  --panel: #101826;
-  --panel-fg: #e8f1f7;
+  --background: #0a0e0c;
+  --foreground: #efe9df;
+  --muted: #9aa89a;
+  --card: rgba(18, 28, 24, 0.86);
+  --border: rgba(239, 233, 223, 0.1);
+  --accent: #2ec4a8;
+  --accent-2: #ff8a3d;
+  --accent-soft: rgba(46, 196, 168, 0.16);
+  --ink: #efe9df;
+  --panel: #0d1512;
+  --panel-fg: #efe9df;
   --current: #ffd43b;
   --matched: #51cf66;
   --rejected: #ff6b6b;
   --remembered: #74c0fc;
-  --glow: rgba(46, 196, 182, 0.18);
-  --hero-glow: rgba(255, 123, 41, 0.14);
-  --grid: rgba(232, 241, 247, 0.04);
+  --glow: rgba(46, 196, 168, 0.16);
+  --hero-glow: rgba(255, 138, 61, 0.12);
+  --grid: rgba(239, 233, 223, 0.035);
+  --hangar: #0b1210;
+  --copper: #e0a06a;
 }
 
 @theme inline {
@@ -76,14 +80,13 @@ body {
   color: var(--foreground);
   font-family: var(--font-body), "Segoe UI", sans-serif;
   background:
-    radial-gradient(900px 520px at 12% -8%, var(--glow), transparent 58%),
-    radial-gradient(760px 480px at 92% 4%, var(--hero-glow), transparent 52%),
-    linear-gradient(180deg, transparent 0%, transparent 40%, var(--background) 100%),
+    radial-gradient(980px 560px at 8% -10%, var(--glow), transparent 58%),
+    radial-gradient(720px 480px at 96% 0%, var(--hero-glow), transparent 50%),
     repeating-linear-gradient(
-      0deg,
+      -12deg,
       transparent,
-      transparent 23px,
-      var(--grid) 24px
+      transparent 31px,
+      var(--grid) 32px
     ),
     var(--background);
 }
@@ -121,7 +124,8 @@ h3,
   border-radius: 999px;
   padding: 0.7rem 1.25rem;
   font-weight: 700;
-  transition: transform 160ms ease, background 160ms ease, color 160ms ease;
+  transition: transform 160ms ease, background 160ms ease, color 160ms ease,
+    box-shadow 160ms ease;
 }
 
 .signal-btn:hover {
@@ -131,6 +135,7 @@ h3,
 .signal-btn-primary {
   background: var(--accent);
   color: white;
+  box-shadow: 0 10px 28px -14px var(--accent);
 }
 
 .signal-btn-secondary {
@@ -145,6 +150,358 @@ h3,
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--accent);
+}
+
+/* —— Mission hangar —— */
+.mission-topbar {
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in oklab, var(--card) 88%, transparent);
+  backdrop-filter: blur(16px);
+}
+
+.stage-rail {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.4rem;
+}
+
+.stage-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 3rem;
+  border-radius: 1rem;
+  border: 1px solid var(--border);
+  background: var(--card);
+  padding: 0.4rem 0.55rem;
+  text-align: left;
+  color: var(--muted);
+  transition: border-color 160ms ease, background 160ms ease, color 160ms ease;
+}
+
+.stage-pill-active {
+  border-color: color-mix(in oklab, var(--accent) 55%, var(--border));
+  background: var(--accent-soft);
+  color: var(--foreground);
+}
+
+.stage-pill-done {
+  border-color: color-mix(in oklab, var(--matched) 40%, var(--border));
+  color: var(--foreground);
+}
+
+.stage-index {
+  display: inline-flex;
+  height: 1.5rem;
+  width: 1.5rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--panel-fg);
+  font-family: var(--font-code), monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.hangar-panel {
+  border-radius: 1.75rem;
+  border: 1px solid var(--border);
+  background: linear-gradient(
+      160deg,
+      color-mix(in oklab, var(--accent) 10%, transparent),
+      transparent 42%
+    ),
+    var(--card);
+}
+
+.blueprint-grid {
+  background-image: linear-gradient(
+      rgba(11, 122, 111, 0.08) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(11, 122, 111, 0.08) 1px, transparent 1px);
+  background-size: 22px 22px;
+  pointer-events: none;
+}
+
+.dark .blueprint-grid {
+  background-image: linear-gradient(
+      rgba(46, 196, 168, 0.08) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(46, 196, 168, 0.08) 1px, transparent 1px);
+}
+
+.capsule-closed {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2rem;
+  border: 2px solid color-mix(in oklab, var(--accent) 45%, transparent);
+  background: var(--panel);
+  color: var(--panel-fg);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+}
+
+.capsule-pulse {
+  position: absolute;
+  inset: 18%;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--accent) 35%, transparent),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.capsule-half {
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--panel);
+  color: var(--panel-fg);
+  padding: 1.25rem;
+  text-align: left;
+  min-height: 11rem;
+}
+
+.capsule-half-accent {
+  border-color: color-mix(in oklab, var(--accent-2) 45%, transparent);
+}
+
+.example-block {
+  border-radius: 1.25rem;
+  border: 1px solid var(--border);
+  background: color-mix(in oklab, var(--background) 70%, var(--card));
+  padding: 1rem 1.1rem;
+}
+
+.example-out {
+  border-color: color-mix(in oklab, var(--accent-2) 35%, var(--border));
+  background: color-mix(in oklab, var(--accent-2) 8%, var(--card));
+}
+
+.rocket-bay {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 20rem;
+  border-radius: 1.5rem;
+  border: 1px dashed color-mix(in oklab, var(--accent) 40%, var(--border));
+  background: var(--panel);
+  padding: 1rem;
+}
+
+.rocket-part {
+  width: 100%;
+  border-radius: 1.15rem;
+  border: 2px solid;
+  background: color-mix(in oklab, var(--panel-fg) 4%, transparent);
+  padding: 1rem 1.1rem;
+  color: var(--panel-fg);
+  cursor: pointer;
+  text-align: left;
+}
+
+.rocket-part-open {
+  background: color-mix(in oklab, var(--panel-fg) 8%, transparent);
+}
+
+.rocket-part-badge {
+  display: inline-flex;
+  height: 1.75rem;
+  width: 1.75rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: #0c1210;
+  font-family: var(--font-code), monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.rocket-ghost {
+  margin-top: auto;
+  border-radius: 1rem;
+  border: 1px dashed rgba(255, 255, 255, 0.18);
+  padding: 1rem;
+  text-align: center;
+  color: rgba(243, 239, 230, 0.65);
+  font-size: 0.9rem;
+}
+
+.rocket-complete {
+  margin-top: 0.5rem;
+  border-radius: 1.15rem;
+  border: 1px solid color-mix(in oklab, var(--matched) 50%, transparent);
+  background: color-mix(in oklab, var(--matched) 18%, transparent);
+  padding: 1rem 1.15rem;
+  color: var(--panel-fg);
+}
+
+.parts-tray {
+  border-radius: 1.25rem;
+  border: 1px solid var(--border);
+  background: var(--card);
+  padding: 0.9rem;
+}
+
+.tray-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.7rem;
+  padding: 0.45rem 0.55rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.tray-item-used {
+  color: var(--matched);
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+.tray-item-next {
+  background: var(--accent-soft);
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.arena-frame {
+  border-radius: 1.85rem;
+  border: 1px solid var(--border);
+  background: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--accent) 8%, transparent),
+      transparent 30%
+    ),
+    var(--card);
+  padding: 0.85rem;
+  box-shadow: 0 24px 60px -36px color-mix(in oklab, var(--accent) 45%, transparent);
+}
+
+.arena-engine {
+  padding: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .arena-engine {
+    padding: 1.1rem;
+  }
+}
+
+.scene-stage {
+  background-image: radial-gradient(
+    circle at 50% 120%,
+    color-mix(in oklab, var(--accent) 12%, transparent),
+    transparent 55%
+  );
+}
+
+.blueprint-sealed {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  border: 2px dashed color-mix(in oklab, var(--accent) 45%, transparent);
+  background: var(--panel);
+  color: var(--panel-fg);
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.blueprint-sealed-glow {
+  position: absolute;
+  inset: 20%;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--accent-2) 30%, transparent),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.stat-tile {
+  border-radius: 1.5rem;
+  border: 1px solid var(--border);
+  background: var(--card);
+  padding: 1.25rem;
+}
+
+.check-panel {
+  border-radius: 1.5rem;
+  border: 1px solid var(--border);
+  background: var(--card);
+  padding: 1.25rem;
+}
+
+.check-panel-edge {
+  border-color: color-mix(in oklab, var(--remembered) 35%, var(--border));
+}
+
+.check-panel-warn {
+  border-color: color-mix(in oklab, var(--accent-2) 35%, var(--border));
+}
+
+.check-panel-tip {
+  border-color: color-mix(in oklab, var(--accent) 35%, var(--border));
+}
+
+/* —— Home launch map —— */
+.launch-hero {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+
+.launch-hero-orbit {
+  position: absolute;
+  inset: -20% -10% auto;
+  height: 70%;
+  background: radial-gradient(
+      circle at 30% 40%,
+      color-mix(in oklab, var(--accent) 22%, transparent),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 70% 30%,
+      color-mix(in oklab, var(--accent-2) 16%, transparent),
+      transparent 40%
+    );
+  pointer-events: none;
+}
+
+.mission-tile {
+  display: block;
+  border-radius: 1.4rem;
+  border: 1px solid var(--border);
+  background: var(--card);
+  padding: 1.15rem 1.2rem;
+  transition: transform 180ms ease, border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.mission-tile:hover {
+  transform: translateY(-3px);
+  border-color: transparent;
+  box-shadow: 0 18px 40px -28px var(--tile-accent, var(--accent));
+}
+
+@media (max-width: 640px) {
+  .stage-rail {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+  }
+
+  .stage-pill {
+    min-width: 7.5rem;
+    flex-shrink: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

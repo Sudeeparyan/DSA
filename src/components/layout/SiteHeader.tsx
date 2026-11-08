@@ -22,7 +22,7 @@ export function SiteHeader() {
         <Link href="/" className="mr-auto min-w-0">
           <div className="brand-font text-xl font-extrabold tracking-tight sm:text-2xl">
             NeetCode<span className="text-accent">150</span>
-            <span className="ml-1 text-accent-2">Learn</span>
+            <span className="ml-1 text-accent-2">Missions</span>
           </div>
         </Link>
         <nav aria-label="Main" className="hidden items-center gap-1 md:flex">

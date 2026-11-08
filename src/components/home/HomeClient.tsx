@@ -71,15 +71,16 @@ export function HomeClient({
 
   return (
     <div>
-      <section className="relative overflow-hidden">
-        <div className="mx-auto grid max-w-6xl items-end gap-8 px-4 pb-10 pt-8 lg:grid-cols-[1.05fr_0.95fr] lg:pb-14 lg:pt-12">
+      <section className="launch-hero">
+        <div className="launch-hero-orbit" />
+        <div className="relative mx-auto grid max-w-6xl items-end gap-8 px-4 pb-12 pt-8 lg:grid-cols-[1.05fr_0.95fr] lg:pb-16 lg:pt-12">
           <div>
             <motion.p
               className="section-kicker"
               initial={reduce ? false : { opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              Google interview prep
+              Hangar · Google interview prep
             </motion.p>
             <motion.h1
               className="brand-font mt-4 max-w-xl text-5xl font-extrabold leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl"
@@ -89,7 +90,7 @@ export function HomeClient({
             >
               NeetCode
               <span className="text-accent">150</span>
-              <span className="block text-accent-2">Learn</span>
+              <span className="block text-accent-2">Missions</span>
             </motion.h1>
             <motion.p
               className="teach mt-5 max-w-md text-lg text-muted"
@@ -97,8 +98,9 @@ export function HomeClient({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.12 }}
             >
-              Stories, step-by-step animations, and interview-ready Python —
-              simple enough for a curious beginner, sharp enough for Google.
+              Not another problem list. Each question is a playable mission:
+              split the puzzle, dock idea-parts like a rocket, simulate the
+              machine, then unseal the blueprint.
             </motion.p>
             <motion.div
               className="mt-7 flex flex-wrap items-center gap-3"
@@ -111,18 +113,18 @@ export function HomeClient({
                   href={`/problem/${continueProblem.slug}/`}
                   className="signal-btn signal-btn-primary"
                 >
-                  Continue · {continueProblem.title}
+                  Resume mission · {continueProblem.title}
                 </Link>
               ) : (
                 <Link
                   href="/problem/contains-duplicate/"
                   className="signal-btn signal-btn-primary"
                 >
-                  Start · Contains Duplicate
+                  Launch mission 1 · Contains Duplicate
                 </Link>
               )}
               <Link href="/roadmap/" className="signal-btn signal-btn-secondary">
-                Open roadmap
+                Mission map
               </Link>
               <div className="ml-auto hidden sm:block">
                 <ProgressRing value={understood} total={150} size={96} />
@@ -133,10 +135,10 @@ export function HomeClient({
         </div>
       </section>
 
-      <div className="mx-auto max-w-6xl space-y-12 px-4 pb-16">
+      <div className="mx-auto max-w-6xl space-y-12 px-4 py-12 pb-16">
         <section className="space-y-3">
           <label htmlFor="home-search" className="section-kicker">
-            Find a problem
+            Find a mission
           </label>
           <input
             id="home-search"
@@ -165,8 +167,10 @@ export function HomeClient({
         <section>
           <div className="mb-5 flex items-end justify-between gap-4">
             <div>
-              <p className="section-kicker">Eighteen patterns</p>
-              <h2 className="brand-font mt-2 text-3xl font-bold">Categories</h2>
+              <p className="section-kicker">Eighteen hangars</p>
+              <h2 className="brand-font mt-2 text-3xl font-bold">
+                Pattern sectors
+              </h2>
             </div>
             <div className="sm:hidden">
               <ProgressRing value={understood} total={150} size={72} />
@@ -188,10 +192,8 @@ export function HomeClient({
                 >
                   <Link
                     href={`/category/${c.slug}/`}
-                    className="group block rounded-[1.4rem] border border-border bg-card/80 p-5 transition hover:-translate-y-0.5 hover:border-transparent"
-                    style={{
-                      boxShadow: "inset 0 0 0 0 transparent",
-                    }}
+                    className="mission-tile"
+                    style={{ ["--tile-accent" as string]: accent }}
                   >
                     <div
                       className="mb-3 h-1.5 w-12 rounded-full transition group-hover:w-20"
@@ -213,7 +215,7 @@ export function HomeClient({
                       />
                     </div>
                     <div className="mt-2 text-xs font-medium text-muted">
-                      {done}/{total} understood
+                      {done}/{total} missions cleared
                     </div>
                   </Link>
                 </motion.div>
