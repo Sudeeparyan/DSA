@@ -7,18 +7,18 @@
   "difficulty": "Hard",
   "leetcodeUrl": "https://leetcode.com/problems/find-median-from-data-stream/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: To find the median from a stream of data, we can use two heaps: a max-heap to store the lower half of the data and a min-heap to store the upper half of the data. The max-heap will contain the smaller elements, and the min-heap will contain the larger elements. To maintain the balance of the heaps, we ensure that the size difference between the two heaps is at most 1. The median will be the average of the top elements of both heaps if the total number of elements is even, or the top element of the larger heap if the total number of elements is odd. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Find Median from Data Stream'. Here is the clever trick in plain words: To find the median from a stream of data, we can use two heaps: a max-heap to store the lower half of the data and a min-heap to store the upper half of the data. The max-heap will contain the smaller elements, and the m We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 295: Find Median from Data Stream. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Find Median from Data Stream)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "add 1,2; findMedian; add 3; findMedian",
+      "output": "1.5 then 2",
+      "explanation": "Running median."
     },
     {
-      "input": "(open LeetCode example 2 for Find Median from Data Stream)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "add 6; median",
+      "output": "6",
+      "explanation": "Single."
     }
   ],
   "thinkingSteps": [

@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/valid-parenthesis-string/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: We can solve this problem using a greedy approach. The idea is to keep track of the possible lower and upper bound of valid open parentheses count as we traverse the string. For every '(', we increment both lower and upper bounds, for every ')', we decrement both bounds, and for '*', we increment the lower bound and decrement the upper bound. At each step, we ensure that the lower bound never goes below 0. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Valid Parenthesis String'. Here is the clever trick in plain words: We can solve this problem using a greedy approach. The idea is to keep track of the possible lower and upper bound of valid open parentheses count as we traverse the string. For every '(', we increment both lower and upp We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 678: Valid Parenthesis String. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Valid Parenthesis String)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "s = \"()\"",
+      "output": "true",
+      "explanation": "Valid."
     },
     {
-      "input": "(open LeetCode example 2 for Valid Parenthesis String)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "s = \"(*)\"",
+      "output": "true",
+      "explanation": "Star helps."
     }
   ],
   "thinkingSteps": [

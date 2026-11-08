@@ -6,11 +6,20 @@
 | --- | --- |
 | Problems in catalog | 150 |
 | Problem JSON validated | 150/150 |
+| Real worked examples (not placeholders) | 150/150 |
 | Python solutions vendored | 150 |
 | C++ solutions in source repo | 0 |
 | Rust solutions in source repo | 0 |
 | Premium traced animations (unit-tested) | 3 (Contains Duplicate, Two Sum, Valid Parentheses) |
 | NeetCode video URLs verified & filled | 0 (all left `null` — never invent URLs) |
+
+## Audit pass (follow-up)
+
+Fixed after quality audit:
+- Replaced **140** placeholder “open LeetCode example” entries with concrete input/output pairs
+- Replaced **generic / Story-version** kid blurbs with problem-specific stories or plain-language idea restatements
+- UI redesign: Syne + Literata + DM Sans, signal teal/coral palette, full-bleed hero board, sticky problem TOC, visualiser keyboard/line-highlight fixes
+- Visualiser no longer steals Space while typing; resets state on problem change; prefers authored steps for non-array generic tracers
 
 ## Data fixes (README vs files)
 

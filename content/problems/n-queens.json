@@ -7,18 +7,18 @@
   "difficulty": "Hard",
   "leetcodeUrl": "https://leetcode.com/problems/n-queens/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: To solve the N-Queens problem, we can use backtracking. Starting from each row, we try placing a queen in each column of that row and recursively move on to the next row. If a valid placement is found, we continue the process. We keep track of the board state and the positions of the queens to avoid conflicts. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'N-Queens'. Here is the clever trick in plain words: To solve the N-Queens problem, we can use backtracking. Starting from each row, we try placing a queen in each column of that row and recursively move on to the next row. If a valid placement is found, we continue the pr We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 51: N-Queens. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for N-Queens)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "n = 4",
+      "output": "[[\".Q..\",\"...Q\",\"Q...\",\"..Q.\"],[\"..Q.\",\"Q...\",\"...Q\",\".Q..\"]]",
+      "explanation": "Two solutions."
     },
     {
-      "input": "(open LeetCode example 2 for N-Queens)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "n = 1",
+      "output": "[[\"Q\"]]",
+      "explanation": "One queen."
     }
   ],
   "thinkingSteps": [

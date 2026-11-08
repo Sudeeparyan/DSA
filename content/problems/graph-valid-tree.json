@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/graph-valid-tree/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: This problem can be solved using Depth-First Search (DFS) or Union-Find algorithm. We represent the given edges as an adjacency list, where each node points to its neighboring nodes. To determine whether the graph is a valid tree, we need to check two conditions: 1. The graph must be connected, i.e., there is a path between every pair of nodes. 2. There should be no cycles in the graph. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Graph Valid Tree'. Here is the clever trick in plain words: This problem can be solved using Depth-First Search (DFS) or Union-Find algorithm. We represent the given edges as an adjacency list, where each node points to its neighboring nodes. To determine whether the graph is a v We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 261: Graph Valid Tree. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Graph Valid Tree)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "n = 5, edges = [[0,1],[0,2],[0,3],[1,4]]",
+      "output": "true",
+      "explanation": "Tree."
     },
     {
-      "input": "(open LeetCode example 2 for Graph Valid Tree)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "n = 5, edges = [[0,1],[1,2],[2,3],[1,3],[1,4]]",
+      "output": "false",
+      "explanation": "Cycle."
     }
   ],
   "thinkingSteps": [

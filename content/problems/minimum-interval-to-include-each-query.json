@@ -7,18 +7,18 @@
   "difficulty": "Hard",
   "leetcodeUrl": "https://leetcode.com/problems/minimum-interval-to-include-each-query/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Imagine 'Minimum Interval to Include Each Query' as a puzzle game. We are in the intervals world. First we invent any correct plan, then we upgrade it with the pattern for this family, so a 10-year-old could retell the steps.",
+  "kidExplanation": "Picture the puzzle 'Minimum Interval to Include Each Query'. Here is the clever trick in plain words: The problem is to find the minimum interval for each query that includes at least one element from each interval in the list. We can solve this problem using a sorted list or priority queue (min-heap). First, we sort bot We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 1851: Minimum Interval to Include Each Query. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Minimum Interval to Include Each Query)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "intervals = [[1,4],[2,4],[3,6],[4,4]], queries = [2,3,4,5]",
+      "output": "[3,3,1,4]",
+      "explanation": "Min lengths."
     },
     {
-      "input": "(open LeetCode example 2 for Minimum Interval to Include Each Query)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "intervals = [[2,3],[2,5],[1,8],[20,25]], queries = [2,19,5,22]",
+      "output": "[2,-1,4,6]",
+      "explanation": "Some missing."
     }
   ],
   "thinkingSteps": [
@@ -73,7 +73,20 @@
     "visualType": "intervals",
     "tracerId": "generic-array-scan",
     "defaultInput": {
-      "demo": true
+      "intervals": [
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          8,
+          10
+        ]
+      ]
     },
     "steps": [
       {

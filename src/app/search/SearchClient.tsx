@@ -57,8 +57,11 @@ export function SearchClient({
   }, [problems, q, category, difficulty, status, pattern, statusMap]);
 
   return (
-    <div className="mx-auto max-w-4xl space-y-6 px-4 py-8">
-      <h1 className="text-4xl font-semibold">Search</h1>
+    <div className="mx-auto max-w-4xl space-y-6 px-4 py-10">
+      <header className="space-y-2">
+        <p className="section-kicker">Filters work offline</p>
+        <h1 className="brand-font text-5xl font-extrabold tracking-tight">Search</h1>
+      </header>
       <input
         value={q}
         onChange={(e) => setQ(e.target.value)}

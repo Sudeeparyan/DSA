@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/walls-and-gates/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: The problem is to fill each empty room (represented by INF) with the distance to the nearest gate. This can be approached using Breadth-First Search (BFS), where the gates are the starting points and the empty rooms are visited layer by layer. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Walls and Gates'. Here is the clever trick in plain words: The problem is to fill each empty room (represented by INF) with the distance to the nearest gate. This can be approached using Breadth-First Search (BFS), where the gates are the starting points and the empty rooms are We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 286: Walls and Gates. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Walls and Gates)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "rooms with INF/gates",
+      "output": "filled distances",
+      "explanation": "Multi-source BFS."
     },
     {
-      "input": "(open LeetCode example 2 for Walls and Gates)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "empty rooms only",
+      "output": "unchanged INF",
+      "explanation": "No gates."
     }
   ],
   "thinkingSteps": [

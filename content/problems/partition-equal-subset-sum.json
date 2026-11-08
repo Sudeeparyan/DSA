@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/partition-equal-subset-sum/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Imagine 'Partition Equal Subset Sum' as a puzzle game. We are in the 1d dp world. First we invent any correct plan, then we upgrade it with the pattern for this family, so a 10-year-old could retell the steps.",
+  "kidExplanation": "Picture the puzzle 'Partition Equal Subset Sum'. Here is the clever trick in plain words: The key idea is to use dynamic programming to determine if it's possible to partition the input array into two subsets with equal sums. We create a dynamic programming array dp, where dp[i][j] represents whether it's pos We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 416: Partition Equal Subset Sum. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Partition Equal Subset Sum)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "nums = [1,5,11,5]",
+      "output": "true",
+      "explanation": "11 vs 1+5+5."
     },
     {
-      "input": "(open LeetCode example 2 for Partition Equal Subset Sum)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "nums = [1,2,3,5]",
+      "output": "false",
+      "explanation": "Odd sum."
     }
   ],
   "thinkingSteps": [
@@ -72,9 +72,12 @@
   "animation": {
     "visualType": "dp",
     "tracerId": "generic-array-scan",
-    "defaultInput": {
-      "demo": true
-    },
+    "defaultInput": [
+      1,
+      2,
+      3,
+      2
+    ],
     "steps": [
       {
         "line": 1,

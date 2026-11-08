@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/longest-increasing-subsequence/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Imagine 'Longest Increasing Subsequence' as a puzzle game. We are in the 1d dp world. First we invent any correct plan, then we upgrade it with the pattern for this family, so a 10-year-old could retell the steps.",
+  "kidExplanation": "Picture the puzzle 'Longest Increasing Subsequence'. Here is the clever trick in plain words: The key idea is to use dynamic programming to find the length of the longest increasing subsequence. We create a dynamic programming array dp, where dp[i] represents the length of the longest increasing subsequence endin We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 300: Longest Increasing Subsequence. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Longest Increasing Subsequence)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "nums = [10,9,2,5,3,7,101,18]",
+      "output": "4",
+      "explanation": "2,3,7,101."
     },
     {
-      "input": "(open LeetCode example 2 for Longest Increasing Subsequence)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "nums = [0,1,0,3,2,3]",
+      "output": "4",
+      "explanation": "0,1,2,3."
     }
   ],
   "thinkingSteps": [
@@ -72,9 +72,12 @@
   "animation": {
     "visualType": "dp",
     "tracerId": "generic-array-scan",
-    "defaultInput": {
-      "demo": true
-    },
+    "defaultInput": [
+      1,
+      2,
+      3,
+      2
+    ],
     "steps": [
       {
         "line": 1,

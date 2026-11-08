@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/non-overlapping-intervals/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: We can solve this problem by first sorting the intervals based on their end times. Then, we iterate through the sorted intervals and count the number of overlapping intervals. If the start of the current interval is less than the end of the previous interval, it means there is an overlap, so we increment the count and skip adding the current interval to the non-overlapping set. If there is no overlap, we update the end of the previous interval to be the end of the current interval. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Non-overlapping Intervals'. Here is the clever trick in plain words: We can solve this problem by first sorting the intervals based on their end times. Then, we iterate through the sorted intervals and count the number of overlapping intervals. If the start of the current interval is less We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 435: Non-overlapping Intervals. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Non-overlapping Intervals)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "intervals = [[1,2],[2,3],[3,4],[1,3]]",
+      "output": "1",
+      "explanation": "Remove one."
     },
     {
-      "input": "(open LeetCode example 2 for Non-overlapping Intervals)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "intervals = [[1,2],[1,2],[1,2]]",
+      "output": "2",
+      "explanation": "Remove two."
     }
   ],
   "thinkingSteps": [
@@ -73,7 +73,20 @@
     "visualType": "intervals",
     "tracerId": "generic-array-scan",
     "defaultInput": {
-      "demo": true
+      "intervals": [
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          8,
+          10
+        ]
+      ]
     },
     "steps": [
       {

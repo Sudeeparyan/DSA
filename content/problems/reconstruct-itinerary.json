@@ -7,18 +7,18 @@
   "difficulty": "Hard",
   "leetcodeUrl": "https://leetcode.com/problems/reconstruct-itinerary/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Imagine 'Reconstruct Itinerary' as a puzzle game. We are in the advanced graphs world. First we invent any correct plan, then we upgrade it with the pattern for this family, so a 10-year-old could retell the steps.",
+  "kidExplanation": "Picture the puzzle 'Reconstruct Itinerary'. Here is the clever trick in plain words: The problem can be approached using a depth-first search (DFS) approach. We start from the \"JFK\" airport and explore all possible routes by visiting each airport exactly once. We use a dictionary to store the destination We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 332: Reconstruct Itinerary. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Reconstruct Itinerary)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "tickets = [[\"MUC\",\"LHR\"],[\"JFK\",\"MUC\"],[\"SFO\",\"SJC\"],[\"LHR\",\"SFO\"]]",
+      "output": "[\"JFK\",\"MUC\",\"LHR\",\"SFO\",\"SJC\"]",
+      "explanation": "Euler path."
     },
     {
-      "input": "(open LeetCode example 2 for Reconstruct Itinerary)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "tickets = [[\"JFK\",\"SFO\"],[\"JFK\",\"ATL\"],[\"SFO\",\"ATL\"],[\"ATL\",\"JFK\"],[\"ATL\",\"SFO\"]]",
+      "output": "[\"JFK\",\"ATL\",\"JFK\",\"SFO\",\"ATL\",\"SFO\"]",
+      "explanation": "Lexical smallest."
     }
   ],
   "thinkingSteps": [

@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: This problem can be solved using Depth-First Search (DFS) or Breadth-First Search (BFS). We represent the given edges as an adjacency list, where each node points to its neighboring nodes. We then iterate through all nodes and perform a DFS/BFS from each unvisited node to explore all connected components. The number of times we need to start a new DFS/BFS corresponds to the number of connected components in the graph. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Number of Connected Components In An Undirected Graph'. Here is the clever trick in plain words: This problem can be solved using Depth-First Search (DFS) or Breadth-First Search (BFS). We represent the given edges as an adjacency list, where each node points to its neighboring nodes. We then iterate through all nod We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 323: Number of Connected Components In An Undirected Graph. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Number of Connected Components In An Undirected Graph)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "n = 5, edges = [[0,1],[1,2],[3,4]]",
+      "output": "2",
+      "explanation": "Two components."
     },
     {
-      "input": "(open LeetCode example 2 for Number of Connected Components In An Undirected Graph)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "n = 5, edges = [[0,1],[1,2],[2,3],[3,4]]",
+      "output": "1",
+      "explanation": "One component."
     }
   ],
   "thinkingSteps": [

@@ -21,36 +21,39 @@ export default async function CategoryPage({
   const accent = accentFor(slug);
 
   return (
-    <div className="mx-auto max-w-3xl space-y-6 px-4 py-8">
+    <div className="mx-auto max-w-3xl space-y-8 px-4 py-10">
       <header className="space-y-3">
-        <h1 className="text-4xl font-semibold" style={{ color: accent }}>
+        <p className="section-kicker">Category</p>
+        <h1
+          className="brand-font text-5xl font-extrabold tracking-tight"
+          style={{ color: accent }}
+        >
           {cat.name}
         </h1>
-        <p className="leading-relaxed text-muted">{cat.whyItMatters}</p>
+        <p className="teach text-lg text-muted">{cat.whyItMatters}</p>
         <CategoryProgress slugs={problems.map((p) => p.slug)} />
       </header>
       <ul className="space-y-2">
-        {problems.map((p) => (
+        {problems.map((p, i) => (
           <li key={p.slug}>
             <Link
               href={`/problem/${p.slug}/`}
-              className="flex flex-wrap items-center gap-3 rounded-2xl border border-border bg-card px-4 py-3 hover:border-accent"
+              className="group flex flex-wrap items-center gap-3 rounded-2xl border border-border bg-card/90 px-4 py-3.5 transition hover:border-transparent"
+              style={{
+                boxShadow: `inset 3px 0 0 0 ${accent}`,
+              }}
             >
               <span className="font-mono text-xs text-muted">
-                #{p.leetcodeNumber}
+                {String(i + 1).padStart(2, "0")}
               </span>
-              <span className="font-semibold">{p.title}</span>
+              <span className="font-semibold group-hover:text-accent">
+                {p.title}
+              </span>
               <DifficultyChip difficulty={p.difficulty} />
-              <span className="ml-auto flex gap-1 text-[10px] uppercase tracking-wide text-muted">
-                {p.hasStory && (
-                  <span className="rounded bg-accent-soft px-1.5 py-0.5">Story</span>
-                )}
-                {p.hasAnimation && (
-                  <span className="rounded bg-accent-soft px-1.5 py-0.5">Anim</span>
-                )}
-                {p.hasCode && (
-                  <span className="rounded bg-accent-soft px-1.5 py-0.5">Code</span>
-                )}
+              <span className="ml-auto hidden gap-1 text-[10px] font-bold uppercase tracking-wide text-muted sm:flex">
+                {p.hasStory && <span className="rounded-md bg-accent-soft px-1.5 py-0.5">Story</span>}
+                {p.hasAnimation && <span className="rounded-md bg-accent-soft px-1.5 py-0.5">Anim</span>}
+                {p.hasCode && <span className="rounded-md bg-accent-soft px-1.5 py-0.5">Code</span>}
               </span>
             </Link>
           </li>

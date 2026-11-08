@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/coin-change/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: The key idea is to use dynamic programming to find the minimum number of coins needed to make up the given amount. We will create a DP array where dp[i] represents the minimum number of coins needed to make up the amount i. (We will slow down and draw it.)",
+  "kidExplanation": "A cashier drawer of coin types. What's the fewest coins to make exact change?",
   "plainProblem": "LeetCode 322: Coin Change. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Coin Change)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "coins = [1,2,5], amount = 11",
+      "output": "3",
+      "explanation": "5+5+1."
     },
     {
-      "input": "(open LeetCode example 2 for Coin Change)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "coins = [2], amount = 3",
+      "output": "-1",
+      "explanation": "Impossible."
     }
   ],
   "thinkingSteps": [
@@ -72,9 +72,12 @@
   "animation": {
     "visualType": "dp",
     "tracerId": "generic-array-scan",
-    "defaultInput": {
-      "demo": true
-    },
+    "defaultInput": [
+      1,
+      2,
+      3,
+      2
+    ],
     "steps": [
       {
         "line": 1,

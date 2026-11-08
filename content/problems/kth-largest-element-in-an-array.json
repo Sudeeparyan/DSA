@@ -11,14 +11,14 @@
   "plainProblem": "LeetCode 215: Kth Largest Element in an Array. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Kth Largest Element in an Array)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "nums = [3,2,1,5,6,4], k = 2",
+      "output": "5",
+      "explanation": "2nd largest."
     },
     {
-      "input": "(open LeetCode example 2 for Kth Largest Element in an Array)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "nums = [3,2,3,1,2,4,5,5,6], k = 4",
+      "output": "4",
+      "explanation": "4th largest."
     }
   ],
   "thinkingSteps": [

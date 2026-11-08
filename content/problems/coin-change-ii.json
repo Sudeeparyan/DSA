@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/coin-change-ii/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: The key idea is to use dynamic programming to count the number of combinations that make up each amount from 0 to 'amount'. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Coin Change II'. Here is the clever trick in plain words: The key idea is to use dynamic programming to count the number of combinations that make up each amount from 0 to 'amount'. We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 518: Coin Change II. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Coin Change II)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "amount = 5, coins = [1,2,5]",
+      "output": "4",
+      "explanation": "Combinations."
     },
     {
-      "input": "(open LeetCode example 2 for Coin Change II)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "amount = 3, coins = [2]",
+      "output": "0",
+      "explanation": "None."
     }
   ],
   "thinkingSteps": [
@@ -72,9 +72,12 @@
   "animation": {
     "visualType": "dp",
     "tracerId": "generic-array-scan",
-    "defaultInput": {
-      "demo": true
-    },
+    "defaultInput": [
+      1,
+      2,
+      3,
+      2
+    ],
     "steps": [
       {
         "line": 1,

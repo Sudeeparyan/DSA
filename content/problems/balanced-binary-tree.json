@@ -7,18 +7,18 @@
   "difficulty": "Easy",
   "leetcodeUrl": "https://leetcode.com/problems/balanced-binary-tree/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Imagine 'Balanced Binary Tree' as a puzzle game. We are in the trees world. First we invent any correct plan, then we upgrade it with the pattern for this family, so a 10-year-old could retell the steps.",
+  "kidExplanation": "Picture the puzzle 'Balanced Binary Tree'. Here is the clever trick in plain words: To check if a binary tree is balanced, we can use a recursive approach. For each node, we calculate the height of its left and right subtrees. If the difference in heights is greater than 1, the tree is not balanced. We We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 110: Balanced Binary Tree. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Balanced Binary Tree)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "root = [3,9,20,null,null,15,7]",
+      "output": "true",
+      "explanation": "Balanced."
     },
     {
-      "input": "(open LeetCode example 2 for Balanced Binary Tree)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "root = [1,2,2,3,3,null,null,4,4]",
+      "output": "false",
+      "explanation": "Skewed."
     }
   ],
   "thinkingSteps": [

@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/interleaving-string/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: The key idea is to use dynamic programming to determine whether s3 can be formed by interleaving s1 and s2. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Interleaving String'. Here is the clever trick in plain words: The key idea is to use dynamic programming to determine whether s3 can be formed by interleaving s1 and s2. We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 97: Interleaving String. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Interleaving String)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "s1 = \"aabcc\", s2 = \"dbbca\", s3 = \"aadbbcbcac\"",
+      "output": "true",
+      "explanation": "Interleave."
     },
     {
-      "input": "(open LeetCode example 2 for Interleaving String)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "s3 = \"aadbbbaccc\"",
+      "output": "false",
+      "explanation": "Impossible."
     }
   ],
   "thinkingSteps": [
@@ -72,9 +72,12 @@
   "animation": {
     "visualType": "dp",
     "tracerId": "generic-array-scan",
-    "defaultInput": {
-      "demo": true
-    },
+    "defaultInput": [
+      1,
+      2,
+      3,
+      2
+    ],
     "steps": [
       {
         "line": 1,

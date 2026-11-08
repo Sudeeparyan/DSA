@@ -7,18 +7,18 @@
   "difficulty": "Easy",
   "leetcodeUrl": "https://leetcode.com/problems/valid-palindrome/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Read only letters and digits, ignoring case and junk. Does the sentence sound the same forwards and backwards?",
+  "kidExplanation": "Ignore spaces and punctuation. Do the letters and digits read the same forwards and backwards?",
   "plainProblem": "LeetCode 125: Valid Palindrome. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Valid Palindrome)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "s = \"A man, a plan, a canal: Panama\"",
+      "output": "true",
+      "explanation": "Alphanumeric palindrome."
     },
     {
-      "input": "(open LeetCode example 2 for Valid Palindrome)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "s = \"race a car\"",
+      "output": "false",
+      "explanation": "Not palindrome."
     }
   ],
   "thinkingSteps": [

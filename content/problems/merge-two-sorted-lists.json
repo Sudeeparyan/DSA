@@ -7,18 +7,18 @@
   "difficulty": "Easy",
   "leetcodeUrl": "https://leetcode.com/problems/merge-two-sorted-lists/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: To merge two sorted linked lists 'l1' and 'l2', we can create a new linked list 'dummy' to hold the merged result. We maintain two pointers, 'current' and 'prev', to traverse through the two input lists. At each step, we compare the values at the 'current' pointers of 'l1' and 'l2', and add the smaller value to the 'dummy' list. We then move the 'current' pointer of the list with the smaller value one step forward. After iterating through both lists, if any list still has remaining elements, we append them to the 'dummy' list. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Merge Two Sorted Lists'. Here is the clever trick in plain words: To merge two sorted linked lists 'l1' and 'l2', we can create a new linked list 'dummy' to hold the merged result. We maintain two pointers, 'current' and 'prev', to traverse through the two input lists. At each step, we We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 21: Merge Two Sorted Lists. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Merge Two Sorted Lists)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "list1 = [1,2,4], list2 = [1,3,4]",
+      "output": "[1,1,2,3,4,4]",
+      "explanation": "Merged."
     },
     {
-      "input": "(open LeetCode example 2 for Merge Two Sorted Lists)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "list1 = [], list2 = [0]",
+      "output": "[0]",
+      "explanation": "One empty."
     }
   ],
   "thinkingSteps": [

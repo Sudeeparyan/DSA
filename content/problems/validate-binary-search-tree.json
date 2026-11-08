@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/validate-binary-search-tree/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Imagine 'Validate Binary Search Tree' as a puzzle game. We are in the trees world. First we invent any correct plan, then we upgrade it with the pattern for this family, so a 10-year-old could retell the steps.",
+  "kidExplanation": "Picture the puzzle 'Validate Binary Search Tree'. Here is the clever trick in plain words: To validate if a binary tree is a valid binary search tree (BST), we can perform an in-order traversal and check if the values are in ascending order. During the in-order traversal, we keep track of the previously visite We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 98: Validate Binary Search Tree. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Validate Binary Search Tree)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "root = [2,1,3]",
+      "output": "true",
+      "explanation": "Valid BST."
     },
     {
-      "input": "(open LeetCode example 2 for Validate Binary Search Tree)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "root = [5,1,4,null,null,3,6]",
+      "output": "false",
+      "explanation": "4 < 5 on right."
     }
   ],
   "thinkingSteps": [

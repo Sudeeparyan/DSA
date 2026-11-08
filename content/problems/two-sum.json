@@ -11,13 +11,13 @@
   "plainProblem": "Given a list of numbers and a target, return the indices of two different numbers that add up to the target. Exactly one solution exists. You may not use the same element twice.",
   "examples": [
     {
-      "input": "nums = [2, 7, 11, 15], target = 9",
-      "output": "[0, 1]",
+      "input": "nums = [2,7,11,15], target = 9",
+      "output": "[0,1]",
       "explanation": "2 + 7 = 9."
     },
     {
-      "input": "nums = [3, 2, 4], target = 6",
-      "output": "[1, 2]",
+      "input": "nums = [3,2,4], target = 6",
+      "output": "[1,2]",
       "explanation": "2 + 4 = 6."
     }
   ],

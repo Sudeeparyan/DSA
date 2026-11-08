@@ -11,14 +11,14 @@
   "plainProblem": "LeetCode 208: Implement Trie (Prefix Tree). Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Implement Trie (Prefix Tree))",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "insert \"apple\"; search \"apple\"",
+      "output": "true",
+      "explanation": "Word present."
     },
     {
-      "input": "(open LeetCode example 2 for Implement Trie (Prefix Tree))",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "search \"app\"; startsWith \"app\"",
+      "output": "false then true",
+      "explanation": "Prefix only."
     }
   ],
   "thinkingSteps": [

@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/spiral-matrix/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: To traverse a matrix in a spiral order, we can iterate through each layer of the matrix and extract the elements in the desired order: top row, right column, bottom row, and left column. We update the boundaries of each layer as we traverse. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Spiral Matrix'. Here is the clever trick in plain words: To traverse a matrix in a spiral order, we can iterate through each layer of the matrix and extract the elements in the desired order: top row, right column, bottom row, and left column. We update the boundaries of each We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 54: Spiral Matrix. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Spiral Matrix)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "matrix = [[1,2,3],[4,5,6],[7,8,9]]",
+      "output": "[1,2,3,6,9,8,7,4,5]",
+      "explanation": "Spiral."
     },
     {
-      "input": "(open LeetCode example 2 for Spiral Matrix)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]",
+      "output": "[1,2,3,4,8,12,11,10,9,5,6,7]",
+      "explanation": "Spiral."
     }
   ],
   "thinkingSteps": [

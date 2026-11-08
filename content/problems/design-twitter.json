@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/design-twitter/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: To design a simplified version of Twitter, we can use a combination of data structures. We maintain a dictionary to map users to their tweets, and a set of followees for each user. When a user posts a tweet, we add it to their tweet list. When a user wants to retrieve their news feed, we merge their own tweets and the tweets of their followees, and then sort them based on timestamps. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Design Twitter'. Here is the clever trick in plain words: To design a simplified version of Twitter, we can use a combination of data structures. We maintain a dictionary to map users to their tweets, and a set of followees for each user. When a user posts a tweet, we add it to We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 355: Design Twitter. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Design Twitter)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "post/follow/unfollow/getNewsFeed sequence",
+      "output": "recent followed tweets",
+      "explanation": "Feed order."
     },
     {
-      "input": "(open LeetCode example 2 for Design Twitter)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "user with no follows",
+      "output": "own tweets only",
+      "explanation": "Empty social."
     }
   ],
   "thinkingSteps": [

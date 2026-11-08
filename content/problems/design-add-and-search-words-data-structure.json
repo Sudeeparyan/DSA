@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/design-add-and-search-words-data-structure/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: To design a data structure that supports adding and searching words, we can use a Trie (prefix tree) with a special character '.' to represent any character. When searching, we traverse the Trie and recursively search in all child nodes for matching characters or '.'. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Design Add and Search Words Data Structure'. Here is the clever trick in plain words: To design a data structure that supports adding and searching words, we can use a Trie (prefix tree) with a special character '.' to represent any character. When searching, we traverse the Trie and recursively search in We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 211: Design Add and Search Words Data Structure. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Design Add and Search Words Data Structure)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "add \"bad\",\"dad\",\"mad\"; search \"pad\"",
+      "output": "false",
+      "explanation": "Missing."
     },
     {
-      "input": "(open LeetCode example 2 for Design Add and Search Words Data Structure)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "search \".ad\"; search \"b..\"",
+      "output": "true, true",
+      "explanation": "Wildcards."
     }
   ],
   "thinkingSteps": [

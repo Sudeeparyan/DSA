@@ -7,18 +7,18 @@
   "difficulty": "Easy",
   "leetcodeUrl": "https://leetcode.com/problems/kth-largest-element-in-a-stream/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: To find the kth largest element in a stream of integers, we can use a min-heap (priority queue) with a maximum size of k. As new elements arrive, we add them to the min-heap. If the size of the heap exceeds k, we remove the smallest element. The top element of the min-heap will be the kth largest element. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Kth Largest Element in a Stream'. Here is the clever trick in plain words: To find the kth largest element in a stream of integers, we can use a min-heap (priority queue) with a maximum size of k. As new elements arrive, we add them to the min-heap. If the size of the heap exceeds k, we remove We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 703: Kth Largest Element in a Stream. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Kth Largest Element in a Stream)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "k = 3, nums = [4,5,8,2]; add 3,5,10,9,4",
+      "output": "4,5,5,8,8",
+      "explanation": "Stream kth."
     },
     {
-      "input": "(open LeetCode example 2 for Kth Largest Element in a Stream)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "k = 1, nums = []",
+      "output": "depends on adds",
+      "explanation": "Min-heap size 1."
     }
   ],
   "thinkingSteps": [

@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/jump-game/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: We can solve this problem using a greedy approach. The idea is to keep track of the maximum reachable index as we iterate through the array. At each index, we update the maximum reachable index by taking the maximum of the current index plus the value at that index (which represents the maximum jump length) and the previous maximum reachable index. If the maximum reachable index surpasses or equals the last index, we know it's possible to reach the end. (We will slow down and draw it.)",
+  "kidExplanation": "You stand on lily pads. Each pad says how far you may hop forward. Can you reach the last pad without getting stuck?",
   "plainProblem": "LeetCode 55: Jump Game. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Jump Game)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "nums = [2,3,1,1,4]",
+      "output": "true",
+      "explanation": "Can reach."
     },
     {
-      "input": "(open LeetCode example 2 for Jump Game)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "nums = [3,2,1,0,4]",
+      "output": "false",
+      "explanation": "Stuck."
     }
   ],
   "thinkingSteps": [

@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/merge-intervals/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: We can solve this problem by first sorting the intervals based on their start times. Then, we iterate through the sorted intervals and merge overlapping intervals. We initialize an empty list `result` to store the merged intervals. For each interval, if it overlaps with the previous interval (i.e., the end of the previous interval is greater than or equal to the start of the current interval), we update the end of the previous interval to be the maximum of the end of both intervals. If there is no overlap, we add the previous interval to the result and update the previous interval to be the current interval. After iterating through all intervals, we add the last interval (or the merged interval) to the result. (We will slow down and draw it.)",
+  "kidExplanation": "Busy blocks on a calendar overlap. Glue overlapping blocks into combined busy times.",
   "plainProblem": "LeetCode 56: Merge Intervals. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Merge Intervals)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "intervals = [[1,3],[2,6],[8,10],[15,18]]",
+      "output": "[[1,6],[8,10],[15,18]]",
+      "explanation": "Merged."
     },
     {
-      "input": "(open LeetCode example 2 for Merge Intervals)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "intervals = [[1,4],[4,5]]",
+      "output": "[[1,5]]",
+      "explanation": "Touching."
     }
   ],
   "thinkingSteps": [
@@ -73,7 +73,20 @@
     "visualType": "intervals",
     "tracerId": "generic-array-scan",
     "defaultInput": {
-      "demo": true
+      "intervals": [
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          8,
+          10
+        ]
+      ]
     },
     "steps": [
       {

@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/course-schedule-ii/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Imagine 'Course Schedule II' as a puzzle game. We are in the graphs world. First we invent any correct plan, then we upgrade it with the pattern for this family, so a 10-year-old could retell the steps.",
+  "kidExplanation": "Picture the puzzle 'Course Schedule II'. Here is the clever trick in plain words: This problem is an extension of the previous Course Schedule problem (LeetCode 207). We need to return the order in which courses can be taken. We can use the topological sorting approach to solve this. We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 210: Course Schedule II. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Course Schedule II)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "numCourses = 2, prerequisites = [[1,0]]",
+      "output": "[0,1]",
+      "explanation": "Order."
     },
     {
-      "input": "(open LeetCode example 2 for Course Schedule II)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "numCourses = 4, prerequisites = [[1,0],[2,0],[3,1],[3,2]]",
+      "output": "[0,2,1,3]",
+      "explanation": "One valid order."
     }
   ],
   "thinkingSteps": [

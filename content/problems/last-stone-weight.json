@@ -7,18 +7,18 @@
   "difficulty": "Easy",
   "leetcodeUrl": "https://leetcode.com/problems/last-stone-weight/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: To simulate the process of smashing stones, we can use a max-heap (priority queue) to keep track of the stone weights. At each step, we pop the two largest stones from the heap, smash them together, and push the resulting weight back into the heap. We repeat this process until there is only one stone left in the heap, which will be the last stone weight. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Last Stone Weight'. Here is the clever trick in plain words: To simulate the process of smashing stones, we can use a max-heap (priority queue) to keep track of the stone weights. At each step, we pop the two largest stones from the heap, smash them together, and push the resultin We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 1046: Last Stone Weight. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Last Stone Weight)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "stones = [2,7,4,1,8,1]",
+      "output": "1",
+      "explanation": "Last stone."
     },
     {
-      "input": "(open LeetCode example 2 for Last Stone Weight)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "stones = [1]",
+      "output": "1",
+      "explanation": "Only one."
     }
   ],
   "thinkingSteps": [

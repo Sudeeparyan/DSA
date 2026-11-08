@@ -7,18 +7,18 @@
   "difficulty": "Hard",
   "leetcodeUrl": "https://leetcode.com/problems/swim-in-rising-water/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: The problem can be approached using a binary search along with depth-first search (DFS). We can perform a binary search on the range of possible time values, from the minimum value (0) to the maximum value (N * N). For each time value, we perform a DFS to check if it's possible to reach the bottom-right cell from the top-left cell without encountering cells with heights greater than the current time value. If a valid path exists, we narrow down the search to the left half of the time range; otherwise, we search in the right half. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Swim in Rising Water'. Here is the clever trick in plain words: The problem can be approached using a binary search along with depth-first search (DFS). We can perform a binary search on the range of possible time values, from the minimum value (0) to the maximum value (N * N). For e We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 778: Swim in Rising Water. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Swim in Rising Water)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "grid = [[0,2],[1,3]]",
+      "output": "3",
+      "explanation": "Wait until 3."
     },
     {
-      "input": "(open LeetCode example 2 for Swim in Rising Water)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "grid = [[0,1,2,3,4],[24,23,22,21,5],[12,13,14,15,16],[11,17,18,19,20],[10,9,8,7,6]]",
+      "output": "16",
+      "explanation": "Path max min."
     }
   ],
   "thinkingSteps": [

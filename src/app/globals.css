@@ -1,33 +1,45 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f3f7f4;
-  --foreground: #14201b;
-  --muted: #5b6b63;
-  --card: #ffffff;
-  --border: #d5e0da;
-  --accent: #0f766e;
-  --accent-soft: #ccfbf1;
-  --current: #eab308;
-  --matched: #16a34a;
-  --rejected: #dc2626;
-  --remembered: #2563eb;
-  --glow: rgba(15, 118, 110, 0.12);
+  --background: #e7eef5;
+  --foreground: #0b1220;
+  --muted: #5a6b7d;
+  --card: rgba(255, 255, 255, 0.72);
+  --border: rgba(15, 30, 50, 0.12);
+  --accent: #0f8f86;
+  --accent-2: #e85d04;
+  --accent-soft: rgba(15, 143, 134, 0.14);
+  --ink: #071018;
+  --panel: #0b1220;
+  --panel-fg: #e8f1f7;
+  --current: #f4c430;
+  --matched: #1f9d55;
+  --rejected: #e03131;
+  --remembered: #1c7ed6;
+  --glow: rgba(15, 143, 134, 0.22);
+  --hero-glow: rgba(232, 93, 4, 0.16);
+  --grid: rgba(11, 18, 32, 0.05);
 }
 
 .dark {
-  --background: #0b1411;
-  --foreground: #e7f0eb;
-  --muted: #9db0a6;
-  --card: #13201b;
-  --border: #24352e;
-  --accent: #2dd4bf;
-  --accent-soft: #134e4a;
-  --current: #facc15;
-  --matched: #4ade80;
-  --rejected: #f87171;
-  --remembered: #60a5fa;
-  --glow: rgba(45, 212, 191, 0.12);
+  --background: #070b12;
+  --foreground: #e8f1f7;
+  --muted: #93a4b8;
+  --card: rgba(16, 24, 38, 0.82);
+  --border: rgba(232, 241, 247, 0.1);
+  --accent: #2ec4b6;
+  --accent-2: #ff7b29;
+  --accent-soft: rgba(46, 196, 182, 0.16);
+  --ink: #e8f1f7;
+  --panel: #101826;
+  --panel-fg: #e8f1f7;
+  --current: #ffd43b;
+  --matched: #51cf66;
+  --rejected: #ff6b6b;
+  --remembered: #74c0fc;
+  --glow: rgba(46, 196, 182, 0.18);
+  --hero-glow: rgba(255, 123, 41, 0.14);
+  --grid: rgba(232, 241, 247, 0.04);
 }
 
 @theme inline {
@@ -37,12 +49,17 @@
   --color-card: var(--card);
   --color-border: var(--border);
   --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
   --color-accent-soft: var(--accent-soft);
+  --color-ink: var(--ink);
+  --color-panel: var(--panel);
+  --color-panel-fg: var(--panel-fg);
   --color-current: var(--current);
   --color-matched: var(--matched);
   --color-rejected: var(--rejected);
   --color-remembered: var(--remembered);
-  --font-sans: var(--font-display);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-brand);
   --font-mono: var(--font-code);
 }
 
@@ -55,22 +72,79 @@ html {
 }
 
 body {
-  background:
-    radial-gradient(1200px 600px at 10% -10%, var(--glow), transparent 55%),
-    radial-gradient(900px 500px at 90% 0%, rgba(234, 179, 8, 0.08), transparent 50%),
-    var(--background);
-  color: var(--foreground);
-  font-family: var(--font-display), "Segoe UI", sans-serif;
   min-height: 100vh;
+  color: var(--foreground);
+  font-family: var(--font-body), "Segoe UI", sans-serif;
+  background:
+    radial-gradient(900px 520px at 12% -8%, var(--glow), transparent 58%),
+    radial-gradient(760px 480px at 92% 4%, var(--hero-glow), transparent 52%),
+    linear-gradient(180deg, transparent 0%, transparent 40%, var(--background) 100%),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 23px,
+      var(--grid) 24px
+    ),
+    var(--background);
 }
 
 ::selection {
   background: var(--accent-soft);
+  color: var(--foreground);
 }
 
-.prose-kid p {
-  line-height: 1.7;
-  font-size: 1.05rem;
+h1,
+h2,
+h3,
+.brand-font {
+  font-family: var(--font-brand), var(--font-body), sans-serif;
+  letter-spacing: -0.03em;
+}
+
+.teach {
+  font-family: var(--font-teach), Georgia, serif;
+  line-height: 1.75;
+  font-size: 1.08rem;
+}
+
+.glass {
+  background: var(--card);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(14px);
+}
+
+.signal-btn {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0.7rem 1.25rem;
+  font-weight: 700;
+  transition: transform 160ms ease, background 160ms ease, color 160ms ease;
+}
+
+.signal-btn:hover {
+  transform: translateY(-1px);
+}
+
+.signal-btn-primary {
+  background: var(--accent);
+  color: white;
+}
+
+.signal-btn-secondary {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--foreground);
+}
+
+.section-kicker {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -11,14 +11,14 @@
   "plainProblem": "LeetCode 150: Evaluate Reverse Polish Notation. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Evaluate Reverse Polish Notation)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "tokens = [\"2\",\"1\",\"+\",\"3\",\"*\"]",
+      "output": "9",
+      "explanation": "(2+1)*3"
     },
     {
-      "input": "(open LeetCode example 2 for Evaluate Reverse Polish Notation)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "tokens = [\"4\",\"13\",\"5\",\"/\",\"+\"]",
+      "output": "6",
+      "explanation": "4+(13/5)"
     }
   ],
   "thinkingSteps": [

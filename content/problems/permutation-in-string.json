@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/permutation-in-string/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: To check whether a string 's2' contains a permutation of another string 's1', we can use a sliding window approach. First, we create a frequency dictionary for characters in 's1'. Then, we initialize two pointers, 'left' and 'right', to represent the current window in 's2'. As we move the 'right' pointer to the right, we add the character to a temporary frequency dictionary and check if it becomes equal to the frequency dictionary of 's1'. If it does, it means we found a permutation of 's1' in 's2', and we return True. If the window size exceeds the length of 's1', we remove the character at the 'left' pointer from the temporary dictionary and move the 'left' pointer to the right to shrink the window. We continue this process until we find a permutation or reach the end of 's2'. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Permutation in String'. Here is the clever trick in plain words: To check whether a string 's2' contains a permutation of another string 's1', we can use a sliding window approach. First, we create a frequency dictionary for characters in 's1'. Then, we initialize two pointers, 'left' We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 567: Permutation in String. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Permutation in String)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "s1 = \"ab\", s2 = \"eidbaooo\"",
+      "output": "true",
+      "explanation": "Window ba."
     },
     {
-      "input": "(open LeetCode example 2 for Permutation in String)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "s1 = \"ab\", s2 = \"eidboaoo\"",
+      "output": "false",
+      "explanation": "No window."
     }
   ],
   "thinkingSteps": [

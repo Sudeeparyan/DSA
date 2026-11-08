@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/letter-combinations-of-a-phone-number/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: To generate all possible letter combinations of a phone number, we can use a recursive approach. Starting from each digit of the phone number, we generate combinations by appending each letter corresponding to the digit to the current combinations. We repeat this process for all digits and all possible letters, building up the combinations. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Letter Combinations of a Phone Number'. Here is the clever trick in plain words: To generate all possible letter combinations of a phone number, we can use a recursive approach. Starting from each digit of the phone number, we generate combinations by appending each letter corresponding to the digit We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 17: Letter Combinations of a Phone Number. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Letter Combinations of a Phone Number)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "digits = \"23\"",
+      "output": "[\"ad\",\"ae\",\"af\",\"bd\",\"be\",\"bf\",\"cd\",\"ce\",\"cf\"]",
+      "explanation": "Keypad."
     },
     {
-      "input": "(open LeetCode example 2 for Letter Combinations of a Phone Number)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "digits = \"\"",
+      "output": "[]",
+      "explanation": "Empty."
     }
   ],
   "thinkingSteps": [

@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/surrounded-regions/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: The problem is to capture 'O' cells that are not surrounded by 'X' cells in a given board. To solve this, we can use Depth-First Search (DFS) starting from the boundary 'O' cells. All the 'O' cells that are reachable from the boundary will be retained, and the rest will be changed to 'X'. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Surrounded Regions'. Here is the clever trick in plain words: The problem is to capture 'O' cells that are not surrounded by 'X' cells in a given board. To solve this, we can use Depth-First Search (DFS) starting from the boundary 'O' cells. All the 'O' cells that are reachable fro We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 130: Surrounded Regions. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Surrounded Regions)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "board with O/X",
+      "output": "captured inner O",
+      "explanation": "Border O safe."
     },
     {
-      "input": "(open LeetCode example 2 for Surrounded Regions)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "no surrounded",
+      "output": "unchanged",
+      "explanation": "Nothing to flip."
     }
   ],
   "thinkingSteps": [

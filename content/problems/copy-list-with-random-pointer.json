@@ -11,14 +11,14 @@
   "plainProblem": "LeetCode 138: Copy List with Random Pointer. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Copy List with Random Pointer)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "head with next+random links",
+      "output": "deep copy",
+      "explanation": "New nodes, same shape."
     },
     {
-      "input": "(open LeetCode example 2 for Copy List with Random Pointer)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "two-node mutual random",
+      "output": "deep copy",
+      "explanation": "Random preserved."
     }
   ],
   "thinkingSteps": [

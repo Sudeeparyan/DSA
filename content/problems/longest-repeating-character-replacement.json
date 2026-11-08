@@ -11,14 +11,14 @@
   "plainProblem": "LeetCode 424: Longest Repeating Character Replacement. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Longest Repeating Character Replacement)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "s = \"ABAB\", k = 2",
+      "output": "4",
+      "explanation": "Whole string."
     },
     {
-      "input": "(open LeetCode example 2 for Longest Repeating Character Replacement)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "s = \"AABABBA\", k = 1",
+      "output": "4",
+      "explanation": "Window 4."
     }
   ],
   "thinkingSteps": [

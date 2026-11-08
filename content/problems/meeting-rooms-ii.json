@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/meeting-rooms-ii/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: We can solve this problem using a priority queue (min-heap). First, we sort the intervals based on their start times. We then iterate through the sorted intervals and maintain a min-heap of end times of ongoing meetings. For each interval, if the start time is greater than or equal to the smallest end time in the min-heap, it means the current meeting can reuse an existing room, so we pop the smallest end time from the min-heap. If not, we need to allocate a new room. After processing all intervals, the size of the min-heap gives us the minimum number of meeting rooms required. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Meeting Rooms II'. Here is the clever trick in plain words: We can solve this problem using a priority queue (min-heap). First, we sort the intervals based on their start times. We then iterate through the sorted intervals and maintain a min-heap of end times of ongoing meetings. We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 253: Meeting Rooms II. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Meeting Rooms II)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "intervals = [[0,30],[5,10],[15,20]]",
+      "output": "2",
+      "explanation": "Rooms needed."
     },
     {
-      "input": "(open LeetCode example 2 for Meeting Rooms II)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "intervals = [[7,10],[2,4]]",
+      "output": "1",
+      "explanation": "One room."
     }
   ],
   "thinkingSteps": [
@@ -73,7 +73,20 @@
     "visualType": "intervals",
     "tracerId": "generic-array-scan",
     "defaultInput": {
-      "demo": true
+      "intervals": [
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          8,
+          10
+        ]
+      ]
     },
     "steps": [
       {

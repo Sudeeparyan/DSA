@@ -11,14 +11,14 @@
   "plainProblem": "LeetCode 22: Generate Parentheses. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Generate Parentheses)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "n = 3",
+      "output": "[\"((()))\",\"(()())\",\"(())()\",\"()(())\",\"()()()\"]",
+      "explanation": "All valid."
     },
     {
-      "input": "(open LeetCode example 2 for Generate Parentheses)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "n = 1",
+      "output": "[\"()\"]",
+      "explanation": "One pair."
     }
   ],
   "thinkingSteps": [

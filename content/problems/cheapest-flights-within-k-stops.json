@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/cheapest-flights-within-k-stops/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: The problem can be solved using Dijkstra's algorithm with a modified priority queue (min-heap) and BFS (Breadth-First Search) approach. We can create a graph where each node represents a city, and the edges represent flights between cities with associated costs. We use a priority queue to explore the nodes in a way that prioritizes the minimum cost. We continue the BFS process until we reach the destination city or exhaust the maximum number of allowed stops (K+1). (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Cheapest Flights Within K Stops'. Here is the clever trick in plain words: The problem can be solved using Dijkstra's algorithm with a modified priority queue (min-heap) and BFS (Breadth-First Search) approach. We can create a graph where each node represents a city, and the edges represent fli We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 787: Cheapest Flights Within K Stops. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Cheapest Flights Within K Stops)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "n = 4, flights = [[0,1,100],[1,2,100],[2,0,100],[1,3,600],[2,3,200]], src = 0, dst = 3, k = 1",
+      "output": "700",
+      "explanation": "Via 1."
     },
     {
-      "input": "(open LeetCode example 2 for Cheapest Flights Within K Stops)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "same, k = 2",
+      "output": "400",
+      "explanation": "Cheaper longer."
     }
   ],
   "thinkingSteps": [

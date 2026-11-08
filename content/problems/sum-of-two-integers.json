@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/sum-of-two-integers/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: To calculate the sum of two integers without using the + and - operators, we can use bitwise operations. We use the XOR operation (^) to calculate the sum without considering the carry, and the AND operation (&) followed by a left shift (<<) to calculate the carry. We repeat these steps until there is no carry left. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Sum of Two Integers'. Here is the clever trick in plain words: To calculate the sum of two integers without using the + and - operators, we can use bitwise operations. We use the XOR operation (^) to calculate the sum without considering the carry, and the AND operation (&) followed We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 371: Sum of Two Integers. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Sum of Two Integers)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "a = 1, b = 2",
+      "output": "3",
+      "explanation": "Bit add."
     },
     {
-      "input": "(open LeetCode example 2 for Sum of Two Integers)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "a = 2, b = 3",
+      "output": "5",
+      "explanation": "Bit add."
     }
   ],
   "thinkingSteps": [

@@ -11,14 +11,14 @@
   "plainProblem": "LeetCode 121: Best Time to Buy & Sell Stock. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Best Time to Buy & Sell Stock)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "prices = [7,1,5,3,6,4]",
+      "output": "5",
+      "explanation": "Buy 1 sell 6."
     },
     {
-      "input": "(open LeetCode example 2 for Best Time to Buy & Sell Stock)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "prices = [7,6,4,3,1]",
+      "output": "0",
+      "explanation": "No profit."
     }
   ],
   "thinkingSteps": [

@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/palindrome-partitioning/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: To partition a given string into palindromic substrings, we can use backtracking. Starting from each position in the string, we check if the substring from that position to the end is a palindrome. If it is, we recursively partition the remaining substring and continue the process. We keep track of the current partition in a list and store valid partitions in the result. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Palindrome Partitioning'. Here is the clever trick in plain words: To partition a given string into palindromic substrings, we can use backtracking. Starting from each position in the string, we check if the substring from that position to the end is a palindrome. If it is, we recursive We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 131: Palindrome Partitioning. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Palindrome Partitioning)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "s = \"aab\"",
+      "output": "[[\"a\",\"a\",\"b\"],[\"aa\",\"b\"]]",
+      "explanation": "Pal parts."
     },
     {
-      "input": "(open LeetCode example 2 for Palindrome Partitioning)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "s = \"a\"",
+      "output": "[[\"a\"]]",
+      "explanation": "Single."
     }
   ],
   "thinkingSteps": [

@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/k-closest-points-to-origin/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: To find the k closest points to the origin, we can calculate the distance of each point from the origin and use a min-heap (priority queue) to keep track of the k closest points. As we iterate through the points, we push each point into the min-heap. If the size of the heap exceeds k, we remove the farthest point. The remaining points in the heap will be the k closest points. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'K Closest Points to Origin'. Here is the clever trick in plain words: To find the k closest points to the origin, we can calculate the distance of each point from the origin and use a min-heap (priority queue) to keep track of the k closest points. As we iterate through the points, we push We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 973: K Closest Points to Origin. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for K Closest Points to Origin)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "points = [[1,3],[-2,2]], k = 1",
+      "output": "[[-2,2]]",
+      "explanation": "Closer."
     },
     {
-      "input": "(open LeetCode example 2 for K Closest Points to Origin)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "points = [[3,3],[5,-1],[-2,4]], k = 2",
+      "output": "[[3,3],[-2,4]]",
+      "explanation": "Two closest."
     }
   ],
   "thinkingSteps": [

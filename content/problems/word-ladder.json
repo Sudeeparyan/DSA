@@ -7,18 +7,18 @@
   "difficulty": "Hard",
   "leetcodeUrl": "https://leetcode.com/problems/word-ladder/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Imagine 'Word Ladder' as a puzzle game. We are in the graphs world. First we invent any correct plan, then we upgrade it with the pattern for this family, so a 10-year-old could retell the steps.",
+  "kidExplanation": "Picture the puzzle 'Word Ladder'. Here is the clever trick in plain words: This problem can be solved using a breadth-first search (BFS) approach. We start with the given beginWord and perform a BFS to explore all possible word transformations, one character change at a time. We maintain a queu We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 127: Word Ladder. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Word Ladder)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\",\"cog\"]",
+      "output": "5",
+      "explanation": "Shortest ladder."
     },
     {
-      "input": "(open LeetCode example 2 for Word Ladder)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "endWord missing",
+      "output": "0",
+      "explanation": "Impossible."
     }
   ],
   "thinkingSteps": [

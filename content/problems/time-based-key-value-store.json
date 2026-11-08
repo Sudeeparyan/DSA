@@ -11,14 +11,14 @@
   "plainProblem": "LeetCode 981: Time Based Key-Value Store. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Time Based Key-Value Store)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "set(\"foo\",\"bar\",1); get(\"foo\",1)",
+      "output": "\"bar\"",
+      "explanation": "Exact time."
     },
     {
-      "input": "(open LeetCode example 2 for Time Based Key-Value Store)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "set(\"foo\",\"bar2\",4); get(\"foo\",5)",
+      "output": "\"bar2\"",
+      "explanation": "Latest \u2264 t."
     }
   ],
   "thinkingSteps": [

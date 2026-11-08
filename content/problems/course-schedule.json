@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/course-schedule/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Courses with prerequisites. Can you finish them all without a cycle of requirements?",
+  "kidExplanation": "Classes with prerequisites. Can you finish them all without a loop of 'must take A before B before A'?",
   "plainProblem": "LeetCode 207: Course Schedule. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Course Schedule)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "numCourses = 2, prerequisites = [[1,0]]",
+      "output": "true",
+      "explanation": "Possible."
     },
     {
-      "input": "(open LeetCode example 2 for Course Schedule)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "numCourses = 2, prerequisites = [[1,0],[0,1]]",
+      "output": "false",
+      "explanation": "Cycle."
     }
   ],
   "thinkingSteps": [

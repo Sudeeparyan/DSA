@@ -7,18 +7,18 @@
   "difficulty": "Easy",
   "leetcodeUrl": "https://leetcode.com/problems/happy-number/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: A number is a happy number if, after repeatedly replacing it with the sum of the square of its digits, the process eventually reaches 1. To determine if a number is a happy number, we can use Floyd's Cycle Detection Algorithm. We use two pointers: a slow pointer that advances one step at a time and a fast pointer that advances two steps at a time. If the fast pointer eventually reaches the slow pointer, we have a cycle, indicating that the number is not a happy number. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Happy Number'. Here is the clever trick in plain words: A number is a happy number if, after repeatedly replacing it with the sum of the square of its digits, the process eventually reaches 1. To determine if a number is a happy number, we can use Floyd's Cycle Detection Algo We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 202: Happy Number. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Happy Number)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "n = 19",
+      "output": "true",
+      "explanation": "Reaches 1."
     },
     {
-      "input": "(open LeetCode example 2 for Happy Number)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "n = 2",
+      "output": "false",
+      "explanation": "Cycle without 1."
     }
   ],
   "thinkingSteps": [

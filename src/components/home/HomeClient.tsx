@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { ProgressRing } from "@/components/ui/ProgressRing";
+import { HeroBoard } from "@/components/home/HeroBoard";
 import { accentFor } from "@/lib/categories";
 import {
   countByStatus,
@@ -31,6 +33,7 @@ export function HomeClient({
   categories: CatCard[];
   problems: ProblemLite[];
 }) {
+  const reduce = useReducedMotion();
   const [understood, setUnderstood] = useState(0);
   const [last, setLast] = useState<string | null>(null);
   const [query, setQuery] = useState("");
@@ -67,117 +70,158 @@ export function HomeClient({
   const continueProblem = problems.find((p) => p.slug === last);
 
   return (
-    <div className="mx-auto max-w-6xl space-y-10 px-4 py-8">
-      <section className="relative overflow-hidden rounded-[2rem] border border-border bg-card px-6 py-10 sm:px-10">
-        <div
-          className="pointer-events-none absolute inset-0 opacity-70"
-          style={{
-            background:
-              "radial-gradient(600px 280px at 80% 20%, rgba(15,118,110,0.18), transparent), linear-gradient(135deg, rgba(234,179,8,0.08), transparent 40%)",
-          }}
-        />
-        <div className="relative grid items-center gap-8 md:grid-cols-[1.2fr_auto]">
+    <div>
+      <section className="relative overflow-hidden">
+        <div className="mx-auto grid max-w-6xl items-end gap-8 px-4 pb-10 pt-8 lg:grid-cols-[1.05fr_0.95fr] lg:pb-14 lg:pt-12">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">
-              NeetCode 150 Learn
-            </p>
-            <h1 className="mt-3 max-w-xl text-4xl font-semibold tracking-tight sm:text-5xl">
-              DSA stories, animations, and interview-ready Python.
-            </h1>
-            <p className="mt-4 max-w-lg text-base leading-relaxed text-muted sm:text-lg">
-              Built for beginners aiming at Google. Understand the idea before
-              the code — then practise on LeetCode.
-            </p>
-            <div className="mt-6 flex flex-wrap gap-3">
+            <motion.p
+              className="section-kicker"
+              initial={reduce ? false : { opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              Google interview prep
+            </motion.p>
+            <motion.h1
+              className="brand-font mt-4 max-w-xl text-5xl font-extrabold leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl"
+              initial={reduce ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.05 }}
+            >
+              NeetCode
+              <span className="text-accent">150</span>
+              <span className="block text-accent-2">Learn</span>
+            </motion.h1>
+            <motion.p
+              className="teach mt-5 max-w-md text-lg text-muted"
+              initial={reduce ? false : { opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.12 }}
+            >
+              Stories, step-by-step animations, and interview-ready Python —
+              simple enough for a curious beginner, sharp enough for Google.
+            </motion.p>
+            <motion.div
+              className="mt-7 flex flex-wrap items-center gap-3"
+              initial={reduce ? false : { opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.18 }}
+            >
               {continueProblem ? (
                 <Link
                   href={`/problem/${continueProblem.slug}/`}
-                  className="inline-flex min-h-12 items-center rounded-2xl bg-accent px-5 font-semibold text-white"
+                  className="signal-btn signal-btn-primary"
                 >
-                  Continue: {continueProblem.title}
+                  Continue · {continueProblem.title}
                 </Link>
               ) : (
                 <Link
                   href="/problem/contains-duplicate/"
-                  className="inline-flex min-h-12 items-center rounded-2xl bg-accent px-5 font-semibold text-white"
+                  className="signal-btn signal-btn-primary"
                 >
-                  Start with Contains Duplicate
+                  Start · Contains Duplicate
                 </Link>
               )}
-              <Link
-                href="/roadmap/"
-                className="inline-flex min-h-12 items-center rounded-2xl border border-border px-5 font-semibold"
-              >
-                View roadmap
+              <Link href="/roadmap/" className="signal-btn signal-btn-secondary">
+                Open roadmap
               </Link>
+              <div className="ml-auto hidden sm:block">
+                <ProgressRing value={understood} total={150} size={96} />
+              </div>
+            </motion.div>
+          </div>
+          <HeroBoard />
+        </div>
+      </section>
+
+      <div className="mx-auto max-w-6xl space-y-12 px-4 pb-16">
+        <section className="space-y-3">
+          <label htmlFor="home-search" className="section-kicker">
+            Find a problem
+          </label>
+          <input
+            id="home-search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Try “two sum”, “stack”, or “island”"
+            className="w-full rounded-2xl border border-border bg-card px-5 py-4 text-base outline-none ring-accent focus:ring-2"
+          />
+          {filtered.length > 0 && (
+            <ul className="glass overflow-hidden rounded-2xl">
+              {filtered.map((p) => (
+                <li key={p.slug} className="border-b border-border last:border-0">
+                  <Link
+                    href={`/problem/${p.slug}/`}
+                    className="block px-4 py-3 hover:bg-accent-soft"
+                  >
+                    <span className="font-semibold">{p.title}</span>
+                    <span className="ml-2 text-sm text-muted">{p.difficulty}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+
+        <section>
+          <div className="mb-5 flex items-end justify-between gap-4">
+            <div>
+              <p className="section-kicker">Eighteen patterns</p>
+              <h2 className="brand-font mt-2 text-3xl font-bold">Categories</h2>
+            </div>
+            <div className="sm:hidden">
+              <ProgressRing value={understood} total={150} size={72} />
             </div>
           </div>
-          <ProgressRing value={understood} total={150} size={140} />
-        </div>
-      </section>
-
-      <section className="space-y-3">
-        <label htmlFor="home-search" className="text-sm font-semibold">
-          Search problems
-        </label>
-        <input
-          id="home-search"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Try “two sum” or “stack”"
-          className="w-full rounded-2xl border border-border bg-card px-4 py-3 text-base"
-        />
-        {filtered.length > 0 && (
-          <ul className="rounded-2xl border border-border bg-card p-2">
-            {filtered.map((p) => (
-              <li key={p.slug}>
-                <Link
-                  href={`/problem/${p.slug}/`}
-                  className="block rounded-xl px-3 py-2 hover:bg-accent-soft"
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {categories.map((c, i) => {
+              const done = catProgress[c.slug] ?? 0;
+              const total = c.problemSlugs.length;
+              const pct = total ? (done / total) * 100 : 0;
+              const accent = accentFor(c.slug);
+              return (
+                <motion.div
+                  key={c.slug}
+                  initial={reduce ? false : { opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ delay: Math.min(i * 0.03, 0.3) }}
                 >
-                  {p.title}{" "}
-                  <span className="text-sm text-muted">({p.difficulty})</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
-
-      <section>
-        <h2 className="mb-4 text-2xl font-semibold">Categories</h2>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {categories.map((c) => {
-            const done = catProgress[c.slug] ?? 0;
-            const total = c.problemSlugs.length;
-            const pct = total ? (done / total) * 100 : 0;
-            const accent = accentFor(c.slug);
-            return (
-              <Link
-                key={c.slug}
-                href={`/category/${c.slug}/`}
-                className="rounded-3xl border border-border bg-card p-5 transition hover:-translate-y-0.5 hover:shadow-md"
-              >
-                <div className="text-lg font-semibold" style={{ color: accent }}>
-                  {c.name}
-                </div>
-                <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted">
-                  {c.whyItMatters}
-                </p>
-                <div className="mt-4 h-2 overflow-hidden rounded-full bg-border">
-                  <div
-                    className="h-full rounded-full"
-                    style={{ width: `${pct}%`, background: accent }}
-                  />
-                </div>
-                <div className="mt-2 text-xs text-muted">
-                  {done}/{total} understood
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-      </section>
+                  <Link
+                    href={`/category/${c.slug}/`}
+                    className="group block rounded-[1.4rem] border border-border bg-card/80 p-5 transition hover:-translate-y-0.5 hover:border-transparent"
+                    style={{
+                      boxShadow: "inset 0 0 0 0 transparent",
+                    }}
+                  >
+                    <div
+                      className="mb-3 h-1.5 w-12 rounded-full transition group-hover:w-20"
+                      style={{ background: accent }}
+                    />
+                    <div
+                      className="brand-font text-xl font-bold"
+                      style={{ color: accent }}
+                    >
+                      {c.name}
+                    </div>
+                    <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted">
+                      {c.whyItMatters}
+                    </p>
+                    <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-border">
+                      <div
+                        className="h-full rounded-full"
+                        style={{ width: `${pct}%`, background: accent }}
+                      />
+                    </div>
+                    <div className="mt-2 text-xs font-medium text-muted">
+                      {done}/{total} understood
+                    </div>
+                  </Link>
+                </motion.div>
+              );
+            })}
+          </div>
+        </section>
+      </div>
     </div>
   );
 }

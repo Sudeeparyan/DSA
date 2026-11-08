@@ -7,18 +7,18 @@
   "difficulty": "Hard",
   "leetcodeUrl": "https://leetcode.com/problems/reverse-nodes-in-k-group/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: To reverse nodes in k-group, we can use a recursive approach. We traverse the linked list in groups of k nodes, reversing each group. For each group, we maintain pointers to the group's first node ('start') and the group's last node ('end'). We reverse the group in-place and connect the previous group's 'end' to the reversed group's 'start'. We then recursively reverse the remaining part of the linked list. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Reverse Nodes in k-Group'. Here is the clever trick in plain words: To reverse nodes in k-group, we can use a recursive approach. We traverse the linked list in groups of k nodes, reversing each group. For each group, we maintain pointers to the group's first node ('start') and the group We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 25: Reverse Nodes in k-Group. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Reverse Nodes in k-Group)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "head = [1,2,3,4,5], k = 2",
+      "output": "[2,1,4,3,5]",
+      "explanation": "Pairs."
     },
     {
-      "input": "(open LeetCode example 2 for Reverse Nodes in k-Group)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "head = [1,2,3,4,5], k = 3",
+      "output": "[3,2,1,4,5]",
+      "explanation": "Trio."
     }
   ],
   "thinkingSteps": [

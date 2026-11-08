@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/jump-game-ii/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: We can solve this problem using a greedy approach. The idea is to keep track of the farthest reachable index and the current end of the interval. As we iterate through the array, we update the farthest reachable index based on the maximum jump length at the current index. When the current index reaches the end of the interval, we update the end of the interval to the farthest reachable index and increment the jump count. This ensures that we always make the jump with the maximum reach. (We will slow down and draw it.)",
+  "kidExplanation": "Same lily pads, but now count the fewest hops to the end.",
   "plainProblem": "LeetCode 45: Jump Game II. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Jump Game II)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "nums = [2,3,1,1,4]",
+      "output": "2",
+      "explanation": "Min jumps."
     },
     {
-      "input": "(open LeetCode example 2 for Jump Game II)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "nums = [2,3,0,1,4]",
+      "output": "2",
+      "explanation": "Min jumps."
     }
   ],
   "thinkingSteps": [

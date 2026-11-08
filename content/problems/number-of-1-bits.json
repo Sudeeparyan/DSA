@@ -7,18 +7,18 @@
   "difficulty": "Easy",
   "leetcodeUrl": "https://leetcode.com/problems/number-of-1-bits/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: To count the number of 1 bits in an unsigned integer, we can use bit manipulation. We iterate through each bit of the number and use a bitwise AND operation with 1 to check if the least significant bit is 1. If it is, we increment the count and right-shift the number by 1 to check the next bit. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Number of 1 Bits'. Here is the clever trick in plain words: To count the number of 1 bits in an unsigned integer, we can use bit manipulation. We iterate through each bit of the number and use a bitwise AND operation with 1 to check if the least significant bit is 1. If it is, we We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 191: Number of 1 Bits. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Number of 1 Bits)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "n = 11 (0b1011)",
+      "output": "3",
+      "explanation": "Three ones."
     },
     {
-      "input": "(open LeetCode example 2 for Number of 1 Bits)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "n = 128",
+      "output": "1",
+      "explanation": "One one."
     }
   ],
   "thinkingSteps": [

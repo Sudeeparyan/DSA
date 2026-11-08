@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/network-delay-time/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: The problem can be solved using Dijkstra's algorithm to find the shortest paths from a source node to all other nodes in a weighted graph. We start by creating an adjacency list representation of the graph. We maintain a priority queue to select the next node to visit based on the minimum distance. We initialize distances to all nodes as infinity except for the source node, which is set to 0. We continue exploring nodes and updating distances until the priority queue is empty. The maximum distance among all nodes will be the answer. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Network Delay Time'. Here is the clever trick in plain words: The problem can be solved using Dijkstra's algorithm to find the shortest paths from a source node to all other nodes in a weighted graph. We start by creating an adjacency list representation of the graph. We maintain a We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 743: Network Delay Time. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Network Delay Time)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "times = [[2,1,1],[2,3,1],[3,4,1]], n = 4, k = 2",
+      "output": "2",
+      "explanation": "All informed."
     },
     {
-      "input": "(open LeetCode example 2 for Network Delay Time)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "times = [[1,2,1]], n = 2, k = 1",
+      "output": "1",
+      "explanation": "One edge."
     }
   ],
   "thinkingSteps": [

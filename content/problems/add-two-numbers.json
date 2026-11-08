@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/add-two-numbers/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: To add two numbers represented by linked lists, we can simulate the addition digit by digit while considering carry. We maintain a dummy node to build the resulting linked list. We iterate through the input lists, summing the corresponding digits along with any carry from the previous digit. We update the carry and create a new node with the sum digit. After processing both lists, if there is a carry remaining, we add a new node with the carry. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Add Two Numbers'. Here is the clever trick in plain words: To add two numbers represented by linked lists, we can simulate the addition digit by digit while considering carry. We maintain a dummy node to build the resulting linked list. We iterate through the input lists, summin We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 2: Add Two Numbers. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Add Two Numbers)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "l1 = [2,4,3], l2 = [5,6,4]",
+      "output": "[7,0,8]",
+      "explanation": "342+465."
     },
     {
-      "input": "(open LeetCode example 2 for Add Two Numbers)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "l1 = [0], l2 = [0]",
+      "output": "[0]",
+      "explanation": "Zero."
     }
   ],
   "thinkingSteps": [

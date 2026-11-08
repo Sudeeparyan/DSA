@@ -13,7 +13,7 @@
     {
       "input": "s = \"anagram\", t = \"nagaram\"",
       "output": "true",
-      "explanation": "Same letters rearranged."
+      "explanation": "Same multiset of letters."
     },
     {
       "input": "s = \"rat\", t = \"car\"",

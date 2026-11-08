@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/max-area-of-island/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: The problem is to find the maximum area of an island in a grid where 1 represents land and 0 represents water. We can solve this using Depth-First Search (DFS) to traverse each cell of the grid and identify connected land cells forming an island. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Max Area of Island'. Here is the clever trick in plain words: The problem is to find the maximum area of an island in a grid where 1 represents land and 0 represents water. We can solve this using Depth-First Search (DFS) to traverse each cell of the grid and identify connected lan We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 695: Max Area of Island. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Max Area of Island)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "grid with islands",
+      "output": "6",
+      "explanation": "Largest area."
     },
     {
-      "input": "(open LeetCode example 2 for Max Area of Island)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "all water",
+      "output": "0",
+      "explanation": "None."
     }
   ],
   "thinkingSteps": [

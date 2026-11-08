@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/palindromic-substrings/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: The key idea for solving this problem is to expand around each character in the string and count the palindromic substrings. We will consider each character as the center of a potential palindrome and expand outwards while checking if the characters at both ends are equal. We need to handle two cases: palindromes with odd length (centered at a single character) and palindromes with even length (centered between two characters). (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Palindromic Substrings'. Here is the clever trick in plain words: The key idea for solving this problem is to expand around each character in the string and count the palindromic substrings. We will consider each character as the center of a potential palindrome and expand outwards whi We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 647: Palindromic Substrings. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Palindromic Substrings)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "s = \"abc\"",
+      "output": "3",
+      "explanation": "Singles."
     },
     {
-      "input": "(open LeetCode example 2 for Palindromic Substrings)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "s = \"aaa\"",
+      "output": "6",
+      "explanation": "Many pals."
     }
   ],
   "thinkingSteps": [
@@ -72,9 +72,12 @@
   "animation": {
     "visualType": "dp",
     "tracerId": "generic-array-scan",
-    "defaultInput": {
-      "demo": true
-    },
+    "defaultInput": [
+      1,
+      2,
+      3,
+      2
+    ],
     "steps": [
       {
         "line": 1,

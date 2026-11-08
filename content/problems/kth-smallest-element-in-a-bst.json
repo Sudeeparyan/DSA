@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/kth-smallest-element-in-a-bst/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Imagine 'Kth Smallest Element in a BST' as a puzzle game. We are in the trees world. First we invent any correct plan, then we upgrade it with the pattern for this family, so a 10-year-old could retell the steps.",
+  "kidExplanation": "Picture the puzzle 'Kth Smallest Element in a BST'. Here is the clever trick in plain words: To find the kth smallest element in a binary search tree (BST), we can perform an in-order traversal and keep track of the count of visited nodes. When the count reaches k, we've found the kth smallest element. We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 230: Kth Smallest Element in a BST. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Kth Smallest Element in a BST)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "root = [3,1,4,null,2], k = 1",
+      "output": "1",
+      "explanation": "Smallest."
     },
     {
-      "input": "(open LeetCode example 2 for Kth Smallest Element in a BST)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "root = [5,3,6,2,4,null,null,1], k = 3",
+      "output": "3",
+      "explanation": "3rd smallest."
     }
   ],
   "thinkingSteps": [

@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/reorder-list/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: To reorder a singly linked list, we can break the list into two halves, reverse the second half, and then merge the two halves alternatively. First, we find the middle of the list using the slow and fast pointer technique. We reverse the second half of the list in place. Finally, we merge the two halves by alternating nodes from each half. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Reorder List'. Here is the clever trick in plain words: To reorder a singly linked list, we can break the list into two halves, reverse the second half, and then merge the two halves alternatively. First, we find the middle of the list using the slow and fast pointer techniqu We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 143: Reorder List. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Reorder List)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "head = [1,2,3,4]",
+      "output": "[1,4,2,3]",
+      "explanation": "Reordered."
     },
     {
-      "input": "(open LeetCode example 2 for Reorder List)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "head = [1,2,3,4,5]",
+      "output": "[1,5,2,4,3]",
+      "explanation": "Odd length."
     }
   ],
   "thinkingSteps": [

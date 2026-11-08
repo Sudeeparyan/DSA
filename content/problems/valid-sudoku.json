@@ -11,14 +11,14 @@
   "plainProblem": "Determine if a 9\u00d79 board is valid Sudoku so far (not necessarily solvable). '.' means empty.",
   "examples": [
     {
-      "input": "board with one duplicate in a row",
-      "output": "false",
-      "explanation": "A repeated digit breaks validity."
-    },
-    {
-      "input": "partial valid board",
+      "input": "valid partial board",
       "output": "true",
       "explanation": "No conflicts yet."
+    },
+    {
+      "input": "duplicate digit in a box",
+      "output": "false",
+      "explanation": "Box rule broken."
     }
   ],
   "thinkingSteps": [

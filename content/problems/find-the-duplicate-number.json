@@ -11,14 +11,14 @@
   "plainProblem": "LeetCode 287: Find the Duplicate Number. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Find the Duplicate Number)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "nums = [1,3,4,2,2]",
+      "output": "2",
+      "explanation": "Dup 2."
     },
     {
-      "input": "(open LeetCode example 2 for Find the Duplicate Number)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "nums = [3,1,3,4,2]",
+      "output": "3",
+      "explanation": "Dup 3."
     }
   ],
   "thinkingSteps": [

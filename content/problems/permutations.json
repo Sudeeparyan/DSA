@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/permutations/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: To generate all permutations of a given list of distinct integers, we can use a backtracking approach. Starting from each element, we explore all possible permutations by swapping the current element with other elements and recursively generating permutations for the remaining elements. Once we reach the end of the list, we add the current permutation to the result. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Permutations'. Here is the clever trick in plain words: To generate all permutations of a given list of distinct integers, we can use a backtracking approach. Starting from each element, we explore all possible permutations by swapping the current element with other elements We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 46: Permutations. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Permutations)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "nums = [1,2,3]",
+      "output": "[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]",
+      "explanation": "All orders."
     },
     {
-      "input": "(open LeetCode example 2 for Permutations)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "nums = [0,1]",
+      "output": "[[0,1],[1,0]]",
+      "explanation": "Two perms."
     }
   ],
   "thinkingSteps": [

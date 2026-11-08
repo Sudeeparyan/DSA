@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/gas-station/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: We can solve this problem using a greedy approach. The idea is to keep track of the total gas available and the current gas needed as we iterate through the stations. If the current gas becomes negative, we reset the starting station to the next station and reset the current gas needed. At the end, if the total gas available is greater than or equal to the current gas needed, then the starting station is a valid solution. (We will slow down and draw it.)",
+  "kidExplanation": "Cars loop a circle of gas stations. Each stop gives gas but costs gas to drive to the next. Find a starting stop that lets you complete the loop.",
   "plainProblem": "LeetCode 134: Gas Station. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Gas Station)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "gas = [1,2,3,4,5], cost = [3,4,5,1,2]",
+      "output": "3",
+      "explanation": "Start index."
     },
     {
-      "input": "(open LeetCode example 2 for Gas Station)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "gas = [2,3,4], cost = [3,4,3]",
+      "output": "-1",
+      "explanation": "Impossible."
     }
   ],
   "thinkingSteps": [

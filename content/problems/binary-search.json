@@ -7,18 +7,18 @@
   "difficulty": "Easy",
   "leetcodeUrl": "https://leetcode.com/problems/binary-search/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: Binary search is an efficient technique to search for a target element in a sorted array. In each step, we compare the middle element of the array with the target. If the middle element is equal to the target, we have found the element and return its index. If the middle element is greater than the target, we narrow down the search to the left half of the array. If the middle element is smaller, we narrow down the search to the right half of the array. We repeat this process until we find the target element or the search space is exhausted. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Binary Search'. Here is the clever trick in plain words: Binary search is an efficient technique to search for a target element in a sorted array. In each step, we compare the middle element of the array with the target. If the middle element is equal to the target, we have fo We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 704: Binary Search. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Binary Search)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "nums = [-1,0,3,5,9,12], target = 9",
+      "output": "4",
+      "explanation": "Index 4."
     },
     {
-      "input": "(open LeetCode example 2 for Binary Search)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "nums = [-1,0,3,5,9,12], target = 2",
+      "output": "-1",
+      "explanation": "Missing."
     }
   ],
   "thinkingSteps": [

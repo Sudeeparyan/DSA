@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/partition-labels/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: We can solve this problem using a greedy approach. The idea is to traverse the string and keep track of the last index at which each character appears. While traversing, we maintain a current partition's start and end indices. When the current index reaches the end index of the current partition, we add the length of the partition to the result list and update the start index for the next partition. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Partition Labels'. Here is the clever trick in plain words: We can solve this problem using a greedy approach. The idea is to traverse the string and keep track of the last index at which each character appears. While traversing, we maintain a current partition's start and end in We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 763: Partition Labels. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Partition Labels)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "s = \"ababcbacadefegdehijhklij\"",
+      "output": "[9,7,8]",
+      "explanation": "Parts."
     },
     {
-      "input": "(open LeetCode example 2 for Partition Labels)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "s = \"eccbbbbdec\"",
+      "output": "[10]",
+      "explanation": "One part."
     }
   ],
   "thinkingSteps": [

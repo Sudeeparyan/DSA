@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/count-good-nodes-in-binary-tree/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Imagine 'Count Good Nodes in Binary Tree' as a puzzle game. We are in the trees world. First we invent any correct plan, then we upgrade it with the pattern for this family, so a 10-year-old could retell the steps.",
+  "kidExplanation": "Picture the puzzle 'Count Good Nodes in Binary Tree'. Here is the clever trick in plain words: To count the number of good nodes in a binary tree, we can use a recursive depth-first search (DFS) approach. For each node, we keep track of the maximum value encountered on the path from the root to the current node. I We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 1448: Count Good Nodes in Binary Tree. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Count Good Nodes in Binary Tree)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "root = [3,1,4,3,null,1,5]",
+      "output": "4",
+      "explanation": "Good nodes."
     },
     {
-      "input": "(open LeetCode example 2 for Count Good Nodes in Binary Tree)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "root = [3,3,null,4,2]",
+      "output": "3",
+      "explanation": "Three goods."
     }
   ],
   "thinkingSteps": [

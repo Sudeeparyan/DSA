@@ -7,18 +7,18 @@
   "difficulty": "Easy",
   "leetcodeUrl": "https://leetcode.com/problems/counting-bits/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: To count the number of 1 bits for each number in the range [0, num], we can use dynamic programming. We observe that the number of 1 bits in a number x is equal to the number of 1 bits in x // 2 plus the value of the least significant bit (x % 2). (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Counting Bits'. Here is the clever trick in plain words: To count the number of 1 bits for each number in the range [0, num], we can use dynamic programming. We observe that the number of 1 bits in a number x is equal to the number of 1 bits in x // 2 plus the value of the lea We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 338: Counting Bits. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Counting Bits)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "n = 2",
+      "output": "[0,1,1]",
+      "explanation": "Popcounts."
     },
     {
-      "input": "(open LeetCode example 2 for Counting Bits)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "n = 5",
+      "output": "[0,1,1,2,1,2]",
+      "explanation": "Popcounts."
     }
   ],
   "thinkingSteps": [

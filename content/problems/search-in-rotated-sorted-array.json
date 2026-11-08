@@ -11,14 +11,14 @@
   "plainProblem": "LeetCode 33: Search in Rotated Sorted Array. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Search in Rotated Sorted Array)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "nums = [4,5,6,7,0,1,2], target = 0",
+      "output": "4",
+      "explanation": "Found."
     },
     {
-      "input": "(open LeetCode example 2 for Search in Rotated Sorted Array)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "nums = [4,5,6,7,0,1,2], target = 3",
+      "output": "-1",
+      "explanation": "Missing."
     }
   ],
   "thinkingSteps": [

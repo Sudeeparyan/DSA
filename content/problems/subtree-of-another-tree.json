@@ -7,18 +7,18 @@
   "difficulty": "Easy",
   "leetcodeUrl": "https://leetcode.com/problems/subtree-of-another-tree/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Imagine 'Subtree Of Another Tree' as a puzzle game. We are in the trees world. First we invent any correct plan, then we upgrade it with the pattern for this family, so a 10-year-old could retell the steps.",
+  "kidExplanation": "Picture the puzzle 'Subtree Of Another Tree'. Here is the clever trick in plain words: To check if one binary tree is a subtree of another, we can use a recursive approach. For each node in the main tree, we check if the current subtree rooted at that node is equal to the given subtree. If not, we recursiv We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 572: Subtree Of Another Tree. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Subtree Of Another Tree)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "root = [3,4,5,1,2], subRoot = [4,1,2]",
+      "output": "true",
+      "explanation": "Subtree."
     },
     {
-      "input": "(open LeetCode example 2 for Subtree Of Another Tree)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "root = [3,4,5,1,2,null,null,null,null,0], subRoot = [4,1,2]",
+      "output": "false",
+      "explanation": "Extra 0."
     }
   ],
   "thinkingSteps": [

@@ -52,44 +52,49 @@ export function ReviseClient({ cards }: { cards: Card[] }) {
 
   if (!current) {
     return (
-      <div className="mx-auto max-w-xl px-4 py-16 text-center">
-        <h1 className="text-3xl font-semibold">Revision mode</h1>
-        <p className="mt-3 text-muted">
-          No cards due right now. Come back later — Leitner boxes are saved on
-          this device.
+      <div className="mx-auto max-w-xl px-4 py-20 text-center">
+        <p className="section-kicker">Leitner boxes</p>
+        <h1 className="brand-font mt-3 text-4xl font-extrabold">All caught up</h1>
+        <p className="teach mt-3 text-muted">
+          No cards due right now. Come back later — progress stays on this
+          device.
         </p>
       </div>
     );
   }
 
   return (
-    <div className="mx-auto max-w-xl space-y-6 px-4 py-8">
-      <h1 className="text-3xl font-semibold">Revision mode</h1>
-      <p className="text-sm text-muted">{queue.length} cards in this session</p>
+    <div className="mx-auto max-w-xl space-y-6 px-4 py-10">
+      <header>
+        <p className="section-kicker">Spaced repetition</p>
+        <h1 className="brand-font mt-2 text-4xl font-extrabold">Revision</h1>
+        <p className="mt-2 text-sm text-muted">{queue.length} cards in this session</p>
+      </header>
       <button
         type="button"
         onClick={() => setFlipped((f) => !f)}
-        className="min-h-56 w-full rounded-3xl border border-border bg-card p-6 text-left shadow-sm"
+        className="min-h-64 w-full rounded-[1.8rem] border border-border bg-panel p-7 text-left text-panel-fg shadow-sm"
         aria-label="Flip flashcard"
       >
-        <div className="text-xs uppercase tracking-wide text-muted">
+        <div className="text-xs font-bold uppercase tracking-[0.18em] text-white/45">
           {flipped ? "Answer" : "Question"}
         </div>
-        <p className="mt-4 text-xl font-semibold leading-snug">
+        <p className="brand-font mt-5 text-2xl font-bold leading-snug">
           {flipped ? answer : prompt}
         </p>
+        <p className="mt-8 text-sm text-white/40">Tap to flip</p>
       </button>
       <div className="flex gap-3">
         <button
           type="button"
-          className="min-h-12 flex-1 rounded-2xl border border-rejected/40 bg-rejected/10 font-semibold text-rejected"
+          className="min-h-12 flex-1 rounded-full border border-rejected/40 bg-rejected/10 font-bold text-rejected"
           onClick={() => grade(false)}
         >
           Forgot
         </button>
         <button
           type="button"
-          className="min-h-12 flex-1 rounded-2xl bg-matched/90 font-semibold text-white"
+          className="min-h-12 flex-1 rounded-full bg-matched font-bold text-white"
           onClick={() => grade(true)}
         >
           Got it

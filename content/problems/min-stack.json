@@ -11,14 +11,14 @@
   "plainProblem": "LeetCode 155: Min Stack. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Min Stack)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "MinStack ops: push -2,0,-3; getMin; pop; top; getMin",
+      "output": "-3, then 0, then -2",
+      "explanation": "Tracks running min."
     },
     {
-      "input": "(open LeetCode example 2 for Min Stack)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "push 1; push 2; getMin",
+      "output": "1",
+      "explanation": "Min is 1."
     }
   ],
   "thinkingSteps": [

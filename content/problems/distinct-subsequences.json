@@ -7,18 +7,18 @@
   "difficulty": "Hard",
   "leetcodeUrl": "https://leetcode.com/problems/distinct-subsequences/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: The key idea is to use dynamic programming to count the number of distinct subsequences of the string 's' that match the string 't'. We can create a 1D DP array dp, where dp[j] represents the number of distinct subsequences of 's' that match 't' up to index 'j'. We can build the DP array based on the following rules: 1. Initialize dp[0] to 1 because there is one way to match an empty string '\"\"' to another empty string '\"\"'. 2. For each character in 's', update dp[j] based on the following conditions: - If s[i] == t[j], we can either match the current characters (s[i] and t[j]), which contributes dp[j-1] to the count, or we can skip the current character in 's', which contributes dp[j] to the count. - If s[i] != t[j], we can only skip the current character in 's', which contributes dp[j] to the count. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Distinct Subsequences'. Here is the clever trick in plain words: The key idea is to use dynamic programming to count the number of distinct subsequences of the string 's' that match the string 't'. We can create a 1D DP array dp, where dp[j] represents the number of distinct subsequen We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 115: Distinct Subsequences. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Distinct Subsequences)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "s = \"rabbbit\", t = \"rabbit\"",
+      "output": "3",
+      "explanation": "Ways."
     },
     {
-      "input": "(open LeetCode example 2 for Distinct Subsequences)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "s = \"babgbag\", t = \"bag\"",
+      "output": "5",
+      "explanation": "Ways."
     }
   ],
   "thinkingSteps": [
@@ -72,9 +72,12 @@
   "animation": {
     "visualType": "dp",
     "tracerId": "generic-array-scan",
-    "defaultInput": {
-      "demo": true
-    },
+    "defaultInput": [
+      1,
+      2,
+      3,
+      2
+    ],
     "steps": [
       {
         "line": 1,

@@ -11,14 +11,14 @@
   "plainProblem": "LeetCode 104: Maximum Depth of Binary Tree. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Maximum Depth of Binary Tree)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "root = [3,9,20,null,null,15,7]",
+      "output": "3",
+      "explanation": "Depth 3."
     },
     {
-      "input": "(open LeetCode example 2 for Maximum Depth of Binary Tree)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "root = [1,null,2]",
+      "output": "2",
+      "explanation": "Depth 2."
     }
   ],
   "thinkingSteps": [

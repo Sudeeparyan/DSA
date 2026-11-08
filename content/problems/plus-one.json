@@ -7,18 +7,18 @@
   "difficulty": "Easy",
   "leetcodeUrl": "https://leetcode.com/problems/plus-one/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: Given a non-empty array representing a non-negative integer, we need to add one to the integer. We can perform this addition by starting from the least significant digit (the last element of the array) and moving towards the most significant digit. If the current digit is less than 9, we can simply increment it and return the modified array. Otherwise, we set the current digit to 0 and continue the process with the previous digit. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Plus One'. Here is the clever trick in plain words: Given a non-empty array representing a non-negative integer, we need to add one to the integer. We can perform this addition by starting from the least significant digit (the last element of the array) and moving towards We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 66: Plus One. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Plus One)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "digits = [1,2,3]",
+      "output": "[1,2,4]",
+      "explanation": "Add one."
     },
     {
-      "input": "(open LeetCode example 2 for Plus One)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "digits = [9]",
+      "output": "[1,0]",
+      "explanation": "Carry."
     }
   ],
   "thinkingSteps": [

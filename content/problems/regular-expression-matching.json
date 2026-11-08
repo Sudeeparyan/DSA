@@ -7,18 +7,18 @@
   "difficulty": "Hard",
   "leetcodeUrl": "https://leetcode.com/problems/regular-expression-matching/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: The key idea is to use dynamic programming to solve this problem. We create a 2D table 'dp' where dp[i][j] represents whether the first 'i' characters in the string 's' match the first 'j' characters in the pattern 'p'. We fill this table based on the characters in 's' and 'p' and previous results. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Regular Expression Matching'. Here is the clever trick in plain words: The key idea is to use dynamic programming to solve this problem. We create a 2D table 'dp' where dp[i][j] represents whether the first 'i' characters in the string 's' match the first 'j' characters in the pattern 'p'. We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 10: Regular Expression Matching. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Regular Expression Matching)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "s = \"aa\", p = \"a\"",
+      "output": "false",
+      "explanation": "Not full."
     },
     {
-      "input": "(open LeetCode example 2 for Regular Expression Matching)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "s = \"aa\", p = \"a*\"",
+      "output": "true",
+      "explanation": "Star."
     }
   ],
   "thinkingSteps": [
@@ -72,9 +72,12 @@
   "animation": {
     "visualType": "dp",
     "tracerId": "generic-array-scan",
-    "defaultInput": {
-      "demo": true
-    },
+    "defaultInput": [
+      1,
+      2,
+      3,
+      2
+    ],
     "steps": [
       {
         "line": 1,

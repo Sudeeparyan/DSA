@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/longest-substring-without-repeating-characters/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "A sliding peephole on a string that may only show unique letters. How wide can it get?",
+  "kidExplanation": "Slide a window along a string. Inside the window, every letter must be unique. How wide can it get?",
   "plainProblem": "LeetCode 3: Longest Substring Without Repeating Characters. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Longest Substring Without Repeating Characters)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "s = \"abcabcbb\"",
+      "output": "3",
+      "explanation": "\"abc\""
     },
     {
-      "input": "(open LeetCode example 2 for Longest Substring Without Repeating Characters)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "s = \"bbbbb\"",
+      "output": "1",
+      "explanation": "One char."
     }
   ],
   "thinkingSteps": [

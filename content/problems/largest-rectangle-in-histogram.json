@@ -7,18 +7,18 @@
   "difficulty": "Hard",
   "leetcodeUrl": "https://leetcode.com/problems/largest-rectangle-in-histogram/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: To find the largest rectangle area in the input histogram represented by the list 'heights', we can use a stack to keep track of increasing bar heights' indices. We iterate through the heights and push the current index onto the stack if the current height is greater than or equal to the height at the top of the stack. If the current height is smaller, it indicates that the previous bars cannot form a larger rectangle, so we pop indices from the stack and calculate the area for each popped bar. The width of the rectangle is determined by the difference between the current index and the index at the top of the stack. The height of the rectangle is the height at the popped index. We keep track of the maximum area seen so far. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Largest Rectangle in Histogram'. Here is the clever trick in plain words: To find the largest rectangle area in the input histogram represented by the list 'heights', we can use a stack to keep track of increasing bar heights' indices. We iterate through the heights and push the current index We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 84: Largest Rectangle in Histogram. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Largest Rectangle in Histogram)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "heights = [2,1,5,6,2,3]",
+      "output": "10",
+      "explanation": "5\u00d72 rectangle."
     },
     {
-      "input": "(open LeetCode example 2 for Largest Rectangle in Histogram)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "heights = [2,4]",
+      "output": "4",
+      "explanation": "Best area 4."
     }
   ],
   "thinkingSteps": [

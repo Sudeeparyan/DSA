@@ -11,14 +11,14 @@
   "plainProblem": "LeetCode 543: Diameter of Binary Tree. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Diameter of Binary Tree)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "root = [1,2,3,4,5]",
+      "output": "3",
+      "explanation": "Longest path edges."
     },
     {
-      "input": "(open LeetCode example 2 for Diameter of Binary Tree)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "root = [1,2]",
+      "output": "1",
+      "explanation": "One edge."
     }
   ],
   "thinkingSteps": [

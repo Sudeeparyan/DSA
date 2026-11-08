@@ -7,18 +7,18 @@
   "difficulty": "Easy",
   "leetcodeUrl": "https://leetcode.com/problems/climbing-stairs/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: To climb to the n-th stair, you have two options, 1. You can climb from the (n-1)-th stair. 2. You can climb from the (n-2)-th stair. So, the number of ways to reach the n-th stair is the sum of the number of ways to reach the (n-1)-th and (n-2)-th stairs. This forms a Fibonacci sequence where f(n) = f(n-1) + f(n-2). (We will slow down and draw it.)",
+  "kidExplanation": "A staircase. You can climb 1 or 2 steps at a time. How many different hop patterns reach the top?",
   "plainProblem": "LeetCode 70: Climbing Stairs. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Climbing Stairs)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "n = 2",
+      "output": "2",
+      "explanation": "1+1 or 2."
     },
     {
-      "input": "(open LeetCode example 2 for Climbing Stairs)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "n = 3",
+      "output": "3",
+      "explanation": "Three ways."
     }
   ],
   "thinkingSteps": [
@@ -72,9 +72,12 @@
   "animation": {
     "visualType": "dp",
     "tracerId": "generic-array-scan",
-    "defaultInput": {
-      "demo": true
-    },
+    "defaultInput": [
+      1,
+      2,
+      3,
+      2
+    ],
     "steps": [
       {
         "line": 1,

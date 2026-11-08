@@ -13,12 +13,12 @@
     {
       "input": "[\"lint\",\"code\",\"love\",\"you\"]",
       "output": "[\"lint\",\"code\",\"love\",\"you\"]",
-      "explanation": "Round-trip must be perfect."
+      "explanation": "Round-trip."
     },
     {
       "input": "[\"we\",\"say\",\":\",\"yes\"]",
       "output": "[\"we\",\"say\",\":\",\"yes\"]",
-      "explanation": "Delimiters inside strings must not break parsing."
+      "explanation": "Special chars safe."
     }
   ],
   "thinkingSteps": [

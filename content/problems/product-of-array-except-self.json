@@ -13,12 +13,12 @@
     {
       "input": "nums = [1,2,3,4]",
       "output": "[24,12,8,6]",
-      "explanation": "For index 0: 2*3*4=24."
+      "explanation": "Prefix \u00d7 suffix."
     },
     {
       "input": "nums = [-1,1,0,-3,3]",
       "output": "[0,0,9,0,0]",
-      "explanation": "Zeros affect products carefully."
+      "explanation": "Zeros."
     }
   ],
   "thinkingSteps": [

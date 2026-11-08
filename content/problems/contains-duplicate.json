@@ -11,14 +11,14 @@
   "plainProblem": "You are given a list of numbers. Return true if any number appears at least twice. Return false if every number is unique.",
   "examples": [
     {
-      "input": "nums = [1, 2, 3, 1]",
+      "input": "nums = [1,2,3,1]",
       "output": "true",
       "explanation": "1 appears twice."
     },
     {
-      "input": "nums = [1, 2, 3, 4]",
+      "input": "nums = [1,2,3,4]",
       "output": "false",
-      "explanation": "All numbers are different."
+      "explanation": "All unique."
     }
   ],
   "thinkingSteps": [

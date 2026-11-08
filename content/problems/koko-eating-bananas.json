@@ -11,14 +11,14 @@
   "plainProblem": "LeetCode 875: Koko Eating Bananas. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Koko Eating Bananas)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "piles = [3,6,7,11], h = 8",
+      "output": "4",
+      "explanation": "Min speed."
     },
     {
-      "input": "(open LeetCode example 2 for Koko Eating Bananas)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "piles = [30,11,23,4,20], h = 5",
+      "output": "30",
+      "explanation": "Faster needed."
     }
   ],
   "thinkingSteps": [

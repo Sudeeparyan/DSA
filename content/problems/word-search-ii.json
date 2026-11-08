@@ -7,18 +7,18 @@
   "difficulty": "Hard",
   "leetcodeUrl": "https://leetcode.com/problems/word-search-ii/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: To find all the words from a given list that can be formed by a 2D board of characters, we can use a Trie (prefix tree) to efficiently search for words while traversing the board. We start by building a Trie from the given list of words. Then, we perform a depth-first search (DFS) on the board, checking if the current path forms a valid prefix in the Trie. If it does, we continue the DFS until we find words or reach dead ends. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Word Search II'. Here is the clever trick in plain words: To find all the words from a given list that can be formed by a 2D board of characters, we can use a Trie (prefix tree) to efficiently search for words while traversing the board. We start by building a Trie from the giv We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 212: Word Search II. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Word Search II)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "board letters, words = [\"oath\",\"pea\",\"eat\",\"rain\"]",
+      "output": "[\"eat\",\"oath\"]",
+      "explanation": "Found words."
     },
     {
-      "input": "(open LeetCode example 2 for Word Search II)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "empty words",
+      "output": "[]",
+      "explanation": "Nothing."
     }
   ],
   "thinkingSteps": [

@@ -7,18 +7,18 @@
   "difficulty": "Hard",
   "leetcodeUrl": "https://leetcode.com/problems/median-of-two-sorted-arrays/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: To find the median of two sorted arrays 'nums1' and 'nums2', we can perform a binary search on the smaller array. We partition both arrays into two parts such that the left half contains smaller elements and the right half contains larger elements. The median will be the average of the maximum element in the left half and the minimum element in the right half. We adjust the partition indices based on binary search, aiming to keep the same number of elements in both halves. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Median of Two Sorted Arrays'. Here is the clever trick in plain words: To find the median of two sorted arrays 'nums1' and 'nums2', we can perform a binary search on the smaller array. We partition both arrays into two parts such that the left half contains smaller elements and the right ha We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 4: Median of Two Sorted Arrays. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Median of Two Sorted Arrays)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "nums1 = [1,3], nums2 = [2]",
+      "output": "2.0",
+      "explanation": "Median 2."
     },
     {
-      "input": "(open LeetCode example 2 for Median of Two Sorted Arrays)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "nums1 = [1,2], nums2 = [3,4]",
+      "output": "2.5",
+      "explanation": "Avg 2 and 3."
     }
   ],
   "thinkingSteps": [

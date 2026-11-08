@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Imagine 'Lowest Common Ancestor Of A Binary Search Tree' as a puzzle game. We are in the trees world. First we invent any correct plan, then we upgrade it with the pattern for this family, so a 10-year-old could retell the steps.",
+  "kidExplanation": "Picture the puzzle 'Lowest Common Ancestor Of A Binary Search Tree'. Here is the clever trick in plain words: To find the lowest common ancestor (LCA) of two nodes in a binary search tree (BST), we can use a recursive approach. We compare the values of the two nodes with the current node's value. If both nodes are in the left su We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 235: Lowest Common Ancestor Of A Binary Search Tree. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Lowest Common Ancestor Of A Binary Search Tree)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 8",
+      "output": "6",
+      "explanation": "Root is LCA."
     },
     {
-      "input": "(open LeetCode example 2 for Lowest Common Ancestor Of A Binary Search Tree)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "same tree, p = 2, q = 4",
+      "output": "2",
+      "explanation": "p is ancestor."
     }
   ],
   "thinkingSteps": [

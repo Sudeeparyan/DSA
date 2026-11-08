@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/clone-graph/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: The problem is to clone an undirected graph. We can solve this using Depth-First Search (DFS) or Breadth-First Search (BFS). Here, I'm use DFS to traverse the original graph and create a new graph. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Clone Graph'. Here is the clever trick in plain words: The problem is to clone an undirected graph. We can solve this using Depth-First Search (DFS) or Breadth-First Search (BFS). Here, I'm use DFS to traverse the original graph and create a new graph. We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 133: Clone Graph. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Clone Graph)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "node adjList = [[2,4],[1,3],[2,4],[1,3]]",
+      "output": "deep clone",
+      "explanation": "Same links new nodes."
     },
     {
-      "input": "(open LeetCode example 2 for Clone Graph)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "empty",
+      "output": "empty",
+      "explanation": "Null graph."
     }
   ],
   "thinkingSteps": [

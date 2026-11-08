@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/rotting-oranges/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: The problem is to determine the minimum time needed for all oranges to become rotten, considering that rotten oranges can also infect adjacent fresh oranges in each minute. We can model this problem using Breadth-First Search (BFS), where each minute corresponds to a level of the BFS traversal. (We will slow down and draw it.)",
+  "kidExplanation": "Fresh oranges rot when they touch a rotten neighbor each minute. How long until every orange is rotten?",
   "plainProblem": "LeetCode 994: Rotting Oranges. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Rotting Oranges)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "grid = [[2,1,1],[1,1,0],[0,1,1]]",
+      "output": "4",
+      "explanation": "Minutes."
     },
     {
-      "input": "(open LeetCode example 2 for Rotting Oranges)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "grid = [[0,2]]",
+      "output": "0",
+      "explanation": "Already done."
     }
   ],
   "thinkingSteps": [

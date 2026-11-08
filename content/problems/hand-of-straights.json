@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/hand-of-straights/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: We can solve this problem using a greedy approach. The idea is to sort the hand and use a Counter to keep track of the frequency of each card. Then, for each card, we check if there are enough consecutive cards to form a group of size W. If so, we decrement the frequencies accordingly. If not, the hand cannot be grouped and we return False. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Hand of Straights'. Here is the clever trick in plain words: We can solve this problem using a greedy approach. The idea is to sort the hand and use a Counter to keep track of the frequency of each card. Then, for each card, we check if there are enough consecutive cards to form a We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 846: Hand of Straights. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Hand of Straights)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "hand = [1,2,3,6,2,3,4,7,8], groupSize = 3",
+      "output": "true",
+      "explanation": "Groups."
     },
     {
-      "input": "(open LeetCode example 2 for Hand of Straights)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "hand = [1,2,3,4,5], groupSize = 4",
+      "output": "false",
+      "explanation": "Cannot."
     }
   ],
   "thinkingSteps": [

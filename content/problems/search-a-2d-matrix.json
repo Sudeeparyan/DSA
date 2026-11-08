@@ -11,14 +11,14 @@
   "plainProblem": "LeetCode 74: Search a 2D Matrix. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Search a 2D Matrix)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3",
+      "output": "true",
+      "explanation": "Found."
     },
     {
-      "input": "(open LeetCode example 2 for Search a 2D Matrix)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "same matrix, target = 13",
+      "output": "false",
+      "explanation": "Missing."
     }
   ],
   "thinkingSteps": [

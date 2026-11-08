@@ -7,18 +7,18 @@
   "difficulty": "Easy",
   "leetcodeUrl": "https://leetcode.com/problems/missing-number/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: To find the missing number in an array containing distinct numbers from 0 to n, we can use the XOR operation. We XOR all the numbers from 0 to n and then XOR the result with all the elements in the array. The XOR operation cancels out the duplicate numbers, leaving only the missing number. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Missing Number'. Here is the clever trick in plain words: To find the missing number in an array containing distinct numbers from 0 to n, we can use the XOR operation. We XOR all the numbers from 0 to n and then XOR the result with all the elements in the array. The XOR operati We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 268: Missing Number. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Missing Number)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "nums = [3,0,1]",
+      "output": "2",
+      "explanation": "Missing 2."
     },
     {
-      "input": "(open LeetCode example 2 for Missing Number)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "nums = [0,1]",
+      "output": "2",
+      "explanation": "Missing 2."
     }
   ],
   "thinkingSteps": [

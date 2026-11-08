@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/rotate-image/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: To rotate the given matrix in-place, we can perform a series of swaps. We start by swapping elements symmetrically along the diagonal, and then swap elements symmetrically along the vertical midline. This process rotates the matrix by 90 degrees clockwise. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Rotate Image'. Here is the clever trick in plain words: To rotate the given matrix in-place, we can perform a series of swaps. We start by swapping elements symmetrically along the diagonal, and then swap elements symmetrically along the vertical midline. This process rotates We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 48: Rotate Image. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Rotate Image)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "matrix 3x3",
+      "output": "rotated 90\u00b0 clockwise",
+      "explanation": "In-place."
     },
     {
-      "input": "(open LeetCode example 2 for Rotate Image)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "matrix 1x1",
+      "output": "same",
+      "explanation": "Trivial."
     }
   ],
   "thinkingSteps": [

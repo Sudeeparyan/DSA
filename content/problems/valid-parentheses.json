@@ -13,12 +13,12 @@
     {
       "input": "s = \"()\"",
       "output": "true",
-      "explanation": "Simple matching pair."
+      "explanation": "Match."
     },
     {
       "input": "s = \"(]\"",
       "output": "false",
-      "explanation": "Wrong closer type."
+      "explanation": "Mismatch."
     }
   ],
   "thinkingSteps": [

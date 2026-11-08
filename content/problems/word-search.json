@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/word-search/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: To determine if a given word exists in the 2D board, we can perform a depth-first search (DFS) from each cell in the board. At each cell, we check if the current character of the word matches the character in the cell. If it does, we mark the cell as visited, recursively search its neighboring cells, and backtrack if the search is unsuccessful. We repeat this process for all cells in the board. (We will slow down and draw it.)",
+  "kidExplanation": "A letter grid like a word search puzzle. Can your finger trace the word without reusing a square?",
   "plainProblem": "LeetCode 79: Word Search. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Word Search)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "board = [[\"A\",\"B\",\"C\",\"E\"],[\"S\",\"F\",\"C\",\"S\"],[\"A\",\"D\",\"E\",\"E\"]], word = \"ABCCED\"",
+      "output": "true",
+      "explanation": "Path exists."
     },
     {
-      "input": "(open LeetCode example 2 for Word Search)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "same board, word = \"ABCB\"",
+      "output": "false",
+      "explanation": "Reuse forbidden."
     }
   ],
   "thinkingSteps": [

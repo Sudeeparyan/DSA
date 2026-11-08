@@ -13,12 +13,12 @@
     {
       "input": "strs = [\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"]",
       "output": "[[\"bat\"],[\"nat\",\"tan\"],[\"ate\",\"eat\",\"tea\"]]",
-      "explanation": "Groups share letter counts."
+      "explanation": "Grouped by signature."
     },
     {
       "input": "strs = [\"\"]",
       "output": "[[\"\"]]",
-      "explanation": "Single empty string."
+      "explanation": "One empty string."
     }
   ],
   "thinkingSteps": [

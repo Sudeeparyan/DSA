@@ -7,18 +7,18 @@
   "difficulty": "Hard",
   "leetcodeUrl": "https://leetcode.com/problems/edit-distance/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: The key idea is to use dynamic programming to calculate the minimum number of operations (insert, delete, or replace) required to transform one string 'word1' into another string 'word2'. We can define a 2D table 'dp' where dp[i][j] represents the minimum edit distance between the first 'i' characters of 'word1' and the first 'j' characters of 'word2'. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Edit Distance'. Here is the clever trick in plain words: The key idea is to use dynamic programming to calculate the minimum number of operations (insert, delete, or replace) required to transform one string 'word1' into another string 'word2'. We can define a 2D table 'dp' wh We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 72: Edit Distance. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Edit Distance)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "word1 = \"horse\", word2 = \"ros\"",
+      "output": "3",
+      "explanation": "3 edits."
     },
     {
-      "input": "(open LeetCode example 2 for Edit Distance)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "word1 = \"intention\", word2 = \"execution\"",
+      "output": "5",
+      "explanation": "5 edits."
     }
   ],
   "thinkingSteps": [
@@ -72,9 +72,12 @@
   "animation": {
     "visualType": "dp",
     "tracerId": "generic-array-scan",
-    "defaultInput": {
-      "demo": true
-    },
+    "defaultInput": [
+      1,
+      2,
+      3,
+      2
+    ],
     "steps": [
       {
         "line": 1,

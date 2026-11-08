@@ -10,7 +10,7 @@ export function ProgressRing({
   size?: number;
 }) {
   const pct = total === 0 ? 0 : Math.min(1, value / total);
-  const stroke = 10;
+  const stroke = Math.max(8, size / 12);
   const r = (size - stroke) / 2;
   const c = 2 * Math.PI * r;
   const offset = c * (1 - pct);
@@ -44,10 +44,13 @@ export function ProgressRing({
         />
       </svg>
       <div className="absolute text-center">
-        <div className="text-2xl font-semibold">
-          {value}/{total}
+        <div className="brand-font text-lg font-extrabold leading-none sm:text-xl">
+          {value}
+          <span className="text-muted">/{total}</span>
         </div>
-        <div className="text-xs text-muted">understood</div>
+        <div className="mt-1 text-[10px] font-semibold uppercase tracking-wide text-muted">
+          done
+        </div>
       </div>
     </div>
   );

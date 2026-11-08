@@ -13,12 +13,12 @@
     {
       "input": "nums = [1,1,1,2,2,3], k = 2",
       "output": "[1,2]",
-      "explanation": "1 appears thrice, 2 twice."
+      "explanation": "Top frequencies."
     },
     {
       "input": "nums = [1], k = 1",
       "output": "[1]",
-      "explanation": "Only one element."
+      "explanation": "Single value."
     }
   ],
   "thinkingSteps": [

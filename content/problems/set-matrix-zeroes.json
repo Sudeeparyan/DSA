@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/set-matrix-zeroes/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: To set the entire row and column to zeros if an element in the matrix is zero, we can use two sets to keep track of the rows and columns that need to be set to zero. We iterate through the matrix and mark the corresponding rows and columns in the sets. Then, we iterate through the matrix again and set the elements to zero if their row or column is marked. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Set Matrix Zeroes'. Here is the clever trick in plain words: To set the entire row and column to zeros if an element in the matrix is zero, we can use two sets to keep track of the rows and columns that need to be set to zero. We iterate through the matrix and mark the correspondi We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 73: Set Matrix Zeroes. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Set Matrix Zeroes)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "matrix = [[1,1,1],[1,0,1],[1,1,1]]",
+      "output": "[[1,0,1],[0,0,0],[1,0,1]]",
+      "explanation": "Cross zeros."
     },
     {
-      "input": "(open LeetCode example 2 for Set Matrix Zeroes)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "matrix = [[0,1,2,0],[3,4,5,2],[1,3,1,5]]",
+      "output": "[[0,0,0,0],[0,4,5,0],[0,3,1,0]]",
+      "explanation": "Multiple zeros."
     }
   ],
   "thinkingSteps": [

@@ -4,22 +4,26 @@ import { getPatterns } from "@/lib/problems";
 export default function PatternsPage() {
   const patterns = getPatterns();
   return (
-    <div className="mx-auto max-w-3xl space-y-8 px-4 py-8">
+    <div className="mx-auto max-w-3xl space-y-8 px-4 py-10">
       <header className="space-y-3">
-        <h1 className="text-4xl font-semibold">Patterns cheat-sheet</h1>
-        <p className="text-muted leading-relaxed">
-          One page of reusable templates. Interviewers listen for these names.
+        <p className="section-kicker">Cheat-sheet</p>
+        <h1 className="brand-font text-5xl font-extrabold tracking-tight">
+          Patterns
+        </h1>
+        <p className="teach text-lg text-muted">
+          Name the pattern early in an interview. These templates are the
+          phrases Google listeners expect.
         </p>
       </header>
-      <div className="space-y-6">
+      <div className="space-y-5">
         {patterns.map((p) => (
           <section
             key={p.id}
-            className="rounded-3xl border border-border bg-card p-5"
+            className="rounded-[1.6rem] border border-border bg-card/90 p-5"
           >
-            <h2 className="text-2xl font-semibold">{p.name}</h2>
-            <p className="mt-2 text-sm leading-relaxed text-muted">{p.summary}</p>
-            <pre className="mt-4 overflow-x-auto rounded-2xl bg-[#0f172a] p-4 font-mono text-xs text-slate-100">
+            <h2 className="brand-font text-2xl font-bold">{p.name}</h2>
+            <p className="teach mt-2 text-base text-muted">{p.summary}</p>
+            <pre className="mt-4 overflow-x-auto rounded-2xl bg-panel p-4 font-mono text-xs leading-6 text-panel-fg">
               {p.templatePython}
             </pre>
             <div className="mt-4 flex flex-wrap gap-2">
@@ -27,7 +31,7 @@ export default function PatternsPage() {
                 <Link
                   key={slug}
                   href={`/problem/${slug}/`}
-                  className="rounded-full border border-border px-3 py-1 text-xs"
+                  className="rounded-full border border-border px-3 py-1 text-xs font-medium hover:border-accent"
                 >
                   {slug}
                 </Link>

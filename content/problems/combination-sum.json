@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/combination-sum/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: To find all unique combinations that sum up to a target value, we can use a backtracking approach. Starting from each candidate element, we explore all possible combinations by adding the element to the current combination and recursively searching for the remaining sum. If the sum becomes equal to the target, we add the current combination to the result. This process is repeated for each candidate element. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Combination Sum'. Here is the clever trick in plain words: To find all unique combinations that sum up to a target value, we can use a backtracking approach. Starting from each candidate element, we explore all possible combinations by adding the element to the current combinati We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 39: Combination Sum. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Combination Sum)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "candidates = [2,3,6,7], target = 7",
+      "output": "[[2,2,3],[7]]",
+      "explanation": "Reuse allowed."
     },
     {
-      "input": "(open LeetCode example 2 for Combination Sum)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "candidates = [2,3,5], target = 8",
+      "output": "[[2,2,2,2],[2,3,3],[3,5]]",
+      "explanation": "Combos."
     }
   ],
   "thinkingSteps": [

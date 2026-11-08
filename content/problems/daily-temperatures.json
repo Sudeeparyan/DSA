@@ -11,14 +11,14 @@
   "plainProblem": "LeetCode 739: Daily Temperatures. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Daily Temperatures)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "temperatures = [73,74,75,71,69,72,76,73]",
+      "output": "[1,1,4,2,1,1,0,0]",
+      "explanation": "Wait days."
     },
     {
-      "input": "(open LeetCode example 2 for Daily Temperatures)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "temperatures = [30,40,50,60]",
+      "output": "[1,1,1,0]",
+      "explanation": "Rising."
     }
   ],
   "thinkingSteps": [

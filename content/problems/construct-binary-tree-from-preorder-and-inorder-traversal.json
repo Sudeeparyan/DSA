@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Imagine 'Construct Binary Tree from Preorder and Inorder Traversal' as a puzzle game. We are in the trees world. First we invent any correct plan, then we upgrade it with the pattern for this family, so a 10-year-old could retell the steps.",
+  "kidExplanation": "Picture the puzzle 'Construct Binary Tree from Preorder and Inorder Traversal'. Here is the clever trick in plain words: To construct a binary tree from its preorder and inorder traversals, we can use a recursive approach. The first element in the preorder list is the root of the current subtree. We locate its position in the inorder list We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 105: Construct Binary Tree from Preorder and Inorder Traversal. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Construct Binary Tree from Preorder and Inorder Traversal)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]",
+      "output": "[3,9,20,null,null,15,7]",
+      "explanation": "Built tree."
     },
     {
-      "input": "(open LeetCode example 2 for Construct Binary Tree from Preorder and Inorder Traversal)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "preorder = [-1], inorder = [-1]",
+      "output": "[-1]",
+      "explanation": "Single."
     }
   ],
   "thinkingSteps": [

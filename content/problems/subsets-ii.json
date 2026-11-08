@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/subsets-ii/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: To generate all possible subsets of a given list of integers, accounting for duplicates, we can use a backtracking approach. Similar to the previous subset problem, we explore all possible choices for each element: either include it in the current subset or exclude it. To handle duplicates, we skip adding the same element if it has already been processed at the same depth level. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Subsets II'. Here is the clever trick in plain words: To generate all possible subsets of a given list of integers, accounting for duplicates, we can use a backtracking approach. Similar to the previous subset problem, we explore all possible choices for each element: eithe We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 90: Subsets II. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Subsets II)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "nums = [1,2,2]",
+      "output": "[[],[1],[1,2],[1,2,2],[2],[2,2]]",
+      "explanation": "No dup subsets."
     },
     {
-      "input": "(open LeetCode example 2 for Subsets II)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "nums = [0]",
+      "output": "[[],[0]]",
+      "explanation": "Simple."
     }
   ],
   "thinkingSteps": [

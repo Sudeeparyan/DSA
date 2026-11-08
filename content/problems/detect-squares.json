@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/detect-squares/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: The key idea is to group points by their x-coordinates and then use these groups to efficiently find potential square corners. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Detect Squares'. Here is the clever trick in plain words: The key idea is to group points by their x-coordinates and then use these groups to efficiently find potential square corners. We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 2013: Detect Squares. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Detect Squares)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "add points; count squares for queries",
+      "output": "counts",
+      "explanation": "Axis-aligned."
     },
     {
-      "input": "(open LeetCode example 2 for Detect Squares)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "sparse points",
+      "output": "0",
+      "explanation": "No square."
     }
   ],
   "thinkingSteps": [

@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/binary-tree-level-order-traversal/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Imagine 'Binary Tree Level Order Traversal' as a puzzle game. We are in the trees world. First we invent any correct plan, then we upgrade it with the pattern for this family, so a 10-year-old could retell the steps.",
+  "kidExplanation": "Picture the puzzle 'Binary Tree Level Order Traversal'. Here is the clever trick in plain words: To perform level order traversal of a binary tree, we can use a breadth-first search (BFS) approach. We start with the root node, and in each iteration, we process all nodes at the current level before moving to the next We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 102: Binary Tree Level Order Traversal. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Binary Tree Level Order Traversal)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "root = [3,9,20,null,null,15,7]",
+      "output": "[[3],[9,20],[15,7]]",
+      "explanation": "Levels."
     },
     {
-      "input": "(open LeetCode example 2 for Binary Tree Level Order Traversal)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "root = [1]",
+      "output": "[[1]]",
+      "explanation": "One node."
     }
   ],
   "thinkingSteps": [

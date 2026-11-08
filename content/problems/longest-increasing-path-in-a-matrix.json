@@ -7,18 +7,18 @@
   "difficulty": "Hard",
   "leetcodeUrl": "https://leetcode.com/problems/longest-increasing-path-in-a-matrix/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: The key idea is to use dynamic programming to find the longest increasing path in a matrix. We can start from each cell and perform a depth-first search (DFS) to explore the neighboring cells with larger values. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Longest Increasing Path in a Matrix'. Here is the clever trick in plain words: The key idea is to use dynamic programming to find the longest increasing path in a matrix. We can start from each cell and perform a depth-first search (DFS) to explore the neighboring cells with larger values. We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 329: Longest Increasing Path in a Matrix. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Longest Increasing Path in a Matrix)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "matrix = [[9,9,4],[6,6,8],[2,1,1]]",
+      "output": "4",
+      "explanation": "1\u21922\u21926\u21929."
     },
     {
-      "input": "(open LeetCode example 2 for Longest Increasing Path in a Matrix)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "matrix = [[3,4,5],[3,2,6],[2,2,1]]",
+      "output": "4",
+      "explanation": "Path length."
     }
   ],
   "thinkingSteps": [
@@ -72,9 +72,12 @@
   "animation": {
     "visualType": "dp",
     "tracerId": "generic-array-scan",
-    "defaultInput": {
-      "demo": true
-    },
+    "defaultInput": [
+      1,
+      2,
+      3,
+      2
+    ],
     "steps": [
       {
         "line": 1,

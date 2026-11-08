@@ -7,18 +7,18 @@
   "difficulty": "Medium",
   "leetcodeUrl": "https://leetcode.com/problems/min-cost-to-connect-all-points/",
   "neetcodeVideoUrl": null,
-  "kidExplanation": "Story version: The problem can be solved using Kruskal's algorithm for finding the Minimum Spanning Tree (MST) of a graph. We start by calculating the distances between all pairs of points and then sort these distances along with their corresponding pairs. We initialize an empty MST and iterate through the sorted distances. For each distance, we check if the two points belong to different connected components in the MST using Union-Find. If they do, we add the distance to the MST and merge the components. We continue this process until all points are connected. (We will slow down and draw it.)",
+  "kidExplanation": "Picture the puzzle 'Min Cost to Connect All Points'. Here is the clever trick in plain words: The problem can be solved using Kruskal's algorithm for finding the Minimum Spanning Tree (MST) of a graph. We start by calculating the distances between all pairs of points and then sort these distances along with their We will still start slow, then use this trick so it becomes fast.",
   "plainProblem": "LeetCode 1584: Min Cost to Connect All Points. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
   "examples": [
     {
-      "input": "(open LeetCode example 1 for Min Cost to Connect All Points)",
-      "output": "(match the official output)",
-      "explanation": "Pause the animation on each caption and predict the next variable change."
+      "input": "points = [[0,0],[2,2],[3,10],[5,2],[7,0]]",
+      "output": "20",
+      "explanation": "MST cost."
     },
     {
-      "input": "(open LeetCode example 2 for Min Cost to Connect All Points)",
-      "output": "(match the official output)",
-      "explanation": "After watching, close the site and redraw the data structure from memory."
+      "input": "points = [[3,12],[-2,5],[-4,1]]",
+      "output": "18",
+      "explanation": "MST cost."
     }
   ],
   "thinkingSteps": [
