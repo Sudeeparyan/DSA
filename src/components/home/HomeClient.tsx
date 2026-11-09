@@ -132,9 +132,9 @@ export function HomeClient({
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
           >
-            Every NeetCode 150 problem is a continuous animated class: the
-            puzzle appears, a rocket idea explodes into parts, the algorithm
-            runs like a game, then the blueprint unseals.
+            Each answer plays in a 3D cinema stage — crane, zoom, dolly, and
+            whip shots adapted from Blender camera skills — so you see the
+            solution form before you ever stare at code.
           </motion.p>
           <motion.div
             className="mt-8 flex flex-wrap gap-3"

@@ -5,6 +5,7 @@ export type BeatKind =
   | "hook"
   | "puzzle"
   | "example"
+  | "answer3d"
   | "rocket"
   | "algo"
   | "code"
@@ -84,6 +85,17 @@ export function buildLessonScript(problem: Problem): TeachBeat[] {
       visualInput: problem.animation.defaultInput,
       visualType: problem.animation.visualType,
     },
+  });
+
+  // Cinematic 3D answer — primary “understand the solution” chapter
+  beats.push({
+    id: "answer3d",
+    kind: "answer3d",
+    chapter: "Answer in 3D",
+    teacher:
+      "This is the answer stage. Cinema cameras (crane → zoom → dolly → whip) show the solution forming. Hit Play and watch the memory shelf fill until the answer clicks.",
+    durationMs: 16000,
+    data: {},
   });
 
   problem.thinkingSteps.forEach((step, i) => {

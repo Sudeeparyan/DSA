@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import dynamic from "next/dynamic";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import type { Problem } from "@/lib/schema";
@@ -18,7 +19,26 @@ import { VisualiserEngine } from "@/components/visualiser/VisualiserEngine";
 import type { AnimationStep } from "@/lib/schema";
 import { clsx } from "clsx";
 
-function StageBody({ beat }: { beat: TeachBeat }) {
+const AnswerStage = dynamic(
+  () =>
+    import("@/components/answer3d/AnswerStage").then((m) => m.AnswerStage),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="answer-stage grid min-h-[360px] place-items-center text-white/55">
+        Loading 3D answer stage…
+      </div>
+    ),
+  },
+);
+
+function StageBody({
+  beat,
+  problem,
+}: {
+  beat: TeachBeat;
+  problem: Problem;
+}) {
   const d = beat.data ?? {};
   switch (beat.kind) {
     case "hook":
@@ -51,6 +71,8 @@ function StageBody({ beat }: { beat: TeachBeat }) {
           visualType={String(d.visualType ?? "array")}
         />
       );
+    case "answer3d":
+      return <AnswerStage problem={problem} />;
     case "rocket":
       return (
         <RocketExplode
@@ -138,15 +160,21 @@ export function LessonTheater({ problem }: { problem: Problem }) {
     setIndex((i) => Math.max(0, i - 1));
   }, []);
 
+  // Hold on interactive 3D answer stage — student drives Play there.
+  useEffect(() => {
+    if (beat?.kind === "answer3d") setPlaying(false);
+  }, [beat?.kind, beat?.id]);
+
   useEffect(() => {
     if (!playing || reduce) return;
+    if (beat?.kind === "answer3d") return;
     if (index >= script.length - 1) {
       setPlaying(false);
       return;
     }
     const t = setTimeout(() => next(), beat?.durationMs ?? 4000);
     return () => clearTimeout(t);
-  }, [playing, index, next, beat?.durationMs, script.length, reduce]);
+  }, [playing, index, next, beat?.durationMs, beat?.kind, script.length, reduce]);
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -239,7 +267,7 @@ export function LessonTheater({ problem }: { problem: Problem }) {
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.28 }}
               >
-                {beat && <StageBody beat={beat} />}
+                {beat && <StageBody beat={beat} problem={problem} />}
               </motion.div>
             </AnimatePresence>
           </div>
