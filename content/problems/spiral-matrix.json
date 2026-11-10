@@ -71,35 +71,54 @@
   ],
   "animation": {
     "visualType": "array",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": [
-      1,
-      2,
-      3
+      "[",
+      "[",
+      "1",
+      ",",
+      "2",
+      ",",
+      "3",
+      "]"
     ],
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving spiral matrix using the array view.",
+        "caption": "Lay out the array for \u201cSpiral Matrix\u201d. Watch the pointer walk the answer into place.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "nums": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "2",
+            ",",
+            "3",
+            "]"
           ],
           "result": null,
-          "highlights": {}
+          "highlights": {},
+          "currentIndex": null
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Index 0 holds [.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "nums": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "2",
+            ",",
+            "3",
+            "]"
           ],
+          "target": null,
+          "currentIndex": 0,
+          "currentValue": "[",
           "result": null,
           "highlights": {
             "0": "current"
@@ -107,16 +126,203 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Index 1 holds [.",
         "state": {
-          "input": [
+          "nums": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "2",
+            ",",
+            "3",
+            "]"
+          ],
+          "target": null,
+          "currentIndex": 1,
+          "currentValue": "[",
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 2 holds 1.",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "2",
+            ",",
+            "3",
+            "]"
+          ],
+          "target": null,
+          "currentIndex": 2,
+          "currentValue": "1",
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 3 holds ,.",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "2",
+            ",",
+            "3",
+            "]"
+          ],
+          "target": null,
+          "currentIndex": 3,
+          "currentValue": ",",
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 4 holds 2.",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "2",
+            ",",
+            "3",
+            "]"
+          ],
+          "target": null,
+          "currentIndex": 4,
+          "currentValue": "2",
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 5 holds ,.",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "2",
+            ",",
+            "3",
+            "]"
+          ],
+          "target": null,
+          "currentIndex": 5,
+          "currentValue": ",",
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 6 holds 3.",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "2",
+            ",",
+            "3",
+            "]"
+          ],
+          "target": null,
+          "currentIndex": 6,
+          "currentValue": "3",
+          "result": null,
+          "highlights": {
+            "6": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 7 holds ].",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "2",
+            ",",
+            "3",
+            "]"
+          ],
+          "target": null,
+          "currentIndex": 7,
+          "currentValue": "]",
+          "result": null,
+          "highlights": {
+            "7": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Answer settles: [1, 2, 3, 6, 9, 8, 7, 4, 5].",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "2",
+            ",",
+            "3",
+            "]"
+          ],
+          "target": null,
+          "currentIndex": 7,
+          "result": [
             1,
             2,
-            3
+            3,
+            6,
+            9,
+            8,
+            7,
+            4,
+            5
           ],
-          "result": "see-leetcode",
-          "highlights": {}
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done",
+            "6": "done",
+            "7": "done"
+          }
         }
       }
     ]

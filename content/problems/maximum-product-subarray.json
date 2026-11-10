@@ -71,32 +71,63 @@
   ],
   "animation": {
     "visualType": "dp",
-    "tracerId": "generic-array-scan",
-    "defaultInput": [
-      1,
-      2,
-      3,
-      2
-    ],
+    "tracerId": "authored",
+    "defaultInput": {
+      "nums": [
+        2,
+        3,
+        -2,
+        4
+      ]
+    },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving maximum product subarray using the dp view.",
+        "caption": "DP over the array for \u201cMaximum Product Subarray\u201d. Each cell stores a best answer so far.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            2,
+            3,
+            -2,
+            4
+          ],
+          "table": [
+            [
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "At index 0 (value 2), dp becomes 2.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            2,
+            3,
+            -2,
+            4
+          ],
+          "table": [
+            [
+              2,
+              0,
+              0,
+              0
+            ]
+          ],
+          "dp": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "currentIndex": 0,
           "result": null,
           "highlights": {
             "0": "current"
@@ -104,14 +135,129 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "At index 1 (value 3), dp becomes 5.",
         "state": {
-          "input": {
-            "demo": true
-          },
-          "result": "see-leetcode",
-          "highlights": {}
+          "nums": [
+            2,
+            3,
+            -2,
+            4
+          ],
+          "table": [
+            [
+              2,
+              5,
+              0,
+              0
+            ]
+          ],
+          "dp": [
+            2,
+            5,
+            0,
+            0
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 2 (value -2), dp becomes 3.",
+        "state": {
+          "nums": [
+            2,
+            3,
+            -2,
+            4
+          ],
+          "table": [
+            [
+              2,
+              5,
+              3,
+              0
+            ]
+          ],
+          "dp": [
+            2,
+            5,
+            3,
+            0
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 3 (value 4), dp becomes 7.",
+        "state": {
+          "nums": [
+            2,
+            3,
+            -2,
+            4
+          ],
+          "table": [
+            [
+              2,
+              5,
+              3,
+              7
+            ]
+          ],
+          "dp": [
+            2,
+            5,
+            3,
+            7
+          ],
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Best DP answer: 6.",
+        "state": {
+          "nums": [
+            2,
+            3,
+            -2,
+            4
+          ],
+          "table": [
+            [
+              2,
+              5,
+              3,
+              7
+            ]
+          ],
+          "dp": [
+            2,
+            5,
+            3,
+            7
+          ],
+          "result": 6,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done"
+          }
         }
       }
     ]

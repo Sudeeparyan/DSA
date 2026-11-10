@@ -43,7 +43,7 @@ export const AnimationSchema = z.object({
     "intervals",
     "bits",
   ]),
-  tracerId: z.string(),
+  tracerId: z.string().min(1),
   defaultInput: z.unknown(),
   steps: z.array(AnimationStepSchema),
 });

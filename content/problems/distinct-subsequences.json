@@ -71,32 +71,81 @@
   ],
   "animation": {
     "visualType": "dp",
-    "tracerId": "generic-array-scan",
-    "defaultInput": [
-      1,
-      2,
-      3,
-      2
-    ],
+    "tracerId": "authored",
+    "defaultInput": {
+      "s": [
+        "r",
+        "a",
+        "b",
+        "b",
+        "b",
+        "i",
+        "t"
+      ]
+    },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving distinct subsequences using the dp view.",
+        "caption": "DP over the array for \u201cDistinct Subsequences\u201d. Each cell stores a best answer so far.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            "r",
+            "a",
+            "b",
+            "b",
+            "b",
+            "i",
+            "t"
+          ],
+          "table": [
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "At index 0 (value r), dp becomes r.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            "r",
+            "a",
+            "b",
+            "b",
+            "b",
+            "i",
+            "t"
+          ],
+          "table": [
+            [
+              "r",
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "dp": [
+            "r",
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "currentIndex": 0,
           "result": null,
           "highlights": {
             "0": "current"
@@ -104,14 +153,288 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "At index 1 (value a), dp becomes ra.",
         "state": {
-          "input": {
-            "demo": true
-          },
-          "result": "see-leetcode",
-          "highlights": {}
+          "nums": [
+            "r",
+            "a",
+            "b",
+            "b",
+            "b",
+            "i",
+            "t"
+          ],
+          "table": [
+            [
+              "r",
+              "ra",
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "dp": [
+            "r",
+            "ra",
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 2 (value b), dp becomes rab.",
+        "state": {
+          "nums": [
+            "r",
+            "a",
+            "b",
+            "b",
+            "b",
+            "i",
+            "t"
+          ],
+          "table": [
+            [
+              "r",
+              "ra",
+              "rab",
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "dp": [
+            "r",
+            "ra",
+            "rab",
+            0,
+            0,
+            0,
+            0
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 3 (value b), dp becomes rabb.",
+        "state": {
+          "nums": [
+            "r",
+            "a",
+            "b",
+            "b",
+            "b",
+            "i",
+            "t"
+          ],
+          "table": [
+            [
+              "r",
+              "ra",
+              "rab",
+              "rabb",
+              0,
+              0,
+              0
+            ]
+          ],
+          "dp": [
+            "r",
+            "ra",
+            "rab",
+            "rabb",
+            0,
+            0,
+            0
+          ],
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 4 (value b), dp becomes rabbb.",
+        "state": {
+          "nums": [
+            "r",
+            "a",
+            "b",
+            "b",
+            "b",
+            "i",
+            "t"
+          ],
+          "table": [
+            [
+              "r",
+              "ra",
+              "rab",
+              "rabb",
+              "rabbb",
+              0,
+              0
+            ]
+          ],
+          "dp": [
+            "r",
+            "ra",
+            "rab",
+            "rabb",
+            "rabbb",
+            0,
+            0
+          ],
+          "currentIndex": 4,
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 5 (value i), dp becomes rabbbi.",
+        "state": {
+          "nums": [
+            "r",
+            "a",
+            "b",
+            "b",
+            "b",
+            "i",
+            "t"
+          ],
+          "table": [
+            [
+              "r",
+              "ra",
+              "rab",
+              "rabb",
+              "rabbb",
+              "rabbbi",
+              0
+            ]
+          ],
+          "dp": [
+            "r",
+            "ra",
+            "rab",
+            "rabb",
+            "rabbb",
+            "rabbbi",
+            0
+          ],
+          "currentIndex": 5,
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 6 (value t), dp becomes t.",
+        "state": {
+          "nums": [
+            "r",
+            "a",
+            "b",
+            "b",
+            "b",
+            "i",
+            "t"
+          ],
+          "table": [
+            [
+              "r",
+              "ra",
+              "rab",
+              "rabb",
+              "rabbb",
+              "rabbbi",
+              "t"
+            ]
+          ],
+          "dp": [
+            "r",
+            "ra",
+            "rab",
+            "rabb",
+            "rabbb",
+            "rabbbi",
+            "t"
+          ],
+          "currentIndex": 6,
+          "result": null,
+          "highlights": {
+            "6": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Best DP answer: 3.",
+        "state": {
+          "nums": [
+            "r",
+            "a",
+            "b",
+            "b",
+            "b",
+            "i",
+            "t"
+          ],
+          "table": [
+            [
+              "r",
+              "ra",
+              "rab",
+              "rabb",
+              "rabbb",
+              "rabbbi",
+              "t"
+            ]
+          ],
+          "dp": [
+            "r",
+            "ra",
+            "rab",
+            "rabb",
+            "rabbb",
+            "rabbbi",
+            "t"
+          ],
+          "result": 3,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done",
+            "6": "done"
+          }
         }
       }
     ]

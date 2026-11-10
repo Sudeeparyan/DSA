@@ -71,23 +71,45 @@
   ],
   "animation": {
     "visualType": "stack",
-    "tracerId": "generic-array-scan",
-    "defaultInput": "()[]{}",
+    "tracerId": "authored",
+    "defaultInput": [
+      "2",
+      "1",
+      "+",
+      "3",
+      "*"
+    ],
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving evaluate reverse polish notation using the stack view.",
+        "caption": "Empty stack for \u201cEvaluate Reverse Polish Notation\u201d. Openers push; closers pop when they match.",
         "state": {
-          "input": "()[]{}",
+          "chars": [
+            "2",
+            "1",
+            "+",
+            "3",
+            "*"
+          ],
+          "stack": [],
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Read '2' at index 0.",
         "state": {
-          "input": "()[]{}",
+          "chars": [
+            "2",
+            "1",
+            "+",
+            "3",
+            "*"
+          ],
+          "stack": [],
+          "currentIndex": 0,
+          "currentValue": "2",
           "result": null,
           "highlights": {
             "0": "current"
@@ -96,11 +118,239 @@
       },
       {
         "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "caption": "Push 2. Stack now holds candidates.",
         "state": {
-          "input": "()[]{}",
-          "result": "see-leetcode",
-          "highlights": {}
+          "chars": [
+            "2",
+            "1",
+            "+",
+            "3",
+            "*"
+          ],
+          "stack": [
+            "2"
+          ],
+          "currentIndex": 0,
+          "result": null,
+          "highlights": {
+            "0": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Read '1' at index 1.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "+",
+            "3",
+            "*"
+          ],
+          "stack": [
+            "2"
+          ],
+          "currentIndex": 1,
+          "currentValue": "1",
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Push 1. Stack now holds candidates.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "+",
+            "3",
+            "*"
+          ],
+          "stack": [
+            "2",
+            "1"
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Read '+' at index 2.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "+",
+            "3",
+            "*"
+          ],
+          "stack": [
+            "2",
+            "1"
+          ],
+          "currentIndex": 2,
+          "currentValue": "+",
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Push +. Stack now holds candidates.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "+",
+            "3",
+            "*"
+          ],
+          "stack": [
+            "2",
+            "1",
+            "+"
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Read '3' at index 3.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "+",
+            "3",
+            "*"
+          ],
+          "stack": [
+            "2",
+            "1",
+            "+"
+          ],
+          "currentIndex": 3,
+          "currentValue": "3",
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Push 3. Stack now holds candidates.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "+",
+            "3",
+            "*"
+          ],
+          "stack": [
+            "2",
+            "1",
+            "+",
+            "3"
+          ],
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Read '*' at index 4.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "+",
+            "3",
+            "*"
+          ],
+          "stack": [
+            "2",
+            "1",
+            "+",
+            "3"
+          ],
+          "currentIndex": 4,
+          "currentValue": "*",
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Push *. Stack now holds candidates.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "+",
+            "3",
+            "*"
+          ],
+          "stack": [
+            "2",
+            "1",
+            "+",
+            "3",
+            "*"
+          ],
+          "currentIndex": 4,
+          "result": null,
+          "highlights": {
+            "4": "remembered"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "Final answer: 9.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "+",
+            "3",
+            "*"
+          ],
+          "stack": [
+            "2",
+            "1",
+            "+",
+            "3",
+            "*"
+          ],
+          "result": 9,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done"
+          }
         }
       }
     ]

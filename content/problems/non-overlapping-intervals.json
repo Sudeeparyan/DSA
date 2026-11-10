@@ -71,7 +71,7 @@
   ],
   "animation": {
     "visualType": "intervals",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": {
       "intervals": [
         [
@@ -91,22 +91,57 @@
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving non overlapping intervals using the intervals view.",
+        "caption": "Intervals for \u201cNon-overlapping Intervals\u201d on a timeline.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "intervals": [
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              6
+            ],
+            [
+              8,
+              10
+            ]
+          ],
+          "nums": [
+            1,
+            3,
+            2,
+            6,
+            8,
+            10
+          ],
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Focus interval 0: [1, 3].",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "intervals": [
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              6
+            ],
+            [
+              8,
+              10
+            ]
+          ],
+          "nums": [
+            1,
+            3
+          ],
+          "currentIndex": 0,
           "result": null,
           "highlights": {
             "0": "current"
@@ -114,14 +149,95 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Focus interval 1: [2, 6].",
         "state": {
-          "input": {
-            "demo": true
-          },
-          "result": "see-leetcode",
-          "highlights": {}
+          "intervals": [
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              6
+            ],
+            [
+              8,
+              10
+            ]
+          ],
+          "nums": [
+            2,
+            6
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Focus interval 2: [8, 10].",
+        "state": {
+          "intervals": [
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              6
+            ],
+            [
+              8,
+              10
+            ]
+          ],
+          "nums": [
+            8,
+            10
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Merged / decided. Answer: 1.",
+        "state": {
+          "intervals": [
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              6
+            ],
+            [
+              8,
+              10
+            ]
+          ],
+          "nums": [
+            1,
+            3,
+            2,
+            6,
+            8,
+            10
+          ],
+          "result": 1,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done"
+          }
         }
       }
     ]

@@ -71,30 +71,57 @@
   ],
   "animation": {
     "visualType": "tree",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": {
-      "demo": true
+      "root": []
     },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving construct binary tree from preorder and inorder traversal using the tree view.",
+        "caption": "Binary tree for \u201cConstruct Binary Tree from Preorder and Inorder Traversal\u201d starts empty on stage \u2014 we reveal levels.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nodes": [],
+          "nums": [],
+          "visible": [],
           "result": null,
           "highlights": {}
         }
       },
       {
-        "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "line": 3,
+        "caption": "Tree fully revealed. Answer: [3, 9, 20, null, null, 15, 7].",
         "state": {
-          "input": {
-            "demo": true
-          },
-          "result": null,
+          "nodes": [],
+          "nums": [],
+          "visible": [],
+          "result": [
+            3,
+            9,
+            20,
+            null,
+            null,
+            15,
+            7
+          ],
+          "highlights": {}
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Keep watching \u2014 the answer structure is still assembling.",
+        "state": {
+          "nodes": [],
+          "nums": [],
+          "visible": [],
+          "result": [
+            3,
+            9,
+            20,
+            null,
+            null,
+            15,
+            7
+          ],
           "highlights": {
             "0": "current"
           }
@@ -102,13 +129,44 @@
       },
       {
         "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "caption": "Keep watching \u2014 the answer structure is still assembling.",
         "state": {
-          "input": {
-            "demo": true
-          },
-          "result": "see-leetcode",
-          "highlights": {}
+          "nodes": [],
+          "nums": [],
+          "visible": [],
+          "result": [
+            3,
+            9,
+            20,
+            null,
+            null,
+            15,
+            7
+          ],
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Keep watching \u2014 the answer structure is still assembling.",
+        "state": {
+          "nodes": [],
+          "nums": [],
+          "visible": [],
+          "result": [
+            3,
+            9,
+            20,
+            null,
+            null,
+            15,
+            7
+          ],
+          "highlights": {
+            "0": "current"
+          }
         }
       }
     ]

@@ -71,35 +71,45 @@
   ],
   "animation": {
     "visualType": "array",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": [
-      1,
       2,
-      3
+      3,
+      1,
+      1,
+      4
     ],
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving jump game using the array view.",
+        "caption": "Lay out the array for \u201cJump Game\u201d. Watch the pointer walk the answer into place.",
         "state": {
-          "input": [
-            1,
+          "nums": [
             2,
-            3
+            3,
+            1,
+            1,
+            4
           ],
           "result": null,
-          "highlights": {}
+          "highlights": {},
+          "currentIndex": null
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Index 0 holds 2.",
         "state": {
-          "input": [
-            1,
+          "nums": [
             2,
-            3
+            3,
+            1,
+            1,
+            4
           ],
+          "target": null,
+          "currentIndex": 0,
+          "currentValue": 2,
           "result": null,
           "highlights": {
             "0": "current"
@@ -107,16 +117,106 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Index 1 holds 3.",
         "state": {
-          "input": [
-            1,
+          "nums": [
             2,
-            3
+            3,
+            1,
+            1,
+            4
           ],
-          "result": "see-leetcode",
-          "highlights": {}
+          "target": null,
+          "currentIndex": 1,
+          "currentValue": 3,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 2 holds 1.",
+        "state": {
+          "nums": [
+            2,
+            3,
+            1,
+            1,
+            4
+          ],
+          "target": null,
+          "currentIndex": 2,
+          "currentValue": 1,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 3 holds 1.",
+        "state": {
+          "nums": [
+            2,
+            3,
+            1,
+            1,
+            4
+          ],
+          "target": null,
+          "currentIndex": 3,
+          "currentValue": 1,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 4 holds 4.",
+        "state": {
+          "nums": [
+            2,
+            3,
+            1,
+            1,
+            4
+          ],
+          "target": null,
+          "currentIndex": 4,
+          "currentValue": 4,
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Answer settles: true.",
+        "state": {
+          "nums": [
+            2,
+            3,
+            1,
+            1,
+            4
+          ],
+          "target": null,
+          "currentIndex": 4,
+          "result": true,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done"
+          }
         }
       }
     ]

@@ -71,21 +71,32 @@
   ],
   "animation": {
     "visualType": "bits",
-    "tracerId": "generic-array-scan",
-    "defaultInput": [
-      1,
-      2,
-      3
-    ],
+    "tracerId": "authored",
+    "defaultInput": {
+      "n": 5
+    },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving sum of two integers using the bits view.",
+        "caption": "Bit view for \u201cSum of Two Integers\u201d.",
         "state": {
-          "input": [
+          "bits": [
+            1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "nums": [
+            0,
             1,
             2,
-            3
+            3,
+            4,
+            5
           ],
           "result": null,
           "highlights": {}
@@ -93,13 +104,27 @@
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Bit 0 is 1.",
         "state": {
-          "input": [
+          "bits": [
+            1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "nums": [
+            0,
             1,
             2,
-            3
+            3,
+            4,
+            5
           ],
+          "currentIndex": 0,
           "result": null,
           "highlights": {
             "0": "current"
@@ -107,16 +132,241 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Bit 1 is 0.",
         "state": {
-          "input": [
+          "bits": [
+            1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "nums": [
+            0,
             1,
             2,
-            3
+            3,
+            4,
+            5
           ],
-          "result": "see-leetcode",
-          "highlights": {}
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Bit 2 is 1.",
+        "state": {
+          "bits": [
+            1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "nums": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Bit 3 is 0.",
+        "state": {
+          "bits": [
+            1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "nums": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Bit 4 is 0.",
+        "state": {
+          "bits": [
+            1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "nums": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "currentIndex": 4,
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Bit 5 is 0.",
+        "state": {
+          "bits": [
+            1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "nums": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "currentIndex": 5,
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Bit 6 is 0.",
+        "state": {
+          "bits": [
+            1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "nums": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "currentIndex": 6,
+          "result": null,
+          "highlights": {
+            "6": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Bit 7 is 0.",
+        "state": {
+          "bits": [
+            1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "nums": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "currentIndex": 7,
+          "result": null,
+          "highlights": {
+            "7": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Bit work done. Answer: 3.",
+        "state": {
+          "bits": [
+            1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "nums": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "result": 3,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done",
+            "6": "done",
+            "7": "done"
+          }
         }
       }
     ]

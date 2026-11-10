@@ -71,29 +71,102 @@
   ],
   "animation": {
     "visualType": "graph",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": {
-      "demo": true
+      "n": 4,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          0
+        ]
+      ]
     },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving min cost to connect all points using the graph view.",
+        "caption": "Graph for \u201cMin Cost to Connect All Points\u201d. Nodes on stage; we walk edges.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "nodes": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              0
+            ]
+          ],
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Visit node 0.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "nodes": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              0
+            ]
+          ],
+          "currentIndex": 0,
           "result": null,
           "highlights": {
             "0": "current"
@@ -101,14 +174,169 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Visit node 1.",
         "state": {
-          "input": {
-            "demo": true
-          },
-          "result": "see-leetcode",
-          "highlights": {}
+          "nums": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "nodes": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              0
+            ]
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit node 2.",
+        "state": {
+          "nums": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "nodes": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              0
+            ]
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit node 3.",
+        "state": {
+          "nums": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "nodes": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              0
+            ]
+          ],
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Traversal complete. Answer: 20.",
+        "state": {
+          "nums": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "nodes": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              0
+            ]
+          ],
+          "result": 20,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done"
+          }
         }
       }
     ]

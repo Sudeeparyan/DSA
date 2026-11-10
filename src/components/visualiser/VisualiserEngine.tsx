@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import type { Problem } from "@/lib/schema";
-import { getTracer, runTracer } from "@/lib/tracers";
+import { resolveAnimationSteps } from "@/lib/animation";
 import { GenericScene } from "./scenes/GenericScene";
 import { clsx } from "clsx";
 
@@ -51,22 +51,10 @@ export function VisualiserEngine({
     setError(null);
   }, [problem.slug, problem.animation.defaultInput]);
 
-  const steps = useMemo(() => {
-    const tracer = getTracer(problem.animation.tracerId);
-    if (!tracer || problem.animation.tracerId === "generic-array-scan") {
-      if (
-        problem.animation.tracerId === "generic-array-scan" &&
-        !Array.isArray(input)
-      ) {
-        return problem.animation.steps;
-      }
-    }
-    try {
-      return runTracer(problem.animation.tracerId, input);
-    } catch {
-      return problem.animation.steps;
-    }
-  }, [problem, input]);
+  const steps = useMemo(
+    () => resolveAnimationSteps(problem, input),
+    [problem, input],
+  );
 
   const step = steps[Math.min(index, Math.max(0, steps.length - 1))];
   const codeLines = problem.solutions.python.split("\n");

@@ -71,36 +71,87 @@
   ],
   "animation": {
     "visualType": "stack",
-    "tracerId": "generic-array-scan",
-    "defaultInput": "()[]{}",
+    "tracerId": "authored",
+    "defaultInput": [],
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving generate parentheses using the stack view.",
+        "caption": "Empty stack for \u201cGenerate Parentheses\u201d. Openers push; closers pop when they match.",
         "state": {
-          "input": "()[]{}",
+          "chars": [],
+          "stack": [],
           "result": null,
           "highlights": {}
         }
       },
       {
-        "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "line": 4,
+        "caption": "Final answer: [\"((()))\", \"(()())\", \"(())()\", \"()(())\", \"()()()\"].",
         "state": {
-          "input": "()[]{}",
-          "result": null,
+          "chars": [],
+          "stack": [],
+          "result": [
+            "((()))",
+            "(()())",
+            "(())()",
+            "()(())",
+            "()()()"
+          ],
+          "highlights": {}
+        }
+      },
+      {
+        "line": 4,
+        "caption": "Keep watching \u2014 the answer structure is still assembling.",
+        "state": {
+          "chars": [],
+          "stack": [],
+          "result": [
+            "((()))",
+            "(()())",
+            "(())()",
+            "()(())",
+            "()()()"
+          ],
           "highlights": {
             "0": "current"
           }
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 4,
+        "caption": "Keep watching \u2014 the answer structure is still assembling.",
         "state": {
-          "input": "()[]{}",
-          "result": "see-leetcode",
-          "highlights": {}
+          "chars": [],
+          "stack": [],
+          "result": [
+            "((()))",
+            "(()())",
+            "(())()",
+            "()(())",
+            "()()()"
+          ],
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "Keep watching \u2014 the answer structure is still assembling.",
+        "state": {
+          "chars": [],
+          "stack": [],
+          "result": [
+            "((()))",
+            "(()())",
+            "(())()",
+            "()(())",
+            "()()()"
+          ],
+          "highlights": {
+            "0": "current"
+          }
         }
       }
     ]

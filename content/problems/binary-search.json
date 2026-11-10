@@ -71,35 +71,51 @@
   ],
   "animation": {
     "visualType": "array",
-    "tracerId": "generic-array-scan",
-    "defaultInput": [
-      1,
-      2,
-      3
-    ],
+    "tracerId": "authored",
+    "defaultInput": {
+      "nums": [
+        -1,
+        0,
+        3,
+        5,
+        9,
+        12
+      ],
+      "target": 9
+    },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving binary search using the array view.",
+        "caption": "Lay out the array for \u201cBinary Search\u201d. Watch the pointer walk the answer into place.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "nums": [
+            -1,
+            0,
+            3,
+            5,
+            9,
+            12
           ],
           "result": null,
-          "highlights": {}
+          "highlights": {},
+          "currentIndex": null
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Index 0 holds -1.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "nums": [
+            -1,
+            0,
+            3,
+            5,
+            9,
+            12
           ],
+          "target": 9,
+          "currentIndex": 0,
+          "currentValue": -1,
           "result": null,
           "highlights": {
             "0": "current"
@@ -107,16 +123,133 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Index 1 holds 0.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "nums": [
+            -1,
+            0,
+            3,
+            5,
+            9,
+            12
           ],
-          "result": "see-leetcode",
-          "highlights": {}
+          "target": 9,
+          "currentIndex": 1,
+          "currentValue": 0,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 2 holds 3.",
+        "state": {
+          "nums": [
+            -1,
+            0,
+            3,
+            5,
+            9,
+            12
+          ],
+          "target": 9,
+          "currentIndex": 2,
+          "currentValue": 3,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 3 holds 5.",
+        "state": {
+          "nums": [
+            -1,
+            0,
+            3,
+            5,
+            9,
+            12
+          ],
+          "target": 9,
+          "currentIndex": 3,
+          "currentValue": 5,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 4 holds 9 \u2014 this matches the target 9.",
+        "state": {
+          "nums": [
+            -1,
+            0,
+            3,
+            5,
+            9,
+            12
+          ],
+          "target": 9,
+          "currentIndex": 4,
+          "currentValue": 9,
+          "result": null,
+          "highlights": {
+            "4": "matched"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 5 holds 12.",
+        "state": {
+          "nums": [
+            -1,
+            0,
+            3,
+            5,
+            9,
+            12
+          ],
+          "target": 9,
+          "currentIndex": 5,
+          "currentValue": 12,
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Answer settles: 4.",
+        "state": {
+          "nums": [
+            -1,
+            0,
+            3,
+            5,
+            9,
+            12
+          ],
+          "target": 9,
+          "currentIndex": 5,
+          "result": 4,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done"
+          }
         }
       }
     ]

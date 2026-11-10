@@ -71,29 +71,80 @@
   ],
   "animation": {
     "visualType": "grid",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": {
-      "demo": true
+      "grid": [
+        [
+          "hot",
+          "dot",
+          "dog"
+        ],
+        [
+          "lot",
+          "log",
+          "cog"
+        ]
+      ]
     },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving word ladder using the grid view.",
+        "caption": "Grid for \u201cWord Ladder\u201d. We scan cells; visited cells light up.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "grid": [
+            [
+              "hot",
+              "dot",
+              "dog"
+            ],
+            [
+              "lot",
+              "log",
+              "cog"
+            ]
+          ],
+          "nums": [
+            "hot",
+            "dot",
+            "dog",
+            "lot",
+            "log",
+            "cog"
+          ],
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Visit cell (0,0) = hot.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "grid": [
+            [
+              "hot",
+              "dot",
+              "dog"
+            ],
+            [
+              "lot",
+              "log",
+              "cog"
+            ]
+          ],
+          "nums": [
+            "hot",
+            "dot",
+            "dog",
+            "lot",
+            "log",
+            "cog"
+          ],
+          "currentIndex": 0,
+          "currentValue": "hot",
+          "cell": [
+            0,
+            0
+          ],
           "result": null,
           "highlights": {
             "0": "current"
@@ -101,14 +152,218 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Visit cell (0,1) = dot.",
         "state": {
-          "input": {
-            "demo": true
-          },
-          "result": "see-leetcode",
-          "highlights": {}
+          "grid": [
+            [
+              "hot",
+              "dot",
+              "dog"
+            ],
+            [
+              "lot",
+              "log",
+              "cog"
+            ]
+          ],
+          "nums": [
+            "hot",
+            "dot",
+            "dog",
+            "lot",
+            "log",
+            "cog"
+          ],
+          "currentIndex": 1,
+          "currentValue": "dot",
+          "cell": [
+            0,
+            1
+          ],
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (0,2) = dog.",
+        "state": {
+          "grid": [
+            [
+              "hot",
+              "dot",
+              "dog"
+            ],
+            [
+              "lot",
+              "log",
+              "cog"
+            ]
+          ],
+          "nums": [
+            "hot",
+            "dot",
+            "dog",
+            "lot",
+            "log",
+            "cog"
+          ],
+          "currentIndex": 2,
+          "currentValue": "dog",
+          "cell": [
+            0,
+            2
+          ],
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (1,0) = lot.",
+        "state": {
+          "grid": [
+            [
+              "hot",
+              "dot",
+              "dog"
+            ],
+            [
+              "lot",
+              "log",
+              "cog"
+            ]
+          ],
+          "nums": [
+            "hot",
+            "dot",
+            "dog",
+            "lot",
+            "log",
+            "cog"
+          ],
+          "currentIndex": 3,
+          "currentValue": "lot",
+          "cell": [
+            1,
+            0
+          ],
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (1,1) = log.",
+        "state": {
+          "grid": [
+            [
+              "hot",
+              "dot",
+              "dog"
+            ],
+            [
+              "lot",
+              "log",
+              "cog"
+            ]
+          ],
+          "nums": [
+            "hot",
+            "dot",
+            "dog",
+            "lot",
+            "log",
+            "cog"
+          ],
+          "currentIndex": 4,
+          "currentValue": "log",
+          "cell": [
+            1,
+            1
+          ],
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (1,2) = cog.",
+        "state": {
+          "grid": [
+            [
+              "hot",
+              "dot",
+              "dog"
+            ],
+            [
+              "lot",
+              "log",
+              "cog"
+            ]
+          ],
+          "nums": [
+            "hot",
+            "dot",
+            "dog",
+            "lot",
+            "log",
+            "cog"
+          ],
+          "currentIndex": 5,
+          "currentValue": "cog",
+          "cell": [
+            1,
+            2
+          ],
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Grid scan complete. Answer: 5.",
+        "state": {
+          "grid": [
+            [
+              "hot",
+              "dot",
+              "dog"
+            ],
+            [
+              "lot",
+              "log",
+              "cog"
+            ]
+          ],
+          "nums": [
+            "hot",
+            "dot",
+            "dog",
+            "lot",
+            "log",
+            "cog"
+          ],
+          "result": 5,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done"
+          }
         }
       }
     ]

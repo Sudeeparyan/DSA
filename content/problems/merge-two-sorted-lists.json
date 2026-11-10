@@ -71,44 +71,137 @@
   ],
   "animation": {
     "visualType": "linkedList",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": {
-      "demo": true
+      "nodes": [
+        1,
+        2,
+        4
+      ]
     },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving merge two sorted lists using the linkedList view.",
+        "caption": "Linked list for \u201cMerge Two Sorted Lists\u201d: each box points to the next.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            1,
+            2,
+            4
+          ],
+          "nodes": [
+            1,
+            2,
+            4
+          ],
           "result": null,
-          "highlights": {}
+          "highlights": {},
+          "pointers": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Pointer visits node 1 (index 0).",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            1,
+            2,
+            4
+          ],
+          "nodes": [
+            1,
+            2,
+            4
+          ],
+          "currentIndex": 0,
+          "currentValue": 1,
           "result": null,
           "highlights": {
             "0": "current"
+          },
+          "pointers": {
+            "curr": 0
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Pointer visits node 2 (index 1).",
+        "state": {
+          "nums": [
+            1,
+            2,
+            4
+          ],
+          "nodes": [
+            1,
+            2,
+            4
+          ],
+          "currentIndex": 1,
+          "currentValue": 2,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          },
+          "pointers": {
+            "curr": 1
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Pointer visits node 4 (index 2).",
+        "state": {
+          "nums": [
+            1,
+            2,
+            4
+          ],
+          "nodes": [
+            1,
+            2,
+            4
+          ],
+          "currentIndex": 2,
+          "currentValue": 4,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          },
+          "pointers": {
+            "curr": 2
           }
         }
       },
       {
         "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "caption": "Done. Result: [1, 1, 2, 3, 4, 4].",
         "state": {
-          "input": {
-            "demo": true
+          "nums": [
+            1,
+            2,
+            4
+          ],
+          "nodes": [
+            1,
+            2,
+            4
+          ],
+          "result": [
+            1,
+            1,
+            2,
+            3,
+            4,
+            4
+          ],
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done"
           },
-          "result": "see-leetcode",
-          "highlights": {}
+          "pointers": {}
         }
       }
     ]

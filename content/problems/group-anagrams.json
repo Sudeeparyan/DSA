@@ -71,35 +71,54 @@
   ],
   "animation": {
     "visualType": "hash",
-    "tracerId": "generic-array-scan",
-    "defaultInput": [
-      1,
-      2,
-      3
-    ],
+    "tracerId": "authored",
+    "defaultInput": {
+      "nums": [
+        "eat",
+        "tea",
+        "tan",
+        "ate",
+        "nat",
+        "bat"
+      ]
+    },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving group anagrams using the hash view.",
+        "caption": "Empty memory shelf for \u201cGroup Anagrams\u201d. We remember what we have already seen.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "nums": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
           ],
+          "seen": [],
+          "map": {},
+          "target": null,
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Look at eat at index 0.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "nums": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
           ],
+          "seen": [],
+          "map": {},
+          "target": null,
+          "currentIndex": 0,
+          "currentValue": "eat",
           "result": null,
           "highlights": {
             "0": "current"
@@ -107,16 +126,391 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 4,
+        "caption": "New value. Dock eat onto the memory shelf.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "nums": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
           ],
-          "result": "see-leetcode",
-          "highlights": {}
+          "seen": [
+            "eat"
+          ],
+          "map": {
+            "eat": 0
+          },
+          "currentIndex": 0,
+          "result": null,
+          "highlights": {
+            "0": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at tea at index 1.",
+        "state": {
+          "nums": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ],
+          "seen": [
+            "eat"
+          ],
+          "map": {
+            "eat": 0
+          },
+          "target": null,
+          "currentIndex": 1,
+          "currentValue": "tea",
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "New value. Dock tea onto the memory shelf.",
+        "state": {
+          "nums": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ],
+          "seen": [
+            "eat",
+            "tea"
+          ],
+          "map": {
+            "eat": 0,
+            "tea": 1
+          },
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at tan at index 2.",
+        "state": {
+          "nums": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ],
+          "seen": [
+            "eat",
+            "tea"
+          ],
+          "map": {
+            "eat": 0,
+            "tea": 1
+          },
+          "target": null,
+          "currentIndex": 2,
+          "currentValue": "tan",
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "New value. Dock tan onto the memory shelf.",
+        "state": {
+          "nums": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ],
+          "seen": [
+            "eat",
+            "tea",
+            "tan"
+          ],
+          "map": {
+            "eat": 0,
+            "tea": 1,
+            "tan": 2
+          },
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at ate at index 3.",
+        "state": {
+          "nums": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ],
+          "seen": [
+            "eat",
+            "tea",
+            "tan"
+          ],
+          "map": {
+            "eat": 0,
+            "tea": 1,
+            "tan": 2
+          },
+          "target": null,
+          "currentIndex": 3,
+          "currentValue": "ate",
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "New value. Dock ate onto the memory shelf.",
+        "state": {
+          "nums": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ],
+          "seen": [
+            "eat",
+            "tea",
+            "tan",
+            "ate"
+          ],
+          "map": {
+            "eat": 0,
+            "tea": 1,
+            "tan": 2,
+            "ate": 3
+          },
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at nat at index 4.",
+        "state": {
+          "nums": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ],
+          "seen": [
+            "eat",
+            "tea",
+            "tan",
+            "ate"
+          ],
+          "map": {
+            "eat": 0,
+            "tea": 1,
+            "tan": 2,
+            "ate": 3
+          },
+          "target": null,
+          "currentIndex": 4,
+          "currentValue": "nat",
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "New value. Dock nat onto the memory shelf.",
+        "state": {
+          "nums": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ],
+          "seen": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat"
+          ],
+          "map": {
+            "eat": 0,
+            "tea": 1,
+            "tan": 2,
+            "ate": 3,
+            "nat": 4
+          },
+          "currentIndex": 4,
+          "result": null,
+          "highlights": {
+            "4": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at bat at index 5.",
+        "state": {
+          "nums": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ],
+          "seen": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat"
+          ],
+          "map": {
+            "eat": 0,
+            "tea": 1,
+            "tan": 2,
+            "ate": 3,
+            "nat": 4
+          },
+          "target": null,
+          "currentIndex": 5,
+          "currentValue": "bat",
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "New value. Dock bat onto the memory shelf.",
+        "state": {
+          "nums": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ],
+          "seen": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ],
+          "map": {
+            "eat": 0,
+            "tea": 1,
+            "tan": 2,
+            "ate": 3,
+            "nat": 4,
+            "bat": 5
+          },
+          "currentIndex": 5,
+          "result": null,
+          "highlights": {
+            "5": "remembered"
+          }
+        }
+      },
+      {
+        "line": 5,
+        "caption": "Scan complete. Result: [[\"bat\"], [\"nat\", \"tan\"], [\"ate\", \"eat\", \"tea\"]].",
+        "state": {
+          "nums": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ],
+          "seen": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ],
+          "map": {
+            "eat": 0,
+            "tea": 1,
+            "tan": 2,
+            "ate": 3,
+            "nat": 4,
+            "bat": 5
+          },
+          "target": null,
+          "result": [
+            [
+              "bat"
+            ],
+            [
+              "nat",
+              "tan"
+            ],
+            [
+              "ate",
+              "eat",
+              "tea"
+            ]
+          ],
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done"
+          }
         }
       }
     ]

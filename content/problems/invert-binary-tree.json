@@ -71,29 +71,73 @@
   ],
   "animation": {
     "visualType": "tree",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": {
-      "demo": true
+      "root": [
+        4,
+        2,
+        7,
+        1,
+        3,
+        6,
+        9
+      ]
     },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving invert binary tree using the tree view.",
+        "caption": "Binary tree for \u201cInvert Binary Tree\u201d starts empty on stage \u2014 we reveal levels.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nodes": [
+            4,
+            2,
+            7,
+            1,
+            3,
+            6,
+            9
+          ],
+          "nums": [
+            4,
+            2,
+            7,
+            1,
+            3,
+            6,
+            9
+          ],
+          "visible": [],
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Reveal node 4 at heap-index 0.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nodes": [
+            4,
+            2,
+            7,
+            1,
+            3,
+            6,
+            9
+          ],
+          "nums": [
+            4,
+            2,
+            7,
+            1,
+            3,
+            6,
+            9
+          ],
+          "visible": [
+            4
+          ],
+          "currentIndex": 0,
+          "currentValue": 4,
           "result": null,
           "highlights": {
             "0": "current"
@@ -101,14 +145,273 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Reveal node 2 at heap-index 1.",
         "state": {
-          "input": {
-            "demo": true
-          },
-          "result": "see-leetcode",
-          "highlights": {}
+          "nodes": [
+            4,
+            2,
+            7,
+            1,
+            3,
+            6,
+            9
+          ],
+          "nums": [
+            4,
+            2,
+            7,
+            1,
+            3,
+            6,
+            9
+          ],
+          "visible": [
+            4,
+            2
+          ],
+          "currentIndex": 1,
+          "currentValue": 2,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Reveal node 7 at heap-index 2.",
+        "state": {
+          "nodes": [
+            4,
+            2,
+            7,
+            1,
+            3,
+            6,
+            9
+          ],
+          "nums": [
+            4,
+            2,
+            7,
+            1,
+            3,
+            6,
+            9
+          ],
+          "visible": [
+            4,
+            2,
+            7
+          ],
+          "currentIndex": 2,
+          "currentValue": 7,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Reveal node 1 at heap-index 3.",
+        "state": {
+          "nodes": [
+            4,
+            2,
+            7,
+            1,
+            3,
+            6,
+            9
+          ],
+          "nums": [
+            4,
+            2,
+            7,
+            1,
+            3,
+            6,
+            9
+          ],
+          "visible": [
+            4,
+            2,
+            7,
+            1
+          ],
+          "currentIndex": 3,
+          "currentValue": 1,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Reveal node 3 at heap-index 4.",
+        "state": {
+          "nodes": [
+            4,
+            2,
+            7,
+            1,
+            3,
+            6,
+            9
+          ],
+          "nums": [
+            4,
+            2,
+            7,
+            1,
+            3,
+            6,
+            9
+          ],
+          "visible": [
+            4,
+            2,
+            7,
+            1,
+            3
+          ],
+          "currentIndex": 4,
+          "currentValue": 3,
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Reveal node 6 at heap-index 5.",
+        "state": {
+          "nodes": [
+            4,
+            2,
+            7,
+            1,
+            3,
+            6,
+            9
+          ],
+          "nums": [
+            4,
+            2,
+            7,
+            1,
+            3,
+            6,
+            9
+          ],
+          "visible": [
+            4,
+            2,
+            7,
+            1,
+            3,
+            6
+          ],
+          "currentIndex": 5,
+          "currentValue": 6,
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Reveal node 9 at heap-index 6.",
+        "state": {
+          "nodes": [
+            4,
+            2,
+            7,
+            1,
+            3,
+            6,
+            9
+          ],
+          "nums": [
+            4,
+            2,
+            7,
+            1,
+            3,
+            6,
+            9
+          ],
+          "visible": [
+            4,
+            2,
+            7,
+            1,
+            3,
+            6,
+            9
+          ],
+          "currentIndex": 6,
+          "currentValue": 9,
+          "result": null,
+          "highlights": {
+            "6": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Tree fully revealed. Answer: [4, 7, 2, 9, 6, 3, 1].",
+        "state": {
+          "nodes": [
+            4,
+            2,
+            7,
+            1,
+            3,
+            6,
+            9
+          ],
+          "nums": [
+            4,
+            2,
+            7,
+            1,
+            3,
+            6,
+            9
+          ],
+          "visible": [
+            4,
+            2,
+            7,
+            1,
+            3,
+            6,
+            9
+          ],
+          "result": [
+            4,
+            7,
+            2,
+            9,
+            6,
+            3,
+            1
+          ],
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done",
+            "6": "done"
+          }
         }
       }
     ]

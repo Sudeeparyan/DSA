@@ -71,32 +71,63 @@
   ],
   "animation": {
     "visualType": "dp",
-    "tracerId": "generic-array-scan",
-    "defaultInput": [
-      1,
-      2,
-      3,
-      2
-    ],
+    "tracerId": "authored",
+    "defaultInput": {
+      "nums": [
+        1,
+        5,
+        11,
+        5
+      ]
+    },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving partition equal subset sum using the dp view.",
+        "caption": "DP over the array for \u201cPartition Equal Subset Sum\u201d. Each cell stores a best answer so far.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            1,
+            5,
+            11,
+            5
+          ],
+          "table": [
+            [
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "At index 0 (value 1), dp becomes 1.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            1,
+            5,
+            11,
+            5
+          ],
+          "table": [
+            [
+              1,
+              0,
+              0,
+              0
+            ]
+          ],
+          "dp": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "currentIndex": 0,
           "result": null,
           "highlights": {
             "0": "current"
@@ -104,14 +135,129 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "At index 1 (value 5), dp becomes 6.",
         "state": {
-          "input": {
-            "demo": true
-          },
-          "result": "see-leetcode",
-          "highlights": {}
+          "nums": [
+            1,
+            5,
+            11,
+            5
+          ],
+          "table": [
+            [
+              1,
+              6,
+              0,
+              0
+            ]
+          ],
+          "dp": [
+            1,
+            6,
+            0,
+            0
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 2 (value 11), dp becomes 17.",
+        "state": {
+          "nums": [
+            1,
+            5,
+            11,
+            5
+          ],
+          "table": [
+            [
+              1,
+              6,
+              17,
+              0
+            ]
+          ],
+          "dp": [
+            1,
+            6,
+            17,
+            0
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 3 (value 5), dp becomes 22.",
+        "state": {
+          "nums": [
+            1,
+            5,
+            11,
+            5
+          ],
+          "table": [
+            [
+              1,
+              6,
+              17,
+              22
+            ]
+          ],
+          "dp": [
+            1,
+            6,
+            17,
+            22
+          ],
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Best DP answer: true.",
+        "state": {
+          "nums": [
+            1,
+            5,
+            11,
+            5
+          ],
+          "table": [
+            [
+              1,
+              6,
+              17,
+              22
+            ]
+          ],
+          "dp": [
+            1,
+            6,
+            17,
+            22
+          ],
+          "result": true,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done"
+          }
         }
       }
     ]

@@ -71,44 +71,365 @@
   ],
   "animation": {
     "visualType": "linkedList",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": {
-      "demo": true
+      "nodes": [
+        "h",
+        "e",
+        "a",
+        "d",
+        " ",
+        "w",
+        "i",
+        "t"
+      ]
     },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving copy list with random pointer using the linkedList view.",
+        "caption": "Linked list for \u201cCopy List with Random Pointer\u201d: each box points to the next.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "nodes": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
           "result": null,
-          "highlights": {}
+          "highlights": {},
+          "pointers": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Pointer visits node h (index 0).",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "nodes": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "currentIndex": 0,
+          "currentValue": "h",
           "result": null,
           "highlights": {
             "0": "current"
+          },
+          "pointers": {
+            "curr": 0
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Pointer visits node e (index 1).",
+        "state": {
+          "nums": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "nodes": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "currentIndex": 1,
+          "currentValue": "e",
+          "result": null,
+          "highlights": {
+            "1": "current"
+          },
+          "pointers": {
+            "curr": 1
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Pointer visits node a (index 2).",
+        "state": {
+          "nums": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "nodes": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "currentIndex": 2,
+          "currentValue": "a",
+          "result": null,
+          "highlights": {
+            "2": "current"
+          },
+          "pointers": {
+            "curr": 2
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Pointer visits node d (index 3).",
+        "state": {
+          "nums": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "nodes": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "currentIndex": 3,
+          "currentValue": "d",
+          "result": null,
+          "highlights": {
+            "3": "current"
+          },
+          "pointers": {
+            "curr": 3
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Pointer visits node   (index 4).",
+        "state": {
+          "nums": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "nodes": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "currentIndex": 4,
+          "currentValue": " ",
+          "result": null,
+          "highlights": {
+            "4": "current"
+          },
+          "pointers": {
+            "curr": 4
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Pointer visits node w (index 5).",
+        "state": {
+          "nums": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "nodes": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "currentIndex": 5,
+          "currentValue": "w",
+          "result": null,
+          "highlights": {
+            "5": "current"
+          },
+          "pointers": {
+            "curr": 5
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Pointer visits node i (index 6).",
+        "state": {
+          "nums": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "nodes": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "currentIndex": 6,
+          "currentValue": "i",
+          "result": null,
+          "highlights": {
+            "6": "current"
+          },
+          "pointers": {
+            "curr": 6
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Pointer visits node t (index 7).",
+        "state": {
+          "nums": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "nodes": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "currentIndex": 7,
+          "currentValue": "t",
+          "result": null,
+          "highlights": {
+            "7": "current"
+          },
+          "pointers": {
+            "curr": 7
           }
         }
       },
       {
         "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "caption": "Done. Result: \"deep copy\".",
         "state": {
-          "input": {
-            "demo": true
+          "nums": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "nodes": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "result": "deep copy",
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done",
+            "6": "done",
+            "7": "done"
           },
-          "result": "see-leetcode",
-          "highlights": {}
+          "pointers": {}
         }
       }
     ]

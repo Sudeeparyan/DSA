@@ -1,5 +1,5 @@
 import type { Problem } from "@/lib/schema";
-import { getTracer, runTracer } from "@/lib/tracers";
+import { resolveAnimationSteps } from "@/lib/animation";
 
 export type BeatKind =
   | "hook"
@@ -27,14 +27,7 @@ function firstExampleInput(problem: Problem): unknown {
 }
 
 function algoSteps(problem: Problem) {
-  const input = firstExampleInput(problem);
-  try {
-    const tracer = getTracer(problem.animation.tracerId);
-    if (tracer) return runTracer(problem.animation.tracerId, input);
-  } catch {
-    /* fall through */
-  }
-  return problem.animation.steps;
+  return resolveAnimationSteps(problem, firstExampleInput(problem));
 }
 
 /** Turn a problem into a continuous teacher-led playthrough. */

@@ -71,35 +71,58 @@
   ],
   "animation": {
     "visualType": "hash",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": [
-      1,
-      2,
-      3
+      "v",
+      "a",
+      "l",
+      "i",
+      "d",
+      " ",
+      "p",
+      "a"
     ],
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving valid sudoku using the hash view.",
+        "caption": "Empty memory shelf for \u201cValid Sudoku\u201d. We remember what we have already seen.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "nums": [
+            "v",
+            "a",
+            "l",
+            "i",
+            "d",
+            " ",
+            "p",
+            "a"
           ],
+          "seen": [],
+          "map": {},
+          "target": null,
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Look at v at index 0.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "nums": [
+            "v",
+            "a",
+            "l",
+            "i",
+            "d",
+            " ",
+            "p",
+            "a"
           ],
+          "seen": [],
+          "map": {},
+          "target": null,
+          "currentIndex": 0,
+          "currentValue": "v",
           "result": null,
           "highlights": {
             "0": "current"
@@ -107,16 +130,557 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 4,
+        "caption": "New value. Dock v onto the memory shelf.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "nums": [
+            "v",
+            "a",
+            "l",
+            "i",
+            "d",
+            " ",
+            "p",
+            "a"
           ],
-          "result": "see-leetcode",
-          "highlights": {}
+          "seen": [
+            "v"
+          ],
+          "map": {
+            "v": 0
+          },
+          "currentIndex": 0,
+          "result": null,
+          "highlights": {
+            "0": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at a at index 1.",
+        "state": {
+          "nums": [
+            "v",
+            "a",
+            "l",
+            "i",
+            "d",
+            " ",
+            "p",
+            "a"
+          ],
+          "seen": [
+            "v"
+          ],
+          "map": {
+            "v": 0
+          },
+          "target": null,
+          "currentIndex": 1,
+          "currentValue": "a",
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "New value. Dock a onto the memory shelf.",
+        "state": {
+          "nums": [
+            "v",
+            "a",
+            "l",
+            "i",
+            "d",
+            " ",
+            "p",
+            "a"
+          ],
+          "seen": [
+            "v",
+            "a"
+          ],
+          "map": {
+            "v": 0,
+            "a": 1
+          },
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at l at index 2.",
+        "state": {
+          "nums": [
+            "v",
+            "a",
+            "l",
+            "i",
+            "d",
+            " ",
+            "p",
+            "a"
+          ],
+          "seen": [
+            "v",
+            "a"
+          ],
+          "map": {
+            "v": 0,
+            "a": 1
+          },
+          "target": null,
+          "currentIndex": 2,
+          "currentValue": "l",
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "New value. Dock l onto the memory shelf.",
+        "state": {
+          "nums": [
+            "v",
+            "a",
+            "l",
+            "i",
+            "d",
+            " ",
+            "p",
+            "a"
+          ],
+          "seen": [
+            "v",
+            "a",
+            "l"
+          ],
+          "map": {
+            "v": 0,
+            "a": 1,
+            "l": 2
+          },
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at i at index 3.",
+        "state": {
+          "nums": [
+            "v",
+            "a",
+            "l",
+            "i",
+            "d",
+            " ",
+            "p",
+            "a"
+          ],
+          "seen": [
+            "v",
+            "a",
+            "l"
+          ],
+          "map": {
+            "v": 0,
+            "a": 1,
+            "l": 2
+          },
+          "target": null,
+          "currentIndex": 3,
+          "currentValue": "i",
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "New value. Dock i onto the memory shelf.",
+        "state": {
+          "nums": [
+            "v",
+            "a",
+            "l",
+            "i",
+            "d",
+            " ",
+            "p",
+            "a"
+          ],
+          "seen": [
+            "v",
+            "a",
+            "l",
+            "i"
+          ],
+          "map": {
+            "v": 0,
+            "a": 1,
+            "l": 2,
+            "i": 3
+          },
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at d at index 4.",
+        "state": {
+          "nums": [
+            "v",
+            "a",
+            "l",
+            "i",
+            "d",
+            " ",
+            "p",
+            "a"
+          ],
+          "seen": [
+            "v",
+            "a",
+            "l",
+            "i"
+          ],
+          "map": {
+            "v": 0,
+            "a": 1,
+            "l": 2,
+            "i": 3
+          },
+          "target": null,
+          "currentIndex": 4,
+          "currentValue": "d",
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "New value. Dock d onto the memory shelf.",
+        "state": {
+          "nums": [
+            "v",
+            "a",
+            "l",
+            "i",
+            "d",
+            " ",
+            "p",
+            "a"
+          ],
+          "seen": [
+            "v",
+            "a",
+            "l",
+            "i",
+            "d"
+          ],
+          "map": {
+            "v": 0,
+            "a": 1,
+            "l": 2,
+            "i": 3,
+            "d": 4
+          },
+          "currentIndex": 4,
+          "result": null,
+          "highlights": {
+            "4": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at   at index 5.",
+        "state": {
+          "nums": [
+            "v",
+            "a",
+            "l",
+            "i",
+            "d",
+            " ",
+            "p",
+            "a"
+          ],
+          "seen": [
+            "v",
+            "a",
+            "l",
+            "i",
+            "d"
+          ],
+          "map": {
+            "v": 0,
+            "a": 1,
+            "l": 2,
+            "i": 3,
+            "d": 4
+          },
+          "target": null,
+          "currentIndex": 5,
+          "currentValue": " ",
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "New value. Dock   onto the memory shelf.",
+        "state": {
+          "nums": [
+            "v",
+            "a",
+            "l",
+            "i",
+            "d",
+            " ",
+            "p",
+            "a"
+          ],
+          "seen": [
+            "v",
+            "a",
+            "l",
+            "i",
+            "d",
+            " "
+          ],
+          "map": {
+            "v": 0,
+            "a": 1,
+            "l": 2,
+            "i": 3,
+            "d": 4,
+            " ": 5
+          },
+          "currentIndex": 5,
+          "result": null,
+          "highlights": {
+            "5": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at p at index 6.",
+        "state": {
+          "nums": [
+            "v",
+            "a",
+            "l",
+            "i",
+            "d",
+            " ",
+            "p",
+            "a"
+          ],
+          "seen": [
+            "v",
+            "a",
+            "l",
+            "i",
+            "d",
+            " "
+          ],
+          "map": {
+            "v": 0,
+            "a": 1,
+            "l": 2,
+            "i": 3,
+            "d": 4,
+            " ": 5
+          },
+          "target": null,
+          "currentIndex": 6,
+          "currentValue": "p",
+          "result": null,
+          "highlights": {
+            "6": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "New value. Dock p onto the memory shelf.",
+        "state": {
+          "nums": [
+            "v",
+            "a",
+            "l",
+            "i",
+            "d",
+            " ",
+            "p",
+            "a"
+          ],
+          "seen": [
+            "v",
+            "a",
+            "l",
+            "i",
+            "d",
+            " ",
+            "p"
+          ],
+          "map": {
+            "v": 0,
+            "a": 1,
+            "l": 2,
+            "i": 3,
+            "d": 4,
+            " ": 5,
+            "p": 6
+          },
+          "currentIndex": 6,
+          "result": null,
+          "highlights": {
+            "6": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at a at index 7.",
+        "state": {
+          "nums": [
+            "v",
+            "a",
+            "l",
+            "i",
+            "d",
+            " ",
+            "p",
+            "a"
+          ],
+          "seen": [
+            "v",
+            "a",
+            "l",
+            "i",
+            "d",
+            " ",
+            "p"
+          ],
+          "map": {
+            "v": 0,
+            "a": 1,
+            "l": 2,
+            "i": 3,
+            "d": 4,
+            " ": 5,
+            "p": 6
+          },
+          "target": null,
+          "currentIndex": 7,
+          "currentValue": "a",
+          "result": null,
+          "highlights": {
+            "7": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Have we seen a before? Yes \u2014 duplicate found.",
+        "state": {
+          "nums": [
+            "v",
+            "a",
+            "l",
+            "i",
+            "d",
+            " ",
+            "p",
+            "a"
+          ],
+          "seen": [
+            "v",
+            "a",
+            "l",
+            "i",
+            "d",
+            " ",
+            "p"
+          ],
+          "map": {
+            "v": 0,
+            "a": 1,
+            "l": 2,
+            "i": 3,
+            "d": 4,
+            " ": 5,
+            "p": 6
+          },
+          "currentIndex": 7,
+          "result": true,
+          "highlights": {
+            "7": "matched"
+          }
+        }
+      },
+      {
+        "line": 5,
+        "caption": "Return true.",
+        "state": {
+          "nums": [
+            "v",
+            "a",
+            "l",
+            "i",
+            "d",
+            " ",
+            "p",
+            "a"
+          ],
+          "seen": [
+            "v",
+            "a",
+            "l",
+            "i",
+            "d",
+            " ",
+            "p"
+          ],
+          "map": {
+            "v": 0,
+            "a": 1,
+            "l": 2,
+            "i": 3,
+            "d": 4,
+            " ": 5,
+            "p": 6
+          },
+          "target": null,
+          "result": true,
+          "highlights": {
+            "7": "matched"
+          }
         }
       }
     ]

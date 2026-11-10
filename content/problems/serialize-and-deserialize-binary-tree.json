@@ -71,29 +71,69 @@
   ],
   "animation": {
     "visualType": "tree",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": {
-      "demo": true
+      "root": [
+        1,
+        2,
+        3,
+        null,
+        null,
+        4,
+        5
+      ]
     },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving serialize and deserialize binary tree using the tree view.",
+        "caption": "Binary tree for \u201cSerialize and Deserialize Binary Tree\u201d starts empty on stage \u2014 we reveal levels.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nodes": [
+            1,
+            2,
+            3,
+            null,
+            null,
+            4,
+            5
+          ],
+          "nums": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "visible": [],
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Reveal node 1 at heap-index 0.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nodes": [
+            1,
+            2,
+            3,
+            null,
+            null,
+            4,
+            5
+          ],
+          "nums": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "visible": [
+            1
+          ],
+          "currentIndex": 0,
+          "currentValue": 1,
           "result": null,
           "highlights": {
             "0": "current"
@@ -101,14 +141,174 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Reveal node 2 at heap-index 1.",
         "state": {
-          "input": {
-            "demo": true
-          },
-          "result": "see-leetcode",
-          "highlights": {}
+          "nodes": [
+            1,
+            2,
+            3,
+            null,
+            null,
+            4,
+            5
+          ],
+          "nums": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "visible": [
+            1,
+            2
+          ],
+          "currentIndex": 1,
+          "currentValue": 2,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Reveal node 3 at heap-index 2.",
+        "state": {
+          "nodes": [
+            1,
+            2,
+            3,
+            null,
+            null,
+            4,
+            5
+          ],
+          "nums": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "visible": [
+            1,
+            2,
+            3
+          ],
+          "currentIndex": 2,
+          "currentValue": 3,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Reveal node 4 at heap-index 5.",
+        "state": {
+          "nodes": [
+            1,
+            2,
+            3,
+            null,
+            null,
+            4,
+            5
+          ],
+          "nums": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "visible": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "currentIndex": 5,
+          "currentValue": 4,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Reveal node 5 at heap-index 6.",
+        "state": {
+          "nodes": [
+            1,
+            2,
+            3,
+            null,
+            null,
+            4,
+            5
+          ],
+          "nums": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "visible": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "currentIndex": 6,
+          "currentValue": 5,
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Tree fully revealed. Answer: \"same after ser/deser\".",
+        "state": {
+          "nodes": [
+            1,
+            2,
+            3,
+            null,
+            null,
+            4,
+            5
+          ],
+          "nums": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "visible": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "result": "same after ser/deser",
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done"
+          }
         }
       }
     ]

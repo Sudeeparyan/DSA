@@ -71,35 +71,45 @@
   ],
   "animation": {
     "visualType": "array",
-    "tracerId": "generic-array-scan",
-    "defaultInput": [
-      1,
-      2,
-      3
-    ],
+    "tracerId": "authored",
+    "defaultInput": {
+      "nums": [
+        2,
+        7,
+        11,
+        15
+      ],
+      "target": 9
+    },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving two sum ii input array is sorted using the array view.",
+        "caption": "Lay out the array for \u201cTwo Sum II\u201d. Watch the pointer walk the answer into place.",
         "state": {
-          "input": [
-            1,
+          "nums": [
             2,
-            3
+            7,
+            11,
+            15
           ],
           "result": null,
-          "highlights": {}
+          "highlights": {},
+          "currentIndex": null
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Index 0 holds 2.",
         "state": {
-          "input": [
-            1,
+          "nums": [
             2,
-            3
+            7,
+            11,
+            15
           ],
+          "target": 9,
+          "currentIndex": 0,
+          "currentValue": 2,
           "result": null,
           "highlights": {
             "0": "current"
@@ -107,16 +117,84 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Index 1 holds 7.",
         "state": {
-          "input": [
-            1,
+          "nums": [
             2,
-            3
+            7,
+            11,
+            15
           ],
-          "result": "see-leetcode",
-          "highlights": {}
+          "target": 9,
+          "currentIndex": 1,
+          "currentValue": 7,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 2 holds 11.",
+        "state": {
+          "nums": [
+            2,
+            7,
+            11,
+            15
+          ],
+          "target": 9,
+          "currentIndex": 2,
+          "currentValue": 11,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 3 holds 15.",
+        "state": {
+          "nums": [
+            2,
+            7,
+            11,
+            15
+          ],
+          "target": 9,
+          "currentIndex": 3,
+          "currentValue": 15,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Answer settles: [1, 2].",
+        "state": {
+          "nums": [
+            2,
+            7,
+            11,
+            15
+          ],
+          "target": 9,
+          "currentIndex": 3,
+          "result": [
+            1,
+            2
+          ],
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done"
+          }
         }
       }
     ]

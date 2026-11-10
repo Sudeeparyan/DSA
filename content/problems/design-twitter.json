@@ -71,21 +71,43 @@
   ],
   "animation": {
     "visualType": "heap",
-    "tracerId": "generic-array-scan",
-    "defaultInput": [
-      1,
-      2,
-      3
-    ],
+    "tracerId": "authored",
+    "defaultInput": {
+      "heap": [
+        "p",
+        "o",
+        "s",
+        "t",
+        "/",
+        "f",
+        "o",
+        "l"
+      ]
+    },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving design twitter using the heap view.",
+        "caption": "Heap array for \u201cDesign Twitter\u201d. Parent always beats its kids.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "heap": [
+            "p",
+            "o",
+            "s",
+            "t",
+            "/",
+            "f",
+            "o",
+            "l"
+          ],
+          "nums": [
+            "p",
+            "o",
+            "s",
+            "t",
+            "/",
+            "f",
+            "o",
+            "l"
           ],
           "result": null,
           "highlights": {}
@@ -93,13 +115,29 @@
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Heap slot 0 stores p.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "heap": [
+            "p",
+            "o",
+            "s",
+            "t",
+            "/",
+            "f",
+            "o",
+            "l"
           ],
+          "nums": [
+            "p",
+            "o",
+            "s",
+            "t",
+            "/",
+            "f",
+            "o",
+            "l"
+          ],
+          "currentIndex": 0,
           "result": null,
           "highlights": {
             "0": "current"
@@ -107,16 +145,257 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Heap slot 1 stores o.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "heap": [
+            "p",
+            "o",
+            "s",
+            "t",
+            "/",
+            "f",
+            "o",
+            "l"
           ],
-          "result": "see-leetcode",
-          "highlights": {}
+          "nums": [
+            "p",
+            "o",
+            "s",
+            "t",
+            "/",
+            "f",
+            "o",
+            "l"
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Heap slot 2 stores s.",
+        "state": {
+          "heap": [
+            "p",
+            "o",
+            "s",
+            "t",
+            "/",
+            "f",
+            "o",
+            "l"
+          ],
+          "nums": [
+            "p",
+            "o",
+            "s",
+            "t",
+            "/",
+            "f",
+            "o",
+            "l"
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Heap slot 3 stores t.",
+        "state": {
+          "heap": [
+            "p",
+            "o",
+            "s",
+            "t",
+            "/",
+            "f",
+            "o",
+            "l"
+          ],
+          "nums": [
+            "p",
+            "o",
+            "s",
+            "t",
+            "/",
+            "f",
+            "o",
+            "l"
+          ],
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Heap slot 4 stores /.",
+        "state": {
+          "heap": [
+            "p",
+            "o",
+            "s",
+            "t",
+            "/",
+            "f",
+            "o",
+            "l"
+          ],
+          "nums": [
+            "p",
+            "o",
+            "s",
+            "t",
+            "/",
+            "f",
+            "o",
+            "l"
+          ],
+          "currentIndex": 4,
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Heap slot 5 stores f.",
+        "state": {
+          "heap": [
+            "p",
+            "o",
+            "s",
+            "t",
+            "/",
+            "f",
+            "o",
+            "l"
+          ],
+          "nums": [
+            "p",
+            "o",
+            "s",
+            "t",
+            "/",
+            "f",
+            "o",
+            "l"
+          ],
+          "currentIndex": 5,
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Heap slot 6 stores o.",
+        "state": {
+          "heap": [
+            "p",
+            "o",
+            "s",
+            "t",
+            "/",
+            "f",
+            "o",
+            "l"
+          ],
+          "nums": [
+            "p",
+            "o",
+            "s",
+            "t",
+            "/",
+            "f",
+            "o",
+            "l"
+          ],
+          "currentIndex": 6,
+          "result": null,
+          "highlights": {
+            "6": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Heap slot 7 stores l.",
+        "state": {
+          "heap": [
+            "p",
+            "o",
+            "s",
+            "t",
+            "/",
+            "f",
+            "o",
+            "l"
+          ],
+          "nums": [
+            "p",
+            "o",
+            "s",
+            "t",
+            "/",
+            "f",
+            "o",
+            "l"
+          ],
+          "currentIndex": 7,
+          "result": null,
+          "highlights": {
+            "7": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Heap settled. Answer: \"recent followed tweets\".",
+        "state": {
+          "heap": [
+            "p",
+            "o",
+            "s",
+            "t",
+            "/",
+            "f",
+            "o",
+            "l"
+          ],
+          "nums": [
+            "p",
+            "o",
+            "s",
+            "t",
+            "/",
+            "f",
+            "o",
+            "l"
+          ],
+          "result": "recent followed tweets",
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done",
+            "6": "done",
+            "7": "done"
+          }
         }
       }
     ]

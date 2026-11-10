@@ -71,29 +71,53 @@
   ],
   "animation": {
     "visualType": "tree",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": {
-      "demo": true
+      "root": [
+        1,
+        2,
+        3
+      ]
     },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving binary tree maximum path sum using the tree view.",
+        "caption": "Binary tree for \u201cBinary Tree Maximum Path Sum\u201d starts empty on stage \u2014 we reveal levels.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nodes": [
+            1,
+            2,
+            3
+          ],
+          "nums": [
+            1,
+            2,
+            3
+          ],
+          "visible": [],
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Reveal node 1 at heap-index 0.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nodes": [
+            1,
+            2,
+            3
+          ],
+          "nums": [
+            1,
+            2,
+            3
+          ],
+          "visible": [
+            1
+          ],
+          "currentIndex": 0,
+          "currentValue": 1,
           "result": null,
           "highlights": {
             "0": "current"
@@ -101,14 +125,83 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Reveal node 2 at heap-index 1.",
         "state": {
-          "input": {
-            "demo": true
-          },
-          "result": "see-leetcode",
-          "highlights": {}
+          "nodes": [
+            1,
+            2,
+            3
+          ],
+          "nums": [
+            1,
+            2,
+            3
+          ],
+          "visible": [
+            1,
+            2
+          ],
+          "currentIndex": 1,
+          "currentValue": 2,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Reveal node 3 at heap-index 2.",
+        "state": {
+          "nodes": [
+            1,
+            2,
+            3
+          ],
+          "nums": [
+            1,
+            2,
+            3
+          ],
+          "visible": [
+            1,
+            2,
+            3
+          ],
+          "currentIndex": 2,
+          "currentValue": 3,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Tree fully revealed. Answer: 6.",
+        "state": {
+          "nodes": [
+            1,
+            2,
+            3
+          ],
+          "nums": [
+            1,
+            2,
+            3
+          ],
+          "visible": [
+            1,
+            2,
+            3
+          ],
+          "result": 6,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done"
+          }
         }
       }
     ]

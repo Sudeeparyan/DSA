@@ -71,29 +71,101 @@
   ],
   "animation": {
     "visualType": "grid",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": {
-      "demo": true
+      "grid": [
+        [
+          "g",
+          "r",
+          "i"
+        ],
+        [
+          "d",
+          " ",
+          "w"
+        ],
+        [
+          "i",
+          "t",
+          "h"
+        ]
+      ]
     },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving max area of island using the grid view.",
+        "caption": "Grid for \u201cMax Area of Island\u201d. We scan cells; visited cells light up.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "grid": [
+            [
+              "g",
+              "r",
+              "i"
+            ],
+            [
+              "d",
+              " ",
+              "w"
+            ],
+            [
+              "i",
+              "t",
+              "h"
+            ]
+          ],
+          "nums": [
+            "g",
+            "r",
+            "i",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t",
+            "h"
+          ],
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Visit cell (0,0) = g.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "grid": [
+            [
+              "g",
+              "r",
+              "i"
+            ],
+            [
+              "d",
+              " ",
+              "w"
+            ],
+            [
+              "i",
+              "t",
+              "h"
+            ]
+          ],
+          "nums": [
+            "g",
+            "r",
+            "i",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t",
+            "h"
+          ],
+          "currentIndex": 0,
+          "currentValue": "g",
+          "cell": [
+            0,
+            0
+          ],
           "result": null,
           "highlights": {
             "0": "current"
@@ -101,14 +173,401 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Visit cell (0,1) = r.",
         "state": {
-          "input": {
-            "demo": true
-          },
-          "result": "see-leetcode",
-          "highlights": {}
+          "grid": [
+            [
+              "g",
+              "r",
+              "i"
+            ],
+            [
+              "d",
+              " ",
+              "w"
+            ],
+            [
+              "i",
+              "t",
+              "h"
+            ]
+          ],
+          "nums": [
+            "g",
+            "r",
+            "i",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t",
+            "h"
+          ],
+          "currentIndex": 1,
+          "currentValue": "r",
+          "cell": [
+            0,
+            1
+          ],
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (0,2) = i.",
+        "state": {
+          "grid": [
+            [
+              "g",
+              "r",
+              "i"
+            ],
+            [
+              "d",
+              " ",
+              "w"
+            ],
+            [
+              "i",
+              "t",
+              "h"
+            ]
+          ],
+          "nums": [
+            "g",
+            "r",
+            "i",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t",
+            "h"
+          ],
+          "currentIndex": 2,
+          "currentValue": "i",
+          "cell": [
+            0,
+            2
+          ],
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (1,0) = d.",
+        "state": {
+          "grid": [
+            [
+              "g",
+              "r",
+              "i"
+            ],
+            [
+              "d",
+              " ",
+              "w"
+            ],
+            [
+              "i",
+              "t",
+              "h"
+            ]
+          ],
+          "nums": [
+            "g",
+            "r",
+            "i",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t",
+            "h"
+          ],
+          "currentIndex": 3,
+          "currentValue": "d",
+          "cell": [
+            1,
+            0
+          ],
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (1,1) =  .",
+        "state": {
+          "grid": [
+            [
+              "g",
+              "r",
+              "i"
+            ],
+            [
+              "d",
+              " ",
+              "w"
+            ],
+            [
+              "i",
+              "t",
+              "h"
+            ]
+          ],
+          "nums": [
+            "g",
+            "r",
+            "i",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t",
+            "h"
+          ],
+          "currentIndex": 4,
+          "currentValue": " ",
+          "cell": [
+            1,
+            1
+          ],
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (1,2) = w.",
+        "state": {
+          "grid": [
+            [
+              "g",
+              "r",
+              "i"
+            ],
+            [
+              "d",
+              " ",
+              "w"
+            ],
+            [
+              "i",
+              "t",
+              "h"
+            ]
+          ],
+          "nums": [
+            "g",
+            "r",
+            "i",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t",
+            "h"
+          ],
+          "currentIndex": 5,
+          "currentValue": "w",
+          "cell": [
+            1,
+            2
+          ],
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (2,0) = i.",
+        "state": {
+          "grid": [
+            [
+              "g",
+              "r",
+              "i"
+            ],
+            [
+              "d",
+              " ",
+              "w"
+            ],
+            [
+              "i",
+              "t",
+              "h"
+            ]
+          ],
+          "nums": [
+            "g",
+            "r",
+            "i",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t",
+            "h"
+          ],
+          "currentIndex": 6,
+          "currentValue": "i",
+          "cell": [
+            2,
+            0
+          ],
+          "result": null,
+          "highlights": {
+            "6": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (2,1) = t.",
+        "state": {
+          "grid": [
+            [
+              "g",
+              "r",
+              "i"
+            ],
+            [
+              "d",
+              " ",
+              "w"
+            ],
+            [
+              "i",
+              "t",
+              "h"
+            ]
+          ],
+          "nums": [
+            "g",
+            "r",
+            "i",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t",
+            "h"
+          ],
+          "currentIndex": 7,
+          "currentValue": "t",
+          "cell": [
+            2,
+            1
+          ],
+          "result": null,
+          "highlights": {
+            "7": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (2,2) = h.",
+        "state": {
+          "grid": [
+            [
+              "g",
+              "r",
+              "i"
+            ],
+            [
+              "d",
+              " ",
+              "w"
+            ],
+            [
+              "i",
+              "t",
+              "h"
+            ]
+          ],
+          "nums": [
+            "g",
+            "r",
+            "i",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t",
+            "h"
+          ],
+          "currentIndex": 8,
+          "currentValue": "h",
+          "cell": [
+            2,
+            2
+          ],
+          "result": null,
+          "highlights": {
+            "8": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Grid scan complete. Answer: 6.",
+        "state": {
+          "grid": [
+            [
+              "g",
+              "r",
+              "i"
+            ],
+            [
+              "d",
+              " ",
+              "w"
+            ],
+            [
+              "i",
+              "t",
+              "h"
+            ]
+          ],
+          "nums": [
+            "g",
+            "r",
+            "i",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t",
+            "h"
+          ],
+          "result": 6,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done",
+            "6": "done",
+            "7": "done",
+            "8": "done"
+          }
         }
       }
     ]

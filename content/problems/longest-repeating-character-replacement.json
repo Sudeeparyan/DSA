@@ -71,35 +71,44 @@
   ],
   "animation": {
     "visualType": "array",
-    "tracerId": "generic-array-scan",
-    "defaultInput": [
-      1,
-      2,
-      3
-    ],
+    "tracerId": "authored",
+    "defaultInput": {
+      "nums": [
+        "A",
+        "B",
+        "A",
+        "B"
+      ]
+    },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving longest repeating character replacement using the array view.",
+        "caption": "Lay out the array for \u201cLongest Repeating Character Replacement\u201d. Watch the pointer walk the answer into place.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "nums": [
+            "A",
+            "B",
+            "A",
+            "B"
           ],
           "result": null,
-          "highlights": {}
+          "highlights": {},
+          "currentIndex": null
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Index 0 holds A.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "nums": [
+            "A",
+            "B",
+            "A",
+            "B"
           ],
+          "target": null,
+          "currentIndex": 0,
+          "currentValue": "A",
           "result": null,
           "highlights": {
             "0": "current"
@@ -107,16 +116,81 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Index 1 holds B.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "nums": [
+            "A",
+            "B",
+            "A",
+            "B"
           ],
-          "result": "see-leetcode",
-          "highlights": {}
+          "target": null,
+          "currentIndex": 1,
+          "currentValue": "B",
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 2 holds A.",
+        "state": {
+          "nums": [
+            "A",
+            "B",
+            "A",
+            "B"
+          ],
+          "target": null,
+          "currentIndex": 2,
+          "currentValue": "A",
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 3 holds B.",
+        "state": {
+          "nums": [
+            "A",
+            "B",
+            "A",
+            "B"
+          ],
+          "target": null,
+          "currentIndex": 3,
+          "currentValue": "B",
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Answer settles: 4.",
+        "state": {
+          "nums": [
+            "A",
+            "B",
+            "A",
+            "B"
+          ],
+          "target": null,
+          "currentIndex": 3,
+          "result": 4,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done"
+          }
         }
       }
     ]

@@ -71,35 +71,60 @@
   ],
   "animation": {
     "visualType": "array",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": [
-      1,
-      2,
-      3
+      "A",
+      " ",
+      "m",
+      "a",
+      "n",
+      ",",
+      " ",
+      "a",
+      " ",
+      "p"
     ],
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving valid palindrome using the array view.",
+        "caption": "Lay out the array for \u201cValid Palindrome\u201d. Watch the pointer walk the answer into place.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "nums": [
+            "A",
+            " ",
+            "m",
+            "a",
+            "n",
+            ",",
+            " ",
+            "a",
+            " ",
+            "p"
           ],
           "result": null,
-          "highlights": {}
+          "highlights": {},
+          "currentIndex": null
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Index 0 holds A.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "nums": [
+            "A",
+            " ",
+            "m",
+            "a",
+            "n",
+            ",",
+            " ",
+            "a",
+            " ",
+            "p"
           ],
+          "target": null,
+          "currentIndex": 0,
+          "currentValue": "A",
           "result": null,
           "highlights": {
             "0": "current"
@@ -107,16 +132,261 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Index 1 holds  .",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "nums": [
+            "A",
+            " ",
+            "m",
+            "a",
+            "n",
+            ",",
+            " ",
+            "a",
+            " ",
+            "p"
           ],
-          "result": "see-leetcode",
-          "highlights": {}
+          "target": null,
+          "currentIndex": 1,
+          "currentValue": " ",
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 2 holds m.",
+        "state": {
+          "nums": [
+            "A",
+            " ",
+            "m",
+            "a",
+            "n",
+            ",",
+            " ",
+            "a",
+            " ",
+            "p"
+          ],
+          "target": null,
+          "currentIndex": 2,
+          "currentValue": "m",
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 3 holds a.",
+        "state": {
+          "nums": [
+            "A",
+            " ",
+            "m",
+            "a",
+            "n",
+            ",",
+            " ",
+            "a",
+            " ",
+            "p"
+          ],
+          "target": null,
+          "currentIndex": 3,
+          "currentValue": "a",
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 4 holds n.",
+        "state": {
+          "nums": [
+            "A",
+            " ",
+            "m",
+            "a",
+            "n",
+            ",",
+            " ",
+            "a",
+            " ",
+            "p"
+          ],
+          "target": null,
+          "currentIndex": 4,
+          "currentValue": "n",
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 5 holds ,.",
+        "state": {
+          "nums": [
+            "A",
+            " ",
+            "m",
+            "a",
+            "n",
+            ",",
+            " ",
+            "a",
+            " ",
+            "p"
+          ],
+          "target": null,
+          "currentIndex": 5,
+          "currentValue": ",",
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 6 holds  .",
+        "state": {
+          "nums": [
+            "A",
+            " ",
+            "m",
+            "a",
+            "n",
+            ",",
+            " ",
+            "a",
+            " ",
+            "p"
+          ],
+          "target": null,
+          "currentIndex": 6,
+          "currentValue": " ",
+          "result": null,
+          "highlights": {
+            "6": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 7 holds a.",
+        "state": {
+          "nums": [
+            "A",
+            " ",
+            "m",
+            "a",
+            "n",
+            ",",
+            " ",
+            "a",
+            " ",
+            "p"
+          ],
+          "target": null,
+          "currentIndex": 7,
+          "currentValue": "a",
+          "result": null,
+          "highlights": {
+            "7": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 8 holds  .",
+        "state": {
+          "nums": [
+            "A",
+            " ",
+            "m",
+            "a",
+            "n",
+            ",",
+            " ",
+            "a",
+            " ",
+            "p"
+          ],
+          "target": null,
+          "currentIndex": 8,
+          "currentValue": " ",
+          "result": null,
+          "highlights": {
+            "8": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 9 holds p.",
+        "state": {
+          "nums": [
+            "A",
+            " ",
+            "m",
+            "a",
+            "n",
+            ",",
+            " ",
+            "a",
+            " ",
+            "p"
+          ],
+          "target": null,
+          "currentIndex": 9,
+          "currentValue": "p",
+          "result": null,
+          "highlights": {
+            "9": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Answer settles: true.",
+        "state": {
+          "nums": [
+            "A",
+            " ",
+            "m",
+            "a",
+            "n",
+            ",",
+            " ",
+            "a",
+            " ",
+            "p"
+          ],
+          "target": null,
+          "currentIndex": 9,
+          "result": true,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done",
+            "6": "done",
+            "7": "done",
+            "8": "done",
+            "9": "done"
+          }
         }
       }
     ]

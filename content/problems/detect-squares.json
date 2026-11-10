@@ -71,35 +71,60 @@
   ],
   "animation": {
     "visualType": "array",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": [
-      1,
-      2,
-      3
+      "a",
+      "d",
+      "d",
+      " ",
+      "p",
+      "o",
+      "i",
+      "n",
+      "t",
+      "s"
     ],
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving detect squares using the array view.",
+        "caption": "Lay out the array for \u201cDetect Squares\u201d. Watch the pointer walk the answer into place.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "nums": [
+            "a",
+            "d",
+            "d",
+            " ",
+            "p",
+            "o",
+            "i",
+            "n",
+            "t",
+            "s"
           ],
           "result": null,
-          "highlights": {}
+          "highlights": {},
+          "currentIndex": null
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Index 0 holds a.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "nums": [
+            "a",
+            "d",
+            "d",
+            " ",
+            "p",
+            "o",
+            "i",
+            "n",
+            "t",
+            "s"
           ],
+          "target": null,
+          "currentIndex": 0,
+          "currentValue": "a",
           "result": null,
           "highlights": {
             "0": "current"
@@ -107,16 +132,261 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Index 1 holds d.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "nums": [
+            "a",
+            "d",
+            "d",
+            " ",
+            "p",
+            "o",
+            "i",
+            "n",
+            "t",
+            "s"
           ],
-          "result": "see-leetcode",
-          "highlights": {}
+          "target": null,
+          "currentIndex": 1,
+          "currentValue": "d",
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 2 holds d.",
+        "state": {
+          "nums": [
+            "a",
+            "d",
+            "d",
+            " ",
+            "p",
+            "o",
+            "i",
+            "n",
+            "t",
+            "s"
+          ],
+          "target": null,
+          "currentIndex": 2,
+          "currentValue": "d",
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 3 holds  .",
+        "state": {
+          "nums": [
+            "a",
+            "d",
+            "d",
+            " ",
+            "p",
+            "o",
+            "i",
+            "n",
+            "t",
+            "s"
+          ],
+          "target": null,
+          "currentIndex": 3,
+          "currentValue": " ",
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 4 holds p.",
+        "state": {
+          "nums": [
+            "a",
+            "d",
+            "d",
+            " ",
+            "p",
+            "o",
+            "i",
+            "n",
+            "t",
+            "s"
+          ],
+          "target": null,
+          "currentIndex": 4,
+          "currentValue": "p",
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 5 holds o.",
+        "state": {
+          "nums": [
+            "a",
+            "d",
+            "d",
+            " ",
+            "p",
+            "o",
+            "i",
+            "n",
+            "t",
+            "s"
+          ],
+          "target": null,
+          "currentIndex": 5,
+          "currentValue": "o",
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 6 holds i.",
+        "state": {
+          "nums": [
+            "a",
+            "d",
+            "d",
+            " ",
+            "p",
+            "o",
+            "i",
+            "n",
+            "t",
+            "s"
+          ],
+          "target": null,
+          "currentIndex": 6,
+          "currentValue": "i",
+          "result": null,
+          "highlights": {
+            "6": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 7 holds n.",
+        "state": {
+          "nums": [
+            "a",
+            "d",
+            "d",
+            " ",
+            "p",
+            "o",
+            "i",
+            "n",
+            "t",
+            "s"
+          ],
+          "target": null,
+          "currentIndex": 7,
+          "currentValue": "n",
+          "result": null,
+          "highlights": {
+            "7": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 8 holds t.",
+        "state": {
+          "nums": [
+            "a",
+            "d",
+            "d",
+            " ",
+            "p",
+            "o",
+            "i",
+            "n",
+            "t",
+            "s"
+          ],
+          "target": null,
+          "currentIndex": 8,
+          "currentValue": "t",
+          "result": null,
+          "highlights": {
+            "8": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 9 holds s.",
+        "state": {
+          "nums": [
+            "a",
+            "d",
+            "d",
+            " ",
+            "p",
+            "o",
+            "i",
+            "n",
+            "t",
+            "s"
+          ],
+          "target": null,
+          "currentIndex": 9,
+          "currentValue": "s",
+          "result": null,
+          "highlights": {
+            "9": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Answer settles: \"counts\".",
+        "state": {
+          "nums": [
+            "a",
+            "d",
+            "d",
+            " ",
+            "p",
+            "o",
+            "i",
+            "n",
+            "t",
+            "s"
+          ],
+          "target": null,
+          "currentIndex": 9,
+          "result": "counts",
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done",
+            "6": "done",
+            "7": "done",
+            "8": "done",
+            "9": "done"
+          }
         }
       }
     ]

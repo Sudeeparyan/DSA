@@ -71,29 +71,42 @@
   ],
   "animation": {
     "visualType": "backtracking",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": {
-      "demo": true
+      "s": [
+        "a",
+        "a",
+        "b"
+      ]
     },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving palindrome partitioning using the backtracking view.",
+        "caption": "Backtracking for \u201cPalindrome Partitioning\u201d. Try a choice, then undo if it fails.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            "a",
+            "a",
+            "b"
+          ],
+          "path": [],
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Choose a \u2192 path ['a'].",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            "a",
+            "a",
+            "b"
+          ],
+          "path": [
+            "a"
+          ],
+          "currentIndex": 0,
           "result": null,
           "highlights": {
             "0": "current"
@@ -101,14 +114,97 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Choose a \u2192 path ['a', 'a'].",
         "state": {
-          "input": {
-            "demo": true
-          },
-          "result": "see-leetcode",
-          "highlights": {}
+          "nums": [
+            "a",
+            "a",
+            "b"
+          ],
+          "path": [
+            "a",
+            "a"
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Choose b \u2192 path ['a', 'a', 'b'].",
+        "state": {
+          "nums": [
+            "a",
+            "a",
+            "b"
+          ],
+          "path": [
+            "a",
+            "a",
+            "b"
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Path looks valid so far: ['a', 'a', 'b'].",
+        "state": {
+          "nums": [
+            "a",
+            "a",
+            "b"
+          ],
+          "path": [
+            "a",
+            "a",
+            "b"
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "matched"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "Collected answers: [[\"a\", \"a\", \"b\"], [\"aa\", \"b\"]].",
+        "state": {
+          "nums": [
+            "a",
+            "a",
+            "b"
+          ],
+          "path": [
+            "a",
+            "a",
+            "b"
+          ],
+          "result": [
+            [
+              "a",
+              "a",
+              "b"
+            ],
+            [
+              "aa",
+              "b"
+            ]
+          ],
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done"
+          }
         }
       }
     ]

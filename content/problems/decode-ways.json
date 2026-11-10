@@ -71,32 +71,51 @@
   ],
   "animation": {
     "visualType": "dp",
-    "tracerId": "generic-array-scan",
-    "defaultInput": [
-      1,
-      2,
-      3,
-      2
-    ],
+    "tracerId": "authored",
+    "defaultInput": {
+      "s": [
+        "1",
+        "2"
+      ]
+    },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving decode ways using the dp view.",
+        "caption": "DP over the array for \u201cDecode Ways\u201d. Each cell stores a best answer so far.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            "1",
+            "2"
+          ],
+          "table": [
+            [
+              0,
+              0
+            ]
+          ],
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "At index 0 (value 1), dp becomes 1.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            "1",
+            "2"
+          ],
+          "table": [
+            [
+              "1",
+              0
+            ]
+          ],
+          "dp": [
+            "1",
+            0
+          ],
+          "currentIndex": 0,
           "result": null,
           "highlights": {
             "0": "current"
@@ -104,14 +123,78 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "At index 1 (value 2), dp becomes 2.",
         "state": {
-          "input": {
-            "demo": true
-          },
-          "result": "see-leetcode",
-          "highlights": {}
+          "nums": [
+            "1",
+            "2"
+          ],
+          "table": [
+            [
+              "1",
+              "2"
+            ]
+          ],
+          "dp": [
+            "1",
+            "2"
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Best DP answer: 2.",
+        "state": {
+          "nums": [
+            "1",
+            "2"
+          ],
+          "table": [
+            [
+              "1",
+              "2"
+            ]
+          ],
+          "dp": [
+            "1",
+            "2"
+          ],
+          "result": 2,
+          "highlights": {
+            "0": "done",
+            "1": "done"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Keep watching \u2014 the answer structure is still assembling.",
+        "state": {
+          "nums": [
+            "1",
+            "2"
+          ],
+          "table": [
+            [
+              "1",
+              "2"
+            ]
+          ],
+          "dp": [
+            "1",
+            "2"
+          ],
+          "result": 2,
+          "highlights": {
+            "0": "done",
+            "1": "done"
+          }
         }
       }
     ]

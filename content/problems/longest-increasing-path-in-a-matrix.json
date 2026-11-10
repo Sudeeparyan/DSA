@@ -71,32 +71,87 @@
   ],
   "animation": {
     "visualType": "dp",
-    "tracerId": "generic-array-scan",
-    "defaultInput": [
-      1,
-      2,
-      3,
-      2
-    ],
+    "tracerId": "authored",
+    "defaultInput": {
+      "matrix": [
+        "[",
+        "[",
+        "9",
+        ",",
+        "9",
+        ",",
+        "4",
+        "]"
+      ]
+    },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving longest increasing path in a matrix using the dp view.",
+        "caption": "DP over the array for \u201cLongest Increasing Path in a Matrix\u201d. Each cell stores a best answer so far.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            "[",
+            "[",
+            "9",
+            ",",
+            "9",
+            ",",
+            "4",
+            "]"
+          ],
+          "table": [
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "At index 0 (value [), dp becomes [.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            "[",
+            "[",
+            "9",
+            ",",
+            "9",
+            ",",
+            "4",
+            "]"
+          ],
+          "table": [
+            [
+              "[",
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "dp": [
+            "[",
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "currentIndex": 0,
           "result": null,
           "highlights": {
             "0": "current"
@@ -104,14 +159,353 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "At index 1 (value [), dp becomes [[.",
         "state": {
-          "input": {
-            "demo": true
-          },
-          "result": "see-leetcode",
-          "highlights": {}
+          "nums": [
+            "[",
+            "[",
+            "9",
+            ",",
+            "9",
+            ",",
+            "4",
+            "]"
+          ],
+          "table": [
+            [
+              "[",
+              "[[",
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "dp": [
+            "[",
+            "[[",
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 2 (value 9), dp becomes [[9.",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "9",
+            ",",
+            "9",
+            ",",
+            "4",
+            "]"
+          ],
+          "table": [
+            [
+              "[",
+              "[[",
+              "[[9",
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "dp": [
+            "[",
+            "[[",
+            "[[9",
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 3 (value ,), dp becomes [[9,.",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "9",
+            ",",
+            "9",
+            ",",
+            "4",
+            "]"
+          ],
+          "table": [
+            [
+              "[",
+              "[[",
+              "[[9",
+              "[[9,",
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "dp": [
+            "[",
+            "[[",
+            "[[9",
+            "[[9,",
+            0,
+            0,
+            0,
+            0
+          ],
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 4 (value 9), dp becomes [[9,9.",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "9",
+            ",",
+            "9",
+            ",",
+            "4",
+            "]"
+          ],
+          "table": [
+            [
+              "[",
+              "[[",
+              "[[9",
+              "[[9,",
+              "[[9,9",
+              0,
+              0,
+              0
+            ]
+          ],
+          "dp": [
+            "[",
+            "[[",
+            "[[9",
+            "[[9,",
+            "[[9,9",
+            0,
+            0,
+            0
+          ],
+          "currentIndex": 4,
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 5 (value ,), dp becomes [[9,9,.",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "9",
+            ",",
+            "9",
+            ",",
+            "4",
+            "]"
+          ],
+          "table": [
+            [
+              "[",
+              "[[",
+              "[[9",
+              "[[9,",
+              "[[9,9",
+              "[[9,9,",
+              0,
+              0
+            ]
+          ],
+          "dp": [
+            "[",
+            "[[",
+            "[[9",
+            "[[9,",
+            "[[9,9",
+            "[[9,9,",
+            0,
+            0
+          ],
+          "currentIndex": 5,
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 6 (value 4), dp becomes [[9,9,4.",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "9",
+            ",",
+            "9",
+            ",",
+            "4",
+            "]"
+          ],
+          "table": [
+            [
+              "[",
+              "[[",
+              "[[9",
+              "[[9,",
+              "[[9,9",
+              "[[9,9,",
+              "[[9,9,4",
+              0
+            ]
+          ],
+          "dp": [
+            "[",
+            "[[",
+            "[[9",
+            "[[9,",
+            "[[9,9",
+            "[[9,9,",
+            "[[9,9,4",
+            0
+          ],
+          "currentIndex": 6,
+          "result": null,
+          "highlights": {
+            "6": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 7 (value ]), dp becomes ].",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "9",
+            ",",
+            "9",
+            ",",
+            "4",
+            "]"
+          ],
+          "table": [
+            [
+              "[",
+              "[[",
+              "[[9",
+              "[[9,",
+              "[[9,9",
+              "[[9,9,",
+              "[[9,9,4",
+              "]"
+            ]
+          ],
+          "dp": [
+            "[",
+            "[[",
+            "[[9",
+            "[[9,",
+            "[[9,9",
+            "[[9,9,",
+            "[[9,9,4",
+            "]"
+          ],
+          "currentIndex": 7,
+          "result": null,
+          "highlights": {
+            "7": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Best DP answer: 4.",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "9",
+            ",",
+            "9",
+            ",",
+            "4",
+            "]"
+          ],
+          "table": [
+            [
+              "[",
+              "[[",
+              "[[9",
+              "[[9,",
+              "[[9,9",
+              "[[9,9,",
+              "[[9,9,4",
+              "]"
+            ]
+          ],
+          "dp": [
+            "[",
+            "[[",
+            "[[9",
+            "[[9,",
+            "[[9,9",
+            "[[9,9,",
+            "[[9,9,4",
+            "]"
+          ],
+          "result": 4,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done",
+            "6": "done",
+            "7": "done"
+          }
         }
       }
     ]

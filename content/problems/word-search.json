@@ -71,29 +71,51 @@
   ],
   "animation": {
     "visualType": "backtracking",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": {
-      "demo": true
+      "word": [
+        "A",
+        "B",
+        "C",
+        "C",
+        "E",
+        "D"
+      ]
     },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving word search using the backtracking view.",
+        "caption": "Backtracking for \u201cWord Search\u201d. Try a choice, then undo if it fails.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            "A",
+            "B",
+            "C",
+            "C",
+            "E",
+            "D"
+          ],
+          "path": [],
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Choose A \u2192 path ['A'].",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            "A",
+            "B",
+            "C",
+            "C",
+            "E",
+            "D"
+          ],
+          "path": [
+            "A"
+          ],
+          "currentIndex": 0,
           "result": null,
           "highlights": {
             "0": "current"
@@ -101,14 +123,210 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Choose B \u2192 path ['A', 'B'].",
         "state": {
-          "input": {
-            "demo": true
-          },
-          "result": "see-leetcode",
-          "highlights": {}
+          "nums": [
+            "A",
+            "B",
+            "C",
+            "C",
+            "E",
+            "D"
+          ],
+          "path": [
+            "A",
+            "B"
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Choose C \u2192 path ['A', 'B', 'C'].",
+        "state": {
+          "nums": [
+            "A",
+            "B",
+            "C",
+            "C",
+            "E",
+            "D"
+          ],
+          "path": [
+            "A",
+            "B",
+            "C"
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Path looks valid so far: ['A', 'B', 'C'].",
+        "state": {
+          "nums": [
+            "A",
+            "B",
+            "C",
+            "C",
+            "E",
+            "D"
+          ],
+          "path": [
+            "A",
+            "B",
+            "C"
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "matched"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Choose C \u2192 path ['A', 'B', 'C', 'C'].",
+        "state": {
+          "nums": [
+            "A",
+            "B",
+            "C",
+            "C",
+            "E",
+            "D"
+          ],
+          "path": [
+            "A",
+            "B",
+            "C",
+            "C"
+          ],
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Choose E \u2192 path ['A', 'B', 'C', 'C', 'E'].",
+        "state": {
+          "nums": [
+            "A",
+            "B",
+            "C",
+            "C",
+            "E",
+            "D"
+          ],
+          "path": [
+            "A",
+            "B",
+            "C",
+            "C",
+            "E"
+          ],
+          "currentIndex": 4,
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Choose D \u2192 path ['A', 'B', 'C', 'C', 'E', 'D'].",
+        "state": {
+          "nums": [
+            "A",
+            "B",
+            "C",
+            "C",
+            "E",
+            "D"
+          ],
+          "path": [
+            "A",
+            "B",
+            "C",
+            "C",
+            "E",
+            "D"
+          ],
+          "currentIndex": 5,
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Path looks valid so far: ['A', 'B', 'C', 'C', 'E', 'D'].",
+        "state": {
+          "nums": [
+            "A",
+            "B",
+            "C",
+            "C",
+            "E",
+            "D"
+          ],
+          "path": [
+            "A",
+            "B",
+            "C",
+            "C",
+            "E",
+            "D"
+          ],
+          "currentIndex": 5,
+          "result": null,
+          "highlights": {
+            "5": "matched"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "Collected answers: true.",
+        "state": {
+          "nums": [
+            "A",
+            "B",
+            "C",
+            "C",
+            "E",
+            "D"
+          ],
+          "path": [
+            "A",
+            "B",
+            "C",
+            "C",
+            "E",
+            "D"
+          ],
+          "result": true,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done"
+          }
         }
       }
     ]

@@ -71,35 +71,45 @@
   ],
   "animation": {
     "visualType": "array",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": [
+      3,
+      4,
+      5,
       1,
-      2,
-      3
+      2
     ],
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving find minimum in rotated sorted array using the array view.",
+        "caption": "Lay out the array for \u201cFind Minimum in Rotated Sorted Array\u201d. Watch the pointer walk the answer into place.",
         "state": {
-          "input": [
+          "nums": [
+            3,
+            4,
+            5,
             1,
-            2,
-            3
+            2
           ],
           "result": null,
-          "highlights": {}
+          "highlights": {},
+          "currentIndex": null
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Index 0 holds 3.",
         "state": {
-          "input": [
+          "nums": [
+            3,
+            4,
+            5,
             1,
-            2,
-            3
+            2
           ],
+          "target": null,
+          "currentIndex": 0,
+          "currentValue": 3,
           "result": null,
           "highlights": {
             "0": "current"
@@ -107,16 +117,106 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Index 1 holds 4.",
         "state": {
-          "input": [
+          "nums": [
+            3,
+            4,
+            5,
             1,
-            2,
-            3
+            2
           ],
-          "result": "see-leetcode",
-          "highlights": {}
+          "target": null,
+          "currentIndex": 1,
+          "currentValue": 4,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 2 holds 5.",
+        "state": {
+          "nums": [
+            3,
+            4,
+            5,
+            1,
+            2
+          ],
+          "target": null,
+          "currentIndex": 2,
+          "currentValue": 5,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 3 holds 1.",
+        "state": {
+          "nums": [
+            3,
+            4,
+            5,
+            1,
+            2
+          ],
+          "target": null,
+          "currentIndex": 3,
+          "currentValue": 1,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 4 holds 2.",
+        "state": {
+          "nums": [
+            3,
+            4,
+            5,
+            1,
+            2
+          ],
+          "target": null,
+          "currentIndex": 4,
+          "currentValue": 2,
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Answer settles: 1.",
+        "state": {
+          "nums": [
+            3,
+            4,
+            5,
+            1,
+            2
+          ],
+          "target": null,
+          "currentIndex": 4,
+          "result": 1,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done"
+          }
         }
       }
     ]

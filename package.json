@@ -12,7 +12,9 @@
     "content:audit": "tsx scripts/audit-solutions.ts",
     "content:stubs": "tsx scripts/generate-stubs.ts",
     "content:validate": "tsx scripts/validate-content.ts",
-    "content:trace": "tsx scripts/trace-animations.ts"
+    "content:trace": "tsx scripts/trace-animations.ts",
+    "content:animate": "python3 scripts/generate_answer_animations.py",
+    "content:verify-animations": "tsx scripts/verify_all_animations.ts"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",

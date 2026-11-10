@@ -71,44 +71,197 @@
   ],
   "animation": {
     "visualType": "trie",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": {
-      "demo": true
+      "words": [
+        "apple"
+      ]
     },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving implement trie prefix tree using the trie view.",
+        "caption": "Trie for \u201cImplement Trie (Prefix Tree)\u201d. We grow character paths.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "path": [],
+          "nums": [],
+          "chars": [],
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Word 'apple': add character 'a'.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "path": [
+            "a"
+          ],
+          "chars": [
+            "a"
+          ],
+          "nums": [
+            "a"
+          ],
+          "currentIndex": 0,
+          "currentValue": "a",
+          "word": "apple",
           "result": null,
           "highlights": {
-            "0": "current"
+            "0": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'apple': add character 'p'.",
+        "state": {
+          "path": [
+            "a",
+            "p"
+          ],
+          "chars": [
+            "a",
+            "p"
+          ],
+          "nums": [
+            "a",
+            "p"
+          ],
+          "currentIndex": 1,
+          "currentValue": "p",
+          "word": "apple",
+          "result": null,
+          "highlights": {
+            "1": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'apple': add character 'p'.",
+        "state": {
+          "path": [
+            "a",
+            "p",
+            "p"
+          ],
+          "chars": [
+            "a",
+            "p",
+            "p"
+          ],
+          "nums": [
+            "a",
+            "p",
+            "p"
+          ],
+          "currentIndex": 2,
+          "currentValue": "p",
+          "word": "apple",
+          "result": null,
+          "highlights": {
+            "2": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'apple': add character 'l'.",
+        "state": {
+          "path": [
+            "a",
+            "p",
+            "p",
+            "l"
+          ],
+          "chars": [
+            "a",
+            "p",
+            "p",
+            "l"
+          ],
+          "nums": [
+            "a",
+            "p",
+            "p",
+            "l"
+          ],
+          "currentIndex": 3,
+          "currentValue": "l",
+          "word": "apple",
+          "result": null,
+          "highlights": {
+            "3": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'apple': add character 'e'.",
+        "state": {
+          "path": [
+            "a",
+            "p",
+            "p",
+            "l",
+            "e"
+          ],
+          "chars": [
+            "a",
+            "p",
+            "p",
+            "l",
+            "e"
+          ],
+          "nums": [
+            "a",
+            "p",
+            "p",
+            "l",
+            "e"
+          ],
+          "currentIndex": 4,
+          "currentValue": "e",
+          "word": "apple",
+          "result": null,
+          "highlights": {
+            "4": "remembered"
           }
         }
       },
       {
         "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "caption": "Trie built. Answer: true.",
         "state": {
-          "input": {
-            "demo": true
-          },
-          "result": "see-leetcode",
-          "highlights": {}
+          "path": [
+            "a",
+            "p",
+            "p",
+            "l",
+            "e"
+          ],
+          "chars": [
+            "a",
+            "p",
+            "p",
+            "l",
+            "e"
+          ],
+          "nums": [
+            "a",
+            "p",
+            "p",
+            "l",
+            "e"
+          ],
+          "result": true,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done"
+          }
         }
       }
     ]

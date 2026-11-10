@@ -71,35 +71,36 @@
   ],
   "animation": {
     "visualType": "array",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": [
-      1,
-      2,
-      3
+      "(",
+      ")"
     ],
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving valid parenthesis string using the array view.",
+        "caption": "Lay out the array for \u201cValid Parenthesis String\u201d. Watch the pointer walk the answer into place.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "nums": [
+            "(",
+            ")"
           ],
           "result": null,
-          "highlights": {}
+          "highlights": {},
+          "currentIndex": null
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Index 0 holds (.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "nums": [
+            "(",
+            ")"
           ],
+          "target": null,
+          "currentIndex": 0,
+          "currentValue": "(",
           "result": null,
           "highlights": {
             "0": "current"
@@ -107,16 +108,54 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Index 1 holds ).",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "nums": [
+            "(",
+            ")"
           ],
-          "result": "see-leetcode",
-          "highlights": {}
+          "target": null,
+          "currentIndex": 1,
+          "currentValue": ")",
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Answer settles: true.",
+        "state": {
+          "nums": [
+            "(",
+            ")"
+          ],
+          "target": null,
+          "currentIndex": 1,
+          "result": true,
+          "highlights": {
+            "0": "done",
+            "1": "done"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Keep watching \u2014 the answer structure is still assembling.",
+        "state": {
+          "nums": [
+            "(",
+            ")"
+          ],
+          "target": null,
+          "currentIndex": 1,
+          "result": true,
+          "highlights": {
+            "0": "done",
+            "1": "done"
+          }
         }
       }
     ]

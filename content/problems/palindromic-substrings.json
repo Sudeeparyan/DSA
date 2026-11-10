@@ -71,32 +71,57 @@
   ],
   "animation": {
     "visualType": "dp",
-    "tracerId": "generic-array-scan",
-    "defaultInput": [
-      1,
-      2,
-      3,
-      2
-    ],
+    "tracerId": "authored",
+    "defaultInput": {
+      "s": [
+        "a",
+        "b",
+        "c"
+      ]
+    },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving palindromic substrings using the dp view.",
+        "caption": "DP over the array for \u201cPalindromic Substrings\u201d. Each cell stores a best answer so far.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            "a",
+            "b",
+            "c"
+          ],
+          "table": [
+            [
+              0,
+              0,
+              0
+            ]
+          ],
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "At index 0 (value a), dp becomes a.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            "a",
+            "b",
+            "c"
+          ],
+          "table": [
+            [
+              "a",
+              0,
+              0
+            ]
+          ],
+          "dp": [
+            "a",
+            0,
+            0
+          ],
+          "currentIndex": 0,
           "result": null,
           "highlights": {
             "0": "current"
@@ -104,14 +129,88 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "At index 1 (value b), dp becomes b.",
         "state": {
-          "input": {
-            "demo": true
-          },
-          "result": "see-leetcode",
-          "highlights": {}
+          "nums": [
+            "a",
+            "b",
+            "c"
+          ],
+          "table": [
+            [
+              "a",
+              "b",
+              0
+            ]
+          ],
+          "dp": [
+            "a",
+            "b",
+            0
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 2 (value c), dp becomes c.",
+        "state": {
+          "nums": [
+            "a",
+            "b",
+            "c"
+          ],
+          "table": [
+            [
+              "a",
+              "b",
+              "c"
+            ]
+          ],
+          "dp": [
+            "a",
+            "b",
+            "c"
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Best DP answer: 3.",
+        "state": {
+          "nums": [
+            "a",
+            "b",
+            "c"
+          ],
+          "table": [
+            [
+              "a",
+              "b",
+              "c"
+            ]
+          ],
+          "dp": [
+            "a",
+            "b",
+            "c"
+          ],
+          "result": 3,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done"
+          }
         }
       }
     ]

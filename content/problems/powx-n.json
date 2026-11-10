@@ -71,36 +71,40 @@
   ],
   "animation": {
     "visualType": "array",
-    "tracerId": "generic-array-scan",
-    "defaultInput": [
-      1,
-      2,
-      3
-    ],
+    "tracerId": "authored",
+    "defaultInput": {
+      "nums": []
+    },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving powx n using the array view.",
+        "caption": "Lay out the array for \u201cPow(x, n)\u201d. Watch the pointer walk the answer into place.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
-          ],
+          "nums": [],
           "result": null,
+          "highlights": {},
+          "currentIndex": null
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Answer settles: 1024.0.",
+        "state": {
+          "nums": [],
+          "target": null,
+          "currentIndex": 0,
+          "result": 1024.0,
           "highlights": {}
         }
       },
       {
-        "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "line": 3,
+        "caption": "Keep watching \u2014 the answer structure is still assembling.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
-          ],
-          "result": null,
+          "nums": [],
+          "target": null,
+          "currentIndex": 0,
+          "result": 1024.0,
           "highlights": {
             "0": "current"
           }
@@ -108,15 +112,28 @@
       },
       {
         "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "caption": "Keep watching \u2014 the answer structure is still assembling.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
-          ],
-          "result": "see-leetcode",
-          "highlights": {}
+          "nums": [],
+          "target": null,
+          "currentIndex": 0,
+          "result": 1024.0,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Keep watching \u2014 the answer structure is still assembling.",
+        "state": {
+          "nums": [],
+          "target": null,
+          "currentIndex": 0,
+          "result": 1024.0,
+          "highlights": {
+            "0": "current"
+          }
         }
       }
     ]

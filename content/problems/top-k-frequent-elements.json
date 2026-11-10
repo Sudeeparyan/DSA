@@ -71,35 +71,52 @@
   ],
   "animation": {
     "visualType": "hash",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": [
       1,
+      1,
+      1,
+      2,
       2,
       3
     ],
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving top k frequent elements using the hash view.",
+        "caption": "Empty memory shelf for \u201cTop K Frequent Elements\u201d. We remember what we have already seen.",
         "state": {
-          "input": [
+          "nums": [
             1,
+            1,
+            1,
+            2,
             2,
             3
           ],
+          "seen": [],
+          "map": {},
+          "target": null,
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Look at 1 at index 0.",
         "state": {
-          "input": [
+          "nums": [
             1,
+            1,
+            1,
+            2,
             2,
             3
           ],
+          "seen": [],
+          "map": {},
+          "target": null,
+          "currentIndex": 0,
+          "currentValue": 1,
           "result": null,
           "highlights": {
             "0": "current"
@@ -107,16 +124,108 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 4,
+        "caption": "New value. Dock 1 onto the memory shelf.",
         "state": {
-          "input": [
+          "nums": [
             1,
+            1,
+            1,
+            2,
             2,
             3
           ],
-          "result": "see-leetcode",
-          "highlights": {}
+          "seen": [
+            1
+          ],
+          "map": {
+            "1": 0
+          },
+          "currentIndex": 0,
+          "result": null,
+          "highlights": {
+            "0": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at 1 at index 1.",
+        "state": {
+          "nums": [
+            1,
+            1,
+            1,
+            2,
+            2,
+            3
+          ],
+          "seen": [
+            1
+          ],
+          "map": {
+            "1": 0
+          },
+          "target": null,
+          "currentIndex": 1,
+          "currentValue": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Have we seen 1 before? Yes \u2014 duplicate found.",
+        "state": {
+          "nums": [
+            1,
+            1,
+            1,
+            2,
+            2,
+            3
+          ],
+          "seen": [
+            1
+          ],
+          "map": {
+            "1": 0
+          },
+          "currentIndex": 1,
+          "result": true,
+          "highlights": {
+            "1": "matched"
+          }
+        }
+      },
+      {
+        "line": 5,
+        "caption": "Return [1, 2].",
+        "state": {
+          "nums": [
+            1,
+            1,
+            1,
+            2,
+            2,
+            3
+          ],
+          "seen": [
+            1
+          ],
+          "map": {
+            "1": 0
+          },
+          "target": null,
+          "result": [
+            1,
+            2
+          ],
+          "highlights": {
+            "1": "matched"
+          }
         }
       }
     ]

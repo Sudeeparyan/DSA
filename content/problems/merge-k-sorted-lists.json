@@ -71,44 +71,106 @@
   ],
   "animation": {
     "visualType": "linkedList",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": {
-      "demo": true
+      "nodes": []
     },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving merge k sorted lists using the linkedList view.",
+        "caption": "Linked list for \u201cMerge k Sorted Lists\u201d: each box points to the next.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [],
+          "nodes": [],
           "result": null,
-          "highlights": {}
-        }
-      },
-      {
-        "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
-        "state": {
-          "input": {
-            "demo": true
-          },
-          "result": null,
-          "highlights": {
-            "0": "current"
-          }
+          "highlights": {},
+          "pointers": {}
         }
       },
       {
         "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "caption": "Done. Result: [1, 1, 2, 3, 4, 4, 5, 6].",
         "state": {
-          "input": {
-            "demo": true
+          "nums": [],
+          "nodes": [],
+          "result": [
+            1,
+            1,
+            2,
+            3,
+            4,
+            4,
+            5,
+            6
+          ],
+          "highlights": {},
+          "pointers": {}
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Keep watching \u2014 the answer structure is still assembling.",
+        "state": {
+          "nums": [],
+          "nodes": [],
+          "result": [
+            1,
+            1,
+            2,
+            3,
+            4,
+            4,
+            5,
+            6
+          ],
+          "highlights": {
+            "0": "current"
           },
-          "result": "see-leetcode",
-          "highlights": {}
+          "pointers": {}
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Keep watching \u2014 the answer structure is still assembling.",
+        "state": {
+          "nums": [],
+          "nodes": [],
+          "result": [
+            1,
+            1,
+            2,
+            3,
+            4,
+            4,
+            5,
+            6
+          ],
+          "highlights": {
+            "0": "current"
+          },
+          "pointers": {}
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Keep watching \u2014 the answer structure is still assembling.",
+        "state": {
+          "nums": [],
+          "nodes": [],
+          "result": [
+            1,
+            1,
+            2,
+            3,
+            4,
+            4,
+            5,
+            6
+          ],
+          "highlights": {
+            "0": "current"
+          },
+          "pointers": {}
         }
       }
     ]

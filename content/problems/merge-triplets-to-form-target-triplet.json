@@ -71,35 +71,50 @@
   ],
   "animation": {
     "visualType": "array",
-    "tracerId": "generic-array-scan",
-    "defaultInput": [
-      1,
-      2,
-      3
-    ],
+    "tracerId": "authored",
+    "defaultInput": {
+      "nums": [
+        2,
+        7,
+        5
+      ],
+      "target": [
+        2,
+        7,
+        5
+      ]
+    },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving merge triplets to form target triplet using the array view.",
+        "caption": "Lay out the array for \u201cMerge Triplets to Form Target Triplet\u201d. Watch the pointer walk the answer into place.",
         "state": {
-          "input": [
-            1,
+          "nums": [
             2,
-            3
+            7,
+            5
           ],
           "result": null,
-          "highlights": {}
+          "highlights": {},
+          "currentIndex": null
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Index 0 holds 2.",
         "state": {
-          "input": [
-            1,
+          "nums": [
             2,
-            3
+            7,
+            5
           ],
+          "target": [
+            2,
+            7,
+            5
+          ],
+          "currentIndex": 0,
+          "currentValue": 2,
           "result": null,
           "highlights": {
             "0": "current"
@@ -107,16 +122,70 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Index 1 holds 7.",
         "state": {
-          "input": [
-            1,
+          "nums": [
             2,
-            3
+            7,
+            5
           ],
-          "result": "see-leetcode",
-          "highlights": {}
+          "target": [
+            2,
+            7,
+            5
+          ],
+          "currentIndex": 1,
+          "currentValue": 7,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 2 holds 5.",
+        "state": {
+          "nums": [
+            2,
+            7,
+            5
+          ],
+          "target": [
+            2,
+            7,
+            5
+          ],
+          "currentIndex": 2,
+          "currentValue": 5,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Answer settles: true.",
+        "state": {
+          "nums": [
+            2,
+            7,
+            5
+          ],
+          "target": [
+            2,
+            7,
+            5
+          ],
+          "currentIndex": 2,
+          "result": true,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done"
+          }
         }
       }
     ]

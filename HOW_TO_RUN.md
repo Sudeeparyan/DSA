@@ -48,8 +48,12 @@ Leave the terminal open while you study. Press `Ctrl+C` to stop the server.
 | --- | --- |
 | `npm run dev` | Start local website |
 | `npm run build` | Build a static site into the `out/` folder |
-| `npm test` | Run automated checks |
-| `npm run content:validate` | Check all 150 problem files |
+| `npm test` | Unit tests + all-150 animation gate |
+| `npm run content:validate` | Check all 150 problem JSON files |
+| `npm run content:animate` | Regenerate cinema steps from examples |
+| `npm run content:verify-animations` | Fail if any answer animation is stubby |
+
+For how the code is structured so you can keep improving it safely, read **[docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md)** and **[docs/EXTENDING.md](./docs/EXTENDING.md)**.
 
 ## 6. Deploy for free
 

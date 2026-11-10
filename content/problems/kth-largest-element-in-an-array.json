@@ -71,21 +71,37 @@
   ],
   "animation": {
     "visualType": "heap",
-    "tracerId": "generic-array-scan",
-    "defaultInput": [
-      1,
-      2,
-      3
-    ],
+    "tracerId": "authored",
+    "defaultInput": {
+      "heap": [
+        3,
+        2,
+        1,
+        5,
+        6,
+        4
+      ]
+    },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving kth largest element in an array using the heap view.",
+        "caption": "Heap array for \u201cKth Largest Element in an Array\u201d. Parent always beats its kids.",
         "state": {
-          "input": [
-            1,
+          "heap": [
+            3,
             2,
-            3
+            1,
+            5,
+            6,
+            4
+          ],
+          "nums": [
+            3,
+            2,
+            1,
+            5,
+            6,
+            4
           ],
           "result": null,
           "highlights": {}
@@ -93,13 +109,25 @@
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Heap slot 0 stores 3.",
         "state": {
-          "input": [
-            1,
+          "heap": [
+            3,
             2,
-            3
+            1,
+            5,
+            6,
+            4
           ],
+          "nums": [
+            3,
+            2,
+            1,
+            5,
+            6,
+            4
+          ],
+          "currentIndex": 0,
           "result": null,
           "highlights": {
             "0": "current"
@@ -107,16 +135,169 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Heap slot 1 stores 2.",
         "state": {
-          "input": [
-            1,
+          "heap": [
+            3,
             2,
-            3
+            1,
+            5,
+            6,
+            4
           ],
-          "result": "see-leetcode",
-          "highlights": {}
+          "nums": [
+            3,
+            2,
+            1,
+            5,
+            6,
+            4
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Heap slot 2 stores 1.",
+        "state": {
+          "heap": [
+            3,
+            2,
+            1,
+            5,
+            6,
+            4
+          ],
+          "nums": [
+            3,
+            2,
+            1,
+            5,
+            6,
+            4
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Heap slot 3 stores 5.",
+        "state": {
+          "heap": [
+            3,
+            2,
+            1,
+            5,
+            6,
+            4
+          ],
+          "nums": [
+            3,
+            2,
+            1,
+            5,
+            6,
+            4
+          ],
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Heap slot 4 stores 6.",
+        "state": {
+          "heap": [
+            3,
+            2,
+            1,
+            5,
+            6,
+            4
+          ],
+          "nums": [
+            3,
+            2,
+            1,
+            5,
+            6,
+            4
+          ],
+          "currentIndex": 4,
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Heap slot 5 stores 4.",
+        "state": {
+          "heap": [
+            3,
+            2,
+            1,
+            5,
+            6,
+            4
+          ],
+          "nums": [
+            3,
+            2,
+            1,
+            5,
+            6,
+            4
+          ],
+          "currentIndex": 5,
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Heap settled. Answer: 5.",
+        "state": {
+          "heap": [
+            3,
+            2,
+            1,
+            5,
+            6,
+            4
+          ],
+          "nums": [
+            3,
+            2,
+            1,
+            5,
+            6,
+            4
+          ],
+          "result": 5,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done"
+          }
         }
       }
     ]

@@ -71,29 +71,42 @@
   ],
   "animation": {
     "visualType": "backtracking",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": {
-      "demo": true
+      "nums": [
+        1,
+        2,
+        2
+      ]
     },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving subsets ii using the backtracking view.",
+        "caption": "Backtracking for \u201cSubsets II\u201d. Try a choice, then undo if it fails.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            1,
+            2,
+            2
+          ],
+          "path": [],
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Choose 1 \u2192 path [1].",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            1,
+            2,
+            2
+          ],
+          "path": [
+            1
+          ],
+          "currentIndex": 0,
           "result": null,
           "highlights": {
             "0": "current"
@@ -101,14 +114,108 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Choose 2 \u2192 path [1, 2].",
         "state": {
-          "input": {
-            "demo": true
-          },
-          "result": "see-leetcode",
-          "highlights": {}
+          "nums": [
+            1,
+            2,
+            2
+          ],
+          "path": [
+            1,
+            2
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Choose 2 \u2192 path [1, 2, 2].",
+        "state": {
+          "nums": [
+            1,
+            2,
+            2
+          ],
+          "path": [
+            1,
+            2,
+            2
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Path looks valid so far: [1, 2, 2].",
+        "state": {
+          "nums": [
+            1,
+            2,
+            2
+          ],
+          "path": [
+            1,
+            2,
+            2
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "matched"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "Collected answers: [[], [1], [1, 2], [1, 2, 2], [2], [2, 2]].",
+        "state": {
+          "nums": [
+            1,
+            2,
+            2
+          ],
+          "path": [
+            1,
+            2,
+            2
+          ],
+          "result": [
+            [],
+            [
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2,
+              2
+            ],
+            [
+              2
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done"
+          }
         }
       }
     ]

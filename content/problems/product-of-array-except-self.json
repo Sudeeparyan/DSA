@@ -71,35 +71,46 @@
   ],
   "animation": {
     "visualType": "hash",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": [
       1,
       2,
-      3
+      3,
+      4
     ],
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving product of array except self using the hash view.",
+        "caption": "Empty memory shelf for \u201cProduct of Array Except Self\u201d. We remember what we have already seen.",
         "state": {
-          "input": [
+          "nums": [
             1,
             2,
-            3
+            3,
+            4
           ],
+          "seen": [],
+          "map": {},
+          "target": null,
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Look at 1 at index 0.",
         "state": {
-          "input": [
+          "nums": [
             1,
             2,
-            3
+            3,
+            4
           ],
+          "seen": [],
+          "map": {},
+          "target": null,
+          "currentIndex": 0,
+          "currentValue": 1,
           "result": null,
           "highlights": {
             "0": "current"
@@ -107,16 +118,225 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 4,
+        "caption": "New value. Dock 1 onto the memory shelf.",
         "state": {
-          "input": [
+          "nums": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "seen": [
+            1
+          ],
+          "map": {
+            "1": 0
+          },
+          "currentIndex": 0,
+          "result": null,
+          "highlights": {
+            "0": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at 2 at index 1.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "seen": [
+            1
+          ],
+          "map": {
+            "1": 0
+          },
+          "target": null,
+          "currentIndex": 1,
+          "currentValue": 2,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "New value. Dock 2 onto the memory shelf.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "seen": [
+            1,
+            2
+          ],
+          "map": {
+            "1": 0,
+            "2": 1
+          },
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at 3 at index 2.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "seen": [
+            1,
+            2
+          ],
+          "map": {
+            "1": 0,
+            "2": 1
+          },
+          "target": null,
+          "currentIndex": 2,
+          "currentValue": 3,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "New value. Dock 3 onto the memory shelf.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "seen": [
             1,
             2,
             3
           ],
-          "result": "see-leetcode",
-          "highlights": {}
+          "map": {
+            "1": 0,
+            "2": 1,
+            "3": 2
+          },
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at 4 at index 3.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "seen": [
+            1,
+            2,
+            3
+          ],
+          "map": {
+            "1": 0,
+            "2": 1,
+            "3": 2
+          },
+          "target": null,
+          "currentIndex": 3,
+          "currentValue": 4,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "New value. Dock 4 onto the memory shelf.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "seen": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "map": {
+            "1": 0,
+            "2": 1,
+            "3": 2,
+            "4": 3
+          },
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "remembered"
+          }
+        }
+      },
+      {
+        "line": 5,
+        "caption": "Scan complete. Result: [24, 12, 8, 6].",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "seen": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "map": {
+            "1": 0,
+            "2": 1,
+            "3": 2,
+            "4": 3
+          },
+          "target": null,
+          "result": [
+            24,
+            12,
+            8,
+            6
+          ],
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done"
+          }
         }
       }
     ]

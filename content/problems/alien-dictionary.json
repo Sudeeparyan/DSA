@@ -71,29 +71,60 @@
   ],
   "animation": {
     "visualType": "graph",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": {
-      "demo": true
+      "words": [
+        "wrt",
+        "wrf",
+        "er",
+        "ett",
+        "rftt"
+      ]
     },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving alien dictionary using the graph view.",
+        "caption": "Graph for \u201cAlien Dictionary\u201d. Nodes on stage; we walk edges.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            "wrt",
+            "wrf",
+            "er",
+            "ett",
+            "rftt"
+          ],
+          "nodes": [
+            "wrt",
+            "wrf",
+            "er",
+            "ett",
+            "rftt"
+          ],
+          "edges": [],
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Visit node wrt.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            "wrt",
+            "wrf",
+            "er",
+            "ett",
+            "rftt"
+          ],
+          "nodes": [
+            "wrt",
+            "wrf",
+            "er",
+            "ett",
+            "rftt"
+          ],
+          "edges": [],
+          "currentIndex": 0,
           "result": null,
           "highlights": {
             "0": "current"
@@ -101,14 +132,136 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Visit node wrf.",
         "state": {
-          "input": {
-            "demo": true
-          },
-          "result": "see-leetcode",
-          "highlights": {}
+          "nums": [
+            "wrt",
+            "wrf",
+            "er",
+            "ett",
+            "rftt"
+          ],
+          "nodes": [
+            "wrt",
+            "wrf",
+            "er",
+            "ett",
+            "rftt"
+          ],
+          "edges": [],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit node er.",
+        "state": {
+          "nums": [
+            "wrt",
+            "wrf",
+            "er",
+            "ett",
+            "rftt"
+          ],
+          "nodes": [
+            "wrt",
+            "wrf",
+            "er",
+            "ett",
+            "rftt"
+          ],
+          "edges": [],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit node ett.",
+        "state": {
+          "nums": [
+            "wrt",
+            "wrf",
+            "er",
+            "ett",
+            "rftt"
+          ],
+          "nodes": [
+            "wrt",
+            "wrf",
+            "er",
+            "ett",
+            "rftt"
+          ],
+          "edges": [],
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit node rftt.",
+        "state": {
+          "nums": [
+            "wrt",
+            "wrf",
+            "er",
+            "ett",
+            "rftt"
+          ],
+          "nodes": [
+            "wrt",
+            "wrf",
+            "er",
+            "ett",
+            "rftt"
+          ],
+          "edges": [],
+          "currentIndex": 4,
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Traversal complete. Answer: \"wertf\".",
+        "state": {
+          "nums": [
+            "wrt",
+            "wrf",
+            "er",
+            "ett",
+            "rftt"
+          ],
+          "nodes": [
+            "wrt",
+            "wrf",
+            "er",
+            "ett",
+            "rftt"
+          ],
+          "edges": [],
+          "result": "wertf",
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done"
+          }
         }
       }
     ]

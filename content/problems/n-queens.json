@@ -71,44 +71,115 @@
   ],
   "animation": {
     "visualType": "backtracking",
-    "tracerId": "generic-array-scan",
-    "defaultInput": {
-      "demo": true
-    },
+    "tracerId": "authored",
+    "defaultInput": [],
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving n queens using the backtracking view.",
+        "caption": "Backtracking for \u201cN-Queens\u201d. Try a choice, then undo if it fails.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [],
+          "path": [],
           "result": null,
           "highlights": {}
         }
       },
       {
-        "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "line": 4,
+        "caption": "Collected answers: [[\".Q..\", \"...Q\", \"Q...\", \"..Q.\"], [\"..Q.\", \"Q...\", \"...Q\", \".Q..\"]].",
         "state": {
-          "input": {
-            "demo": true
-          },
-          "result": null,
+          "nums": [],
+          "path": [],
+          "result": [
+            [
+              ".Q..",
+              "...Q",
+              "Q...",
+              "..Q."
+            ],
+            [
+              "..Q.",
+              "Q...",
+              "...Q",
+              ".Q.."
+            ]
+          ],
+          "highlights": {}
+        }
+      },
+      {
+        "line": 4,
+        "caption": "Keep watching \u2014 the answer structure is still assembling.",
+        "state": {
+          "nums": [],
+          "path": [],
+          "result": [
+            [
+              ".Q..",
+              "...Q",
+              "Q...",
+              "..Q."
+            ],
+            [
+              "..Q.",
+              "Q...",
+              "...Q",
+              ".Q.."
+            ]
+          ],
           "highlights": {
             "0": "current"
           }
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 4,
+        "caption": "Keep watching \u2014 the answer structure is still assembling.",
         "state": {
-          "input": {
-            "demo": true
-          },
-          "result": "see-leetcode",
-          "highlights": {}
+          "nums": [],
+          "path": [],
+          "result": [
+            [
+              ".Q..",
+              "...Q",
+              "Q...",
+              "..Q."
+            ],
+            [
+              "..Q.",
+              "Q...",
+              "...Q",
+              ".Q.."
+            ]
+          ],
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "Keep watching \u2014 the answer structure is still assembling.",
+        "state": {
+          "nums": [],
+          "path": [],
+          "result": [
+            [
+              ".Q..",
+              "...Q",
+              "Q...",
+              "..Q."
+            ],
+            [
+              "..Q.",
+              "Q...",
+              "...Q",
+              ".Q.."
+            ]
+          ],
+          "highlights": {
+            "0": "current"
+          }
         }
       }
     ]

@@ -71,29 +71,70 @@
   ],
   "animation": {
     "visualType": "grid",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": {
-      "demo": true
+      "grid": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ]
     },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving course schedule using the grid view.",
+        "caption": "Grid for \u201cCourse Schedule\u201d. We scan cells; visited cells light up.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "grid": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "nums": [
+            1,
+            0,
+            0,
+            1
+          ],
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Visit cell (0,0) = 1.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "grid": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "nums": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "currentIndex": 0,
+          "currentValue": 1,
+          "cell": [
+            0,
+            0
+          ],
           "result": null,
           "highlights": {
             "0": "current"
@@ -101,14 +142,128 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Visit cell (0,1) = 0.",
         "state": {
-          "input": {
-            "demo": true
-          },
-          "result": "see-leetcode",
-          "highlights": {}
+          "grid": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "nums": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "currentIndex": 1,
+          "currentValue": 0,
+          "cell": [
+            0,
+            1
+          ],
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (1,0) = 0.",
+        "state": {
+          "grid": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "nums": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "currentIndex": 2,
+          "currentValue": 0,
+          "cell": [
+            1,
+            0
+          ],
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (1,1) = 1.",
+        "state": {
+          "grid": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "nums": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "currentIndex": 3,
+          "currentValue": 1,
+          "cell": [
+            1,
+            1
+          ],
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Grid scan complete. Answer: true.",
+        "state": {
+          "grid": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "nums": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "result": true,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done"
+          }
         }
       }
     ]

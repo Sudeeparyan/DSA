@@ -71,35 +71,46 @@
   ],
   "animation": {
     "visualType": "hash",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": [
-      1,
-      2,
-      3
+      "lint",
+      "code",
+      "love",
+      "you"
     ],
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving encode and decode strings using the hash view.",
+        "caption": "Empty memory shelf for \u201cEncode and Decode Strings\u201d. We remember what we have already seen.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "nums": [
+            "lint",
+            "code",
+            "love",
+            "you"
           ],
+          "seen": [],
+          "map": {},
+          "target": null,
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Look at lint at index 0.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "nums": [
+            "lint",
+            "code",
+            "love",
+            "you"
           ],
+          "seen": [],
+          "map": {},
+          "target": null,
+          "currentIndex": 0,
+          "currentValue": "lint",
           "result": null,
           "highlights": {
             "0": "current"
@@ -107,16 +118,225 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 4,
+        "caption": "New value. Dock lint onto the memory shelf.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "nums": [
+            "lint",
+            "code",
+            "love",
+            "you"
           ],
-          "result": "see-leetcode",
-          "highlights": {}
+          "seen": [
+            "lint"
+          ],
+          "map": {
+            "lint": 0
+          },
+          "currentIndex": 0,
+          "result": null,
+          "highlights": {
+            "0": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at code at index 1.",
+        "state": {
+          "nums": [
+            "lint",
+            "code",
+            "love",
+            "you"
+          ],
+          "seen": [
+            "lint"
+          ],
+          "map": {
+            "lint": 0
+          },
+          "target": null,
+          "currentIndex": 1,
+          "currentValue": "code",
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "New value. Dock code onto the memory shelf.",
+        "state": {
+          "nums": [
+            "lint",
+            "code",
+            "love",
+            "you"
+          ],
+          "seen": [
+            "lint",
+            "code"
+          ],
+          "map": {
+            "lint": 0,
+            "code": 1
+          },
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at love at index 2.",
+        "state": {
+          "nums": [
+            "lint",
+            "code",
+            "love",
+            "you"
+          ],
+          "seen": [
+            "lint",
+            "code"
+          ],
+          "map": {
+            "lint": 0,
+            "code": 1
+          },
+          "target": null,
+          "currentIndex": 2,
+          "currentValue": "love",
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "New value. Dock love onto the memory shelf.",
+        "state": {
+          "nums": [
+            "lint",
+            "code",
+            "love",
+            "you"
+          ],
+          "seen": [
+            "lint",
+            "code",
+            "love"
+          ],
+          "map": {
+            "lint": 0,
+            "code": 1,
+            "love": 2
+          },
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at you at index 3.",
+        "state": {
+          "nums": [
+            "lint",
+            "code",
+            "love",
+            "you"
+          ],
+          "seen": [
+            "lint",
+            "code",
+            "love"
+          ],
+          "map": {
+            "lint": 0,
+            "code": 1,
+            "love": 2
+          },
+          "target": null,
+          "currentIndex": 3,
+          "currentValue": "you",
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "New value. Dock you onto the memory shelf.",
+        "state": {
+          "nums": [
+            "lint",
+            "code",
+            "love",
+            "you"
+          ],
+          "seen": [
+            "lint",
+            "code",
+            "love",
+            "you"
+          ],
+          "map": {
+            "lint": 0,
+            "code": 1,
+            "love": 2,
+            "you": 3
+          },
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "remembered"
+          }
+        }
+      },
+      {
+        "line": 5,
+        "caption": "Scan complete. Result: [\"lint\", \"code\", \"love\", \"you\"].",
+        "state": {
+          "nums": [
+            "lint",
+            "code",
+            "love",
+            "you"
+          ],
+          "seen": [
+            "lint",
+            "code",
+            "love",
+            "you"
+          ],
+          "map": {
+            "lint": 0,
+            "code": 1,
+            "love": 2,
+            "you": 3
+          },
+          "target": null,
+          "result": [
+            "lint",
+            "code",
+            "love",
+            "you"
+          ],
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done"
+          }
         }
       }
     ]

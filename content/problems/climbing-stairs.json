@@ -71,47 +71,147 @@
   ],
   "animation": {
     "visualType": "dp",
-    "tracerId": "generic-array-scan",
-    "defaultInput": [
-      1,
-      2,
-      3,
-      2
-    ],
+    "tracerId": "authored",
+    "defaultInput": {
+      "n": 2
+    },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving climbing stairs using the dp view.",
+        "caption": "DP row for \u201cClimbing Stairs\u201d. dp[0] starts as the base case.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            1,
+            1,
+            2
+          ],
+          "table": [
+            [
+              1,
+              0,
+              0
+            ]
+          ],
           "result": null,
-          "highlights": {}
+          "highlights": {
+            "0": "remembered"
+          }
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Fill dp[1] using earlier answers \u2192 1.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            1,
+            1,
+            0
+          ],
+          "table": [
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "currentIndex": 1,
           "result": null,
           "highlights": {
-            "0": "current"
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Fill dp[2] using earlier answers \u2192 2.",
+        "state": {
+          "nums": [
+            1,
+            1,
+            2
+          ],
+          "table": [
+            [
+              1,
+              1,
+              2
+            ]
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Hold the DP row \u2014 each cell is built only from earlier answers.",
+        "state": {
+          "nums": [
+            1,
+            1,
+            2
+          ],
+          "table": [
+            [
+              1,
+              1,
+              2
+            ]
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Hold the DP row \u2014 each cell is built only from earlier answers.",
+        "state": {
+          "nums": [
+            1,
+            1,
+            2
+          ],
+          "table": [
+            [
+              1,
+              1,
+              2
+            ]
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
           }
         }
       },
       {
         "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "caption": "DP finished. Answer: 2.",
         "state": {
-          "input": {
-            "demo": true
-          },
-          "result": "see-leetcode",
-          "highlights": {}
+          "nums": [
+            1,
+            1,
+            2
+          ],
+          "table": [
+            [
+              1,
+              1,
+              2
+            ]
+          ],
+          "result": 2,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done"
+          }
         }
       }
     ]

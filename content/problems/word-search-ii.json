@@ -71,44 +71,421 @@
   ],
   "animation": {
     "visualType": "trie",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": {
-      "demo": true
+      "words": [
+        "oath",
+        "pea",
+        "eat",
+        "rain"
+      ]
     },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving word search ii using the trie view.",
+        "caption": "Trie for \u201cWord Search II\u201d. We grow character paths.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "path": [],
+          "nums": [],
+          "chars": [],
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Word 'oath': add character 'o'.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "path": [
+            "o"
+          ],
+          "chars": [
+            "o"
+          ],
+          "nums": [
+            "o"
+          ],
+          "currentIndex": 0,
+          "currentValue": "o",
+          "word": "oath",
           "result": null,
           "highlights": {
-            "0": "current"
+            "0": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'oath': add character 'a'.",
+        "state": {
+          "path": [
+            "o",
+            "a"
+          ],
+          "chars": [
+            "o",
+            "a"
+          ],
+          "nums": [
+            "o",
+            "a"
+          ],
+          "currentIndex": 1,
+          "currentValue": "a",
+          "word": "oath",
+          "result": null,
+          "highlights": {
+            "1": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'oath': add character 't'.",
+        "state": {
+          "path": [
+            "o",
+            "a",
+            "t"
+          ],
+          "chars": [
+            "o",
+            "a",
+            "t"
+          ],
+          "nums": [
+            "o",
+            "a",
+            "t"
+          ],
+          "currentIndex": 2,
+          "currentValue": "t",
+          "word": "oath",
+          "result": null,
+          "highlights": {
+            "2": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'oath': add character 'h'.",
+        "state": {
+          "path": [
+            "o",
+            "a",
+            "t",
+            "h"
+          ],
+          "chars": [
+            "o",
+            "a",
+            "t",
+            "h"
+          ],
+          "nums": [
+            "o",
+            "a",
+            "t",
+            "h"
+          ],
+          "currentIndex": 3,
+          "currentValue": "h",
+          "word": "oath",
+          "result": null,
+          "highlights": {
+            "3": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'pea': add character 'p'.",
+        "state": {
+          "path": [
+            "p"
+          ],
+          "chars": [
+            "p"
+          ],
+          "nums": [
+            "p"
+          ],
+          "currentIndex": 0,
+          "currentValue": "p",
+          "word": "pea",
+          "result": null,
+          "highlights": {
+            "0": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'pea': add character 'e'.",
+        "state": {
+          "path": [
+            "p",
+            "e"
+          ],
+          "chars": [
+            "p",
+            "e"
+          ],
+          "nums": [
+            "p",
+            "e"
+          ],
+          "currentIndex": 1,
+          "currentValue": "e",
+          "word": "pea",
+          "result": null,
+          "highlights": {
+            "1": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'pea': add character 'a'.",
+        "state": {
+          "path": [
+            "p",
+            "e",
+            "a"
+          ],
+          "chars": [
+            "p",
+            "e",
+            "a"
+          ],
+          "nums": [
+            "p",
+            "e",
+            "a"
+          ],
+          "currentIndex": 2,
+          "currentValue": "a",
+          "word": "pea",
+          "result": null,
+          "highlights": {
+            "2": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'eat': add character 'e'.",
+        "state": {
+          "path": [
+            "e"
+          ],
+          "chars": [
+            "e"
+          ],
+          "nums": [
+            "e"
+          ],
+          "currentIndex": 0,
+          "currentValue": "e",
+          "word": "eat",
+          "result": null,
+          "highlights": {
+            "0": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'eat': add character 'a'.",
+        "state": {
+          "path": [
+            "e",
+            "a"
+          ],
+          "chars": [
+            "e",
+            "a"
+          ],
+          "nums": [
+            "e",
+            "a"
+          ],
+          "currentIndex": 1,
+          "currentValue": "a",
+          "word": "eat",
+          "result": null,
+          "highlights": {
+            "1": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'eat': add character 't'.",
+        "state": {
+          "path": [
+            "e",
+            "a",
+            "t"
+          ],
+          "chars": [
+            "e",
+            "a",
+            "t"
+          ],
+          "nums": [
+            "e",
+            "a",
+            "t"
+          ],
+          "currentIndex": 2,
+          "currentValue": "t",
+          "word": "eat",
+          "result": null,
+          "highlights": {
+            "2": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'rain': add character 'r'.",
+        "state": {
+          "path": [
+            "r"
+          ],
+          "chars": [
+            "r"
+          ],
+          "nums": [
+            "r"
+          ],
+          "currentIndex": 0,
+          "currentValue": "r",
+          "word": "rain",
+          "result": null,
+          "highlights": {
+            "0": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'rain': add character 'a'.",
+        "state": {
+          "path": [
+            "r",
+            "a"
+          ],
+          "chars": [
+            "r",
+            "a"
+          ],
+          "nums": [
+            "r",
+            "a"
+          ],
+          "currentIndex": 1,
+          "currentValue": "a",
+          "word": "rain",
+          "result": null,
+          "highlights": {
+            "1": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'rain': add character 'i'.",
+        "state": {
+          "path": [
+            "r",
+            "a",
+            "i"
+          ],
+          "chars": [
+            "r",
+            "a",
+            "i"
+          ],
+          "nums": [
+            "r",
+            "a",
+            "i"
+          ],
+          "currentIndex": 2,
+          "currentValue": "i",
+          "word": "rain",
+          "result": null,
+          "highlights": {
+            "2": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'rain': add character 'n'.",
+        "state": {
+          "path": [
+            "r",
+            "a",
+            "i",
+            "n"
+          ],
+          "chars": [
+            "r",
+            "a",
+            "i",
+            "n"
+          ],
+          "nums": [
+            "r",
+            "a",
+            "i",
+            "n"
+          ],
+          "currentIndex": 3,
+          "currentValue": "n",
+          "word": "rain",
+          "result": null,
+          "highlights": {
+            "3": "remembered"
           }
         }
       },
       {
         "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "caption": "Trie built. Answer: [\"eat\", \"oath\"].",
         "state": {
-          "input": {
-            "demo": true
-          },
-          "result": "see-leetcode",
-          "highlights": {}
+          "path": [
+            "r",
+            "a",
+            "i",
+            "n"
+          ],
+          "chars": [
+            "r",
+            "a",
+            "i",
+            "n"
+          ],
+          "nums": [
+            "r",
+            "a",
+            "i",
+            "n"
+          ],
+          "result": [
+            "eat",
+            "oath"
+          ],
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done"
+          }
         }
       }
     ]

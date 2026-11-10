@@ -71,7 +71,7 @@
   ],
   "animation": {
     "visualType": "array",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": [
       1,
       2,
@@ -80,26 +80,30 @@
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving plus one using the array view.",
+        "caption": "Lay out the array for \u201cPlus One\u201d. Watch the pointer walk the answer into place.",
         "state": {
-          "input": [
+          "nums": [
             1,
             2,
             3
           ],
           "result": null,
-          "highlights": {}
+          "highlights": {},
+          "currentIndex": null
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Index 0 holds 1.",
         "state": {
-          "input": [
+          "nums": [
             1,
             2,
             3
           ],
+          "target": null,
+          "currentIndex": 0,
+          "currentValue": 1,
           "result": null,
           "highlights": {
             "0": "current"
@@ -107,16 +111,62 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Index 1 holds 2.",
         "state": {
-          "input": [
+          "nums": [
             1,
             2,
             3
           ],
-          "result": "see-leetcode",
-          "highlights": {}
+          "target": null,
+          "currentIndex": 1,
+          "currentValue": 2,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 2 holds 3.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3
+          ],
+          "target": null,
+          "currentIndex": 2,
+          "currentValue": 3,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Answer settles: [1, 2, 4].",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3
+          ],
+          "target": null,
+          "currentIndex": 2,
+          "result": [
+            1,
+            2,
+            4
+          ],
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done"
+          }
         }
       }
     ]

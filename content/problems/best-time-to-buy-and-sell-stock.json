@@ -71,35 +71,48 @@
   ],
   "animation": {
     "visualType": "array",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": [
+      7,
       1,
-      2,
-      3
+      5,
+      3,
+      6,
+      4
     ],
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving best time to buy and sell stock using the array view.",
+        "caption": "Lay out the array for \u201cBest Time to Buy & Sell Stock\u201d. Watch the pointer walk the answer into place.",
         "state": {
-          "input": [
+          "nums": [
+            7,
             1,
-            2,
-            3
+            5,
+            3,
+            6,
+            4
           ],
           "result": null,
-          "highlights": {}
+          "highlights": {},
+          "currentIndex": null
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Index 0 holds 7.",
         "state": {
-          "input": [
+          "nums": [
+            7,
             1,
-            2,
-            3
+            5,
+            3,
+            6,
+            4
           ],
+          "target": null,
+          "currentIndex": 0,
+          "currentValue": 7,
           "result": null,
           "highlights": {
             "0": "current"
@@ -107,16 +120,133 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Index 1 holds 1.",
         "state": {
-          "input": [
+          "nums": [
+            7,
             1,
-            2,
-            3
+            5,
+            3,
+            6,
+            4
           ],
-          "result": "see-leetcode",
-          "highlights": {}
+          "target": null,
+          "currentIndex": 1,
+          "currentValue": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 2 holds 5.",
+        "state": {
+          "nums": [
+            7,
+            1,
+            5,
+            3,
+            6,
+            4
+          ],
+          "target": null,
+          "currentIndex": 2,
+          "currentValue": 5,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 3 holds 3.",
+        "state": {
+          "nums": [
+            7,
+            1,
+            5,
+            3,
+            6,
+            4
+          ],
+          "target": null,
+          "currentIndex": 3,
+          "currentValue": 3,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 4 holds 6.",
+        "state": {
+          "nums": [
+            7,
+            1,
+            5,
+            3,
+            6,
+            4
+          ],
+          "target": null,
+          "currentIndex": 4,
+          "currentValue": 6,
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 5 holds 4.",
+        "state": {
+          "nums": [
+            7,
+            1,
+            5,
+            3,
+            6,
+            4
+          ],
+          "target": null,
+          "currentIndex": 5,
+          "currentValue": 4,
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Answer settles: 5.",
+        "state": {
+          "nums": [
+            7,
+            1,
+            5,
+            3,
+            6,
+            4
+          ],
+          "target": null,
+          "currentIndex": 5,
+          "result": 5,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done"
+          }
         }
       }
     ]

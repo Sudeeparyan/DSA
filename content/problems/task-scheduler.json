@@ -71,21 +71,37 @@
   ],
   "animation": {
     "visualType": "heap",
-    "tracerId": "generic-array-scan",
-    "defaultInput": [
-      1,
-      2,
-      3
-    ],
+    "tracerId": "authored",
+    "defaultInput": {
+      "heap": [
+        "A",
+        "A",
+        "A",
+        "B",
+        "B",
+        "B"
+      ]
+    },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving task scheduler using the heap view.",
+        "caption": "Heap array for \u201cTask Scheduler\u201d. Parent always beats its kids.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "heap": [
+            "A",
+            "A",
+            "A",
+            "B",
+            "B",
+            "B"
+          ],
+          "nums": [
+            "A",
+            "A",
+            "A",
+            "B",
+            "B",
+            "B"
           ],
           "result": null,
           "highlights": {}
@@ -93,13 +109,25 @@
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Heap slot 0 stores A.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "heap": [
+            "A",
+            "A",
+            "A",
+            "B",
+            "B",
+            "B"
           ],
+          "nums": [
+            "A",
+            "A",
+            "A",
+            "B",
+            "B",
+            "B"
+          ],
+          "currentIndex": 0,
           "result": null,
           "highlights": {
             "0": "current"
@@ -107,16 +135,169 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Heap slot 1 stores A.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "heap": [
+            "A",
+            "A",
+            "A",
+            "B",
+            "B",
+            "B"
           ],
-          "result": "see-leetcode",
-          "highlights": {}
+          "nums": [
+            "A",
+            "A",
+            "A",
+            "B",
+            "B",
+            "B"
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Heap slot 2 stores A.",
+        "state": {
+          "heap": [
+            "A",
+            "A",
+            "A",
+            "B",
+            "B",
+            "B"
+          ],
+          "nums": [
+            "A",
+            "A",
+            "A",
+            "B",
+            "B",
+            "B"
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Heap slot 3 stores B.",
+        "state": {
+          "heap": [
+            "A",
+            "A",
+            "A",
+            "B",
+            "B",
+            "B"
+          ],
+          "nums": [
+            "A",
+            "A",
+            "A",
+            "B",
+            "B",
+            "B"
+          ],
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Heap slot 4 stores B.",
+        "state": {
+          "heap": [
+            "A",
+            "A",
+            "A",
+            "B",
+            "B",
+            "B"
+          ],
+          "nums": [
+            "A",
+            "A",
+            "A",
+            "B",
+            "B",
+            "B"
+          ],
+          "currentIndex": 4,
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Heap slot 5 stores B.",
+        "state": {
+          "heap": [
+            "A",
+            "A",
+            "A",
+            "B",
+            "B",
+            "B"
+          ],
+          "nums": [
+            "A",
+            "A",
+            "A",
+            "B",
+            "B",
+            "B"
+          ],
+          "currentIndex": 5,
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Heap settled. Answer: 8.",
+        "state": {
+          "heap": [
+            "A",
+            "A",
+            "A",
+            "B",
+            "B",
+            "B"
+          ],
+          "nums": [
+            "A",
+            "A",
+            "A",
+            "B",
+            "B",
+            "B"
+          ],
+          "result": 8,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done"
+          }
         }
       }
     ]

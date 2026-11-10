@@ -71,29 +71,51 @@
   ],
   "animation": {
     "visualType": "backtracking",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": {
-      "demo": true
+      "candidates": [
+        10,
+        1,
+        2,
+        7,
+        6,
+        1
+      ]
     },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving combination sum ii using the backtracking view.",
+        "caption": "Backtracking for \u201cCombination Sum II\u201d. Try a choice, then undo if it fails.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            10,
+            1,
+            2,
+            7,
+            6,
+            1
+          ],
+          "path": [],
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Choose 10 \u2192 path [10].",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            10,
+            1,
+            2,
+            7,
+            6,
+            1
+          ],
+          "path": [
+            10
+          ],
+          "currentIndex": 0,
           "result": null,
           "highlights": {
             "0": "current"
@@ -101,14 +123,229 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Choose 1 \u2192 path [10, 1].",
         "state": {
-          "input": {
-            "demo": true
-          },
-          "result": "see-leetcode",
-          "highlights": {}
+          "nums": [
+            10,
+            1,
+            2,
+            7,
+            6,
+            1
+          ],
+          "path": [
+            10,
+            1
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Choose 2 \u2192 path [10, 1, 2].",
+        "state": {
+          "nums": [
+            10,
+            1,
+            2,
+            7,
+            6,
+            1
+          ],
+          "path": [
+            10,
+            1,
+            2
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Path looks valid so far: [10, 1, 2].",
+        "state": {
+          "nums": [
+            10,
+            1,
+            2,
+            7,
+            6,
+            1
+          ],
+          "path": [
+            10,
+            1,
+            2
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "matched"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Choose 7 \u2192 path [10, 1, 2, 7].",
+        "state": {
+          "nums": [
+            10,
+            1,
+            2,
+            7,
+            6,
+            1
+          ],
+          "path": [
+            10,
+            1,
+            2,
+            7
+          ],
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Choose 6 \u2192 path [10, 1, 2, 7, 6].",
+        "state": {
+          "nums": [
+            10,
+            1,
+            2,
+            7,
+            6,
+            1
+          ],
+          "path": [
+            10,
+            1,
+            2,
+            7,
+            6
+          ],
+          "currentIndex": 4,
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Choose 1 \u2192 path [10, 1, 2, 7, 6, 1].",
+        "state": {
+          "nums": [
+            10,
+            1,
+            2,
+            7,
+            6,
+            1
+          ],
+          "path": [
+            10,
+            1,
+            2,
+            7,
+            6,
+            1
+          ],
+          "currentIndex": 5,
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Path looks valid so far: [10, 1, 2, 7, 6, 1].",
+        "state": {
+          "nums": [
+            10,
+            1,
+            2,
+            7,
+            6,
+            1
+          ],
+          "path": [
+            10,
+            1,
+            2,
+            7,
+            6,
+            1
+          ],
+          "currentIndex": 5,
+          "result": null,
+          "highlights": {
+            "5": "matched"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "Collected answers: [[1, 1, 6], [1, 2, 5], [1, 7], [2, 6]].",
+        "state": {
+          "nums": [
+            10,
+            1,
+            2,
+            7,
+            6,
+            1
+          ],
+          "path": [
+            10,
+            1,
+            2,
+            7,
+            6,
+            1
+          ],
+          "result": [
+            [
+              1,
+              1,
+              6
+            ],
+            [
+              1,
+              2,
+              5
+            ],
+            [
+              1,
+              7
+            ],
+            [
+              2,
+              6
+            ]
+          ],
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done"
+          }
         }
       }
     ]

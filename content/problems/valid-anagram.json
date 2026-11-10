@@ -71,34 +71,57 @@
   ],
   "animation": {
     "visualType": "hash",
-    "tracerId": "generic-array-scan",
-    "defaultInput": [
-      "anagram",
-      "nagaram"
-    ],
+    "tracerId": "authored",
+    "defaultInput": {
+      "nums": [
+        "a",
+        "n",
+        "a",
+        "g",
+        "r",
+        "a",
+        "m"
+      ]
+    },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving valid anagram using the hash view.",
+        "caption": "Empty memory shelf for \u201cValid Anagram\u201d. We remember what we have already seen.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "nums": [
+            "a",
+            "n",
+            "a",
+            "g",
+            "r",
+            "a",
+            "m"
           ],
+          "seen": [],
+          "map": {},
+          "target": null,
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Look at a at index 0.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "nums": [
+            "a",
+            "n",
+            "a",
+            "g",
+            "r",
+            "a",
+            "m"
           ],
+          "seen": [],
+          "map": {},
+          "target": null,
+          "currentIndex": 0,
+          "currentValue": "a",
           "result": null,
           "highlights": {
             "0": "current"
@@ -106,16 +129,171 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 4,
+        "caption": "New value. Dock a onto the memory shelf.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "nums": [
+            "a",
+            "n",
+            "a",
+            "g",
+            "r",
+            "a",
+            "m"
           ],
-          "result": "see-leetcode",
-          "highlights": {}
+          "seen": [
+            "a"
+          ],
+          "map": {
+            "a": 0
+          },
+          "currentIndex": 0,
+          "result": null,
+          "highlights": {
+            "0": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at n at index 1.",
+        "state": {
+          "nums": [
+            "a",
+            "n",
+            "a",
+            "g",
+            "r",
+            "a",
+            "m"
+          ],
+          "seen": [
+            "a"
+          ],
+          "map": {
+            "a": 0
+          },
+          "target": null,
+          "currentIndex": 1,
+          "currentValue": "n",
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "New value. Dock n onto the memory shelf.",
+        "state": {
+          "nums": [
+            "a",
+            "n",
+            "a",
+            "g",
+            "r",
+            "a",
+            "m"
+          ],
+          "seen": [
+            "a",
+            "n"
+          ],
+          "map": {
+            "a": 0,
+            "n": 1
+          },
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at a at index 2.",
+        "state": {
+          "nums": [
+            "a",
+            "n",
+            "a",
+            "g",
+            "r",
+            "a",
+            "m"
+          ],
+          "seen": [
+            "a",
+            "n"
+          ],
+          "map": {
+            "a": 0,
+            "n": 1
+          },
+          "target": null,
+          "currentIndex": 2,
+          "currentValue": "a",
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Have we seen a before? Yes \u2014 duplicate found.",
+        "state": {
+          "nums": [
+            "a",
+            "n",
+            "a",
+            "g",
+            "r",
+            "a",
+            "m"
+          ],
+          "seen": [
+            "a",
+            "n"
+          ],
+          "map": {
+            "a": 0,
+            "n": 1
+          },
+          "currentIndex": 2,
+          "result": true,
+          "highlights": {
+            "2": "matched"
+          }
+        }
+      },
+      {
+        "line": 5,
+        "caption": "Return true.",
+        "state": {
+          "nums": [
+            "a",
+            "n",
+            "a",
+            "g",
+            "r",
+            "a",
+            "m"
+          ],
+          "seen": [
+            "a",
+            "n"
+          ],
+          "map": {
+            "a": 0,
+            "n": 1
+          },
+          "target": null,
+          "result": true,
+          "highlights": {
+            "2": "matched"
+          }
         }
       }
     ]

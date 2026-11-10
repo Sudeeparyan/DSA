@@ -71,29 +71,45 @@
   ],
   "animation": {
     "visualType": "backtracking",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": {
-      "demo": true
+      "candidates": [
+        2,
+        3,
+        6,
+        7
+      ]
     },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving combination sum using the backtracking view.",
+        "caption": "Backtracking for \u201cCombination Sum\u201d. Try a choice, then undo if it fails.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            2,
+            3,
+            6,
+            7
+          ],
+          "path": [],
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Choose 2 \u2192 path [2].",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            2,
+            3,
+            6,
+            7
+          ],
+          "path": [
+            2
+          ],
+          "currentIndex": 0,
           "result": null,
           "highlights": {
             "0": "current"
@@ -101,14 +117,148 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Choose 3 \u2192 path [2, 3].",
         "state": {
-          "input": {
-            "demo": true
-          },
-          "result": "see-leetcode",
-          "highlights": {}
+          "nums": [
+            2,
+            3,
+            6,
+            7
+          ],
+          "path": [
+            2,
+            3
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Choose 6 \u2192 path [2, 3, 6].",
+        "state": {
+          "nums": [
+            2,
+            3,
+            6,
+            7
+          ],
+          "path": [
+            2,
+            3,
+            6
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Path looks valid so far: [2, 3, 6].",
+        "state": {
+          "nums": [
+            2,
+            3,
+            6,
+            7
+          ],
+          "path": [
+            2,
+            3,
+            6
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "matched"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Choose 7 \u2192 path [2, 3, 6, 7].",
+        "state": {
+          "nums": [
+            2,
+            3,
+            6,
+            7
+          ],
+          "path": [
+            2,
+            3,
+            6,
+            7
+          ],
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Path looks valid so far: [2, 3, 6, 7].",
+        "state": {
+          "nums": [
+            2,
+            3,
+            6,
+            7
+          ],
+          "path": [
+            2,
+            3,
+            6,
+            7
+          ],
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "matched"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "Collected answers: [[2, 2, 3], [7]].",
+        "state": {
+          "nums": [
+            2,
+            3,
+            6,
+            7
+          ],
+          "path": [
+            2,
+            3,
+            6,
+            7
+          ],
+          "result": [
+            [
+              2,
+              2,
+              3
+            ],
+            [
+              7
+            ]
+          ],
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done"
+          }
         }
       }
     ]

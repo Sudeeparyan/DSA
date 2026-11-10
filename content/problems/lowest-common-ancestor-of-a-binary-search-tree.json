@@ -71,29 +71,89 @@
   ],
   "animation": {
     "visualType": "tree",
-    "tracerId": "generic-array-scan",
+    "tracerId": "authored",
     "defaultInput": {
-      "demo": true
+      "root": [
+        6,
+        2,
+        8,
+        0,
+        4,
+        7,
+        9,
+        null,
+        null,
+        3,
+        5
+      ]
     },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving lowest common ancestor of a binary search tree using the tree view.",
+        "caption": "Binary tree for \u201cLowest Common Ancestor Of A Binary Search Tree\u201d starts empty on stage \u2014 we reveal levels.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nodes": [
+            6,
+            2,
+            8,
+            0,
+            4,
+            7,
+            9,
+            null,
+            null,
+            3,
+            5
+          ],
+          "nums": [
+            6,
+            2,
+            8,
+            0,
+            4,
+            7,
+            9,
+            3,
+            5
+          ],
+          "visible": [],
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Reveal node 6 at heap-index 0.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nodes": [
+            6,
+            2,
+            8,
+            0,
+            4,
+            7,
+            9,
+            null,
+            null,
+            3,
+            5
+          ],
+          "nums": [
+            6,
+            2,
+            8,
+            0,
+            4,
+            7,
+            9,
+            3,
+            5
+          ],
+          "visible": [
+            6
+          ],
+          "currentIndex": 0,
+          "currentValue": 6,
           "result": null,
           "highlights": {
             "0": "current"
@@ -101,14 +161,404 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Reveal node 2 at heap-index 1.",
         "state": {
-          "input": {
-            "demo": true
-          },
-          "result": "see-leetcode",
-          "highlights": {}
+          "nodes": [
+            6,
+            2,
+            8,
+            0,
+            4,
+            7,
+            9,
+            null,
+            null,
+            3,
+            5
+          ],
+          "nums": [
+            6,
+            2,
+            8,
+            0,
+            4,
+            7,
+            9,
+            3,
+            5
+          ],
+          "visible": [
+            6,
+            2
+          ],
+          "currentIndex": 1,
+          "currentValue": 2,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Reveal node 8 at heap-index 2.",
+        "state": {
+          "nodes": [
+            6,
+            2,
+            8,
+            0,
+            4,
+            7,
+            9,
+            null,
+            null,
+            3,
+            5
+          ],
+          "nums": [
+            6,
+            2,
+            8,
+            0,
+            4,
+            7,
+            9,
+            3,
+            5
+          ],
+          "visible": [
+            6,
+            2,
+            8
+          ],
+          "currentIndex": 2,
+          "currentValue": 8,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Reveal node 0 at heap-index 3.",
+        "state": {
+          "nodes": [
+            6,
+            2,
+            8,
+            0,
+            4,
+            7,
+            9,
+            null,
+            null,
+            3,
+            5
+          ],
+          "nums": [
+            6,
+            2,
+            8,
+            0,
+            4,
+            7,
+            9,
+            3,
+            5
+          ],
+          "visible": [
+            6,
+            2,
+            8,
+            0
+          ],
+          "currentIndex": 3,
+          "currentValue": 0,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Reveal node 4 at heap-index 4.",
+        "state": {
+          "nodes": [
+            6,
+            2,
+            8,
+            0,
+            4,
+            7,
+            9,
+            null,
+            null,
+            3,
+            5
+          ],
+          "nums": [
+            6,
+            2,
+            8,
+            0,
+            4,
+            7,
+            9,
+            3,
+            5
+          ],
+          "visible": [
+            6,
+            2,
+            8,
+            0,
+            4
+          ],
+          "currentIndex": 4,
+          "currentValue": 4,
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Reveal node 7 at heap-index 5.",
+        "state": {
+          "nodes": [
+            6,
+            2,
+            8,
+            0,
+            4,
+            7,
+            9,
+            null,
+            null,
+            3,
+            5
+          ],
+          "nums": [
+            6,
+            2,
+            8,
+            0,
+            4,
+            7,
+            9,
+            3,
+            5
+          ],
+          "visible": [
+            6,
+            2,
+            8,
+            0,
+            4,
+            7
+          ],
+          "currentIndex": 5,
+          "currentValue": 7,
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Reveal node 9 at heap-index 6.",
+        "state": {
+          "nodes": [
+            6,
+            2,
+            8,
+            0,
+            4,
+            7,
+            9,
+            null,
+            null,
+            3,
+            5
+          ],
+          "nums": [
+            6,
+            2,
+            8,
+            0,
+            4,
+            7,
+            9,
+            3,
+            5
+          ],
+          "visible": [
+            6,
+            2,
+            8,
+            0,
+            4,
+            7,
+            9
+          ],
+          "currentIndex": 6,
+          "currentValue": 9,
+          "result": null,
+          "highlights": {
+            "6": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Reveal node 3 at heap-index 9.",
+        "state": {
+          "nodes": [
+            6,
+            2,
+            8,
+            0,
+            4,
+            7,
+            9,
+            null,
+            null,
+            3,
+            5
+          ],
+          "nums": [
+            6,
+            2,
+            8,
+            0,
+            4,
+            7,
+            9,
+            3,
+            5
+          ],
+          "visible": [
+            6,
+            2,
+            8,
+            0,
+            4,
+            7,
+            9,
+            3
+          ],
+          "currentIndex": 9,
+          "currentValue": 3,
+          "result": null,
+          "highlights": {
+            "7": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Reveal node 5 at heap-index 10.",
+        "state": {
+          "nodes": [
+            6,
+            2,
+            8,
+            0,
+            4,
+            7,
+            9,
+            null,
+            null,
+            3,
+            5
+          ],
+          "nums": [
+            6,
+            2,
+            8,
+            0,
+            4,
+            7,
+            9,
+            3,
+            5
+          ],
+          "visible": [
+            6,
+            2,
+            8,
+            0,
+            4,
+            7,
+            9,
+            3,
+            5
+          ],
+          "currentIndex": 10,
+          "currentValue": 5,
+          "result": null,
+          "highlights": {
+            "8": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Tree fully revealed. Answer: 6.",
+        "state": {
+          "nodes": [
+            6,
+            2,
+            8,
+            0,
+            4,
+            7,
+            9,
+            null,
+            null,
+            3,
+            5
+          ],
+          "nums": [
+            6,
+            2,
+            8,
+            0,
+            4,
+            7,
+            9,
+            3,
+            5
+          ],
+          "visible": [
+            6,
+            2,
+            8,
+            0,
+            4,
+            7,
+            9,
+            3,
+            5
+          ],
+          "result": 6,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done",
+            "6": "done",
+            "7": "done",
+            "8": "done"
+          }
         }
       }
     ]

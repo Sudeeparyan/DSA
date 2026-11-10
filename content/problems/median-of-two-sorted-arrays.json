@@ -71,35 +71,38 @@
   ],
   "animation": {
     "visualType": "array",
-    "tracerId": "generic-array-scan",
-    "defaultInput": [
-      1,
-      2,
-      3
-    ],
+    "tracerId": "authored",
+    "defaultInput": {
+      "nums": [
+        1,
+        3
+      ]
+    },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving median of two sorted arrays using the array view.",
+        "caption": "Lay out the array for \u201cMedian of Two Sorted Arrays\u201d. Watch the pointer walk the answer into place.",
         "state": {
-          "input": [
+          "nums": [
             1,
-            2,
             3
           ],
           "result": null,
-          "highlights": {}
+          "highlights": {},
+          "currentIndex": null
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Index 0 holds 1.",
         "state": {
-          "input": [
+          "nums": [
             1,
-            2,
             3
           ],
+          "target": null,
+          "currentIndex": 0,
+          "currentValue": 1,
           "result": null,
           "highlights": {
             "0": "current"
@@ -107,16 +110,54 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Index 1 holds 3.",
         "state": {
-          "input": [
+          "nums": [
             1,
-            2,
             3
           ],
-          "result": "see-leetcode",
-          "highlights": {}
+          "target": null,
+          "currentIndex": 1,
+          "currentValue": 3,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Answer settles: 2.0.",
+        "state": {
+          "nums": [
+            1,
+            3
+          ],
+          "target": null,
+          "currentIndex": 1,
+          "result": 2.0,
+          "highlights": {
+            "0": "done",
+            "1": "done"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Keep watching \u2014 the answer structure is still assembling.",
+        "state": {
+          "nums": [
+            1,
+            3
+          ],
+          "target": null,
+          "currentIndex": 1,
+          "result": 2.0,
+          "highlights": {
+            "0": "done",
+            "1": "done"
+          }
         }
       }
     ]

@@ -5,46 +5,22 @@ import { Canvas } from "@react-three/fiber";
 import { ContactShadows, Environment, OrbitControls } from "@react-three/drei";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import type { Problem } from "@/lib/schema";
-import { getTracer, runTracer } from "@/lib/tracers";
-import type { AnimationStep } from "@/lib/schema";
 import { shotForAlgoMoment, type CinemaShot } from "@/lib/cinemaCameras";
+import {
+  type AnimationState,
+  hasMatchHighlight,
+  readHighlights,
+  readMemoryShelf,
+  readPrimaryValues,
+  resolveAnimationSteps,
+} from "@/lib/animation";
 import { AlgoWorld } from "./AlgoWorld";
 import { CinematicCamera } from "./CinematicCamera";
 import { clsx } from "clsx";
 
-function stepsFor(problem: Problem): AnimationStep[] {
-  try {
-    const tracer = getTracer(problem.animation.tracerId);
-    if (tracer) {
-      return runTracer(problem.animation.tracerId, problem.animation.defaultInput);
-    }
-  } catch {
-    /* authored fallback */
-  }
-  return problem.animation.steps;
-}
-
-function readNums(state: Record<string, unknown>): unknown[] {
-  if (Array.isArray(state.nums)) return state.nums as unknown[];
-  if (Array.isArray(state.chars)) return state.chars as unknown[];
-  if (Array.isArray(state.input)) return state.input as unknown[];
-  return [];
-}
-
-function readSeen(state: Record<string, unknown>): unknown[] {
-  if (Array.isArray(state.seen)) return state.seen as unknown[];
-  if (state.map && typeof state.map === "object") {
-    return Object.entries(state.map as Record<string, unknown>).map(
-      ([k, v]) => `${k}→${v}`,
-    );
-  }
-  if (Array.isArray(state.stack)) return state.stack as unknown[];
-  return [];
-}
-
 export function AnswerStage({ problem }: { problem: Problem }) {
   const reduce = useReducedMotion();
-  const steps = useMemo(() => stepsFor(problem), [problem]);
+  const steps = useMemo(() => resolveAnimationSteps(problem), [problem]);
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(true);
   const [shotProgress, setShotProgress] = useState(0);
@@ -59,14 +35,11 @@ export function AnswerStage({ problem }: { problem: Problem }) {
 
   const step = steps[Math.min(index, Math.max(0, steps.length - 1))];
   const state = useMemo(
-    () => (step?.state ?? {}) as Record<string, unknown>,
+    () => (step?.state ?? {}) as AnimationState,
     [step],
   );
-  const highlights = useMemo(
-    () => (state.highlights ?? {}) as Record<string, string>,
-    [state],
-  );
-  const matched = Object.values(highlights).includes("matched");
+  const highlights = useMemo(() => readHighlights(state), [state]);
+  const matched = hasMatchHighlight(state);
   const shot: CinemaShot = shotForAlgoMoment({
     index,
     total: steps.length,
@@ -75,8 +48,8 @@ export function AnswerStage({ problem }: { problem: Problem }) {
   });
 
   const focusX = useMemo(() => {
-    const nums = readNums(state);
-    const spacing = 0.95;
+    const nums = readPrimaryValues(state);
+    const spacing = nums.length > 8 ? 0.7 : 0.95;
     const start = -((Math.max(nums.length, 1) - 1) * spacing) / 2;
     const ci =
       typeof state.currentIndex === "number"
@@ -85,7 +58,7 @@ export function AnswerStage({ problem }: { problem: Problem }) {
             .map(Number)
             .find((n) => !Number.isNaN(n));
     if (ci == null || nums.length === 0) return 0;
-    return start + ci * spacing;
+    return start + Math.min(ci, nums.length - 1) * spacing;
   }, [state, highlights]);
 
   useEffect(() => {
@@ -111,8 +84,13 @@ export function AnswerStage({ problem }: { problem: Problem }) {
     setShotProgress(0);
   }, [index]);
 
-  const nums = readNums(state);
-  const seen = readSeen(state);
+  const nums = readPrimaryValues(state);
+  const seen = readMemoryShelf(state);
+  const grid = Array.isArray(state.grid) ? (state.grid as unknown[][]) : undefined;
+  const intervals = Array.isArray(state.intervals)
+    ? (state.intervals as number[][])
+    : undefined;
+  const bits = Array.isArray(state.bits) ? (state.bits as number[]) : undefined;
 
   return (
     <div className="answer-stage">
@@ -136,7 +114,14 @@ export function AnswerStage({ problem }: { problem: Problem }) {
           <directionalLight position={[-3, 2.5, 2]} intensity={0.55} color="#9ad7ff" />
           <directionalLight position={[0, 1.5, 4]} intensity={0.35} color="#ffffff" />
           <Suspense fallback={null}>
-            <AlgoWorld nums={nums} seen={seen} highlights={highlights} />
+            <AlgoWorld
+              nums={nums}
+              seen={seen}
+              highlights={highlights}
+              grid={grid}
+              intervals={intervals}
+              bits={bits}
+            />
             <ContactShadows
               position={[0, -0.16, 0]}
               opacity={0.45}

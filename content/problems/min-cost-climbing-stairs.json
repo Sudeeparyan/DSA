@@ -71,32 +71,57 @@
   ],
   "animation": {
     "visualType": "dp",
-    "tracerId": "generic-array-scan",
-    "defaultInput": [
-      1,
-      2,
-      3,
-      2
-    ],
+    "tracerId": "authored",
+    "defaultInput": {
+      "cost": [
+        10,
+        15,
+        20
+      ]
+    },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving min cost climbing stairs using the dp view.",
+        "caption": "DP over the array for \u201cMin Cost Climbing Stairs\u201d. Each cell stores a best answer so far.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            10,
+            15,
+            20
+          ],
+          "table": [
+            [
+              0,
+              0,
+              0
+            ]
+          ],
           "result": null,
           "highlights": {}
         }
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "At index 0 (value 10), dp becomes 10.",
         "state": {
-          "input": {
-            "demo": true
-          },
+          "nums": [
+            10,
+            15,
+            20
+          ],
+          "table": [
+            [
+              10,
+              0,
+              0
+            ]
+          ],
+          "dp": [
+            10,
+            0,
+            0
+          ],
+          "currentIndex": 0,
           "result": null,
           "highlights": {
             "0": "current"
@@ -104,14 +129,88 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "At index 1 (value 15), dp becomes 25.",
         "state": {
-          "input": {
-            "demo": true
-          },
-          "result": "see-leetcode",
-          "highlights": {}
+          "nums": [
+            10,
+            15,
+            20
+          ],
+          "table": [
+            [
+              10,
+              25,
+              0
+            ]
+          ],
+          "dp": [
+            10,
+            25,
+            0
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 2 (value 20), dp becomes 45.",
+        "state": {
+          "nums": [
+            10,
+            15,
+            20
+          ],
+          "table": [
+            [
+              10,
+              25,
+              45
+            ]
+          ],
+          "dp": [
+            10,
+            25,
+            45
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Best DP answer: 15.",
+        "state": {
+          "nums": [
+            10,
+            15,
+            20
+          ],
+          "table": [
+            [
+              10,
+              25,
+              45
+            ]
+          ],
+          "dp": [
+            10,
+            25,
+            45
+          ],
+          "result": 15,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done"
+          }
         }
       }
     ]

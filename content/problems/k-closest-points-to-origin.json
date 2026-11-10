@@ -71,21 +71,37 @@
   ],
   "animation": {
     "visualType": "heap",
-    "tracerId": "generic-array-scan",
-    "defaultInput": [
-      1,
-      2,
-      3
-    ],
+    "tracerId": "authored",
+    "defaultInput": {
+      "heap": [
+        "[",
+        "[",
+        "1",
+        ",",
+        "3",
+        "]"
+      ]
+    },
     "steps": [
       {
         "line": 1,
-        "caption": "Start solving k closest points to origin using the heap view.",
+        "caption": "Heap array for \u201cK Closest Points to Origin\u201d. Parent always beats its kids.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "heap": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "3",
+            "]"
+          ],
+          "nums": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "3",
+            "]"
           ],
           "result": null,
           "highlights": {}
@@ -93,13 +109,25 @@
       },
       {
         "line": 2,
-        "caption": "Walk the main loop. Watch the highlighted piece \u2014 yellow means 'looking now'.",
+        "caption": "Heap slot 0 stores [.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "heap": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "3",
+            "]"
           ],
+          "nums": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "3",
+            "]"
+          ],
+          "currentIndex": 0,
           "result": null,
           "highlights": {
             "0": "current"
@@ -107,16 +135,174 @@
         }
       },
       {
-        "line": 3,
-        "caption": "Finish. Green means done. Compare with the expected LeetCode example.",
+        "line": 2,
+        "caption": "Heap slot 1 stores [.",
         "state": {
-          "input": [
-            1,
-            2,
-            3
+          "heap": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "3",
+            "]"
           ],
-          "result": "see-leetcode",
-          "highlights": {}
+          "nums": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "3",
+            "]"
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Heap slot 2 stores 1.",
+        "state": {
+          "heap": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "3",
+            "]"
+          ],
+          "nums": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "3",
+            "]"
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Heap slot 3 stores ,.",
+        "state": {
+          "heap": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "3",
+            "]"
+          ],
+          "nums": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "3",
+            "]"
+          ],
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Heap slot 4 stores 3.",
+        "state": {
+          "heap": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "3",
+            "]"
+          ],
+          "nums": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "3",
+            "]"
+          ],
+          "currentIndex": 4,
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Heap slot 5 stores ].",
+        "state": {
+          "heap": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "3",
+            "]"
+          ],
+          "nums": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "3",
+            "]"
+          ],
+          "currentIndex": 5,
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Heap settled. Answer: [[-2, 2]].",
+        "state": {
+          "heap": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "3",
+            "]"
+          ],
+          "nums": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "3",
+            "]"
+          ],
+          "result": [
+            [
+              -2,
+              2
+            ]
+          ],
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done"
+          }
         }
       }
     ]
