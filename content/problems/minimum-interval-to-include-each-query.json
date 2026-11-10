@@ -8,7 +8,7 @@
   "leetcodeUrl": "https://leetcode.com/problems/minimum-interval-to-include-each-query/",
   "neetcodeVideoUrl": null,
   "kidExplanation": "Picture the puzzle 'Minimum Interval to Include Each Query'. Here is the clever trick in plain words: The problem is to find the minimum interval for each query that includes at least one element from each interval in the list. We can solve this problem using a sorted list or priority queue (min-heap). First, we sort bot We will still start slow, then use this trick so it becomes fast.",
-  "plainProblem": "LeetCode 1851: Minimum Interval to Include Each Query. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "plainProblem": "Minimum Interval to Include Each Query: Picture the puzzle 'Minimum Interval to Include Each Query'. Worked example \u2014 input: intervals = [[1,4],[2,4],[3,6],[4,4]], queries = [2,3,4,5]; expected output: [3,3,1,4]. Why: Min lengths. Interview pattern to name out loud: Sort + sweep intervals.",
   "examples": [
     {
       "input": "intervals = [[1,4],[2,4],[3,6],[4,4]], queries = [2,3,4,5]",
@@ -24,11 +24,11 @@
   "thinkingSteps": [
     {
       "title": "Brute force idea",
-      "body": "For Minimum Interval to Include Each Query, first describe a slow but correct approach (often nested loops or rescanning)."
+      "body": "For \u201cMinimum Interval to Include Each Query\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input intervals = [[1,4],[2,4],[3,6],[4,4]], queries = [2,3,4,5] should still produce [3,3,1,4]."
     },
     {
       "title": "Why it is slow",
-      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
     },
     {
       "title": "Aha insight",
@@ -36,7 +36,7 @@
     },
     {
       "title": "Better idea",
-      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+      "body": "Commit to Sort + sweep intervals. Overlapping time ranges. Walk example `intervals = [[1,4],[2,4],[3,6],[4,4]], queries = [2,3,4,5]` \u2192 `[3,3,1,4]` while naming each variable, then code. Close with See code time and See code space."
     }
   ],
   "pattern": {
@@ -50,19 +50,19 @@
   },
   "complexity": {
     "time": "See code",
-    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "timeReason": "From the coded loops for \u201cMinimum Interval to Include Each Query\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
     "space": "See code",
-    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+    "spaceReason": "Extra memory is See code from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
   },
   "edgeCases": [
-    "Empty or minimal input.",
-    "Already-best or already-worst arrangement.",
-    "Duplicates and boundary values from the constraints."
+    "Smallest legal input for \u201cMinimum Interval to Include Each Query\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `intervals = [[1,4],[2,4],[3,6],[4,4]], queries = [2,3,4,5]` and check boundary indices / empty containers.",
+    "Second example `intervals = [[2,3],[2,5],[1,8],[20,25]], queries = [2,19,5,22]` often hides duplicates, ties, or already-sorted cases."
   ],
   "commonMistakes": [
-    "Coding before stating the pattern and complexity.",
-    "Off-by-one errors on indices or window edges.",
-    "Mutating data structures while iterating carelessly."
+    "Jumping into code before naming Sort + sweep intervals and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
   ],
   "interviewTips": [
     "Open with: 'This looks like Sort + sweep intervals.'",

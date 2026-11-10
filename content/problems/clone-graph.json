@@ -8,7 +8,7 @@
   "leetcodeUrl": "https://leetcode.com/problems/clone-graph/",
   "neetcodeVideoUrl": null,
   "kidExplanation": "Picture the puzzle 'Clone Graph'. Here is the clever trick in plain words: The problem is to clone an undirected graph. We can solve this using Depth-First Search (DFS) or Breadth-First Search (BFS). Here, I'm use DFS to traverse the original graph and create a new graph. We will still start slow, then use this trick so it becomes fast.",
-  "plainProblem": "LeetCode 133: Clone Graph. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "plainProblem": "Clone Graph: Picture the puzzle 'Clone Graph'. Worked example \u2014 input: node adjList = [[2,4],[1,3],[2,4],[1,3]]; expected output: deep clone. Why: Same links new nodes. Interview pattern to name out loud: Graph BFS / DFS.",
   "examples": [
     {
       "input": "node adjList = [[2,4],[1,3],[2,4],[1,3]]",
@@ -24,11 +24,11 @@
   "thinkingSteps": [
     {
       "title": "Brute force idea",
-      "body": "For Clone Graph, first describe a slow but correct approach (often nested loops or rescanning)."
+      "body": "For \u201cClone Graph\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input node adjList = [[2,4],[1,3],[2,4],[1,3]] should still produce deep clone."
     },
     {
       "title": "Why it is slow",
-      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
     },
     {
       "title": "Aha insight",
@@ -36,7 +36,7 @@
     },
     {
       "title": "Better idea",
-      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+      "body": "Commit to Graph BFS / DFS. Islands, rooms, or connections on a grid/graph. Walk example `node adjList = [[2,4],[1,3],[2,4],[1,3]]` \u2192 `deep clone` while naming each variable, then code. Close with See code time and See code space."
     }
   ],
   "pattern": {
@@ -50,19 +50,19 @@
   },
   "complexity": {
     "time": "See code",
-    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "timeReason": "From the coded loops for \u201cClone Graph\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
     "space": "See code",
-    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+    "spaceReason": "Extra memory is See code from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
   },
   "edgeCases": [
-    "Empty or minimal input.",
-    "Already-best or already-worst arrangement.",
-    "Duplicates and boundary values from the constraints."
+    "Smallest legal input for \u201cClone Graph\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `node adjList = [[2,4],[1,3],[2,4],[1,3]]` and check boundary indices / empty containers.",
+    "Second example `empty` often hides duplicates, ties, or already-sorted cases."
   ],
   "commonMistakes": [
-    "Coding before stating the pattern and complexity.",
-    "Off-by-one errors on indices or window edges.",
-    "Mutating data structures while iterating carelessly."
+    "Jumping into code before naming Graph BFS / DFS and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
   ],
   "interviewTips": [
     "Open with: 'This looks like Graph BFS / DFS.'",

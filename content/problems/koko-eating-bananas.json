@@ -8,7 +8,7 @@
   "leetcodeUrl": "https://leetcode.com/problems/koko-eating-bananas/",
   "neetcodeVideoUrl": null,
   "kidExplanation": "Koko must finish banana piles before guards return. Find the slowest eating speed that still works.",
-  "plainProblem": "LeetCode 875: Koko Eating Bananas. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "plainProblem": "Koko Eating Bananas: Koko must finish banana piles before guards return. Worked example \u2014 input: piles = [3,6,7,11], h = 8; expected output: 4. Why: Min speed. Interview pattern to name out loud: Binary search (halving the range).",
   "examples": [
     {
       "input": "piles = [3,6,7,11], h = 8",
@@ -24,11 +24,11 @@
   "thinkingSteps": [
     {
       "title": "Brute force idea",
-      "body": "For Koko Eating Bananas, first describe a slow but correct approach (often nested loops or rescanning)."
+      "body": "For \u201cKoko Eating Bananas\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input piles = [3,6,7,11], h = 8 should still produce 4."
     },
     {
       "title": "Why it is slow",
-      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: O(n * log(max_pile)."
     },
     {
       "title": "Aha insight",
@@ -36,7 +36,7 @@
     },
     {
       "title": "Better idea",
-      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+      "body": "Commit to Binary search (halving the range). Sorted data or a monotonic yes/no answer. Walk example `piles = [3,6,7,11], h = 8` \u2192 `4` while naming each variable, then code. Close with O(n * log(max_pile) time and O(1) space."
     }
   ],
   "pattern": {
@@ -50,19 +50,19 @@
   },
   "complexity": {
     "time": "O(n * log(max_pile)",
-    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "timeReason": "From the coded loops for \u201cKoko Eating Bananas\u201d: O(n * log(max_pile) matches how many elements / states each pass touches (say this out loud in the interview).",
     "space": "O(1)",
-    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+    "spaceReason": "Extra memory is O(1) from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
   },
   "edgeCases": [
-    "Empty or minimal input.",
-    "Already-best or already-worst arrangement.",
-    "Duplicates and boundary values from the constraints."
+    "Smallest legal input for \u201cKoko Eating Bananas\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `piles = [3,6,7,11], h = 8` and check boundary indices / empty containers.",
+    "Second example `piles = [30,11,23,4,20], h = 5` often hides duplicates, ties, or already-sorted cases."
   ],
   "commonMistakes": [
-    "Coding before stating the pattern and complexity.",
-    "Off-by-one errors on indices or window edges.",
-    "Mutating data structures while iterating carelessly."
+    "Jumping into code before naming Binary search (halving the range) and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
   ],
   "interviewTips": [
     "Open with: 'This looks like Binary search (halving the range).'",

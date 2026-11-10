@@ -8,7 +8,7 @@
   "leetcodeUrl": "https://leetcode.com/problems/add-two-numbers/",
   "neetcodeVideoUrl": null,
   "kidExplanation": "Picture the puzzle 'Add Two Numbers'. Here is the clever trick in plain words: To add two numbers represented by linked lists, we can simulate the addition digit by digit while considering carry. We maintain a dummy node to build the resulting linked list. We iterate through the input lists, summin We will still start slow, then use this trick so it becomes fast.",
-  "plainProblem": "LeetCode 2: Add Two Numbers. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "plainProblem": "Add Two Numbers: Picture the puzzle 'Add Two Numbers'. Worked example \u2014 input: l1 = [2,4,3], l2 = [5,6,4]; expected output: [7,0,8]. Why: 342+465. Interview pattern to name out loud: Pointer rewriting on a linked list.",
   "examples": [
     {
       "input": "l1 = [2,4,3], l2 = [5,6,4]",
@@ -24,11 +24,11 @@
   "thinkingSteps": [
     {
       "title": "Brute force idea",
-      "body": "For Add Two Numbers, first describe a slow but correct approach (often nested loops or rescanning)."
+      "body": "For \u201cAdd Two Numbers\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input l1 = [2,4,3], l2 = [5,6,4] should still produce [7,0,8]."
     },
     {
       "title": "Why it is slow",
-      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: O(max(m, n)."
     },
     {
       "title": "Aha insight",
@@ -36,7 +36,7 @@
     },
     {
       "title": "Better idea",
-      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+      "body": "Commit to Pointer rewriting on a linked list. Nodes with next pointers; reverse, merge, cycle. Walk example `l1 = [2,4,3], l2 = [5,6,4]` \u2192 `[7,0,8]` while naming each variable, then code. Close with O(max(m, n) time and O(max(m, n) space."
     }
   ],
   "pattern": {
@@ -50,19 +50,19 @@
   },
   "complexity": {
     "time": "O(max(m, n)",
-    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "timeReason": "From the coded loops for \u201cAdd Two Numbers\u201d: O(max(m, n) matches how many elements / states each pass touches (say this out loud in the interview).",
     "space": "O(max(m, n)",
-    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+    "spaceReason": "Extra memory is O(max(m, n) from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
   },
   "edgeCases": [
-    "Empty or minimal input.",
-    "Already-best or already-worst arrangement.",
-    "Duplicates and boundary values from the constraints."
+    "Smallest legal input for \u201cAdd Two Numbers\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `l1 = [2,4,3], l2 = [5,6,4]` and check boundary indices / empty containers.",
+    "Second example `l1 = [0], l2 = [0]` often hides duplicates, ties, or already-sorted cases."
   ],
   "commonMistakes": [
-    "Coding before stating the pattern and complexity.",
-    "Off-by-one errors on indices or window edges.",
-    "Mutating data structures while iterating carelessly."
+    "Jumping into code before naming Pointer rewriting on a linked list and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
   ],
   "interviewTips": [
     "Open with: 'This looks like Pointer rewriting on a linked list.'",

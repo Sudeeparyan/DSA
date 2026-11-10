@@ -8,7 +8,7 @@
   "leetcodeUrl": "https://leetcode.com/problems/lru-cache/",
   "neetcodeVideoUrl": null,
   "kidExplanation": "A cache that evicts the least recently used item when full \u2014 hash map + doubly linked list.",
-  "plainProblem": "LeetCode 146: LRU Cache. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "plainProblem": "LRU Cache: A cache that evicts the least recently used item when full \u2014 hash map + doubly linked list. Worked example \u2014 input: cap=2; put1; put2; get1; put3; get2; expected output: 1 then -1. Why: LRU eviction. Interview pattern to name out loud: Pointer rewriting on a linked list.",
   "examples": [
     {
       "input": "cap=2; put1; put2; get1; put3; get2",
@@ -24,11 +24,11 @@
   "thinkingSteps": [
     {
       "title": "Brute force idea",
-      "body": "For LRU Cache, first describe a slow but correct approach (often nested loops or rescanning)."
+      "body": "For \u201cLRU Cache\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input cap=2; put1; put2; get1; put3; get2 should still produce 1 then -1."
     },
     {
       "title": "Why it is slow",
-      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
     },
     {
       "title": "Aha insight",
@@ -36,7 +36,7 @@
     },
     {
       "title": "Better idea",
-      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+      "body": "Commit to Pointer rewriting on a linked list. Nodes with next pointers; reverse, merge, cycle. Walk example `cap=2; put1; put2; get1; put3; get2` \u2192 `1 then -1` while naming each variable, then code. Close with See code time and O(capacity) space."
     }
   ],
   "pattern": {
@@ -50,19 +50,19 @@
   },
   "complexity": {
     "time": "See code",
-    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "timeReason": "From the coded loops for \u201cLRU Cache\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
     "space": "O(capacity)",
-    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+    "spaceReason": "Extra memory is O(capacity) from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
   },
   "edgeCases": [
-    "Empty or minimal input.",
-    "Already-best or already-worst arrangement.",
-    "Duplicates and boundary values from the constraints."
+    "Smallest legal input for \u201cLRU Cache\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `cap=2; put1; put2; get1; put3; get2` and check boundary indices / empty containers.",
+    "Second example `continue puts/gets` often hides duplicates, ties, or already-sorted cases."
   ],
   "commonMistakes": [
-    "Coding before stating the pattern and complexity.",
-    "Off-by-one errors on indices or window edges.",
-    "Mutating data structures while iterating carelessly."
+    "Jumping into code before naming Pointer rewriting on a linked list and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
   ],
   "interviewTips": [
     "Open with: 'This looks like Pointer rewriting on a linked list.'",
@@ -100,7 +100,7 @@
       },
       {
         "line": 3,
-        "caption": "Keep watching \u2014 the answer structure is still assembling.",
+        "caption": "Trace the highlighted cell once more before we move on. (LRU Cache: beat 3)",
         "state": {
           "nums": [],
           "nodes": [],
@@ -113,7 +113,7 @@
       },
       {
         "line": 3,
-        "caption": "Keep watching \u2014 the answer structure is still assembling.",
+        "caption": "Same structure, new focus \u2014 this beat locks the idea in. (LRU Cache: beat 4)",
         "state": {
           "nums": [],
           "nodes": [],
@@ -126,7 +126,7 @@
       },
       {
         "line": 3,
-        "caption": "Keep watching \u2014 the answer structure is still assembling.",
+        "caption": "One more look: every highlighted piece earned its place. (LRU Cache: beat 5)",
         "state": {
           "nums": [],
           "nodes": [],

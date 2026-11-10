@@ -8,7 +8,7 @@
   "leetcodeUrl": "https://leetcode.com/problems/multiply-strings/",
   "neetcodeVideoUrl": null,
   "kidExplanation": "Picture the puzzle 'Multiply Strings'. Here is the clever trick in plain words: The problem is to multiply two given non-negative integers represented as strings. We can perform multiplication digit by digit, similar to how we do multiplication manually. We start from the least significant digits an We will still start slow, then use this trick so it becomes fast.",
-  "plainProblem": "LeetCode 43: Multiply Strings. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "plainProblem": "Multiply Strings: Picture the puzzle 'Multiply Strings'. Worked example \u2014 input: num1 = \"2\", num2 = \"3\"; expected output: \"6\". Why: Product. Interview pattern to name out loud: Math / matrix geometry.",
   "examples": [
     {
       "input": "num1 = \"2\", num2 = \"3\"",
@@ -24,11 +24,11 @@
   "thinkingSteps": [
     {
       "title": "Brute force idea",
-      "body": "For Multiply Strings, first describe a slow but correct approach (often nested loops or rescanning)."
+      "body": "For \u201cMultiply Strings\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input num1 = \"2\", num2 = \"3\" should still produce \"6\"."
     },
     {
       "title": "Why it is slow",
-      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
     },
     {
       "title": "Aha insight",
@@ -36,7 +36,7 @@
     },
     {
       "title": "Better idea",
-      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+      "body": "Commit to Math / matrix geometry. Rotate, spiral, primes, counting bits of structure. Walk example `num1 = \"2\", num2 = \"3\"` \u2192 `\"6\"` while naming each variable, then code. Close with See code time and See code space."
     }
   ],
   "pattern": {
@@ -50,19 +50,19 @@
   },
   "complexity": {
     "time": "See code",
-    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "timeReason": "From the coded loops for \u201cMultiply Strings\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
     "space": "See code",
-    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+    "spaceReason": "Extra memory is See code from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
   },
   "edgeCases": [
-    "Empty or minimal input.",
-    "Already-best or already-worst arrangement.",
-    "Duplicates and boundary values from the constraints."
+    "Smallest legal input for \u201cMultiply Strings\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `num1 = \"2\", num2 = \"3\"` and check boundary indices / empty containers.",
+    "Second example `num1 = \"123\", num2 = \"456\"` often hides duplicates, ties, or already-sorted cases."
   ],
   "commonMistakes": [
-    "Coding before stating the pattern and complexity.",
-    "Off-by-one errors on indices or window edges.",
-    "Mutating data structures while iterating carelessly."
+    "Jumping into code before naming Math / matrix geometry and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
   ],
   "interviewTips": [
     "Open with: 'This looks like Math / matrix geometry.'",
@@ -99,7 +99,7 @@
       },
       {
         "line": 3,
-        "caption": "Keep watching \u2014 the answer structure is still assembling.",
+        "caption": "Trace the highlighted cell once more before we move on. (Multiply Strings: beat 3)",
         "state": {
           "nums": [],
           "target": null,
@@ -112,7 +112,7 @@
       },
       {
         "line": 3,
-        "caption": "Keep watching \u2014 the answer structure is still assembling.",
+        "caption": "Same structure, new focus \u2014 this beat locks the idea in. (Multiply Strings: beat 4)",
         "state": {
           "nums": [],
           "target": null,
@@ -125,7 +125,7 @@
       },
       {
         "line": 3,
-        "caption": "Keep watching \u2014 the answer structure is still assembling.",
+        "caption": "One more look: every highlighted piece earned its place. (Multiply Strings: beat 5)",
         "state": {
           "nums": [],
           "target": null,

@@ -8,7 +8,7 @@
   "leetcodeUrl": "https://leetcode.com/problems/number-of-1-bits/",
   "neetcodeVideoUrl": null,
   "kidExplanation": "Picture the puzzle 'Number of 1 Bits'. Here is the clever trick in plain words: To count the number of 1 bits in an unsigned integer, we can use bit manipulation. We iterate through each bit of the number and use a bitwise AND operation with 1 to check if the least significant bit is 1. If it is, we We will still start slow, then use this trick so it becomes fast.",
-  "plainProblem": "LeetCode 191: Number of 1 Bits. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "plainProblem": "Number of 1 Bits: Picture the puzzle 'Number of 1 Bits'. Worked example \u2014 input: n = 11 (0b1011); expected output: 3. Why: Three ones. Interview pattern to name out loud: Bit tricks (AND/OR/XOR).",
   "examples": [
     {
       "input": "n = 11 (0b1011)",
@@ -24,11 +24,11 @@
   "thinkingSteps": [
     {
       "title": "Brute force idea",
-      "body": "For Number of 1 Bits, first describe a slow but correct approach (often nested loops or rescanning)."
+      "body": "For \u201cNumber of 1 Bits\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input n = 11 (0b1011) should still produce 3."
     },
     {
       "title": "Why it is slow",
-      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
     },
     {
       "title": "Aha insight",
@@ -36,7 +36,7 @@
     },
     {
       "title": "Better idea",
-      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+      "body": "Commit to Bit tricks (AND/OR/XOR). Flags, uniqueness, or power-of-two checks. Walk example `n = 11 (0b1011)` \u2192 `3` while naming each variable, then code. Close with See code time and See code space."
     }
   ],
   "pattern": {
@@ -50,19 +50,19 @@
   },
   "complexity": {
     "time": "See code",
-    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "timeReason": "From the coded loops for \u201cNumber of 1 Bits\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
     "space": "See code",
-    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+    "spaceReason": "Extra memory is See code from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
   },
   "edgeCases": [
-    "Empty or minimal input.",
-    "Already-best or already-worst arrangement.",
-    "Duplicates and boundary values from the constraints."
+    "Smallest legal input for \u201cNumber of 1 Bits\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `n = 11 (0b1011)` and check boundary indices / empty containers.",
+    "Second example `n = 128` often hides duplicates, ties, or already-sorted cases."
   ],
   "commonMistakes": [
-    "Coding before stating the pattern and complexity.",
-    "Off-by-one errors on indices or window edges.",
-    "Mutating data structures while iterating carelessly."
+    "Jumping into code before naming Bit tricks (AND/OR/XOR) and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
   ],
   "interviewTips": [
     "Open with: 'This looks like Bit tricks (AND/OR/XOR).'",

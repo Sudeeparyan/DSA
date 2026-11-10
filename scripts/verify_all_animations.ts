@@ -62,6 +62,29 @@ for (const file of files) {
   const quality = animationQualityReport(steps);
   reasons.push(...quality.reasons);
 
+  const capBlob = steps.map((s) => s.caption).join(" ");
+  if (
+    problem.slug === "min-stack" &&
+    /Openers push; closers pop|Read '[A-Za-z]' at index/i.test(capBlob)
+  ) {
+    reasons.push("min-stack-wrong-narrative");
+  }
+  if (
+    problem.slug === "reverse-integer" &&
+    problem.animation.visualType === "bits"
+  ) {
+    reasons.push("reverse-integer-as-bits");
+  }
+  if (
+    /Restate the official prompt/i.test(problem.plainProblem)
+  ) {
+    reasons.push("stub-plain-problem");
+  }
+  const thinkBlob = problem.thinkingSteps.map((t) => t.body).join(" ");
+  if (/slow but correct approach \(often nested loops or rescanning\)/i.test(thinkBlob)) {
+    reasons.push("stub-thinking-steps");
+  }
+
   try {
     const script = buildLessonScript(problem);
     if (script.length < 8) reasons.push(`lesson-too-short:${script.length}`);

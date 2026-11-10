@@ -8,7 +8,7 @@
   "leetcodeUrl": "https://leetcode.com/problems/word-search-ii/",
   "neetcodeVideoUrl": null,
   "kidExplanation": "Picture the puzzle 'Word Search II'. Here is the clever trick in plain words: To find all the words from a given list that can be formed by a 2D board of characters, we can use a Trie (prefix tree) to efficiently search for words while traversing the board. We start by building a Trie from the giv We will still start slow, then use this trick so it becomes fast.",
-  "plainProblem": "LeetCode 212: Word Search II. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "plainProblem": "Word Search II: Picture the puzzle 'Word Search II'. Worked example \u2014 input: board letters, words = [\"oath\",\"pea\",\"eat\",\"rain\"]; expected output: [\"eat\",\"oath\"]. Why: Found words. Interview pattern to name out loud: Trie (prefix tree).",
   "examples": [
     {
       "input": "board letters, words = [\"oath\",\"pea\",\"eat\",\"rain\"]",
@@ -24,11 +24,11 @@
   "thinkingSteps": [
     {
       "title": "Brute force idea",
-      "body": "For Word Search II, first describe a slow but correct approach (often nested loops or rescanning)."
+      "body": "For \u201cWord Search II\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input board letters, words = [\"oath\",\"pea\",\"eat\",\"rain\"] should still produce [\"eat\",\"oath\"]."
     },
     {
       "title": "Why it is slow",
-      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
     },
     {
       "title": "Aha insight",
@@ -36,7 +36,7 @@
     },
     {
       "title": "Better idea",
-      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+      "body": "Commit to Trie (prefix tree). Many words sharing prefixes; autocomplete. Walk example `board letters, words = [\"oath\",\"pea\",\"eat\",\"rain\"]` \u2192 `[\"eat\",\"oath\"]` while naming each variable, then code. Close with See code time and See code space."
     }
   ],
   "pattern": {
@@ -50,19 +50,19 @@
   },
   "complexity": {
     "time": "See code",
-    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "timeReason": "From the coded loops for \u201cWord Search II\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
     "space": "See code",
-    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+    "spaceReason": "Extra memory is See code from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
   },
   "edgeCases": [
-    "Empty or minimal input.",
-    "Already-best or already-worst arrangement.",
-    "Duplicates and boundary values from the constraints."
+    "Smallest legal input for \u201cWord Search II\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `board letters, words = [\"oath\",\"pea\",\"eat\",\"rain\"]` and check boundary indices / empty containers.",
+    "Second example `empty words` often hides duplicates, ties, or already-sorted cases."
   ],
   "commonMistakes": [
-    "Coding before stating the pattern and complexity.",
-    "Off-by-one errors on indices or window edges.",
-    "Mutating data structures while iterating carelessly."
+    "Jumping into code before naming Trie (prefix tree) and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
   ],
   "interviewTips": [
     "Open with: 'This looks like Trie (prefix tree).'",

@@ -55,14 +55,14 @@
     "spaceReason": "Output array does not count as extra space per the usual problem note; only a few variables otherwise."
   },
   "edgeCases": [
-    "Empty or minimal input.",
-    "Already-best or already-worst arrangement.",
-    "Duplicates and boundary values from the constraints."
+    "Smallest legal input for \u201cProduct of Array Except Self\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `nums = [1,2,3,4]` and check boundary indices / empty containers.",
+    "Second example `nums = [-1,1,0,-3,3]` often hides duplicates, ties, or already-sorted cases."
   ],
   "commonMistakes": [
-    "Coding before stating the pattern and complexity.",
-    "Off-by-one errors on indices or window edges.",
-    "Mutating data structures while iterating carelessly."
+    "Jumping into code before naming Hash set / hash map for seen items and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
   ],
   "interviewTips": [
     "Name the pattern: Hash set / hash map for seen items.",

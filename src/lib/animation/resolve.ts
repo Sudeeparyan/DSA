@@ -50,6 +50,13 @@ export function animationQualityReport(steps: AnimationStep[]): {
   if (isStubSteps(steps)) reasons.push("stub-captions");
   const caps = steps.map((s) => s.caption.trim()).filter(Boolean);
   if (caps.length !== steps.length) reasons.push("empty-caption");
+  const filler = "Keep watching — the answer structure is still assembling.";
+  if (caps.some((c) => c === filler)) reasons.push("padding-filler");
+  let identical = 0;
+  for (let i = 1; i < caps.length; i++) {
+    if (caps[i] === caps[i - 1]) identical += 1;
+  }
+  if (identical >= 2) reasons.push(`identical-captions:${identical}`);
   const hasVisual = steps.some((s) => {
     const st = s.state ?? {};
     return (

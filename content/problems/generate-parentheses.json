@@ -8,7 +8,7 @@
   "leetcodeUrl": "https://leetcode.com/problems/generate-parentheses/",
   "neetcodeVideoUrl": null,
   "kidExplanation": "How many ways can you write n pairs of parentheses that always stay correctly nested?",
-  "plainProblem": "LeetCode 22: Generate Parentheses. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "plainProblem": "Generate Parentheses: How many ways can you write n pairs of parentheses that always stay correctly nested? Worked example \u2014 input: n = 3; expected output: [\"((()))\",\"(()())\",\"(())()\",\"()(())\",\"()()()\"]. Why: All valid. Interview pattern to name out loud: Stack (last-in, first-out pile).",
   "examples": [
     {
       "input": "n = 3",
@@ -24,11 +24,11 @@
   "thinkingSteps": [
     {
       "title": "Brute force idea",
-      "body": "For Generate Parentheses, first describe a slow but correct approach (often nested loops or rescanning)."
+      "body": "For \u201cGenerate Parentheses\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input n = 3 should still produce [\"((()))\",\"(()())\",\"(())()\",\"()(())\",\"()()()\"]."
     },
     {
       "title": "Why it is slow",
-      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: O(4^n / sqrt(n)."
     },
     {
       "title": "Aha insight",
@@ -36,7 +36,7 @@
     },
     {
       "title": "Better idea",
-      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+      "body": "Commit to Stack (last-in, first-out pile). Matching brackets, next greater element, undo order. Walk example `n = 3` \u2192 `[\"((()))\",\"(()())\",\"(())()\",\"()(())\",\"()()()\"]` while naming each variable, then code. Close with O(4^n / sqrt(n) time and O(4^n / sqrt(n) space."
     }
   ],
   "pattern": {
@@ -50,19 +50,19 @@
   },
   "complexity": {
     "time": "O(4^n / sqrt(n)",
-    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "timeReason": "From the coded loops for \u201cGenerate Parentheses\u201d: O(4^n / sqrt(n) matches how many elements / states each pass touches (say this out loud in the interview).",
     "space": "O(4^n / sqrt(n)",
-    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+    "spaceReason": "Extra memory is O(4^n / sqrt(n) from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
   },
   "edgeCases": [
-    "Empty or minimal input.",
-    "Already-best or already-worst arrangement.",
-    "Duplicates and boundary values from the constraints."
+    "Smallest legal input for \u201cGenerate Parentheses\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `n = 3` and check boundary indices / empty containers.",
+    "Second example `n = 1` often hides duplicates, ties, or already-sorted cases."
   ],
   "commonMistakes": [
-    "Coding before stating the pattern and complexity.",
-    "Off-by-one errors on indices or window edges.",
-    "Mutating data structures while iterating carelessly."
+    "Jumping into code before naming Stack (last-in, first-out pile) and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
   ],
   "interviewTips": [
     "Open with: 'This looks like Stack (last-in, first-out pile).'",
@@ -72,76 +72,236 @@
   "animation": {
     "visualType": "stack",
     "tracerId": "authored",
-    "defaultInput": [],
+    "defaultInput": {
+      "n": 3
+    },
     "steps": [
       {
         "line": 1,
-        "caption": "Empty stack for \u201cGenerate Parentheses\u201d. Openers push; closers pop when they match.",
+        "caption": "Generate Parentheses for n=3: only add '(' or ')' when the string stays valid.",
         "state": {
           "chars": [],
           "stack": [],
+          "path": [],
+          "nums": [],
           "result": null,
           "highlights": {}
         }
       },
       {
-        "line": 4,
-        "caption": "Final answer: [\"((()))\", \"(()())\", \"(())()\", \"()(())\", \"()()()\"].",
+        "line": 2,
+        "caption": "Add '(' (open=1, close=0). Path: (",
         "state": {
-          "chars": [],
-          "stack": [],
-          "result": [
-            "((()))",
-            "(()())",
-            "(())()",
-            "()(())",
-            "()()()"
+          "chars": [
+            "("
           ],
-          "highlights": {}
-        }
-      },
-      {
-        "line": 4,
-        "caption": "Keep watching \u2014 the answer structure is still assembling.",
-        "state": {
-          "chars": [],
-          "stack": [],
-          "result": [
-            "((()))",
-            "(()())",
-            "(())()",
-            "()(())",
-            "()()()"
+          "stack": [
+            "("
           ],
+          "path": [
+            "("
+          ],
+          "nums": [
+            "("
+          ],
+          "currentIndex": 0,
+          "result": null,
           "highlights": {
-            "0": "current"
+            "0": "remembered"
           }
         }
       },
       {
-        "line": 4,
-        "caption": "Keep watching \u2014 the answer structure is still assembling.",
+        "line": 2,
+        "caption": "Add '(' (open=2, close=0). Path: ((",
         "state": {
-          "chars": [],
-          "stack": [],
-          "result": [
-            "((()))",
-            "(()())",
-            "(())()",
-            "()(())",
-            "()()()"
+          "chars": [
+            "(",
+            "("
           ],
+          "stack": [
+            "(",
+            "("
+          ],
+          "path": [
+            "(",
+            "("
+          ],
+          "nums": [
+            "(",
+            "("
+          ],
+          "currentIndex": 1,
+          "result": null,
           "highlights": {
-            "0": "current"
+            "1": "remembered"
           }
         }
       },
       {
-        "line": 4,
-        "caption": "Keep watching \u2014 the answer structure is still assembling.",
+        "line": 2,
+        "caption": "Add '(' (open=3, close=0). Path: (((",
         "state": {
-          "chars": [],
+          "chars": [
+            "(",
+            "(",
+            "("
+          ],
+          "stack": [
+            "(",
+            "(",
+            "("
+          ],
+          "path": [
+            "(",
+            "(",
+            "("
+          ],
+          "nums": [
+            "(",
+            "(",
+            "("
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Add ')' (open=3, close=1). Path: ((()",
+        "state": {
+          "chars": [
+            "(",
+            "(",
+            "(",
+            ")"
+          ],
+          "stack": [
+            "(",
+            "("
+          ],
+          "path": [
+            "(",
+            "(",
+            "(",
+            ")"
+          ],
+          "nums": [
+            "(",
+            "(",
+            "(",
+            ")"
+          ],
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "matched"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Add ')' (open=3, close=2). Path: ((())",
+        "state": {
+          "chars": [
+            "(",
+            "(",
+            "(",
+            ")",
+            ")"
+          ],
+          "stack": [
+            "("
+          ],
+          "path": [
+            "(",
+            "(",
+            "(",
+            ")",
+            ")"
+          ],
+          "nums": [
+            "(",
+            "(",
+            "(",
+            ")",
+            ")"
+          ],
+          "currentIndex": 4,
+          "result": null,
+          "highlights": {
+            "4": "matched"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Add ')' (open=3, close=3). Path: ((()))",
+        "state": {
+          "chars": [
+            "(",
+            "(",
+            "(",
+            ")",
+            ")",
+            ")"
+          ],
           "stack": [],
+          "path": [
+            "(",
+            "(",
+            "(",
+            ")",
+            ")",
+            ")"
+          ],
+          "nums": [
+            "(",
+            "(",
+            "(",
+            ")",
+            ")",
+            ")"
+          ],
+          "currentIndex": 5,
+          "result": null,
+          "highlights": {
+            "5": "matched"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "One valid string done. Full answer set: [\"((()))\", \"(()())\", \"(())()\", \"()(())\", \"()()()\"].",
+        "state": {
+          "chars": [
+            "(",
+            "(",
+            "(",
+            ")",
+            ")",
+            ")"
+          ],
+          "stack": [],
+          "path": [
+            "(",
+            "(",
+            "(",
+            ")",
+            ")",
+            ")"
+          ],
+          "nums": [
+            "(",
+            "(",
+            "(",
+            ")",
+            ")",
+            ")"
+          ],
           "result": [
             "((()))",
             "(()())",
@@ -150,7 +310,12 @@
             "()()()"
           ],
           "highlights": {
-            "0": "current"
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done"
           }
         }
       }

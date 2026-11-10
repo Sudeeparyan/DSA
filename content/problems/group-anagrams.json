@@ -55,14 +55,14 @@
     "spaceReason": "We store all words in the groups map."
   },
   "edgeCases": [
-    "Empty or minimal input.",
-    "Already-best or already-worst arrangement.",
-    "Duplicates and boundary values from the constraints."
+    "Smallest legal input for \u201cGroup Anagrams\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `strs = [\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"]` and check boundary indices / empty containers.",
+    "Second example `strs = [\"\"]` often hides duplicates, ties, or already-sorted cases."
   ],
   "commonMistakes": [
-    "Coding before stating the pattern and complexity.",
-    "Off-by-one errors on indices or window edges.",
-    "Mutating data structures while iterating carelessly."
+    "Jumping into code before naming Hash set / hash map for seen items and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
   ],
   "interviewTips": [
     "Name the pattern: Hash set / hash map for seen items.",

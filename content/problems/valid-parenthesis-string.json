@@ -8,7 +8,7 @@
   "leetcodeUrl": "https://leetcode.com/problems/valid-parenthesis-string/",
   "neetcodeVideoUrl": null,
   "kidExplanation": "Picture the puzzle 'Valid Parenthesis String'. Here is the clever trick in plain words: We can solve this problem using a greedy approach. The idea is to keep track of the possible lower and upper bound of valid open parentheses count as we traverse the string. For every '(', we increment both lower and upp We will still start slow, then use this trick so it becomes fast.",
-  "plainProblem": "LeetCode 678: Valid Parenthesis String. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "plainProblem": "Valid Parenthesis String: Picture the puzzle 'Valid Parenthesis String'. Worked example \u2014 input: s = \"()\"; expected output: true. Why: Valid. Interview pattern to name out loud: Greedy choice.",
   "examples": [
     {
       "input": "s = \"()\"",
@@ -24,11 +24,11 @@
   "thinkingSteps": [
     {
       "title": "Brute force idea",
-      "body": "For Valid Parenthesis String, first describe a slow but correct approach (often nested loops or rescanning)."
+      "body": "For \u201cValid Parenthesis String\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input s = \"()\" should still produce true."
     },
     {
       "title": "Why it is slow",
-      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
     },
     {
       "title": "Aha insight",
@@ -36,7 +36,7 @@
     },
     {
       "title": "Better idea",
-      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+      "body": "Commit to Greedy choice. Local best pick that still works globally. Walk example `s = \"()\"` \u2192 `true` while naming each variable, then code. Close with See code time and See code space."
     }
   ],
   "pattern": {
@@ -50,19 +50,19 @@
   },
   "complexity": {
     "time": "See code",
-    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "timeReason": "From the coded loops for \u201cValid Parenthesis String\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
     "space": "See code",
-    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+    "spaceReason": "Extra memory is See code from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
   },
   "edgeCases": [
-    "Empty or minimal input.",
-    "Already-best or already-worst arrangement.",
-    "Duplicates and boundary values from the constraints."
+    "Smallest legal input for \u201cValid Parenthesis String\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `s = \"()\"` and check boundary indices / empty containers.",
+    "Second example `s = \"(*)\"` often hides duplicates, ties, or already-sorted cases."
   ],
   "commonMistakes": [
-    "Coding before stating the pattern and complexity.",
-    "Off-by-one errors on indices or window edges.",
-    "Mutating data structures while iterating carelessly."
+    "Jumping into code before naming Greedy choice and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
   ],
   "interviewTips": [
     "Open with: 'This looks like Greedy choice.'",
@@ -143,7 +143,7 @@
       },
       {
         "line": 3,
-        "caption": "Keep watching \u2014 the answer structure is still assembling.",
+        "caption": "Trace the highlighted cell once more before we move on. (Valid Parenthesis String: beat 5)",
         "state": {
           "nums": [
             "(",

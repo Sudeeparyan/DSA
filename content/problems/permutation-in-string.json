@@ -8,7 +8,7 @@
   "leetcodeUrl": "https://leetcode.com/problems/permutation-in-string/",
   "neetcodeVideoUrl": null,
   "kidExplanation": "Picture the puzzle 'Permutation in String'. Here is the clever trick in plain words: To check whether a string 's2' contains a permutation of another string 's1', we can use a sliding window approach. First, we create a frequency dictionary for characters in 's1'. Then, we initialize two pointers, 'left' We will still start slow, then use this trick so it becomes fast.",
-  "plainProblem": "LeetCode 567: Permutation in String. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "plainProblem": "Permutation in String: Picture the puzzle 'Permutation in String'. Worked example \u2014 input: s1 = \"ab\", s2 = \"eidbaooo\"; expected output: true. Why: Window ba. Interview pattern to name out loud: Sliding window.",
   "examples": [
     {
       "input": "s1 = \"ab\", s2 = \"eidbaooo\"",
@@ -24,11 +24,11 @@
   "thinkingSteps": [
     {
       "title": "Brute force idea",
-      "body": "For Permutation in String, first describe a slow but correct approach (often nested loops or rescanning)."
+      "body": "For \u201cPermutation in String\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input s1 = \"ab\", s2 = \"eidbaooo\" should still produce true."
     },
     {
       "title": "Why it is slow",
-      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: O(n)."
     },
     {
       "title": "Aha insight",
@@ -36,7 +36,7 @@
     },
     {
       "title": "Better idea",
-      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+      "body": "Commit to Sliding window. Longest/shortest subarray or substring with a condition. Walk example `s1 = \"ab\", s2 = \"eidbaooo\"` \u2192 `true` while naming each variable, then code. Close with O(n) time and O(1) space."
     }
   ],
   "pattern": {
@@ -50,19 +50,19 @@
   },
   "complexity": {
     "time": "O(n)",
-    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "timeReason": "From the coded loops for \u201cPermutation in String\u201d: O(n) matches how many elements / states each pass touches (say this out loud in the interview).",
     "space": "O(1)",
-    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+    "spaceReason": "Extra memory is O(1) from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
   },
   "edgeCases": [
-    "Empty or minimal input.",
-    "Already-best or already-worst arrangement.",
-    "Duplicates and boundary values from the constraints."
+    "Smallest legal input for \u201cPermutation in String\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `s1 = \"ab\", s2 = \"eidbaooo\"` and check boundary indices / empty containers.",
+    "Second example `s1 = \"ab\", s2 = \"eidboaoo\"` often hides duplicates, ties, or already-sorted cases."
   ],
   "commonMistakes": [
-    "Coding before stating the pattern and complexity.",
-    "Off-by-one errors on indices or window edges.",
-    "Mutating data structures while iterating carelessly."
+    "Jumping into code before naming Sliding window and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
   ],
   "interviewTips": [
     "Open with: 'This looks like Sliding window.'",
@@ -99,7 +99,7 @@
       },
       {
         "line": 3,
-        "caption": "Keep watching \u2014 the answer structure is still assembling.",
+        "caption": "Trace the highlighted cell once more before we move on. (Permutation in String: beat 3)",
         "state": {
           "nums": [],
           "target": null,
@@ -112,7 +112,7 @@
       },
       {
         "line": 3,
-        "caption": "Keep watching \u2014 the answer structure is still assembling.",
+        "caption": "Same structure, new focus \u2014 this beat locks the idea in. (Permutation in String: beat 4)",
         "state": {
           "nums": [],
           "target": null,
@@ -125,7 +125,7 @@
       },
       {
         "line": 3,
-        "caption": "Keep watching \u2014 the answer structure is still assembling.",
+        "caption": "One more look: every highlighted piece earned its place. (Permutation in String: beat 5)",
         "state": {
           "nums": [],
           "target": null,

@@ -8,7 +8,7 @@
   "leetcodeUrl": "https://leetcode.com/problems/interleaving-string/",
   "neetcodeVideoUrl": null,
   "kidExplanation": "Picture the puzzle 'Interleaving String'. Here is the clever trick in plain words: The key idea is to use dynamic programming to determine whether s3 can be formed by interleaving s1 and s2. We will still start slow, then use this trick so it becomes fast.",
-  "plainProblem": "LeetCode 97: Interleaving String. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "plainProblem": "Interleaving String: Picture the puzzle 'Interleaving String'. Worked example \u2014 input: s1 = \"aabcc\", s2 = \"dbbca\", s3 = \"aadbbcbcac\"; expected output: true. Why: Interleave. Interview pattern to name out loud: 2-D dynamic programming.",
   "examples": [
     {
       "input": "s1 = \"aabcc\", s2 = \"dbbca\", s3 = \"aadbbcbcac\"",
@@ -24,11 +24,11 @@
   "thinkingSteps": [
     {
       "title": "Brute force idea",
-      "body": "For Interleaving String, first describe a slow but correct approach (often nested loops or rescanning)."
+      "body": "For \u201cInterleaving String\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input s1 = \"aabcc\", s2 = \"dbbca\", s3 = \"aadbbcbcac\" should still produce true."
     },
     {
       "title": "Why it is slow",
-      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
     },
     {
       "title": "Aha insight",
@@ -36,7 +36,7 @@
     },
     {
       "title": "Better idea",
-      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+      "body": "Commit to 2-D dynamic programming. Two changing indices; fill a table. Walk example `s1 = \"aabcc\", s2 = \"dbbca\", s3 = \"aadbbcbcac\"` \u2192 `true` while naming each variable, then code. Close with See code time and O(m * n) space."
     }
   ],
   "pattern": {
@@ -50,19 +50,19 @@
   },
   "complexity": {
     "time": "See code",
-    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "timeReason": "From the coded loops for \u201cInterleaving String\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
     "space": "O(m * n)",
-    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+    "spaceReason": "Extra memory is O(m * n) from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
   },
   "edgeCases": [
-    "Empty or minimal input.",
-    "Already-best or already-worst arrangement.",
-    "Duplicates and boundary values from the constraints."
+    "Smallest legal input for \u201cInterleaving String\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `s1 = \"aabcc\", s2 = \"dbbca\", s3 = \"aadbbcbcac\"` and check boundary indices / empty containers.",
+    "Second example `s3 = \"aadbbbaccc\"` often hides duplicates, ties, or already-sorted cases."
   ],
   "commonMistakes": [
-    "Coding before stating the pattern and complexity.",
-    "Off-by-one errors on indices or window edges.",
-    "Mutating data structures while iterating carelessly."
+    "Jumping into code before naming 2-D dynamic programming and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
   ],
   "interviewTips": [
     "Open with: 'This looks like 2-D dynamic programming.'",

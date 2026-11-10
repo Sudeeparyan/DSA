@@ -8,7 +8,7 @@
   "leetcodeUrl": "https://leetcode.com/problems/kth-largest-element-in-a-stream/",
   "neetcodeVideoUrl": null,
   "kidExplanation": "Picture the puzzle 'Kth Largest Element in a Stream'. Here is the clever trick in plain words: To find the kth largest element in a stream of integers, we can use a min-heap (priority queue) with a maximum size of k. As new elements arrive, we add them to the min-heap. If the size of the heap exceeds k, we remove We will still start slow, then use this trick so it becomes fast.",
-  "plainProblem": "LeetCode 703: Kth Largest Element in a Stream. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "plainProblem": "Kth Largest Element in a Stream: Picture the puzzle 'Kth Largest Element in a Stream'. Worked example \u2014 input: k = 3, nums = [4,5,8,2]; add 3,5,10,9,4; expected output: 4,5,5,8,8. Why: Stream kth. Interview pattern to name out loud: Heap / priority queue.",
   "examples": [
     {
       "input": "k = 3, nums = [4,5,8,2]; add 3,5,10,9,4",
@@ -24,11 +24,11 @@
   "thinkingSteps": [
     {
       "title": "Brute force idea",
-      "body": "For Kth Largest Element in a Stream, first describe a slow but correct approach (often nested loops or rescanning)."
+      "body": "For \u201cKth Largest Element in a Stream\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input k = 3, nums = [4,5,8,2]; add 3,5,10,9,4 should still produce 4,5,5,8,8."
     },
     {
       "title": "Why it is slow",
-      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
     },
     {
       "title": "Aha insight",
@@ -36,7 +36,7 @@
     },
     {
       "title": "Better idea",
-      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+      "body": "Commit to Heap / priority queue. Repeatedly need min or max quickly. Walk example `k = 3, nums = [4,5,8,2]; add 3,5,10,9,4` \u2192 `4,5,5,8,8` while naming each variable, then code. Close with See code time and See code space."
     }
   ],
   "pattern": {
@@ -50,19 +50,19 @@
   },
   "complexity": {
     "time": "See code",
-    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "timeReason": "From the coded loops for \u201cKth Largest Element in a Stream\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
     "space": "See code",
-    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+    "spaceReason": "Extra memory is See code from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
   },
   "edgeCases": [
-    "Empty or minimal input.",
-    "Already-best or already-worst arrangement.",
-    "Duplicates and boundary values from the constraints."
+    "Smallest legal input for \u201cKth Largest Element in a Stream\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `k = 3, nums = [4,5,8,2]; add 3,5,10,9,4` and check boundary indices / empty containers.",
+    "Second example `k = 1, nums = []` often hides duplicates, ties, or already-sorted cases."
   ],
   "commonMistakes": [
-    "Coding before stating the pattern and complexity.",
-    "Off-by-one errors on indices or window edges.",
-    "Mutating data structures while iterating carelessly."
+    "Jumping into code before naming Heap / priority queue and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
   ],
   "interviewTips": [
     "Open with: 'This looks like Heap / priority queue.'",

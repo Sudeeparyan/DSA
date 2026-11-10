@@ -8,7 +8,7 @@
   "leetcodeUrl": "https://leetcode.com/problems/letter-combinations-of-a-phone-number/",
   "neetcodeVideoUrl": null,
   "kidExplanation": "Picture the puzzle 'Letter Combinations of a Phone Number'. Here is the clever trick in plain words: To generate all possible letter combinations of a phone number, we can use a recursive approach. Starting from each digit of the phone number, we generate combinations by appending each letter corresponding to the digit We will still start slow, then use this trick so it becomes fast.",
-  "plainProblem": "LeetCode 17: Letter Combinations of a Phone Number. Restate the official prompt in your own words, list inputs and outputs, then solve a tiny example by hand before coding.",
+  "plainProblem": "Letter Combinations of a Phone Number: Picture the puzzle 'Letter Combinations of a Phone Number'. Worked example \u2014 input: digits = \"23\"; expected output: [\"ad\",\"ae\",\"af\",\"bd\",\"be\",\"bf\",\"cd\",\"ce\",\"cf\"]. Why: Keypad. Interview pattern to name out loud: Backtracking (try \u2192 explore \u2192 undo).",
   "examples": [
     {
       "input": "digits = \"23\"",
@@ -24,11 +24,11 @@
   "thinkingSteps": [
     {
       "title": "Brute force idea",
-      "body": "For Letter Combinations of a Phone Number, first describe a slow but correct approach (often nested loops or rescanning)."
+      "body": "For \u201cLetter Combinations of a Phone Number\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input digits = \"23\" should still produce [\"ad\",\"ae\",\"af\",\"bd\",\"be\",\"bf\",\"cd\",\"ce\",\"cf\"]."
     },
     {
       "title": "Why it is slow",
-      "body": "Count the loops. If work looks like n\u00d7n, say so. Google interviewers want that honesty."
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
     },
     {
       "title": "Aha insight",
@@ -36,7 +36,7 @@
     },
     {
       "title": "Better idea",
-      "body": "Write the optimal plan in 3 bullets, then code. Walk example 1 with your finger on each variable."
+      "body": "Commit to Backtracking (try \u2192 explore \u2192 undo). Build all combinations / permutations / placements. Walk example `digits = \"23\"` \u2192 `[\"ad\",\"ae\",\"af\",\"bd\",\"be\",\"bf\",\"cd\",\"ce\",\"cf\"]` while naming each variable, then code. Close with See code time and See code space."
     }
   ],
   "pattern": {
@@ -50,19 +50,19 @@
   },
   "complexity": {
     "time": "See code",
-    "timeReason": "We follow the loops in the solution \u2014 usually one main pass means linear time.",
+    "timeReason": "From the coded loops for \u201cLetter Combinations of a Phone Number\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
     "space": "See code",
-    "spaceReason": "Extra memory comes from sets, maps, stacks, or recursion depth."
+    "spaceReason": "Extra memory is See code from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
   },
   "edgeCases": [
-    "Empty or minimal input.",
-    "Already-best or already-worst arrangement.",
-    "Duplicates and boundary values from the constraints."
+    "Smallest legal input for \u201cLetter Combinations of a Phone Number\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `digits = \"23\"` and check boundary indices / empty containers.",
+    "Second example `digits = \"\"` often hides duplicates, ties, or already-sorted cases."
   ],
   "commonMistakes": [
-    "Coding before stating the pattern and complexity.",
-    "Off-by-one errors on indices or window edges.",
-    "Mutating data structures while iterating carelessly."
+    "Jumping into code before naming Backtracking (try \u2192 explore \u2192 undo) and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
   ],
   "interviewTips": [
     "Open with: 'This looks like Backtracking (try \u2192 explore \u2192 undo).'",
@@ -106,7 +106,7 @@
       },
       {
         "line": 4,
-        "caption": "Keep watching \u2014 the answer structure is still assembling.",
+        "caption": "Trace the highlighted cell once more before we move on. (Letter Combinations of a Phone Number: beat 3)",
         "state": {
           "nums": [],
           "path": [],
@@ -128,7 +128,7 @@
       },
       {
         "line": 4,
-        "caption": "Keep watching \u2014 the answer structure is still assembling.",
+        "caption": "Same structure, new focus \u2014 this beat locks the idea in. (Letter Combinations of a Phone Number: beat 4)",
         "state": {
           "nums": [],
           "path": [],
@@ -150,7 +150,7 @@
       },
       {
         "line": 4,
-        "caption": "Keep watching \u2014 the answer structure is still assembling.",
+        "caption": "One more look: every highlighted piece earned its place. (Letter Combinations of a Phone Number: beat 5)",
         "state": {
           "nums": [],
           "path": [],

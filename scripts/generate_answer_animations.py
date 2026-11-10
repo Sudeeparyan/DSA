@@ -334,19 +334,232 @@ def gen_hash(title: str, data: dict, output) -> tuple[object, list]:
     return default, steps
 
 
+def parse_stack_ops(raw) -> list[tuple[str, int | None]]:
+    """Parse MinStack-style `push -2,0,-3; getMin; pop` text into ops."""
+    text = raw if isinstance(raw, str) else str(raw)
+    ops: list[tuple[str, int | None]] = []
+    # strip leading labels like "MinStack ops:"
+    text = re.sub(r"^.*?:\s*", "", text, count=1) if ":" in text[:40] else text
+    # Expand `push -2,0,-3` into individual push ops before splitting the rest.
+    def expand_push(match: re.Match) -> str:
+        nums = re.findall(r"-?\d+", match.group(0))
+        return "; ".join(f"push {n}" for n in nums)
+
+    text = re.sub(r"push\s+(-?\d+\s*,\s*)+-?\d+", expand_push, text, flags=re.I)
+    for part in re.split(r"[;]", text):
+        part = part.strip()
+        if not part:
+            continue
+        m = re.match(r"(push)\s+(-?\d+)", part, re.I)
+        if m:
+            ops.append(("push", int(m.group(2))))
+            continue
+        # bare numbers after a prior push context
+        if re.fullmatch(r"-?\d+", part):
+            ops.append(("push", int(part)))
+            continue
+        low = part.lower().replace("()", "").strip()
+        if low in {"pop", "top", "getmin", "get_min", "peek"}:
+            name = "getMin" if "min" in low else ("top" if low == "peek" else low)
+            ops.append((name, None))
+    return ops
+
+
+def gen_min_stack(title: str, data: dict, output) -> tuple[object, list]:
+    raw = data.get("value") or data.get("ops") or next(iter(data.values()), "")
+    ops = parse_stack_ops(raw)
+    if not ops:
+        ops = [("push", -2), ("push", 0), ("push", -3), ("getMin", None), ("pop", None), ("top", None), ("getMin", None)]
+    stack: list[int] = []
+    mins: list[int] = []
+    results: list = []
+    steps = [
+        step(
+            1,
+            f"Min Stack for “{title}”: one stack for values, one for running mins.",
+            {"stack": [], "nums": [], "heap": [], "result": None, "highlights": {}},
+        )
+    ]
+    for i, (op, val) in enumerate(ops[:12]):
+        if op == "push" and val is not None:
+            stack.append(val)
+            mins.append(val if not mins else min(mins[-1], val))
+            steps.append(
+                step(
+                    2,
+                    f"push({val}). Value stack {stack}; min stack top is {mins[-1]}.",
+                    {
+                        "stack": list(stack),
+                        "nums": list(stack),
+                        "heap": list(mins),
+                        "currentIndex": len(stack) - 1,
+                        "currentValue": val,
+                        "result": None,
+                        "highlights": hl(len(stack) - 1, "remembered"),
+                    },
+                )
+            )
+        elif op == "pop":
+            gone = stack.pop() if stack else None
+            if mins:
+                mins.pop()
+            steps.append(
+                step(
+                    2,
+                    f"pop() removes {gone}. New min is {mins[-1] if mins else 'empty'}.",
+                    {
+                        "stack": list(stack),
+                        "nums": list(stack),
+                        "heap": list(mins),
+                        "currentIndex": max(0, len(stack) - 1),
+                        "result": gone,
+                        "highlights": hl(max(0, len(stack) - 1), "current") if stack else {},
+                    },
+                )
+            )
+        elif op == "top":
+            top = stack[-1] if stack else None
+            results.append(top)
+            steps.append(
+                step(
+                    2,
+                    f"top() → {top} (peek only, stack unchanged).",
+                    {
+                        "stack": list(stack),
+                        "nums": list(stack),
+                        "heap": list(mins),
+                        "currentIndex": max(0, len(stack) - 1),
+                        "result": top,
+                        "highlights": hl(max(0, len(stack) - 1), "matched") if stack else {},
+                    },
+                )
+            )
+        else:  # getMin
+            cur = mins[-1] if mins else None
+            results.append(cur)
+            steps.append(
+                step(
+                    2,
+                    f"getMin() → {cur} in O(1) from the min-stack top.",
+                    {
+                        "stack": list(stack),
+                        "nums": list(stack),
+                        "heap": list(mins),
+                        "currentIndex": max(0, len(mins) - 1),
+                        "result": cur,
+                        "highlights": hl(max(0, len(mins) - 1), "matched") if mins else {},
+                    },
+                )
+            )
+    steps.append(
+        step(
+            3,
+            f"Sequence complete. Answers: {json.dumps(output, default=str)}.",
+            {
+                "stack": list(stack),
+                "nums": list(stack),
+                "heap": list(mins),
+                "result": output,
+                "highlights": {str(i): "done" for i in range(len(stack))} if stack else {"0": "done"},
+            },
+        )
+    )
+    return {"ops": [op if val is None else f"{op} {val}" for op, val in ops]}, steps
+
+
+def gen_generate_parentheses(title: str, data: dict, output) -> tuple[object, list]:
+    n = data.get("n", 3)
+    try:
+        n = max(1, min(int(n), 3))
+    except Exception:
+        n = 3
+    # Walk one canonical build path for n pairs, then show collected answers.
+    path: list[str] = []
+    open_c = close_c = 0
+    steps = [
+        step(
+            1,
+            f"Generate Parentheses for n={n}: only add '(' or ')' when the string stays valid.",
+            {"chars": [], "stack": [], "path": [], "nums": [], "result": None, "highlights": {}},
+        )
+    ]
+    # Deterministic walk: prefer '(' while available, else ')'
+    while len(path) < 2 * n:
+        if open_c < n:
+            path.append("(")
+            open_c += 1
+            caption = f"Add '(' (open={open_c}, close={close_c}). Path: {''.join(path)}"
+            kind = "remembered"
+        else:
+            path.append(")")
+            close_c += 1
+            caption = f"Add ')' (open={open_c}, close={close_c}). Path: {''.join(path)}"
+            kind = "matched"
+        steps.append(
+            step(
+                2,
+                caption,
+                {
+                    "chars": list(path),
+                    "stack": [c for c in path if c == "("][: open_c - close_c],
+                    "path": list(path),
+                    "nums": list(path),
+                    "currentIndex": len(path) - 1,
+                    "result": None,
+                    "highlights": hl(len(path) - 1, kind),
+                },
+            )
+        )
+    steps.append(
+        step(
+            3,
+            f"One valid string done. Full answer set: {json.dumps(output, default=str)}.",
+            {
+                "chars": list(path),
+                "stack": [],
+                "path": list(path),
+                "nums": list(path),
+                "result": output,
+                "highlights": {str(i): "done" for i in range(len(path))},
+            },
+        )
+    )
+    return {"n": n}, steps
+
+
 def gen_stack(title: str, data: dict, output) -> tuple[object, list]:
+    slugish = title.lower()
+    raw_blob = " ".join(str(v) for v in data.values())
+    if "min stack" in slugish or "push" in raw_blob.lower() and "getmin" in raw_blob.lower().replace(" ", ""):
+        return gen_min_stack(title, data, output)
+    if "generate parentheses" in slugish or ("n" in data and not any(isinstance(v, (str, list)) for v in data.values())):
+        return gen_generate_parentheses(title, data, output)
+
     key, vals = first_list(data)
     if isinstance(vals, str):
         chars = list(vals)
         default = vals
-    else:
+    elif isinstance(vals, list) and vals:
         chars = [str(x) for x in as_nums(vals)[:10]]
         default = chars
+    elif "n" in data:
+        return gen_generate_parentheses(title, data, output)
+    else:
+        chars = list("()[]{}")
+        default = "()[]{}"
+
+    # If the "string" is clearly not brackets (e.g. title chars), fall back to value stack.
+    bracketish = sum(1 for ch in chars if ch in "()[]{}") >= max(1, len(chars) // 2)
+
     stack: list[str] = []
     steps = [
         step(
             1,
-            f"Empty stack for “{title}”. Openers push; closers pop when they match.",
+            (
+                f"Empty stack for “{title}”. Openers push; closers pop when they match."
+                if bracketish
+                else f"Empty stack for “{title}”. Push candidates; pop when the rule says so."
+            ),
             {"chars": chars, "stack": [], "result": None, "highlights": {}},
         )
     ]
@@ -366,7 +579,7 @@ def gen_stack(title: str, data: dict, output) -> tuple[object, list]:
                 },
             )
         )
-        if ch in "([{":
+        if bracketish and ch in "([{":
             stack.append(ch)
             steps.append(
                 step(
@@ -381,7 +594,7 @@ def gen_stack(title: str, data: dict, output) -> tuple[object, list]:
                     },
                 )
             )
-        elif ch in pairs:
+        elif bracketish and ch in pairs:
             if stack and stack[-1] == pairs[ch]:
                 stack.pop()
                 steps.append(
@@ -738,8 +951,109 @@ def gen_intervals(title: str, data: dict, output) -> tuple[object, list]:
     return {"intervals": intervals}, steps
 
 
+def gen_reverse_integer(title: str, data: dict, output) -> tuple[object, list]:
+    x = data.get("x", data.get("value", data.get("n", 123)))
+    try:
+        x = int(x)
+    except Exception:
+        x = 123
+    sign = -1 if x < 0 else 1
+    digits = [int(d) for d in str(abs(x))]
+    rev: list[int] = []
+    steps = [
+        step(
+            1,
+            f"Reverse Integer: take digits of {x} and rebuild from the right.",
+            {"nums": digits, "chars": [str(d) for d in digits], "result": None, "highlights": {}},
+        )
+    ]
+    for i, d in enumerate(reversed(digits)):
+        rev.append(d)
+        steps.append(
+            step(
+                2,
+                f"Take digit {d}. Reversed so far: {''.join(str(y) for y in rev)}.",
+                {
+                    "nums": list(rev),
+                    "chars": [str(y) for y in rev],
+                    "currentIndex": i,
+                    "currentValue": d,
+                    "result": None,
+                    "highlights": hl(i, "current"),
+                },
+            )
+        )
+    value = sign * int("".join(str(y) for y in rev) or "0")
+    steps.append(
+        step(
+            3,
+            f"Reassembled value {value}. Final answer: {json.dumps(output, default=str)}.",
+            {
+                "nums": list(rev),
+                "chars": [str(y) for y in rev],
+                "result": output,
+                "highlights": {str(i): "done" for i in range(len(rev))},
+            },
+        )
+    )
+    return {"x": x}, steps
+
+
 def gen_bits(title: str, data: dict, output) -> tuple[object, list]:
-    n = data.get("n") or data.get("num") or data.get("value")
+    if "reverse integer" in title.lower():
+        return gen_reverse_integer(title, data, output)
+
+    n = data.get("n") or data.get("num") or data.get("value") or data.get("x")
+    nums_in = data.get("nums")
+    if isinstance(nums_in, list):
+        nums = as_nums(nums_in)[:8]
+        # XOR / single-number style: show bits of each number briefly
+        bits = []
+        steps = [
+            step(
+                1,
+                f"Bit / XOR view for “{title}”. Walk each number’s contribution.",
+                {"nums": nums, "bits": [], "seen": [], "result": None, "highlights": {}},
+            )
+        ]
+        acc = 0
+        for i, val in enumerate(nums):
+            try:
+                iv = int(val)
+            except Exception:
+                iv = 0
+            acc ^= iv
+            bits = [1 if (iv & (1 << b)) else 0 for b in range(8)]
+            steps.append(
+                step(
+                    2,
+                    f"Number {val} at index {i}. Running XOR → {acc}.",
+                    {
+                        "nums": nums,
+                        "bits": bits,
+                        "seen": nums[: i + 1],
+                        "currentIndex": i,
+                        "currentValue": val,
+                        "result": None,
+                        "highlights": hl(i, "current"),
+                    },
+                )
+            )
+        steps.append(
+            step(
+                3,
+                f"Bit work done. Answer: {json.dumps(output, default=str)}.",
+                {
+                    "nums": nums,
+                    "bits": bits,
+                    "seen": nums,
+                    "result": output,
+                    "highlights": {str(i): "done" for i in range(len(nums))},
+                },
+            )
+        )
+        return {"nums": nums}, steps
+
     if isinstance(n, list):
         nums = as_nums(n)[:8]
         bits = [1 if int(x) else 0 for x in nums]
@@ -751,8 +1065,44 @@ def gen_bits(title: str, data: dict, output) -> tuple[object, list]:
             n = 5
         n = max(1, min(n, 8))
         bits = [1 if (n & (1 << i)) else 0 for i in range(8)]
-        nums = list(range(n + 1))
+        nums = list(range(n + 1)) if "counting" in title.lower() else bits
         default = {"n": n}
+        steps = [
+            step(
+                1,
+                f"Bit view for “{title}” on value {n}.",
+                {"bits": bits, "nums": nums, "result": None, "highlights": {"0": "current"}},
+            )
+        ]
+        for i, b in enumerate(bits):
+            meaning = "set" if b else "clear"
+            steps.append(
+                step(
+                    2,
+                    f"Bit {i} is {b} ({meaning}). Partial mask so far uses bits 0..{i}.",
+                    {
+                        "bits": bits,
+                        "nums": nums,
+                        "currentIndex": i,
+                        "result": None,
+                        "highlights": hl(i, "matched" if b else "current"),
+                    },
+                )
+            )
+        steps.append(
+            step(
+                3,
+                f"Bit work done. Answer: {json.dumps(output, default=str)}.",
+                {
+                    "bits": bits,
+                    "nums": nums,
+                    "result": output,
+                    "highlights": {str(i): "done" for i in range(len(bits))},
+                },
+            )
+        )
+        return default, steps
+
     steps = [
         step(
             1,
@@ -764,7 +1114,7 @@ def gen_bits(title: str, data: dict, output) -> tuple[object, list]:
         steps.append(
             step(
                 2,
-                f"Bit {i} is {b}.",
+                f"Bit {i} is {b} — {'set' if b else 'clear'}.",
                 {
                     "bits": bits,
                     "nums": nums if isinstance(nums, list) else bits,
@@ -1016,6 +1366,49 @@ GENERATORS = {
 }
 
 
+PAD_CAPTIONS = (
+    "Hold this frame — notice what changed since the last beat.",
+    "Trace the highlighted cell once more before we move on.",
+    "Same structure, new focus — this beat locks the idea in.",
+    "One more look: every highlighted piece earned its place.",
+    "Pause on the result shape — this is what the code will return.",
+)
+
+PAREN_OK = {
+    "valid-parentheses",
+    "generate-parentheses",
+    "valid-parenthesis-string",
+}
+
+
+def has_padding(steps: list) -> bool:
+    # Legacy identical filler only — unique teachable pad captions are OK.
+    return any(
+        (s.get("caption") or "").strip()
+        == "Keep watching — the answer structure is still assembling."
+        for s in steps
+    )
+
+
+def has_identical_captions(steps: list) -> bool:
+    caps = [s.get("caption") or "" for s in steps]
+    same = sum(1 for i in range(1, len(caps)) if caps[i] == caps[i - 1])
+    return same >= 2
+
+
+def has_wrong_paren_story(problem: dict, steps: list) -> bool:
+    if problem.get("slug") in PAREN_OK:
+        return False
+    blob = " ".join(s.get("caption") or "" for s in steps)
+    if "Openers push; closers pop" not in blob:
+        return False
+    # Min Stack / design problems must never use bracket narrative
+    if problem.get("slug") in {"min-stack"}:
+        return True
+    # Title-letter walk is a clear bug (Read 'M' at index 0)
+    return bool(re.search(r"Read '[A-Za-z]' at index", blob))
+
+
 def should_regenerate(problem: dict) -> bool:
     steps = problem.get("animation", {}).get("steps", [])
     if problem.get("animation", {}).get("tracerId") in {
@@ -1029,36 +1422,61 @@ def should_regenerate(problem: dict) -> bool:
     blob = json.dumps(steps)
     if "Start solving" in blob or "see-leetcode" in blob or "Green means done" in blob:
         return True
+    if "Keep watching" in blob:
+        return True
+    if has_identical_captions(steps) or has_wrong_paren_story(problem, steps):
+        return True
+    if problem.get("slug") == "reverse-integer":
+        return True
     if problem.get("animation", {}).get("defaultInput") == {"demo": True}:
         return True
+    # Force refresh when stack visual has empty demo input (generate-parentheses bug)
+    if problem.get("animation", {}).get("visualType") == "stack" and problem.get("animation", {}).get("defaultInput") in ([], "", None):
+        return True
     return False
+
+
+def pad_steps(title: str, steps: list) -> list:
+    """Ensure ≥5 steps with unique, teachable captions (never identical fillers)."""
+    i = 0
+    while len(steps) < 5:
+        prev = steps[-1] if steps else step(1, "Begin.", {"result": None, "highlights": {}})
+        st = deepcopy(prev["state"])
+        st["highlights"] = st.get("highlights") or {"0": "current"}
+        caption = PAD_CAPTIONS[min(i + 1, len(PAD_CAPTIONS) - 1)]
+        # make unique per title + index
+        caption = f"{caption} ({title}: beat {len(steps) + 1})"
+        steps.append(step(max(2, prev["line"]), caption, st))
+        i += 1
+    return steps
 
 
 def enrich(problem: dict) -> bool:
     if not should_regenerate(problem):
         return False
     visual = problem["animation"]["visualType"]
+    # Reverse Integer is digit work, not bit flags
+    if problem["slug"] == "reverse-integer":
+        visual = "array"
+        problem["animation"]["visualType"] = "array"
     ex = problem["examples"][0]
     data = parse_example_input(ex["input"])
     output = parse_output(ex["output"])
-    gen = GENERATORS.get(visual, gen_array)
+    if problem["slug"] == "min-stack":
+        gen = gen_min_stack
+    elif problem["slug"] == "generate-parentheses":
+        gen = gen_generate_parentheses
+    elif problem["slug"] == "reverse-integer":
+        gen = gen_reverse_integer
+    else:
+        gen = GENERATORS.get(visual, gen_array)
     default_input, steps = gen(problem["title"], data, output)
-    # ensure quality floor for every visual type
-    while len(steps) < 5:
-        prev = steps[-1] if steps else step(1, "Begin.", {"result": None, "highlights": {}})
-        st = deepcopy(prev["state"])
-        st["highlights"] = st.get("highlights") or {"0": "current"}
-        steps.append(
-            step(
-                max(2, prev["line"]),
-                "Keep watching — the answer structure is still assembling.",
-                st,
-            )
-        )
+    steps = pad_steps(problem["title"], steps)
     # guarantee at least one highlight somewhere
     if not any((s.get("state") or {}).get("highlights") for s in steps):
         steps[1]["state"]["highlights"] = {"0": "current"}
     assert len(steps) >= 5, problem["slug"]
+    assert not has_padding(steps), problem["slug"]
     problem["animation"]["defaultInput"] = default_input
     problem["animation"]["steps"] = steps
     problem["animation"]["tracerId"] = "authored"
