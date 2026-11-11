@@ -1,0 +1,280 @@
+{
+  "id": 90,
+  "leetcodeNumber": 323,
+  "title": "Number of Connected Components In An Undirected Graph",
+  "slug": "number-of-connected-components-in-an-undirected-graph",
+  "category": "graphs",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Picture the puzzle 'Number of Connected Components In An Undirected Graph'. Here is the clever trick in plain words: This problem can be solved using Depth-First Search (DFS) or Breadth-First Search (BFS). We represent the given edges as an adjacency list, where each node points to its neighboring nodes. We then iterate through all nod We will still start slow, then use this trick so it becomes fast.",
+  "plainProblem": "Number of Connected Components In An Undirected Graph: Picture the puzzle 'Number of Connected Components In An Undirected Graph'. Worked example \u2014 input: n = 5, edges = [[0,1],[1,2],[3,4]]; expected output: 2. Why: Two components. Interview pattern to name out loud: Graph BFS / DFS.",
+  "examples": [
+    {
+      "input": "n = 5, edges = [[0,1],[1,2],[3,4]]",
+      "output": "2",
+      "explanation": "Two components."
+    },
+    {
+      "input": "n = 5, edges = [[0,1],[1,2],[2,3],[3,4]]",
+      "output": "1",
+      "explanation": "One component."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cNumber of Connected Components In An Undirected Graph\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input n = 5, edges = [[0,1],[1,2],[3,4]] should still produce 2."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
+    },
+    {
+      "title": "Aha insight",
+      "body": "This problem can be solved using Depth-First Search (DFS) or Breadth-First Search (BFS). We represent the given edges as an adjacency list, where each node points to its neighboring nodes. We then iterate through all nodes and perform a DFS/BFS from each unvisited node to explore all connected components. The number of times we need to start a new DFS/BFS corresponds to the number of connected components in the graph."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Graph BFS / DFS. Islands, rooms, or connections on a grid/graph. Walk example `n = 5, edges = [[0,1],[1,2],[3,4]]` \u2192 `2` while naming each variable, then code. Close with See code time and See code space."
+    }
+  ],
+  "pattern": {
+    "name": "Graph BFS / DFS",
+    "whenToSpot": "Islands, rooms, or connections on a grid/graph."
+  },
+  "solutions": {
+    "python": "# Number of Connected Components In An Undirected Graph\n# Idea: This problem can be solved using Depth-First Search (DFS) or Breadth-First Search (BFS). We represent the given edges as an adjacency list, where each node points to its neighboring nodes. We then iterate through all nod\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nfrom collections import defaultdict, deque\n\n\nclass Solution:\n    def countComponents(self, n: int, edges: List[List[int]]) -> int:\n        graph = defaultdict(list)\n        for u, v in edges:\n            graph[u].append(v)\n            graph[v].append(u)\n\n        def dfs(node):\n            visited.add(node)\n            for neighbor in graph[node]:\n                if neighbor not in visited:\n                    dfs(neighbor)\n\n        # Cells/nodes we already explored\n\n        visited = set()\n        components = 0\n\n        for node in range(n):\n            if node not in visited:\n                components += 1\n                dfs(node)\n\n        return components\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "From the coded loops for \u201cNumber of Connected Components In An Undirected Graph\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "See code",
+    "spaceReason": "Extra memory is See code from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cNumber of Connected Components In An Undirected Graph\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `n = 5, edges = [[0,1],[1,2],[3,4]]` and check boundary indices / empty containers.",
+    "Second example `n = 5, edges = [[0,1],[1,2],[2,3],[3,4]]` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Graph BFS / DFS and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Graph BFS / DFS.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "grid",
+    "tracerId": "authored",
+    "defaultInput": {
+      "grid": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Grid for \u201cNumber of Connected Components In An Undirected Graph\u201d. We scan cells; visited cells light up.",
+        "state": {
+          "grid": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "nums": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (0,0) = 1.",
+        "state": {
+          "grid": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "nums": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "currentIndex": 0,
+          "currentValue": 1,
+          "cell": [
+            0,
+            0
+          ],
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (0,1) = 0.",
+        "state": {
+          "grid": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "nums": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "currentIndex": 1,
+          "currentValue": 0,
+          "cell": [
+            0,
+            1
+          ],
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (1,0) = 0.",
+        "state": {
+          "grid": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "nums": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "currentIndex": 2,
+          "currentValue": 0,
+          "cell": [
+            1,
+            0
+          ],
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (1,1) = 1.",
+        "state": {
+          "grid": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "nums": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "currentIndex": 3,
+          "currentValue": 1,
+          "cell": [
+            1,
+            1
+          ],
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Grid scan complete. Answer: 2.",
+        "state": {
+          "grid": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "nums": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "result": 2,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "redundant-connection",
+    "graph-valid-tree",
+    "word-ladder"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Number of Connected Components In An Undirected Graph is the usual interview target: clear graph bfs / dfs with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

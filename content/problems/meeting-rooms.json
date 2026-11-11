@@ -1,0 +1,254 @@
+{
+  "id": 133,
+  "leetcodeNumber": 252,
+  "title": "Meeting Rooms",
+  "slug": "meeting-rooms",
+  "category": "intervals",
+  "difficulty": "Easy",
+  "leetcodeUrl": "https://leetcode.com/problems/meeting-rooms/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Picture the puzzle 'Meeting Rooms'. Here is the clever trick in plain words: We can solve this problem by sorting the intervals based on their start times and then checking for any overlapping intervals. If the start time of the current interval is less than the end time of the previous interval, We will still start slow, then use this trick so it becomes fast.",
+  "plainProblem": "Meeting Rooms: Picture the puzzle 'Meeting Rooms'. Worked example \u2014 input: intervals = [[0,30],[5,10],[15,20]]; expected output: false. Why: Overlap. Interview pattern to name out loud: Sort + sweep intervals.",
+  "examples": [
+    {
+      "input": "intervals = [[0,30],[5,10],[15,20]]",
+      "output": "false",
+      "explanation": "Overlap."
+    },
+    {
+      "input": "intervals = [[7,10],[2,4]]",
+      "output": "true",
+      "explanation": "No overlap."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cMeeting Rooms\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input intervals = [[0,30],[5,10],[15,20]] should still produce false."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
+    },
+    {
+      "title": "Aha insight",
+      "body": "We can solve this problem by sorting the intervals based on their start times and then checking for any overlapping intervals. If the start time of the current interval is less than the end time of the previous interval, it means there is an overlap, and the person cannot attend all meetings. Otherwise, there is no overlap, and the person can attend all meetings."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Sort + sweep intervals. Overlapping time ranges. Walk example `intervals = [[0,30],[5,10],[15,20]]` \u2192 `false` while naming each variable, then code. Close with See code time and See code space."
+    }
+  ],
+  "pattern": {
+    "name": "Sort + sweep intervals",
+    "whenToSpot": "Overlapping time ranges."
+  },
+  "solutions": {
+    "python": "# Meeting Rooms\n# Idea: We can solve this problem by sorting the intervals based on their start times and then checking for any overlapping intervals. If the start time of the current interval is less than the end time of the previous interval,\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def canAttendMeetings(self, intervals: List[List[int]]) -> bool:\n        if not intervals:\n            return True\n\n        intervals.sort(key=lambda x: x[0])\n\n        for i in range(1, len(intervals)):\n            if intervals[i][0] < intervals[i - 1][1]:\n                return False\n\n        return True\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "From the coded loops for \u201cMeeting Rooms\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "See code",
+    "spaceReason": "Extra memory is See code from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cMeeting Rooms\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `intervals = [[0,30],[5,10],[15,20]]` and check boundary indices / empty containers.",
+    "Second example `intervals = [[7,10],[2,4]]` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Sort + sweep intervals and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Sort + sweep intervals.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "intervals",
+    "tracerId": "authored",
+    "defaultInput": {
+      "intervals": [
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          8,
+          10
+        ]
+      ]
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Intervals for \u201cMeeting Rooms\u201d on a timeline.",
+        "state": {
+          "intervals": [
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              6
+            ],
+            [
+              8,
+              10
+            ]
+          ],
+          "nums": [
+            1,
+            3,
+            2,
+            6,
+            8,
+            10
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Focus interval 0: [1, 3].",
+        "state": {
+          "intervals": [
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              6
+            ],
+            [
+              8,
+              10
+            ]
+          ],
+          "nums": [
+            1,
+            3
+          ],
+          "currentIndex": 0,
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Focus interval 1: [2, 6].",
+        "state": {
+          "intervals": [
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              6
+            ],
+            [
+              8,
+              10
+            ]
+          ],
+          "nums": [
+            2,
+            6
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Focus interval 2: [8, 10].",
+        "state": {
+          "intervals": [
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              6
+            ],
+            [
+              8,
+              10
+            ]
+          ],
+          "nums": [
+            8,
+            10
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Merged / decided. Answer: false.",
+        "state": {
+          "intervals": [
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              6
+            ],
+            [
+              8,
+              10
+            ]
+          ],
+          "nums": [
+            1,
+            3,
+            2,
+            6,
+            8,
+            10
+          ],
+          "result": false,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "non-overlapping-intervals",
+    "meeting-rooms-ii",
+    "minimum-interval-to-include-each-query"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Meeting Rooms is the usual interview target: clear sort + sweep intervals with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

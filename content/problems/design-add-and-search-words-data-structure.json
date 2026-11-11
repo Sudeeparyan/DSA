@@ -1,0 +1,277 @@
+{
+  "id": 62,
+  "leetcodeNumber": 211,
+  "title": "Design Add and Search Words Data Structure",
+  "slug": "design-add-and-search-words-data-structure",
+  "category": "tries",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/design-add-and-search-words-data-structure/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Picture the puzzle 'Design Add and Search Words Data Structure'. Here is the clever trick in plain words: To design a data structure that supports adding and searching words, we can use a Trie (prefix tree) with a special character '.' to represent any character. When searching, we traverse the Trie and recursively search in We will still start slow, then use this trick so it becomes fast.",
+  "plainProblem": "Design Add and Search Words Data Structure: Picture the puzzle 'Design Add and Search Words Data Structure'. Worked example \u2014 input: add \"bad\",\"dad\",\"mad\"; search \"pad\"; expected output: false. Why: Missing. Interview pattern to name out loud: Trie (prefix tree).",
+  "examples": [
+    {
+      "input": "add \"bad\",\"dad\",\"mad\"; search \"pad\"",
+      "output": "false",
+      "explanation": "Missing."
+    },
+    {
+      "input": "search \".ad\"; search \"b..\"",
+      "output": "true, true",
+      "explanation": "Wildcards."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cDesign Add and Search Words Data Structure\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input add \"bad\",\"dad\",\"mad\"; search \"pad\" should still produce false."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To design a data structure that supports adding and searching words, we can use a Trie (prefix tree) with a special character '.' to represent any character. When searching, we traverse the Trie and recursively search in all child nodes for matching characters or '.'."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Trie (prefix tree). Many words sharing prefixes; autocomplete. Walk example `add \"bad\",\"dad\",\"mad\"; search \"pad\"` \u2192 `false` while naming each variable, then code. Close with See code time and See code space."
+    }
+  ],
+  "pattern": {
+    "name": "Trie (prefix tree)",
+    "whenToSpot": "Many words sharing prefixes; autocomplete."
+  },
+  "solutions": {
+    "python": "# Design Add and Search Words Data Structure\n# Idea: To design a data structure that supports adding and searching words, we can use a Trie (prefix tree) with a special character '.' to represent any character. When searching, we traverse the Trie and recursively search in\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass TrieNode:\n    def __init__(self):\n        self.children = {}\n        self.is_end = False\n\n\nclass WordDictionary:\n    def __init__(self):\n        self.root = TrieNode()\n\n    def addWord(self, word: str) -> None:\n        node = self.root\n        for char in word:\n            if char not in node.children:\n                node.children[char] = TrieNode()\n            node = node.children[char]\n        node.is_end = True\n\n    def search(self, word: str) -> bool:\n        def search_in_node(node, word):\n            for i, char in enumerate(word):\n                if char not in node.children:\n                    if char == \".\":\n                        for child in node.children:\n                            if search_in_node(node.children[child], word[i + 1 :]):\n                                return True\n                    return False\n                else:\n                    node = node.children[char]\n            return node.is_end\n\n        return search_in_node(self.root, word)\n\n\n# Your WordDictionary object will be instantiated and called as such:\n# obj = WordDictionary()\n# obj.addWord(word)\n# param_2 = obj.search(word)\n\n# class WordDictionary:\n\n#     def __init__(self):\n#         self.word_set = set()\n\n#     def addWord(self, word: str) -> None:\n#         self.word_set.add(word)\n#         for i in range(len(word)):\n#             # Add all possible variations with a '.' in each position\n#             self.word_set.add(word[:i] + '.' + word[i + 1:])\n\n#     def search(self, word: str) -> bool:\n#         if word in self.word_set:\n#             return True\n\n#         # Check if the word contains a '.'\n#         if '.' not in word:\n#             return False\n\n#         # Split the word into two parts at the first occurrence of '.'\n#         first_part, rest_part = word.split('.', 1)\n\n#         # Iterate over lowercase letters and create variations to search\n#         for char in 'abcdefghijklmnopqrstuvwxyz':\n#             new_word = first_part + char + rest_part\n#             if new_word in self.word_set:\n#                 return True\n\n#         return False\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "From the coded loops for \u201cDesign Add and Search Words Data Structure\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "See code",
+    "spaceReason": "Extra memory is See code from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cDesign Add and Search Words Data Structure\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `add \"bad\",\"dad\",\"mad\"; search \"pad\"` and check boundary indices / empty containers.",
+    "Second example `search \".ad\"; search \"b..\"` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Trie (prefix tree) and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Trie (prefix tree).'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "trie",
+    "tracerId": "authored",
+    "defaultInput": {
+      "words": [
+        "apple"
+      ]
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Trie for \u201cDesign Add and Search Words Data Structure\u201d. We grow character paths.",
+        "state": {
+          "path": [],
+          "nums": [],
+          "chars": [],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'apple': add character 'a'.",
+        "state": {
+          "path": [
+            "a"
+          ],
+          "chars": [
+            "a"
+          ],
+          "nums": [
+            "a"
+          ],
+          "currentIndex": 0,
+          "currentValue": "a",
+          "word": "apple",
+          "result": null,
+          "highlights": {
+            "0": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'apple': add character 'p'.",
+        "state": {
+          "path": [
+            "a",
+            "p"
+          ],
+          "chars": [
+            "a",
+            "p"
+          ],
+          "nums": [
+            "a",
+            "p"
+          ],
+          "currentIndex": 1,
+          "currentValue": "p",
+          "word": "apple",
+          "result": null,
+          "highlights": {
+            "1": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'apple': add character 'p'.",
+        "state": {
+          "path": [
+            "a",
+            "p",
+            "p"
+          ],
+          "chars": [
+            "a",
+            "p",
+            "p"
+          ],
+          "nums": [
+            "a",
+            "p",
+            "p"
+          ],
+          "currentIndex": 2,
+          "currentValue": "p",
+          "word": "apple",
+          "result": null,
+          "highlights": {
+            "2": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'apple': add character 'l'.",
+        "state": {
+          "path": [
+            "a",
+            "p",
+            "p",
+            "l"
+          ],
+          "chars": [
+            "a",
+            "p",
+            "p",
+            "l"
+          ],
+          "nums": [
+            "a",
+            "p",
+            "p",
+            "l"
+          ],
+          "currentIndex": 3,
+          "currentValue": "l",
+          "word": "apple",
+          "result": null,
+          "highlights": {
+            "3": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'apple': add character 'e'.",
+        "state": {
+          "path": [
+            "a",
+            "p",
+            "p",
+            "l",
+            "e"
+          ],
+          "chars": [
+            "a",
+            "p",
+            "p",
+            "l",
+            "e"
+          ],
+          "nums": [
+            "a",
+            "p",
+            "p",
+            "l",
+            "e"
+          ],
+          "currentIndex": 4,
+          "currentValue": "e",
+          "word": "apple",
+          "result": null,
+          "highlights": {
+            "4": "remembered"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Trie built. Answer: false.",
+        "state": {
+          "path": [
+            "a",
+            "p",
+            "p",
+            "l",
+            "e"
+          ],
+          "chars": [
+            "a",
+            "p",
+            "p",
+            "l",
+            "e"
+          ],
+          "nums": [
+            "a",
+            "p",
+            "p",
+            "l",
+            "e"
+          ],
+          "result": false,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "implement-trie-prefix-tree",
+    "word-search-ii"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Design Add and Search Words Data Structure is the usual interview target: clear trie (prefix tree) with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

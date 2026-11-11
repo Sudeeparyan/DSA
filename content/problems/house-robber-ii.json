@@ -1,0 +1,227 @@
+{
+  "id": 102,
+  "leetcodeNumber": 213,
+  "title": "House Robber II",
+  "slug": "house-robber-ii",
+  "category": "1d-dp",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/house-robber-ii/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Same treasure houses, but now they form a circle \u2014 first and last are neighbors too.",
+  "plainProblem": "House Robber II: Same treasure houses, but now they form a circle \u2014 first and last are neighbors too. Worked example \u2014 input: nums = [2,3,2]; expected output: 3. Why: Circle. Interview pattern to name out loud: 1-D dynamic programming.",
+  "examples": [
+    {
+      "input": "nums = [2,3,2]",
+      "output": "3",
+      "explanation": "Circle."
+    },
+    {
+      "input": "nums = [1,2,3,1]",
+      "output": "4",
+      "explanation": "Best linear of two ranges."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cHouse Robber II\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input nums = [2,3,2] should still produce 3."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
+    },
+    {
+      "title": "Aha insight",
+      "body": "The key idea for solving this problem is to recognize that it's an extension of the House Robber I problem (LeetCode 198). Since we cannot rob adjacent houses, we have two scenarios: 1. Rob the first house and exclude the last house. 2. Exclude the first house and consider robbing the last house. We calculate the maximum amount for both scenarios using the House Robber I algorithm and return the maximum of the two results."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to 1-D dynamic programming. Answer depends on smaller answers along one line. Walk example `nums = [2,3,2]` \u2192 `3` while naming each variable, then code. Close with See code time and O(1) space."
+    }
+  ],
+  "pattern": {
+    "name": "1-D dynamic programming",
+    "whenToSpot": "Answer depends on smaller answers along one line."
+  },
+  "solutions": {
+    "python": "# House Robber II\n# Idea: The key idea for solving this problem is to recognize that it's an extension of the House Robber I problem (LeetCode 198). Since we cannot rob adjacent houses, we have two scenarios: 1. Rob the first house and exclude th\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def rob(self, nums: List[int]) -> int:\n        def houseRobber(nums: List[int]) -> int:\n            n = len(nums)\n            if n == 0:\n                return 0\n            if n == 1:\n                return nums[0]\n\n            prev = 0\n            curr = 0\n\n            for num in nums:\n                temp = curr\n                curr = max(prev + num, curr)\n                prev = temp\n\n            return curr\n\n        if len(nums) == 1:\n            return nums[0]\n\n        # Rob first house and exclude the last house, or exclude the first house and rob the last house.\n        return max(houseRobber(nums[1:]), houseRobber(nums[:-1]))\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "From the coded loops for \u201cHouse Robber II\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "O(1)",
+    "spaceReason": "Extra memory is O(1) from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cHouse Robber II\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `nums = [2,3,2]` and check boundary indices / empty containers.",
+    "Second example `nums = [1,2,3,1]` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming 1-D dynamic programming and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like 1-D dynamic programming.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, O(1) space, and why."
+  ],
+  "animation": {
+    "visualType": "dp",
+    "tracerId": "authored",
+    "defaultInput": {
+      "nums": [
+        2,
+        3,
+        2
+      ]
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "DP over the array for \u201cHouse Robber II\u201d. Each cell stores a best answer so far.",
+        "state": {
+          "nums": [
+            2,
+            3,
+            2
+          ],
+          "table": [
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 0 (value 2), dp becomes 2.",
+        "state": {
+          "nums": [
+            2,
+            3,
+            2
+          ],
+          "table": [
+            [
+              2,
+              0,
+              0
+            ]
+          ],
+          "dp": [
+            2,
+            0,
+            0
+          ],
+          "currentIndex": 0,
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 1 (value 3), dp becomes 5.",
+        "state": {
+          "nums": [
+            2,
+            3,
+            2
+          ],
+          "table": [
+            [
+              2,
+              5,
+              0
+            ]
+          ],
+          "dp": [
+            2,
+            5,
+            0
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 2 (value 2), dp becomes 7.",
+        "state": {
+          "nums": [
+            2,
+            3,
+            2
+          ],
+          "table": [
+            [
+              2,
+              5,
+              7
+            ]
+          ],
+          "dp": [
+            2,
+            5,
+            7
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Best DP answer: 3.",
+        "state": {
+          "nums": [
+            2,
+            3,
+            2
+          ],
+          "table": [
+            [
+              2,
+              5,
+              7
+            ]
+          ],
+          "dp": [
+            2,
+            5,
+            7
+          ],
+          "result": 3,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "house-robber",
+    "longest-palindromic-substring",
+    "palindromic-substrings"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for House Robber II is the usual interview target: clear 1-d dynamic programming with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

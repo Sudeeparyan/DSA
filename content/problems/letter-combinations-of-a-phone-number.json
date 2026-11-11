@@ -1,0 +1,183 @@
+{
+  "id": 78,
+  "leetcodeNumber": 17,
+  "title": "Letter Combinations of a Phone Number",
+  "slug": "letter-combinations-of-a-phone-number",
+  "category": "backtracking",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/letter-combinations-of-a-phone-number/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Picture the puzzle 'Letter Combinations of a Phone Number'. Here is the clever trick in plain words: To generate all possible letter combinations of a phone number, we can use a recursive approach. Starting from each digit of the phone number, we generate combinations by appending each letter corresponding to the digit We will still start slow, then use this trick so it becomes fast.",
+  "plainProblem": "Letter Combinations of a Phone Number: Picture the puzzle 'Letter Combinations of a Phone Number'. Worked example \u2014 input: digits = \"23\"; expected output: [\"ad\",\"ae\",\"af\",\"bd\",\"be\",\"bf\",\"cd\",\"ce\",\"cf\"]. Why: Keypad. Interview pattern to name out loud: Backtracking (try \u2192 explore \u2192 undo).",
+  "examples": [
+    {
+      "input": "digits = \"23\"",
+      "output": "[\"ad\",\"ae\",\"af\",\"bd\",\"be\",\"bf\",\"cd\",\"ce\",\"cf\"]",
+      "explanation": "Keypad."
+    },
+    {
+      "input": "digits = \"\"",
+      "output": "[]",
+      "explanation": "Empty."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cLetter Combinations of a Phone Number\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input digits = \"23\" should still produce [\"ad\",\"ae\",\"af\",\"bd\",\"be\",\"bf\",\"cd\",\"ce\",\"cf\"]."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To generate all possible letter combinations of a phone number, we can use a recursive approach. Starting from each digit of the phone number, we generate combinations by appending each letter corresponding to the digit to the current combinations. We repeat this process for all digits and all possible letters, building up the combinations."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Backtracking (try \u2192 explore \u2192 undo). Build all combinations / permutations / placements. Walk example `digits = \"23\"` \u2192 `[\"ad\",\"ae\",\"af\",\"bd\",\"be\",\"bf\",\"cd\",\"ce\",\"cf\"]` while naming each variable, then code. Close with See code time and See code space."
+    }
+  ],
+  "pattern": {
+    "name": "Backtracking (try \u2192 explore \u2192 undo)",
+    "whenToSpot": "Build all combinations / permutations / placements."
+  },
+  "solutions": {
+    "python": "# Letter Combinations of a Phone Number\n# Idea: To generate all possible letter combinations of a phone number, we can use a recursive approach. Starting from each digit of the phone number, we generate combinations by appending each letter corresponding to the digit \u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def letterCombinations(self, digits: str) -> List[str]:\n        if not digits:\n            return []\n\n        phone_mapping = {\n            \"2\": \"abc\",\n            \"3\": \"def\",\n            \"4\": \"ghi\",\n            \"5\": \"jkl\",\n            \"6\": \"mno\",\n            \"7\": \"pqrs\",\n            \"8\": \"tuv\",\n            \"9\": \"wxyz\",\n        }\n\n        def backtrack(index, combination):\n            if index == len(digits):\n                combinations.append(combination)\n                return\n\n            digit = digits[index]\n            letters = phone_mapping[digit]\n\n            for letter in letters:\n                backtrack(index + 1, combination + letter)\n\n        combinations = []\n        backtrack(0, \"\")\n        return combinations\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "From the coded loops for \u201cLetter Combinations of a Phone Number\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "See code",
+    "spaceReason": "Extra memory is See code from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cLetter Combinations of a Phone Number\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `digits = \"23\"` and check boundary indices / empty containers.",
+    "Second example `digits = \"\"` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Backtracking (try \u2192 explore \u2192 undo) and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Backtracking (try \u2192 explore \u2192 undo).'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "backtracking",
+    "tracerId": "authored",
+    "defaultInput": [],
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Backtracking for \u201cLetter Combinations of a Phone Number\u201d. Try a choice, then undo if it fails.",
+        "state": {
+          "nums": [],
+          "path": [],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 4,
+        "caption": "Collected answers: [\"ad\", \"ae\", \"af\", \"bd\", \"be\", \"bf\", \"cd\", \"ce\", \"cf\"].",
+        "state": {
+          "nums": [],
+          "path": [],
+          "result": [
+            "ad",
+            "ae",
+            "af",
+            "bd",
+            "be",
+            "bf",
+            "cd",
+            "ce",
+            "cf"
+          ],
+          "highlights": {}
+        }
+      },
+      {
+        "line": 4,
+        "caption": "Trace the highlighted cell once more before we move on. (Letter Combinations of a Phone Number: beat 3)",
+        "state": {
+          "nums": [],
+          "path": [],
+          "result": [
+            "ad",
+            "ae",
+            "af",
+            "bd",
+            "be",
+            "bf",
+            "cd",
+            "ce",
+            "cf"
+          ],
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "Same structure, new focus \u2014 this beat locks the idea in. (Letter Combinations of a Phone Number: beat 4)",
+        "state": {
+          "nums": [],
+          "path": [],
+          "result": [
+            "ad",
+            "ae",
+            "af",
+            "bd",
+            "be",
+            "bf",
+            "cd",
+            "ce",
+            "cf"
+          ],
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "One more look: every highlighted piece earned its place. (Letter Combinations of a Phone Number: beat 5)",
+        "state": {
+          "nums": [],
+          "path": [],
+          "result": [
+            "ad",
+            "ae",
+            "af",
+            "bd",
+            "be",
+            "bf",
+            "cd",
+            "ce",
+            "cf"
+          ],
+          "highlights": {
+            "0": "current"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "palindrome-partitioning",
+    "n-queens"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Letter Combinations of a Phone Number is the usual interview target: clear backtracking (try \u2192 explore \u2192 undo) with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

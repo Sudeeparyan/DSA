@@ -1,0 +1,434 @@
+{
+  "id": 27,
+  "leetcodeNumber": 84,
+  "title": "Largest Rectangle in Histogram",
+  "slug": "largest-rectangle-in-histogram",
+  "category": "stack",
+  "difficulty": "Hard",
+  "leetcodeUrl": "https://leetcode.com/problems/largest-rectangle-in-histogram/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Picture the puzzle 'Largest Rectangle in Histogram'. Here is the clever trick in plain words: To find the largest rectangle area in the input histogram represented by the list 'heights', we can use a stack to keep track of increasing bar heights' indices. We iterate through the heights and push the current index We will still start slow, then use this trick so it becomes fast.",
+  "plainProblem": "Largest Rectangle in Histogram: Picture the puzzle 'Largest Rectangle in Histogram'. Worked example \u2014 input: heights = [2,1,5,6,2,3]; expected output: 10. Why: 5\u00d72 rectangle. Interview pattern to name out loud: Stack (last-in, first-out pile).",
+  "examples": [
+    {
+      "input": "heights = [2,1,5,6,2,3]",
+      "output": "10",
+      "explanation": "5\u00d72 rectangle."
+    },
+    {
+      "input": "heights = [2,4]",
+      "output": "4",
+      "explanation": "Best area 4."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cLargest Rectangle in Histogram\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input heights = [2,1,5,6,2,3] should still produce 10."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: O(n)."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To find the largest rectangle area in the input histogram represented by the list 'heights', we can use a stack to keep track of increasing bar heights' indices. We iterate through the heights and push the current index onto the stack if the current height is greater than or equal to the height at the top of the stack. If the current height is smaller, it indicates that the previous bars cannot form a larger rectangle, so we pop indices from the stack and calculate the area for each popped bar. The width of the rectangle is determined by the difference between the current index and the index at the top of the stack. The height of the rectangle is the height at the popped index. We keep track of the maximum area seen so far."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Stack (last-in, first-out pile). Matching brackets, next greater element, undo order. Walk example `heights = [2,1,5,6,2,3]` \u2192 `10` while naming each variable, then code. Close with O(n) time and O(n) space."
+    }
+  ],
+  "pattern": {
+    "name": "Stack (last-in, first-out pile)",
+    "whenToSpot": "Matching brackets, next greater element, undo order."
+  },
+  "solutions": {
+    "python": "# Largest Rectangle in Histogram\n# Idea: To find the largest rectangle area in the input histogram represented by the list 'heights', we can use a stack to keep track of increasing bar heights' indices. We iterate through the heights and push the current index \u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def largestRectangleArea(self, heights: List[int]) -> int:\n        # Last-in-first-out pile (stack)\n        stack = []\n        max_area = 0\n\n        for i in range(len(heights)):\n            while stack and heights[i] < heights[stack[-1]]:\n                height = heights[stack.pop()]\n                width = i if not stack else i - stack[-1] - 1\n                max_area = max(max_area, height * width)\n            stack.append(i)\n\n        while stack:\n            height = heights[stack.pop()]\n            width = len(heights) if not stack else len(heights) - stack[-1] - 1\n            max_area = max(max_area, height * width)\n\n        return max_area\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(n)",
+    "timeReason": "From the coded loops for \u201cLargest Rectangle in Histogram\u201d: O(n) matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "O(n)",
+    "spaceReason": "Extra memory is O(n) from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cLargest Rectangle in Histogram\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `heights = [2,1,5,6,2,3]` and check boundary indices / empty containers.",
+    "Second example `heights = [2,4]` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Stack (last-in, first-out pile) and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Stack (last-in, first-out pile).'",
+    "Narrate one example before typing.",
+    "Close with complexity: O(n) time, O(n) space, and why."
+  ],
+  "animation": {
+    "visualType": "stack",
+    "tracerId": "authored",
+    "defaultInput": [
+      "2",
+      "1",
+      "5",
+      "6",
+      "2",
+      "3"
+    ],
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Empty stack for \u201cLargest Rectangle in Histogram\u201d. Openers push; closers pop when they match.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "5",
+            "6",
+            "2",
+            "3"
+          ],
+          "stack": [],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Read '2' at index 0.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "5",
+            "6",
+            "2",
+            "3"
+          ],
+          "stack": [],
+          "currentIndex": 0,
+          "currentValue": "2",
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Push 2. Stack now holds candidates.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "5",
+            "6",
+            "2",
+            "3"
+          ],
+          "stack": [
+            "2"
+          ],
+          "currentIndex": 0,
+          "result": null,
+          "highlights": {
+            "0": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Read '1' at index 1.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "5",
+            "6",
+            "2",
+            "3"
+          ],
+          "stack": [
+            "2"
+          ],
+          "currentIndex": 1,
+          "currentValue": "1",
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Push 1. Stack now holds candidates.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "5",
+            "6",
+            "2",
+            "3"
+          ],
+          "stack": [
+            "2",
+            "1"
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Read '5' at index 2.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "5",
+            "6",
+            "2",
+            "3"
+          ],
+          "stack": [
+            "2",
+            "1"
+          ],
+          "currentIndex": 2,
+          "currentValue": "5",
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Push 5. Stack now holds candidates.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "5",
+            "6",
+            "2",
+            "3"
+          ],
+          "stack": [
+            "2",
+            "1",
+            "5"
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Read '6' at index 3.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "5",
+            "6",
+            "2",
+            "3"
+          ],
+          "stack": [
+            "2",
+            "1",
+            "5"
+          ],
+          "currentIndex": 3,
+          "currentValue": "6",
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Push 6. Stack now holds candidates.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "5",
+            "6",
+            "2",
+            "3"
+          ],
+          "stack": [
+            "2",
+            "1",
+            "5",
+            "6"
+          ],
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Read '2' at index 4.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "5",
+            "6",
+            "2",
+            "3"
+          ],
+          "stack": [
+            "2",
+            "1",
+            "5",
+            "6"
+          ],
+          "currentIndex": 4,
+          "currentValue": "2",
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Push 2. Stack now holds candidates.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "5",
+            "6",
+            "2",
+            "3"
+          ],
+          "stack": [
+            "2",
+            "1",
+            "5",
+            "6",
+            "2"
+          ],
+          "currentIndex": 4,
+          "result": null,
+          "highlights": {
+            "4": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Read '3' at index 5.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "5",
+            "6",
+            "2",
+            "3"
+          ],
+          "stack": [
+            "2",
+            "1",
+            "5",
+            "6",
+            "2"
+          ],
+          "currentIndex": 5,
+          "currentValue": "3",
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Push 3. Stack now holds candidates.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "5",
+            "6",
+            "2",
+            "3"
+          ],
+          "stack": [
+            "2",
+            "1",
+            "5",
+            "6",
+            "2",
+            "3"
+          ],
+          "currentIndex": 5,
+          "result": null,
+          "highlights": {
+            "5": "remembered"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "Final answer: 10.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "5",
+            "6",
+            "2",
+            "3"
+          ],
+          "stack": [
+            "2",
+            "1",
+            "5",
+            "6",
+            "2",
+            "3"
+          ],
+          "result": 10,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "car-fleet"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Largest Rectangle in Histogram is the usual interview target: clear stack (last-in, first-out pile) with competitive complexity (O(n) time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

@@ -1,0 +1,227 @@
+{
+  "id": 100,
+  "leetcodeNumber": 746,
+  "title": "Min Cost Climbing Stairs",
+  "slug": "min-cost-climbing-stairs",
+  "category": "1d-dp",
+  "difficulty": "Easy",
+  "leetcodeUrl": "https://leetcode.com/problems/min-cost-climbing-stairs/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Picture the puzzle 'Min Cost Climbing Stairs'. Here is the clever trick in plain words: To find the minimum cost to reach the top of the stairs, we can use dynamic programming. We start by creating a list dp where dp[i] represents the minimum cost to reach the i-th stair. We initialize dp[0] and dp[1] to th We will still start slow, then use this trick so it becomes fast.",
+  "plainProblem": "Min Cost Climbing Stairs: Picture the puzzle 'Min Cost Climbing Stairs'. Worked example \u2014 input: cost = [10,15,20]; expected output: 15. Why: Start at 1. Interview pattern to name out loud: 1-D dynamic programming.",
+  "examples": [
+    {
+      "input": "cost = [10,15,20]",
+      "output": "15",
+      "explanation": "Start at 1."
+    },
+    {
+      "input": "cost = [1,100,1,1,1,100,1,1,100,1]",
+      "output": "6",
+      "explanation": "Cheap path."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cMin Cost Climbing Stairs\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input cost = [10,15,20] should still produce 15."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To find the minimum cost to reach the top of the stairs, we can use dynamic programming. We start by creating a list dp where dp[i] represents the minimum cost to reach the i-th stair. We initialize dp[0] and dp[1] to the costs of the 0-th and 1-st stairs, as there's no cost to reach them. Then, we iterate from the 2-nd stair to the top, and for each stair i, we calculate dp[i] as the minimum of either reaching it from dp[i-1] (one step) or dp[i-2] (two steps), plus the cost of the current stair. The minimum cost to reach the top will be either dp[n-1] or dp[n-2], where n is the number of stairs, as we can reach the top by either taking one step from the last stair or two steps from the second-to-last stair."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to 1-D dynamic programming. Answer depends on smaller answers along one line. Walk example `cost = [10,15,20]` \u2192 `15` while naming each variable, then code. Close with See code time and O(n) space."
+    }
+  ],
+  "pattern": {
+    "name": "1-D dynamic programming",
+    "whenToSpot": "Answer depends on smaller answers along one line."
+  },
+  "solutions": {
+    "python": "# Min Cost Climbing Stairs\n# Idea: To find the minimum cost to reach the top of the stairs, we can use dynamic programming. We start by creating a list dp where dp[i] represents the minimum cost to reach the i-th stair. We initialize dp[0] and dp[1] to th\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def minCostClimbingStairs(self, cost: List[int]) -> int:\n        n = len(cost)\n        if n <= 1:\n            return 0  # No cost if there are 0 or 1 stairs\n\n        # Table of answers to smaller problems (DP)\n\n        dp = [0] * n  # Initialize a list to store minimum costs\n\n        # Base cases\n        dp[0] = cost[0]\n        dp[1] = cost[1]\n\n        for i in range(2, n):\n            dp[i] = min(dp[i - 1], dp[i - 2]) + cost[i]\n\n        return min(dp[n - 1], dp[n - 2])\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "From the coded loops for \u201cMin Cost Climbing Stairs\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "O(n)",
+    "spaceReason": "Extra memory is O(n) from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cMin Cost Climbing Stairs\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `cost = [10,15,20]` and check boundary indices / empty containers.",
+    "Second example `cost = [1,100,1,1,1,100,1,1,100,1]` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming 1-D dynamic programming and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like 1-D dynamic programming.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, O(n) space, and why."
+  ],
+  "animation": {
+    "visualType": "dp",
+    "tracerId": "authored",
+    "defaultInput": {
+      "cost": [
+        10,
+        15,
+        20
+      ]
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "DP over the array for \u201cMin Cost Climbing Stairs\u201d. Each cell stores a best answer so far.",
+        "state": {
+          "nums": [
+            10,
+            15,
+            20
+          ],
+          "table": [
+            [
+              0,
+              0,
+              0
+            ]
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 0 (value 10), dp becomes 10.",
+        "state": {
+          "nums": [
+            10,
+            15,
+            20
+          ],
+          "table": [
+            [
+              10,
+              0,
+              0
+            ]
+          ],
+          "dp": [
+            10,
+            0,
+            0
+          ],
+          "currentIndex": 0,
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 1 (value 15), dp becomes 25.",
+        "state": {
+          "nums": [
+            10,
+            15,
+            20
+          ],
+          "table": [
+            [
+              10,
+              25,
+              0
+            ]
+          ],
+          "dp": [
+            10,
+            25,
+            0
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 2 (value 20), dp becomes 45.",
+        "state": {
+          "nums": [
+            10,
+            15,
+            20
+          ],
+          "table": [
+            [
+              10,
+              25,
+              45
+            ]
+          ],
+          "dp": [
+            10,
+            25,
+            45
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Best DP answer: 15.",
+        "state": {
+          "nums": [
+            10,
+            15,
+            20
+          ],
+          "table": [
+            [
+              10,
+              25,
+              45
+            ]
+          ],
+          "dp": [
+            10,
+            25,
+            45
+          ],
+          "result": 15,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "climbing-stairs",
+    "house-robber",
+    "house-robber-ii"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Min Cost Climbing Stairs is the usual interview target: clear 1-d dynamic programming with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

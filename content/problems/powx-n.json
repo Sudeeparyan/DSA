@@ -1,0 +1,150 @@
+{
+  "id": 141,
+  "leetcodeNumber": 50,
+  "title": "Pow(x, n)",
+  "slug": "powx-n",
+  "category": "math-geometry",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/powx-n/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Picture the puzzle 'Pow(x, n)'. Here is the clever trick in plain words: The problem is to calculate x raised to the power n. We can solve this problem using the concept of exponentiation by squaring. If n is even, we can compute x^n as (x^(n//2)) * (x^(n//2)). If n is odd, we can compute x^n We will still start slow, then use this trick so it becomes fast.",
+  "plainProblem": "Pow(x, n): Picture the puzzle 'Pow(x, n)'. Worked example \u2014 input: x = 2.00000, n = 10; expected output: 1024.00000. Why: Power. Interview pattern to name out loud: Math / matrix geometry.",
+  "examples": [
+    {
+      "input": "x = 2.00000, n = 10",
+      "output": "1024.00000",
+      "explanation": "Power."
+    },
+    {
+      "input": "x = 2.00000, n = -2",
+      "output": "0.25000",
+      "explanation": "Inverse."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cPow(x, n)\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input x = 2.00000, n = 10 should still produce 1024.00000."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
+    },
+    {
+      "title": "Aha insight",
+      "body": "The problem is to calculate x raised to the power n. We can solve this problem using the concept of exponentiation by squaring. If n is even, we can compute x^n as (x^(n//2)) * (x^(n//2)). If n is odd, we can compute x^n as x * (x^(n//2)) * (x^(n//2))."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Math / matrix geometry. Rotate, spiral, primes, counting bits of structure. Walk example `x = 2.00000, n = 10` \u2192 `1024.00000` while naming each variable, then code. Close with See code time and See code space."
+    }
+  ],
+  "pattern": {
+    "name": "Math / matrix geometry",
+    "whenToSpot": "Rotate, spiral, primes, counting bits of structure."
+  },
+  "solutions": {
+    "python": "# Pow(x, n)\n# Idea: The problem is to calculate x raised to the power n. We can solve this problem using the concept of exponentiation by squaring. If n is even, we can compute x^n as (x^(n//2)) * (x^(n//2)). If n is odd, we can compute x^n\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def myPow(self, x: float, n: int) -> float:\n        def helper(base, exp):\n            if exp == 0:\n                return 1.0\n            temp = helper(base, exp // 2)\n            if exp % 2 == 0:\n                return temp * temp\n            else:\n                return base * temp * temp\n\n        if n < 0:\n            x = 1 / x\n            n = -n\n\n        return helper(x, n)\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "From the coded loops for \u201cPow(x, n)\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "See code",
+    "spaceReason": "Extra memory is See code from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cPow(x, n)\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `x = 2.00000, n = 10` and check boundary indices / empty containers.",
+    "Second example `x = 2.00000, n = -2` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Math / matrix geometry and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Math / matrix geometry.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "array",
+    "tracerId": "authored",
+    "defaultInput": {
+      "nums": []
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Lay out the array for \u201cPow(x, n)\u201d. Watch the pointer walk the answer into place.",
+        "state": {
+          "nums": [],
+          "result": null,
+          "highlights": {},
+          "currentIndex": null
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Answer settles: 1024.0.",
+        "state": {
+          "nums": [],
+          "target": null,
+          "currentIndex": 0,
+          "result": 1024.0,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Trace the highlighted cell once more before we move on. (Pow(x, n): beat 3)",
+        "state": {
+          "nums": [],
+          "target": null,
+          "currentIndex": 0,
+          "result": 1024.0,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Same structure, new focus \u2014 this beat locks the idea in. (Pow(x, n): beat 4)",
+        "state": {
+          "nums": [],
+          "target": null,
+          "currentIndex": 0,
+          "result": 1024.0,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "One more look: every highlighted piece earned its place. (Pow(x, n): beat 5)",
+        "state": {
+          "nums": [],
+          "target": null,
+          "currentIndex": 0,
+          "result": 1024.0,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "plus-one",
+    "multiply-strings",
+    "detect-squares"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Pow(x, n) is the usual interview target: clear math / matrix geometry with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

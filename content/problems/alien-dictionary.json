@@ -1,0 +1,277 @@
+{
+  "id": 97,
+  "leetcodeNumber": 269,
+  "title": "Alien Dictionary",
+  "slug": "alien-dictionary",
+  "category": "advanced-graphs",
+  "difficulty": "Hard",
+  "leetcodeUrl": "https://leetcode.com/problems/alien-dictionary/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Alien words in sorted order. Recover the alphabet order (topological sort) if possible.",
+  "plainProblem": "Alien Dictionary: Alien words in sorted order. Worked example \u2014 input: words = [\"wrt\",\"wrf\",\"er\",\"ett\",\"rftt\"]; expected output: \"wertf\". Why: Order. Interview pattern to name out loud: Dijkstra / topological sort.",
+  "examples": [
+    {
+      "input": "words = [\"wrt\",\"wrf\",\"er\",\"ett\",\"rftt\"]",
+      "output": "\"wertf\"",
+      "explanation": "Order."
+    },
+    {
+      "input": "words = [\"z\",\"x\"]",
+      "output": "\"zx\"",
+      "explanation": "z before x."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cAlien Dictionary\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input words = [\"wrt\",\"wrf\",\"er\",\"ett\",\"rftt\"] should still produce \"wertf\"."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
+    },
+    {
+      "title": "Aha insight",
+      "body": "The problem can be solved using topological sorting. The given words can be thought of as directed edges between characters of adjacent words. We can build a graph where each character is a node, and the edges represent the order between characters. Then, we can perform topological sorting to find the correct order of characters."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Dijkstra / topological sort. Weighted shortest paths or course-order constraints. Walk example `words = [\"wrt\",\"wrf\",\"er\",\"ett\",\"rftt\"]` \u2192 `\"wertf\"` while naming each variable, then code. Close with See code time and See code space."
+    }
+  ],
+  "pattern": {
+    "name": "Dijkstra / topological sort",
+    "whenToSpot": "Weighted shortest paths or course-order constraints."
+  },
+  "solutions": {
+    "python": "# Alien Dictionary\n# Idea: The problem can be solved using topological sorting. The given words can be thought of as directed edges between characters of adjacent words. We can build a graph where each character is a node, and the edges represent \u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nfrom collections import defaultdict, deque\n\n\nclass Solution:\n    def alienOrder(self, words: List[str]) -> str:\n        graph = defaultdict(list)\n        in_degree = defaultdict(int)\n\n        for i in range(len(words) - 1):\n            word1, word2 = words[i], words[i + 1]\n            for j in range(min(len(word1), len(word2))):\n                if word1[j] != word2[j]:\n                    graph[word1[j]].append(word2[j])\n                    in_degree[word2[j]] += 1\n                    break\n\n        queue = deque(char for char, indeg in in_degree.items() if indeg == 0)\n        result = []\n\n        while queue:\n            char = queue.popleft()\n            result.append(char)\n            for neighbor in graph[char]:\n                in_degree[neighbor] -= 1\n                if in_degree[neighbor] == 0:\n                    queue.append(neighbor)\n\n        if len(result) < len(in_degree):\n            return \"\"\n        return \"\".join(result)\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "From the coded loops for \u201cAlien Dictionary\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "See code",
+    "spaceReason": "Extra memory is See code from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cAlien Dictionary\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `words = [\"wrt\",\"wrf\",\"er\",\"ett\",\"rftt\"]` and check boundary indices / empty containers.",
+    "Second example `words = [\"z\",\"x\"]` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Dijkstra / topological sort and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Dijkstra / topological sort.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "graph",
+    "tracerId": "authored",
+    "defaultInput": {
+      "words": [
+        "wrt",
+        "wrf",
+        "er",
+        "ett",
+        "rftt"
+      ]
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Graph for \u201cAlien Dictionary\u201d. Nodes on stage; we walk edges.",
+        "state": {
+          "nums": [
+            "wrt",
+            "wrf",
+            "er",
+            "ett",
+            "rftt"
+          ],
+          "nodes": [
+            "wrt",
+            "wrf",
+            "er",
+            "ett",
+            "rftt"
+          ],
+          "edges": [],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit node wrt.",
+        "state": {
+          "nums": [
+            "wrt",
+            "wrf",
+            "er",
+            "ett",
+            "rftt"
+          ],
+          "nodes": [
+            "wrt",
+            "wrf",
+            "er",
+            "ett",
+            "rftt"
+          ],
+          "edges": [],
+          "currentIndex": 0,
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit node wrf.",
+        "state": {
+          "nums": [
+            "wrt",
+            "wrf",
+            "er",
+            "ett",
+            "rftt"
+          ],
+          "nodes": [
+            "wrt",
+            "wrf",
+            "er",
+            "ett",
+            "rftt"
+          ],
+          "edges": [],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit node er.",
+        "state": {
+          "nums": [
+            "wrt",
+            "wrf",
+            "er",
+            "ett",
+            "rftt"
+          ],
+          "nodes": [
+            "wrt",
+            "wrf",
+            "er",
+            "ett",
+            "rftt"
+          ],
+          "edges": [],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit node ett.",
+        "state": {
+          "nums": [
+            "wrt",
+            "wrf",
+            "er",
+            "ett",
+            "rftt"
+          ],
+          "nodes": [
+            "wrt",
+            "wrf",
+            "er",
+            "ett",
+            "rftt"
+          ],
+          "edges": [],
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit node rftt.",
+        "state": {
+          "nums": [
+            "wrt",
+            "wrf",
+            "er",
+            "ett",
+            "rftt"
+          ],
+          "nodes": [
+            "wrt",
+            "wrf",
+            "er",
+            "ett",
+            "rftt"
+          ],
+          "edges": [],
+          "currentIndex": 4,
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Traversal complete. Answer: \"wertf\".",
+        "state": {
+          "nums": [
+            "wrt",
+            "wrf",
+            "er",
+            "ett",
+            "rftt"
+          ],
+          "nodes": [
+            "wrt",
+            "wrf",
+            "er",
+            "ett",
+            "rftt"
+          ],
+          "edges": [],
+          "result": "wertf",
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "swim-in-rising-water",
+    "cheapest-flights-within-k-stops"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Alien Dictionary is the usual interview target: clear dijkstra / topological sort with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

@@ -1,0 +1,378 @@
+{
+  "id": 92,
+  "leetcodeNumber": 127,
+  "title": "Word Ladder",
+  "slug": "word-ladder",
+  "category": "graphs",
+  "difficulty": "Hard",
+  "leetcodeUrl": "https://leetcode.com/problems/word-ladder/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Picture the puzzle 'Word Ladder'. Here is the clever trick in plain words: This problem can be solved using a breadth-first search (BFS) approach. We start with the given beginWord and perform a BFS to explore all possible word transformations, one character change at a time. We maintain a queu We will still start slow, then use this trick so it becomes fast.",
+  "plainProblem": "Word Ladder: Picture the puzzle 'Word Ladder'. Worked example \u2014 input: beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\",\"cog\"]; expected output: 5. Why: Shortest ladder. Interview pattern to name out loud: Graph BFS / DFS.",
+  "examples": [
+    {
+      "input": "beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\",\"cog\"]",
+      "output": "5",
+      "explanation": "Shortest ladder."
+    },
+    {
+      "input": "endWord missing",
+      "output": "0",
+      "explanation": "Impossible."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cWord Ladder\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\",\"cog\"] should still produce 5."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
+    },
+    {
+      "title": "Aha insight",
+      "body": "This problem can be solved using a breadth-first search (BFS) approach. We start with the given beginWord and perform a BFS to explore all possible word transformations, one character change at a time. We maintain a queue to track the current word and its transformation path. For each word in the queue, we generate all possible words by changing one character at a time and check if it's in the word list. If it is, we add it to the queue and mark it as visited. We continue this process until we reach the endWord or the queue is empty."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Graph BFS / DFS. Islands, rooms, or connections on a grid/graph. Walk example `beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\",\"cog\"]` \u2192 `5` while naming each variable, then code. Close with See code time and See code space."
+    }
+  ],
+  "pattern": {
+    "name": "Graph BFS / DFS",
+    "whenToSpot": "Islands, rooms, or connections on a grid/graph."
+  },
+  "solutions": {
+    "python": "# Word Ladder\n# Idea: This problem can be solved using a breadth-first search (BFS) approach. We start with the given beginWord and perform a BFS to explore all possible word transformations, one character change at a time. We maintain a queu\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nfrom collections import deque\n\n\nclass Solution:\n    def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:\n        wordSet = set(wordList)\n        if endWord not in wordSet:\n            return 0\n\n        queue = deque([(beginWord, 1)])  # Start from the beginWord with level 1\n        # Cells/nodes we already explored\n        visited = set()\n\n        while queue:\n            word, level = queue.popleft()\n            if word == endWord:\n                return level\n\n            for i in range(len(word)):\n                for c in \"abcdefghijklmnopqrstuvwxyz\":\n                    new_word = word[:i] + c + word[i + 1 :]\n                    if new_word in wordSet and new_word not in visited:\n                        visited.add(new_word)\n                        queue.append((new_word, level + 1))\n\n        return 0\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "From the coded loops for \u201cWord Ladder\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "See code",
+    "spaceReason": "Extra memory is See code from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cWord Ladder\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\",\"cog\"]` and check boundary indices / empty containers.",
+    "Second example `endWord missing` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Graph BFS / DFS and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Graph BFS / DFS.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "grid",
+    "tracerId": "authored",
+    "defaultInput": {
+      "grid": [
+        [
+          "hot",
+          "dot",
+          "dog"
+        ],
+        [
+          "lot",
+          "log",
+          "cog"
+        ]
+      ]
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Grid for \u201cWord Ladder\u201d. We scan cells; visited cells light up.",
+        "state": {
+          "grid": [
+            [
+              "hot",
+              "dot",
+              "dog"
+            ],
+            [
+              "lot",
+              "log",
+              "cog"
+            ]
+          ],
+          "nums": [
+            "hot",
+            "dot",
+            "dog",
+            "lot",
+            "log",
+            "cog"
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (0,0) = hot.",
+        "state": {
+          "grid": [
+            [
+              "hot",
+              "dot",
+              "dog"
+            ],
+            [
+              "lot",
+              "log",
+              "cog"
+            ]
+          ],
+          "nums": [
+            "hot",
+            "dot",
+            "dog",
+            "lot",
+            "log",
+            "cog"
+          ],
+          "currentIndex": 0,
+          "currentValue": "hot",
+          "cell": [
+            0,
+            0
+          ],
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (0,1) = dot.",
+        "state": {
+          "grid": [
+            [
+              "hot",
+              "dot",
+              "dog"
+            ],
+            [
+              "lot",
+              "log",
+              "cog"
+            ]
+          ],
+          "nums": [
+            "hot",
+            "dot",
+            "dog",
+            "lot",
+            "log",
+            "cog"
+          ],
+          "currentIndex": 1,
+          "currentValue": "dot",
+          "cell": [
+            0,
+            1
+          ],
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (0,2) = dog.",
+        "state": {
+          "grid": [
+            [
+              "hot",
+              "dot",
+              "dog"
+            ],
+            [
+              "lot",
+              "log",
+              "cog"
+            ]
+          ],
+          "nums": [
+            "hot",
+            "dot",
+            "dog",
+            "lot",
+            "log",
+            "cog"
+          ],
+          "currentIndex": 2,
+          "currentValue": "dog",
+          "cell": [
+            0,
+            2
+          ],
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (1,0) = lot.",
+        "state": {
+          "grid": [
+            [
+              "hot",
+              "dot",
+              "dog"
+            ],
+            [
+              "lot",
+              "log",
+              "cog"
+            ]
+          ],
+          "nums": [
+            "hot",
+            "dot",
+            "dog",
+            "lot",
+            "log",
+            "cog"
+          ],
+          "currentIndex": 3,
+          "currentValue": "lot",
+          "cell": [
+            1,
+            0
+          ],
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (1,1) = log.",
+        "state": {
+          "grid": [
+            [
+              "hot",
+              "dot",
+              "dog"
+            ],
+            [
+              "lot",
+              "log",
+              "cog"
+            ]
+          ],
+          "nums": [
+            "hot",
+            "dot",
+            "dog",
+            "lot",
+            "log",
+            "cog"
+          ],
+          "currentIndex": 4,
+          "currentValue": "log",
+          "cell": [
+            1,
+            1
+          ],
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (1,2) = cog.",
+        "state": {
+          "grid": [
+            [
+              "hot",
+              "dot",
+              "dog"
+            ],
+            [
+              "lot",
+              "log",
+              "cog"
+            ]
+          ],
+          "nums": [
+            "hot",
+            "dot",
+            "dog",
+            "lot",
+            "log",
+            "cog"
+          ],
+          "currentIndex": 5,
+          "currentValue": "cog",
+          "cell": [
+            1,
+            2
+          ],
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Grid scan complete. Answer: 5.",
+        "state": {
+          "grid": [
+            [
+              "hot",
+              "dot",
+              "dog"
+            ],
+            [
+              "lot",
+              "log",
+              "cog"
+            ]
+          ],
+          "nums": [
+            "hot",
+            "dot",
+            "dog",
+            "lot",
+            "log",
+            "cog"
+          ],
+          "result": 5,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "graph-valid-tree"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Word Ladder is the usual interview target: clear graph bfs / dfs with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

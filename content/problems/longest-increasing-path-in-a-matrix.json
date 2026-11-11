@@ -1,0 +1,522 @@
+{
+  "id": 117,
+  "leetcodeNumber": 329,
+  "title": "Longest Increasing Path in a Matrix",
+  "slug": "longest-increasing-path-in-a-matrix",
+  "category": "2d-dp",
+  "difficulty": "Hard",
+  "leetcodeUrl": "https://leetcode.com/problems/longest-increasing-path-in-a-matrix/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Picture the puzzle 'Longest Increasing Path in a Matrix'. Here is the clever trick in plain words: The key idea is to use dynamic programming to find the longest increasing path in a matrix. We can start from each cell and perform a depth-first search (DFS) to explore the neighboring cells with larger values. We will still start slow, then use this trick so it becomes fast.",
+  "plainProblem": "Longest Increasing Path in a Matrix: Picture the puzzle 'Longest Increasing Path in a Matrix'. Worked example \u2014 input: matrix = [[9,9,4],[6,6,8],[2,1,1]]; expected output: 4. Why: 1\u21922\u21926\u21929. Interview pattern to name out loud: 2-D dynamic programming.",
+  "examples": [
+    {
+      "input": "matrix = [[9,9,4],[6,6,8],[2,1,1]]",
+      "output": "4",
+      "explanation": "1\u21922\u21926\u21929."
+    },
+    {
+      "input": "matrix = [[3,4,5],[3,2,6],[2,2,1]]",
+      "output": "4",
+      "explanation": "Path length."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cLongest Increasing Path in a Matrix\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input matrix = [[9,9,4],[6,6,8],[2,1,1]] should still produce 4."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
+    },
+    {
+      "title": "Aha insight",
+      "body": "The key idea is to use dynamic programming to find the longest increasing path in a matrix. We can start from each cell and perform a depth-first search (DFS) to explore the neighboring cells with larger values."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to 2-D dynamic programming. Two changing indices; fill a table. Walk example `matrix = [[9,9,4],[6,6,8],[2,1,1]]` \u2192 `4` while naming each variable, then code. Close with See code time and O(m * n) space."
+    }
+  ],
+  "pattern": {
+    "name": "2-D dynamic programming",
+    "whenToSpot": "Two changing indices; fill a table."
+  },
+  "solutions": {
+    "python": "# Longest Increasing Path in a Matrix\n# Idea: The key idea is to use dynamic programming to find the longest increasing path in a matrix. We can start from each cell and perform a depth-first search (DFS) to explore the neighboring cells with larger values.\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def longestIncreasingPath(self, matrix: List[List[int]]) -> int:\n        if not matrix:\n            return 0\n\n        # Define directions for moving to neighboring cells: up, down, left, right.\n        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]\n\n        # Function to perform DFS from a given cell (i, j).\n        def dfs(i, j):\n            # If the result for this cell is already calculated, return it.\n            if dp[i][j] != -1:\n                return dp[i][j]\n\n            # Initialize the result for this cell to 1 (counting itself).\n            dp[i][j] = 1\n\n            # Explore the four neighboring cells.\n            for dx, dy in directions:\n                x, y = i + dx, j + dy\n                if 0 <= x < m and 0 <= y < n and matrix[x][y] > matrix[i][j]:\n                    # If the neighboring cell has a larger value, perform DFS.\n                    dp[i][j] = max(dp[i][j], 1 + dfs(x, y))\n\n            return dp[i][j]\n\n        m, n = len(matrix), len(matrix[0])\n        # Table of answers to smaller problems (DP)\n        dp = [[-1] * n for _ in range(m)]  # Memoization table to store results.\n        max_path = 0\n\n        # Start DFS from each cell in the matrix.\n        for i in range(m):\n            for j in range(n):\n                max_path = max(max_path, dfs(i, j))\n\n        return max_path\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "From the coded loops for \u201cLongest Increasing Path in a Matrix\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "O(m * n)",
+    "spaceReason": "Extra memory is O(m * n) from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cLongest Increasing Path in a Matrix\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `matrix = [[9,9,4],[6,6,8],[2,1,1]]` and check boundary indices / empty containers.",
+    "Second example `matrix = [[3,4,5],[3,2,6],[2,2,1]]` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming 2-D dynamic programming and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like 2-D dynamic programming.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, O(m * n) space, and why."
+  ],
+  "animation": {
+    "visualType": "dp",
+    "tracerId": "authored",
+    "defaultInput": {
+      "matrix": [
+        "[",
+        "[",
+        "9",
+        ",",
+        "9",
+        ",",
+        "4",
+        "]"
+      ]
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "DP over the array for \u201cLongest Increasing Path in a Matrix\u201d. Each cell stores a best answer so far.",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "9",
+            ",",
+            "9",
+            ",",
+            "4",
+            "]"
+          ],
+          "table": [
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 0 (value [), dp becomes [.",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "9",
+            ",",
+            "9",
+            ",",
+            "4",
+            "]"
+          ],
+          "table": [
+            [
+              "[",
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "dp": [
+            "[",
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "currentIndex": 0,
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 1 (value [), dp becomes [[.",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "9",
+            ",",
+            "9",
+            ",",
+            "4",
+            "]"
+          ],
+          "table": [
+            [
+              "[",
+              "[[",
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "dp": [
+            "[",
+            "[[",
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 2 (value 9), dp becomes [[9.",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "9",
+            ",",
+            "9",
+            ",",
+            "4",
+            "]"
+          ],
+          "table": [
+            [
+              "[",
+              "[[",
+              "[[9",
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "dp": [
+            "[",
+            "[[",
+            "[[9",
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 3 (value ,), dp becomes [[9,.",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "9",
+            ",",
+            "9",
+            ",",
+            "4",
+            "]"
+          ],
+          "table": [
+            [
+              "[",
+              "[[",
+              "[[9",
+              "[[9,",
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "dp": [
+            "[",
+            "[[",
+            "[[9",
+            "[[9,",
+            0,
+            0,
+            0,
+            0
+          ],
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 4 (value 9), dp becomes [[9,9.",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "9",
+            ",",
+            "9",
+            ",",
+            "4",
+            "]"
+          ],
+          "table": [
+            [
+              "[",
+              "[[",
+              "[[9",
+              "[[9,",
+              "[[9,9",
+              0,
+              0,
+              0
+            ]
+          ],
+          "dp": [
+            "[",
+            "[[",
+            "[[9",
+            "[[9,",
+            "[[9,9",
+            0,
+            0,
+            0
+          ],
+          "currentIndex": 4,
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 5 (value ,), dp becomes [[9,9,.",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "9",
+            ",",
+            "9",
+            ",",
+            "4",
+            "]"
+          ],
+          "table": [
+            [
+              "[",
+              "[[",
+              "[[9",
+              "[[9,",
+              "[[9,9",
+              "[[9,9,",
+              0,
+              0
+            ]
+          ],
+          "dp": [
+            "[",
+            "[[",
+            "[[9",
+            "[[9,",
+            "[[9,9",
+            "[[9,9,",
+            0,
+            0
+          ],
+          "currentIndex": 5,
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 6 (value 4), dp becomes [[9,9,4.",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "9",
+            ",",
+            "9",
+            ",",
+            "4",
+            "]"
+          ],
+          "table": [
+            [
+              "[",
+              "[[",
+              "[[9",
+              "[[9,",
+              "[[9,9",
+              "[[9,9,",
+              "[[9,9,4",
+              0
+            ]
+          ],
+          "dp": [
+            "[",
+            "[[",
+            "[[9",
+            "[[9,",
+            "[[9,9",
+            "[[9,9,",
+            "[[9,9,4",
+            0
+          ],
+          "currentIndex": 6,
+          "result": null,
+          "highlights": {
+            "6": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "At index 7 (value ]), dp becomes ].",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "9",
+            ",",
+            "9",
+            ",",
+            "4",
+            "]"
+          ],
+          "table": [
+            [
+              "[",
+              "[[",
+              "[[9",
+              "[[9,",
+              "[[9,9",
+              "[[9,9,",
+              "[[9,9,4",
+              "]"
+            ]
+          ],
+          "dp": [
+            "[",
+            "[[",
+            "[[9",
+            "[[9,",
+            "[[9,9",
+            "[[9,9,",
+            "[[9,9,4",
+            "]"
+          ],
+          "currentIndex": 7,
+          "result": null,
+          "highlights": {
+            "7": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Best DP answer: 4.",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "9",
+            ",",
+            "9",
+            ",",
+            "4",
+            "]"
+          ],
+          "table": [
+            [
+              "[",
+              "[[",
+              "[[9",
+              "[[9,",
+              "[[9,9",
+              "[[9,9,",
+              "[[9,9,4",
+              "]"
+            ]
+          ],
+          "dp": [
+            "[",
+            "[[",
+            "[[9",
+            "[[9,",
+            "[[9,9",
+            "[[9,9,",
+            "[[9,9,4",
+            "]"
+          ],
+          "result": 4,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done",
+            "6": "done",
+            "7": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "interleaving-string",
+    "distinct-subsequences",
+    "edit-distance"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Longest Increasing Path in a Matrix is the usual interview target: clear 2-d dynamic programming with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

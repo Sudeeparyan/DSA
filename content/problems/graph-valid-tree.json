@@ -1,0 +1,279 @@
+{
+  "id": 91,
+  "leetcodeNumber": 261,
+  "title": "Graph Valid Tree",
+  "slug": "graph-valid-tree",
+  "category": "graphs",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/graph-valid-tree/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Picture the puzzle 'Graph Valid Tree'. Here is the clever trick in plain words: This problem can be solved using Depth-First Search (DFS) or Union-Find algorithm. We represent the given edges as an adjacency list, where each node points to its neighboring nodes. To determine whether the graph is a v We will still start slow, then use this trick so it becomes fast.",
+  "plainProblem": "Graph Valid Tree: Picture the puzzle 'Graph Valid Tree'. Worked example \u2014 input: n = 5, edges = [[0,1],[0,2],[0,3],[1,4]]; expected output: true. Why: Tree. Interview pattern to name out loud: Graph BFS / DFS.",
+  "examples": [
+    {
+      "input": "n = 5, edges = [[0,1],[0,2],[0,3],[1,4]]",
+      "output": "true",
+      "explanation": "Tree."
+    },
+    {
+      "input": "n = 5, edges = [[0,1],[1,2],[2,3],[1,3],[1,4]]",
+      "output": "false",
+      "explanation": "Cycle."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cGraph Valid Tree\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input n = 5, edges = [[0,1],[0,2],[0,3],[1,4]] should still produce true."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
+    },
+    {
+      "title": "Aha insight",
+      "body": "This problem can be solved using Depth-First Search (DFS) or Union-Find algorithm. We represent the given edges as an adjacency list, where each node points to its neighboring nodes. To determine whether the graph is a valid tree, we need to check two conditions: 1. The graph must be connected, i.e., there is a path between every pair of nodes. 2. There should be no cycles in the graph."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Graph BFS / DFS. Islands, rooms, or connections on a grid/graph. Walk example `n = 5, edges = [[0,1],[0,2],[0,3],[1,4]]` \u2192 `true` while naming each variable, then code. Close with See code time and See code space."
+    }
+  ],
+  "pattern": {
+    "name": "Graph BFS / DFS",
+    "whenToSpot": "Islands, rooms, or connections on a grid/graph."
+  },
+  "solutions": {
+    "python": "# Graph Valid Tree\n# Idea: This problem can be solved using Depth-First Search (DFS) or Union-Find algorithm. We represent the given edges as an adjacency list, where each node points to its neighboring nodes. To determine whether the graph is a v\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def validTree(self, n: int, edges: List[List[int]]) -> bool:\n        if len(edges) != n - 1:\n            return False\n\n        graph = defaultdict(list)\n        for u, v in edges:\n            graph[u].append(v)\n            graph[v].append(u)\n\n        # Cells/nodes we already explored\n\n        visited = set()\n\n        def dfs(node, parent):\n            visited.add(node)\n            for neighbor in graph[node]:\n                if neighbor != parent:\n                    if neighbor in visited or not dfs(neighbor, node):\n                        return False\n            return True\n\n        # Check if the graph is connected\n        if not dfs(0, -1):\n            return False\n\n        return len(visited) == n\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "From the coded loops for \u201cGraph Valid Tree\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "See code",
+    "spaceReason": "Extra memory is See code from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cGraph Valid Tree\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `n = 5, edges = [[0,1],[0,2],[0,3],[1,4]]` and check boundary indices / empty containers.",
+    "Second example `n = 5, edges = [[0,1],[1,2],[2,3],[1,3],[1,4]]` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Graph BFS / DFS and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Graph BFS / DFS.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "grid",
+    "tracerId": "authored",
+    "defaultInput": {
+      "grid": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Grid for \u201cGraph Valid Tree\u201d. We scan cells; visited cells light up.",
+        "state": {
+          "grid": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "nums": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (0,0) = 1.",
+        "state": {
+          "grid": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "nums": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "currentIndex": 0,
+          "currentValue": 1,
+          "cell": [
+            0,
+            0
+          ],
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (0,1) = 0.",
+        "state": {
+          "grid": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "nums": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "currentIndex": 1,
+          "currentValue": 0,
+          "cell": [
+            0,
+            1
+          ],
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (1,0) = 0.",
+        "state": {
+          "grid": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "nums": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "currentIndex": 2,
+          "currentValue": 0,
+          "cell": [
+            1,
+            0
+          ],
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (1,1) = 1.",
+        "state": {
+          "grid": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "nums": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "currentIndex": 3,
+          "currentValue": 1,
+          "cell": [
+            1,
+            1
+          ],
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Grid scan complete. Answer: true.",
+        "state": {
+          "grid": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "nums": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "result": true,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "number-of-connected-components-in-an-undirected-graph",
+    "word-ladder"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Graph Valid Tree is the usual interview target: clear graph bfs / dfs with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

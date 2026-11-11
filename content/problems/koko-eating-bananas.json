@@ -1,0 +1,207 @@
+{
+  "id": 30,
+  "leetcodeNumber": 875,
+  "title": "Koko Eating Bananas",
+  "slug": "koko-eating-bananas",
+  "category": "binary-search",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/koko-eating-bananas/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Koko must finish banana piles before guards return. Find the slowest eating speed that still works.",
+  "plainProblem": "Koko Eating Bananas: Koko must finish banana piles before guards return. Worked example \u2014 input: piles = [3,6,7,11], h = 8; expected output: 4. Why: Min speed. Interview pattern to name out loud: Binary search (halving the range).",
+  "examples": [
+    {
+      "input": "piles = [3,6,7,11], h = 8",
+      "output": "4",
+      "explanation": "Min speed."
+    },
+    {
+      "input": "piles = [30,11,23,4,20], h = 5",
+      "output": "30",
+      "explanation": "Faster needed."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cKoko Eating Bananas\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input piles = [3,6,7,11], h = 8 should still produce 4."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: O(n * log(max_pile)."
+    },
+    {
+      "title": "Aha insight",
+      "body": "The key idea is to perform binary search to find the minimum value of the integer 'k' such that Koko can eat all the bananas within 'hours' hours. We can define a binary search space for 'k' and perform binary search to find the smallest 'k' that satisfies the given condition."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Binary search (halving the range). Sorted data or a monotonic yes/no answer. Walk example `piles = [3,6,7,11], h = 8` \u2192 `4` while naming each variable, then code. Close with O(n * log(max_pile) time and O(1) space."
+    }
+  ],
+  "pattern": {
+    "name": "Binary search (halving the range)",
+    "whenToSpot": "Sorted data or a monotonic yes/no answer."
+  },
+  "solutions": {
+    "python": "# Koko Eating Bananas\n# Idea: The key idea is to perform binary search to find the minimum value of the integer 'k' such that Koko can eat all the bananas within 'hours' hours. We can define a binary search space for 'k' and perform binary search to \u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def minEatingSpeed(self, piles: List[int], h: int) -> int:\n        left, right = 1, max(piles)\n\n        while left < right:\n            mid = left + (right - left) // 2\n            hours = sum((pile + mid - 1) // mid for pile in piles)\n\n            if hours > h:\n                left = mid + 1\n            else:\n                right = mid\n\n        return left\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(n * log(max_pile)",
+    "timeReason": "From the coded loops for \u201cKoko Eating Bananas\u201d: O(n * log(max_pile) matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "O(1)",
+    "spaceReason": "Extra memory is O(1) from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cKoko Eating Bananas\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `piles = [3,6,7,11], h = 8` and check boundary indices / empty containers.",
+    "Second example `piles = [30,11,23,4,20], h = 5` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Binary search (halving the range) and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Binary search (halving the range).'",
+    "Narrate one example before typing.",
+    "Close with complexity: O(n * log(max_pile) time, O(1) space, and why."
+  ],
+  "animation": {
+    "visualType": "array",
+    "tracerId": "authored",
+    "defaultInput": {
+      "nums": [
+        3,
+        6,
+        7,
+        11
+      ]
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Lay out the array for \u201cKoko Eating Bananas\u201d. Watch the pointer walk the answer into place.",
+        "state": {
+          "nums": [
+            3,
+            6,
+            7,
+            11
+          ],
+          "result": null,
+          "highlights": {},
+          "currentIndex": null
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 0 holds 3.",
+        "state": {
+          "nums": [
+            3,
+            6,
+            7,
+            11
+          ],
+          "target": null,
+          "currentIndex": 0,
+          "currentValue": 3,
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 1 holds 6.",
+        "state": {
+          "nums": [
+            3,
+            6,
+            7,
+            11
+          ],
+          "target": null,
+          "currentIndex": 1,
+          "currentValue": 6,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 2 holds 7.",
+        "state": {
+          "nums": [
+            3,
+            6,
+            7,
+            11
+          ],
+          "target": null,
+          "currentIndex": 2,
+          "currentValue": 7,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 3 holds 11.",
+        "state": {
+          "nums": [
+            3,
+            6,
+            7,
+            11
+          ],
+          "target": null,
+          "currentIndex": 3,
+          "currentValue": 11,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Answer settles: 4.",
+        "state": {
+          "nums": [
+            3,
+            6,
+            7,
+            11
+          ],
+          "target": null,
+          "currentIndex": 3,
+          "result": 4,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "search-a-2d-matrix",
+    "find-minimum-in-rotated-sorted-array",
+    "search-in-rotated-sorted-array"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Koko Eating Bananas is the usual interview target: clear binary search (halving the range) with competitive complexity (O(n * log(max_pile) time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

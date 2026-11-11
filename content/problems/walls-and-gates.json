@@ -1,0 +1,584 @@
+{
+  "id": 86,
+  "leetcodeNumber": 286,
+  "title": "Walls and Gates",
+  "slug": "walls-and-gates",
+  "category": "graphs",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/walls-and-gates/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Picture the puzzle 'Walls and Gates'. Here is the clever trick in plain words: The problem is to fill each empty room (represented by INF) with the distance to the nearest gate. This can be approached using Breadth-First Search (BFS), where the gates are the starting points and the empty rooms are We will still start slow, then use this trick so it becomes fast.",
+  "plainProblem": "Walls and Gates: Picture the puzzle 'Walls and Gates'. Worked example \u2014 input: rooms with INF/gates; expected output: filled distances. Why: Multi-source BFS. Interview pattern to name out loud: Graph BFS / DFS.",
+  "examples": [
+    {
+      "input": "rooms with INF/gates",
+      "output": "filled distances",
+      "explanation": "Multi-source BFS."
+    },
+    {
+      "input": "empty rooms only",
+      "output": "unchanged INF",
+      "explanation": "No gates."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cWalls and Gates\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input rooms with INF/gates should still produce filled distances."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
+    },
+    {
+      "title": "Aha insight",
+      "body": "The problem is to fill each empty room (represented by INF) with the distance to the nearest gate. This can be approached using Breadth-First Search (BFS), where the gates are the starting points and the empty rooms are visited layer by layer."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Graph BFS / DFS. Islands, rooms, or connections on a grid/graph. Walk example `rooms with INF/gates` \u2192 `filled distances` while naming each variable, then code. Close with See code time and See code space."
+    }
+  ],
+  "pattern": {
+    "name": "Graph BFS / DFS",
+    "whenToSpot": "Islands, rooms, or connections on a grid/graph."
+  },
+  "solutions": {
+    "python": "# Walls and Gates\n# Idea: The problem is to fill each empty room (represented by INF) with the distance to the nearest gate. This can be approached using Breadth-First Search (BFS), where the gates are the starting points and the empty rooms are \u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def wallsAndGates(self, rooms: List[List[int]]) -> None:\n        if not rooms:\n            return\n\n        rows, cols = len(rooms), len(rooms[0])\n        gates = [(i, j) for i in range(rows) for j in range(cols) if rooms[i][j] == 0]\n        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]\n\n        for gate_row, gate_col in gates:\n            # Cells/nodes we already explored\n            visited = set()  # To track visited cells in BFS\n            queue = deque([(gate_row, gate_col, 0)])\n\n            while queue:\n                row, col, distance = queue.popleft()\n                rooms[row][col] = min(rooms[row][col], distance)\n                visited.add((row, col))\n\n                for dr, dc in directions:\n                    new_row, new_col = row + dr, col + dc\n\n                    if (\n                        0 <= new_row < rows\n                        and 0 <= new_col < cols\n                        and rooms[new_row][new_col] != -1\n                        and (new_row, new_col) not in visited\n                    ):\n                        queue.append((new_row, new_col, distance + 1))\n                        visited.add((new_row, new_col))\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "From the coded loops for \u201cWalls and Gates\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "See code",
+    "spaceReason": "Extra memory is See code from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cWalls and Gates\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `rooms with INF/gates` and check boundary indices / empty containers.",
+    "Second example `empty rooms only` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Graph BFS / DFS and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Graph BFS / DFS.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "grid",
+    "tracerId": "authored",
+    "defaultInput": {
+      "grid": [
+        [
+          "r",
+          "o",
+          "o"
+        ],
+        [
+          "m",
+          "s",
+          " "
+        ],
+        [
+          "w",
+          "i",
+          "t"
+        ]
+      ]
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Grid for \u201cWalls and Gates\u201d. We scan cells; visited cells light up.",
+        "state": {
+          "grid": [
+            [
+              "r",
+              "o",
+              "o"
+            ],
+            [
+              "m",
+              "s",
+              " "
+            ],
+            [
+              "w",
+              "i",
+              "t"
+            ]
+          ],
+          "nums": [
+            "r",
+            "o",
+            "o",
+            "m",
+            "s",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (0,0) = r.",
+        "state": {
+          "grid": [
+            [
+              "r",
+              "o",
+              "o"
+            ],
+            [
+              "m",
+              "s",
+              " "
+            ],
+            [
+              "w",
+              "i",
+              "t"
+            ]
+          ],
+          "nums": [
+            "r",
+            "o",
+            "o",
+            "m",
+            "s",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "currentIndex": 0,
+          "currentValue": "r",
+          "cell": [
+            0,
+            0
+          ],
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (0,1) = o.",
+        "state": {
+          "grid": [
+            [
+              "r",
+              "o",
+              "o"
+            ],
+            [
+              "m",
+              "s",
+              " "
+            ],
+            [
+              "w",
+              "i",
+              "t"
+            ]
+          ],
+          "nums": [
+            "r",
+            "o",
+            "o",
+            "m",
+            "s",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "currentIndex": 1,
+          "currentValue": "o",
+          "cell": [
+            0,
+            1
+          ],
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (0,2) = o.",
+        "state": {
+          "grid": [
+            [
+              "r",
+              "o",
+              "o"
+            ],
+            [
+              "m",
+              "s",
+              " "
+            ],
+            [
+              "w",
+              "i",
+              "t"
+            ]
+          ],
+          "nums": [
+            "r",
+            "o",
+            "o",
+            "m",
+            "s",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "currentIndex": 2,
+          "currentValue": "o",
+          "cell": [
+            0,
+            2
+          ],
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (1,0) = m.",
+        "state": {
+          "grid": [
+            [
+              "r",
+              "o",
+              "o"
+            ],
+            [
+              "m",
+              "s",
+              " "
+            ],
+            [
+              "w",
+              "i",
+              "t"
+            ]
+          ],
+          "nums": [
+            "r",
+            "o",
+            "o",
+            "m",
+            "s",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "currentIndex": 3,
+          "currentValue": "m",
+          "cell": [
+            1,
+            0
+          ],
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (1,1) = s.",
+        "state": {
+          "grid": [
+            [
+              "r",
+              "o",
+              "o"
+            ],
+            [
+              "m",
+              "s",
+              " "
+            ],
+            [
+              "w",
+              "i",
+              "t"
+            ]
+          ],
+          "nums": [
+            "r",
+            "o",
+            "o",
+            "m",
+            "s",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "currentIndex": 4,
+          "currentValue": "s",
+          "cell": [
+            1,
+            1
+          ],
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (1,2) =  .",
+        "state": {
+          "grid": [
+            [
+              "r",
+              "o",
+              "o"
+            ],
+            [
+              "m",
+              "s",
+              " "
+            ],
+            [
+              "w",
+              "i",
+              "t"
+            ]
+          ],
+          "nums": [
+            "r",
+            "o",
+            "o",
+            "m",
+            "s",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "currentIndex": 5,
+          "currentValue": " ",
+          "cell": [
+            1,
+            2
+          ],
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (2,0) = w.",
+        "state": {
+          "grid": [
+            [
+              "r",
+              "o",
+              "o"
+            ],
+            [
+              "m",
+              "s",
+              " "
+            ],
+            [
+              "w",
+              "i",
+              "t"
+            ]
+          ],
+          "nums": [
+            "r",
+            "o",
+            "o",
+            "m",
+            "s",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "currentIndex": 6,
+          "currentValue": "w",
+          "cell": [
+            2,
+            0
+          ],
+          "result": null,
+          "highlights": {
+            "6": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (2,1) = i.",
+        "state": {
+          "grid": [
+            [
+              "r",
+              "o",
+              "o"
+            ],
+            [
+              "m",
+              "s",
+              " "
+            ],
+            [
+              "w",
+              "i",
+              "t"
+            ]
+          ],
+          "nums": [
+            "r",
+            "o",
+            "o",
+            "m",
+            "s",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "currentIndex": 7,
+          "currentValue": "i",
+          "cell": [
+            2,
+            1
+          ],
+          "result": null,
+          "highlights": {
+            "7": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit cell (2,2) = t.",
+        "state": {
+          "grid": [
+            [
+              "r",
+              "o",
+              "o"
+            ],
+            [
+              "m",
+              "s",
+              " "
+            ],
+            [
+              "w",
+              "i",
+              "t"
+            ]
+          ],
+          "nums": [
+            "r",
+            "o",
+            "o",
+            "m",
+            "s",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "currentIndex": 8,
+          "currentValue": "t",
+          "cell": [
+            2,
+            2
+          ],
+          "result": null,
+          "highlights": {
+            "8": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Grid scan complete. Answer: \"filled distances\".",
+        "state": {
+          "grid": [
+            [
+              "r",
+              "o",
+              "o"
+            ],
+            [
+              "m",
+              "s",
+              " "
+            ],
+            [
+              "w",
+              "i",
+              "t"
+            ]
+          ],
+          "nums": [
+            "r",
+            "o",
+            "o",
+            "m",
+            "s",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "result": "filled distances",
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done",
+            "6": "done",
+            "7": "done",
+            "8": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "rotting-oranges",
+    "course-schedule",
+    "course-schedule-ii"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Walls and Gates is the usual interview target: clear graph bfs / dfs with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

@@ -1,0 +1,353 @@
+{
+  "id": 95,
+  "leetcodeNumber": 743,
+  "title": "Network Delay Time",
+  "slug": "network-delay-time",
+  "category": "advanced-graphs",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/network-delay-time/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Picture the puzzle 'Network Delay Time'. Here is the clever trick in plain words: The problem can be solved using Dijkstra's algorithm to find the shortest paths from a source node to all other nodes in a weighted graph. We start by creating an adjacency list representation of the graph. We maintain a We will still start slow, then use this trick so it becomes fast.",
+  "plainProblem": "Network Delay Time: Picture the puzzle 'Network Delay Time'. Worked example \u2014 input: times = [[2,1,1],[2,3,1],[3,4,1]], n = 4, k = 2; expected output: 2. Why: All informed. Interview pattern to name out loud: Dijkstra / topological sort.",
+  "examples": [
+    {
+      "input": "times = [[2,1,1],[2,3,1],[3,4,1]], n = 4, k = 2",
+      "output": "2",
+      "explanation": "All informed."
+    },
+    {
+      "input": "times = [[1,2,1]], n = 2, k = 1",
+      "output": "1",
+      "explanation": "One edge."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cNetwork Delay Time\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input times = [[2,1,1],[2,3,1],[3,4,1]], n = 4, k = 2 should still produce 2."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
+    },
+    {
+      "title": "Aha insight",
+      "body": "The problem can be solved using Dijkstra's algorithm to find the shortest paths from a source node to all other nodes in a weighted graph. We start by creating an adjacency list representation of the graph. We maintain a priority queue to select the next node to visit based on the minimum distance. We initialize distances to all nodes as infinity except for the source node, which is set to 0. We continue exploring nodes and updating distances until the priority queue is empty. The maximum distance among all nodes will be the answer."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Dijkstra / topological sort. Weighted shortest paths or course-order constraints. Walk example `times = [[2,1,1],[2,3,1],[3,4,1]], n = 4, k = 2` \u2192 `2` while naming each variable, then code. Close with See code time and See code space."
+    }
+  ],
+  "pattern": {
+    "name": "Dijkstra / topological sort",
+    "whenToSpot": "Weighted shortest paths or course-order constraints."
+  },
+  "solutions": {
+    "python": "# Network Delay Time\n# Idea: The problem can be solved using Dijkstra's algorithm to find the shortest paths from a source node to all other nodes in a weighted graph. We start by creating an adjacency list representation of the graph. We maintain a\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nimport heapq\nfrom collections import defaultdict\n\n\nclass Solution:\n    def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:\n        # Create an adjacency list representation of the graph\n        graph = defaultdict(list)\n        for u, v, w in times:\n            graph[u].append((v, w))\n\n        # Initialize distances to all nodes as infinity except for the source node\n        distances = [float(\"inf\")] * (n + 1)\n        distances[k] = 0\n\n        # Priority queue to select the next node to visit based on the minimum distance\n        pq = [(0, k)]\n\n        while pq:\n            distance, node = heapq.heappop(pq)\n            if distance > distances[node]:\n                continue\n            for neighbor, weight in graph[node]:\n                if distance + weight < distances[neighbor]:\n                    distances[neighbor] = distance + weight\n                    # Heap ops keep min/max ready\n                    heapq.heappush(pq, (distances[neighbor], neighbor))\n\n        # Find the maximum distance among all nodes\n        max_distance = max(distances[1:])\n\n        return max_distance if max_distance < float(\"inf\") else -1\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "From the coded loops for \u201cNetwork Delay Time\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "See code",
+    "spaceReason": "Extra memory is See code from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cNetwork Delay Time\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `times = [[2,1,1],[2,3,1],[3,4,1]], n = 4, k = 2` and check boundary indices / empty containers.",
+    "Second example `times = [[1,2,1]], n = 2, k = 1` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Dijkstra / topological sort and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Dijkstra / topological sort.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "graph",
+    "tracerId": "authored",
+    "defaultInput": {
+      "n": 4,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          0
+        ]
+      ]
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Graph for \u201cNetwork Delay Time\u201d. Nodes on stage; we walk edges.",
+        "state": {
+          "nums": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "nodes": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              0
+            ]
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit node 0.",
+        "state": {
+          "nums": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "nodes": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              0
+            ]
+          ],
+          "currentIndex": 0,
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit node 1.",
+        "state": {
+          "nums": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "nodes": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              0
+            ]
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit node 2.",
+        "state": {
+          "nums": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "nodes": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              0
+            ]
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit node 3.",
+        "state": {
+          "nums": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "nodes": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              0
+            ]
+          ],
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Traversal complete. Answer: 2.",
+        "state": {
+          "nums": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "nodes": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              0
+            ]
+          ],
+          "result": 2,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "min-cost-to-connect-all-points",
+    "swim-in-rising-water",
+    "alien-dictionary"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Network Delay Time is the usual interview target: clear dijkstra / topological sort with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

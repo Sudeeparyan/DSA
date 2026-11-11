@@ -1,0 +1,391 @@
+{
+  "id": 111,
+  "leetcodeNumber": 62,
+  "title": "Unique Paths",
+  "slug": "unique-paths",
+  "category": "2d-dp",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/unique-paths/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Picture the puzzle 'Unique Paths'. Here is the clever trick in plain words: The key idea is to use dynamic programming to count the number of unique paths from the top-left corner to the bottom-right corner of a grid. We create a dynamic programming grid 'dp', where dp[i][j] represents the numbe We will still start slow, then use this trick so it becomes fast.",
+  "plainProblem": "Unique Paths: Picture the puzzle 'Unique Paths'. Worked example \u2014 input: m = 3, n = 7; expected output: 28. Why: Paths. Interview pattern to name out loud: 2-D dynamic programming.",
+  "examples": [
+    {
+      "input": "m = 3, n = 7",
+      "output": "28",
+      "explanation": "Paths."
+    },
+    {
+      "input": "m = 3, n = 2",
+      "output": "3",
+      "explanation": "Paths."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cUnique Paths\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input m = 3, n = 7 should still produce 28."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
+    },
+    {
+      "title": "Aha insight",
+      "body": "The key idea is to use dynamic programming to count the number of unique paths from the top-left corner to the bottom-right corner of a grid. We create a dynamic programming grid 'dp', where dp[i][j] represents the number of unique paths to reach cell (i, j) from the top-left corner."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to 2-D dynamic programming. Two changing indices; fill a table. Walk example `m = 3, n = 7` \u2192 `28` while naming each variable, then code. Close with See code time and O(m*n) space."
+    }
+  ],
+  "pattern": {
+    "name": "2-D dynamic programming",
+    "whenToSpot": "Two changing indices; fill a table."
+  },
+  "solutions": {
+    "python": "# Unique Paths\n# Idea: The key idea is to use dynamic programming to count the number of unique paths from the top-left corner to the bottom-right corner of a grid. We create a dynamic programming grid 'dp', where dp[i][j] represents the numbe\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def uniquePaths(self, m: int, n: int) -> int:\n        # Initialize a 2D dp grid of size m x n with all values set to 1.\n        # Table of answers to smaller problems (DP)\n        dp = [[1] * n for _ in range(m)]\n\n        # Fill in the dp grid using dynamic programming.\n        for i in range(1, m):\n            for j in range(1, n):\n                dp[i][j] = dp[i - 1][j] + dp[i][j - 1]\n\n        # The value in dp[m-1][n-1] represents the number of unique paths.\n        return dp[m - 1][n - 1]\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "From the coded loops for \u201cUnique Paths\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "O(m*n)",
+    "spaceReason": "Extra memory is O(m*n) from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cUnique Paths\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `m = 3, n = 7` and check boundary indices / empty containers.",
+    "Second example `m = 3, n = 2` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming 2-D dynamic programming and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like 2-D dynamic programming.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, O(m*n) space, and why."
+  ],
+  "animation": {
+    "visualType": "dp",
+    "tracerId": "authored",
+    "defaultInput": {
+      "n": 7
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "DP row for \u201cUnique Paths\u201d. dp[0] starts as the base case.",
+        "state": {
+          "nums": [
+            1,
+            1,
+            2,
+            3,
+            5,
+            8,
+            13,
+            21
+          ],
+          "table": [
+            [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "result": null,
+          "highlights": {
+            "0": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Fill dp[1] using earlier answers \u2192 1.",
+        "state": {
+          "nums": [
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "table": [
+            [
+              1,
+              1,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Fill dp[2] using earlier answers \u2192 2.",
+        "state": {
+          "nums": [
+            1,
+            1,
+            2,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "table": [
+            [
+              1,
+              1,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Fill dp[3] using earlier answers \u2192 3.",
+        "state": {
+          "nums": [
+            1,
+            1,
+            2,
+            3,
+            0,
+            0,
+            0,
+            0
+          ],
+          "table": [
+            [
+              1,
+              1,
+              2,
+              3,
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Fill dp[4] using earlier answers \u2192 5.",
+        "state": {
+          "nums": [
+            1,
+            1,
+            2,
+            3,
+            5,
+            0,
+            0,
+            0
+          ],
+          "table": [
+            [
+              1,
+              1,
+              2,
+              3,
+              5,
+              0,
+              0,
+              0
+            ]
+          ],
+          "currentIndex": 4,
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Fill dp[5] using earlier answers \u2192 8.",
+        "state": {
+          "nums": [
+            1,
+            1,
+            2,
+            3,
+            5,
+            8,
+            0,
+            0
+          ],
+          "table": [
+            [
+              1,
+              1,
+              2,
+              3,
+              5,
+              8,
+              0,
+              0
+            ]
+          ],
+          "currentIndex": 5,
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Fill dp[6] using earlier answers \u2192 13.",
+        "state": {
+          "nums": [
+            1,
+            1,
+            2,
+            3,
+            5,
+            8,
+            13,
+            0
+          ],
+          "table": [
+            [
+              1,
+              1,
+              2,
+              3,
+              5,
+              8,
+              13,
+              0
+            ]
+          ],
+          "currentIndex": 6,
+          "result": null,
+          "highlights": {
+            "6": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Fill dp[7] using earlier answers \u2192 21.",
+        "state": {
+          "nums": [
+            1,
+            1,
+            2,
+            3,
+            5,
+            8,
+            13,
+            21
+          ],
+          "table": [
+            [
+              1,
+              1,
+              2,
+              3,
+              5,
+              8,
+              13,
+              21
+            ]
+          ],
+          "currentIndex": 7,
+          "result": null,
+          "highlights": {
+            "7": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "DP finished. Answer: 28.",
+        "state": {
+          "nums": [
+            1,
+            1,
+            2,
+            3,
+            5,
+            8,
+            13,
+            21
+          ],
+          "table": [
+            [
+              1,
+              1,
+              2,
+              3,
+              5,
+              8,
+              13,
+              21
+            ]
+          ],
+          "result": 28,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done",
+            "6": "done",
+            "7": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "longest-common-subsequence",
+    "best-time-to-buy-and-sell-stock-with-cooldown"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Unique Paths is the usual interview target: clear 2-d dynamic programming with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

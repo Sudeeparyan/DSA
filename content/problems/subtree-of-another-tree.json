@@ -1,0 +1,309 @@
+{
+  "id": 51,
+  "leetcodeNumber": 572,
+  "title": "Subtree Of Another Tree",
+  "slug": "subtree-of-another-tree",
+  "category": "trees",
+  "difficulty": "Easy",
+  "leetcodeUrl": "https://leetcode.com/problems/subtree-of-another-tree/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Picture the puzzle 'Subtree Of Another Tree'. Here is the clever trick in plain words: To check if one binary tree is a subtree of another, we can use a recursive approach. For each node in the main tree, we check if the current subtree rooted at that node is equal to the given subtree. If not, we recursiv We will still start slow, then use this trick so it becomes fast.",
+  "plainProblem": "Subtree Of Another Tree: Picture the puzzle 'Subtree Of Another Tree'. Worked example \u2014 input: root = [3,4,5,1,2], subRoot = [4,1,2]; expected output: true. Why: Subtree. Interview pattern to name out loud: Tree DFS / BFS recursion.",
+  "examples": [
+    {
+      "input": "root = [3,4,5,1,2], subRoot = [4,1,2]",
+      "output": "true",
+      "explanation": "Subtree."
+    },
+    {
+      "input": "root = [3,4,5,1,2,null,null,null,null,0], subRoot = [4,1,2]",
+      "output": "false",
+      "explanation": "Extra 0."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cSubtree Of Another Tree\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input root = [3,4,5,1,2], subRoot = [4,1,2] should still produce true."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: O(m * n)."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To check if one binary tree is a subtree of another, we can use a recursive approach. For each node in the main tree, we check if the current subtree rooted at that node is equal to the given subtree. If not, we recursively check the left and right subtrees."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Tree DFS / BFS recursion. Hierarchical nodes with left/right children. Walk example `root = [3,4,5,1,2], subRoot = [4,1,2]` \u2192 `true` while naming each variable, then code. Close with O(m * n) time and O(h) space."
+    }
+  ],
+  "pattern": {
+    "name": "Tree DFS / BFS recursion",
+    "whenToSpot": "Hierarchical nodes with left/right children."
+  },
+  "solutions": {
+    "python": "# Subtree Of Another Tree\n# Idea: To check if one binary tree is a subtree of another, we can use a recursive approach. For each node in the main tree, we check if the current subtree rooted at that node is equal to the given subtree. If not, we recursiv\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\n# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\n\nclass Solution:\n    def isSubtree(self, s: TreeNode, t: TreeNode) -> bool:\n        if not s:\n            return False\n        if self.isSameTree(s, t):\n            return True\n        return self.isSubtree(s.left, t) or self.isSubtree(s.right, t)\n\n    def isSameTree(self, p, q):\n        if not p and not q:\n            return True\n        if not p or not q or p.val != q.val:\n            return False\n        return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(m * n)",
+    "timeReason": "From the coded loops for \u201cSubtree Of Another Tree\u201d: O(m * n) matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "O(h)",
+    "spaceReason": "Extra memory is O(h) from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cSubtree Of Another Tree\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `root = [3,4,5,1,2], subRoot = [4,1,2]` and check boundary indices / empty containers.",
+    "Second example `root = [3,4,5,1,2,null,null,null,null,0], subRoot = [4,1,2]` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Tree DFS / BFS recursion and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Tree DFS / BFS recursion.'",
+    "Narrate one example before typing.",
+    "Close with complexity: O(m * n) time, O(h) space, and why."
+  ],
+  "animation": {
+    "visualType": "tree",
+    "tracerId": "authored",
+    "defaultInput": {
+      "root": [
+        3,
+        4,
+        5,
+        1,
+        2
+      ]
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Binary tree for \u201cSubtree Of Another Tree\u201d starts empty on stage \u2014 we reveal levels.",
+        "state": {
+          "nodes": [
+            3,
+            4,
+            5,
+            1,
+            2
+          ],
+          "nums": [
+            3,
+            4,
+            5,
+            1,
+            2
+          ],
+          "visible": [],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Reveal node 3 at heap-index 0.",
+        "state": {
+          "nodes": [
+            3,
+            4,
+            5,
+            1,
+            2
+          ],
+          "nums": [
+            3,
+            4,
+            5,
+            1,
+            2
+          ],
+          "visible": [
+            3
+          ],
+          "currentIndex": 0,
+          "currentValue": 3,
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Reveal node 4 at heap-index 1.",
+        "state": {
+          "nodes": [
+            3,
+            4,
+            5,
+            1,
+            2
+          ],
+          "nums": [
+            3,
+            4,
+            5,
+            1,
+            2
+          ],
+          "visible": [
+            3,
+            4
+          ],
+          "currentIndex": 1,
+          "currentValue": 4,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Reveal node 5 at heap-index 2.",
+        "state": {
+          "nodes": [
+            3,
+            4,
+            5,
+            1,
+            2
+          ],
+          "nums": [
+            3,
+            4,
+            5,
+            1,
+            2
+          ],
+          "visible": [
+            3,
+            4,
+            5
+          ],
+          "currentIndex": 2,
+          "currentValue": 5,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Reveal node 1 at heap-index 3.",
+        "state": {
+          "nodes": [
+            3,
+            4,
+            5,
+            1,
+            2
+          ],
+          "nums": [
+            3,
+            4,
+            5,
+            1,
+            2
+          ],
+          "visible": [
+            3,
+            4,
+            5,
+            1
+          ],
+          "currentIndex": 3,
+          "currentValue": 1,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Reveal node 2 at heap-index 4.",
+        "state": {
+          "nodes": [
+            3,
+            4,
+            5,
+            1,
+            2
+          ],
+          "nums": [
+            3,
+            4,
+            5,
+            1,
+            2
+          ],
+          "visible": [
+            3,
+            4,
+            5,
+            1,
+            2
+          ],
+          "currentIndex": 4,
+          "currentValue": 2,
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Tree fully revealed. Answer: true.",
+        "state": {
+          "nodes": [
+            3,
+            4,
+            5,
+            1,
+            2
+          ],
+          "nums": [
+            3,
+            4,
+            5,
+            1,
+            2
+          ],
+          "visible": [
+            3,
+            4,
+            5,
+            1,
+            2
+          ],
+          "result": true,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "same-tree",
+    "lowest-common-ancestor-of-a-binary-search-tree",
+    "binary-tree-level-order-traversal"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Subtree Of Another Tree is the usual interview target: clear tree dfs / bfs recursion with competitive complexity (O(m * n) time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

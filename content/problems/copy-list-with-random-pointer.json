@@ -1,0 +1,446 @@
+{
+  "id": 39,
+  "leetcodeNumber": 138,
+  "title": "Copy List with Random Pointer",
+  "slug": "copy-list-with-random-pointer",
+  "category": "linked-list",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/copy-list-with-random-pointer/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Clone a list where each node also points somewhere random \u2014 copy both kinds of arrows.",
+  "plainProblem": "Copy List with Random Pointer: Clone a list where each node also points somewhere random \u2014 copy both kinds of arrows. Worked example \u2014 input: head with next+random links; expected output: deep copy. Why: New nodes, same shape. Interview pattern to name out loud: Pointer rewriting on a linked list.",
+  "examples": [
+    {
+      "input": "head with next+random links",
+      "output": "deep copy",
+      "explanation": "New nodes, same shape."
+    },
+    {
+      "input": "two-node mutual random",
+      "output": "deep copy",
+      "explanation": "Random preserved."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cCopy List with Random Pointer\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input head with next+random links should still produce deep copy."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: O(n)."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To create a deep copy of a linked list with random pointers, we can follow a three-step approach. First, we duplicate each node in the original list and insert the duplicates right after their corresponding original nodes. Second, we update the random pointers of the duplicate nodes to point to the correct nodes. Finally, we split the combined list into two separate lists: the original list and the duplicated list."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Pointer rewriting on a linked list. Nodes with next pointers; reverse, merge, cycle. Walk example `head with next+random links` \u2192 `deep copy` while naming each variable, then code. Close with O(n) time and O(n) space."
+    }
+  ],
+  "pattern": {
+    "name": "Pointer rewriting on a linked list",
+    "whenToSpot": "Nodes with next pointers; reverse, merge, cycle."
+  },
+  "solutions": {
+    "python": "# Copy List with Random Pointer\n# Idea: To create a deep copy of a linked list with random pointers, we can follow a three-step approach. First, we duplicate each node in the original list and insert the duplicates right after their corresponding original node\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\n# Definition for a Node.\n# class Node:\n#     def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):\n#         self.val = int(x)\n#         self.next = next\n#         self.random = random\n\n\nclass Solution:\n    def copyRandomList(self, head: \"Node\") -> \"Node\":\n        if not head:\n            return None\n\n        # Step 1: Duplicate nodes and insert them in between the original nodes\n        current = head\n        while current:\n            duplicate = Node(current.val)\n            duplicate.next = current.next\n            current.next = duplicate\n            current = duplicate.next\n\n        # Step 2: Update random pointers for the duplicate nodes\n        current = head\n        while current:\n            if current.random:\n                current.next.random = current.random.next\n            current = current.next.next\n\n        # Step 3: Split the combined list into two separate lists\n        original = head\n        duplicate_head = head.next\n        current = duplicate_head\n        while original:\n            original.next = original.next.next\n            if current.next:\n                current.next = current.next.next\n            original = original.next\n            current = current.next\n\n        return duplicate_head\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(n)",
+    "timeReason": "From the coded loops for \u201cCopy List with Random Pointer\u201d: O(n) matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "O(n)",
+    "spaceReason": "Extra memory is O(n) from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cCopy List with Random Pointer\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `head with next+random links` and check boundary indices / empty containers.",
+    "Second example `two-node mutual random` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Pointer rewriting on a linked list and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Pointer rewriting on a linked list.'",
+    "Narrate one example before typing.",
+    "Close with complexity: O(n) time, O(n) space, and why."
+  ],
+  "animation": {
+    "visualType": "linkedList",
+    "tracerId": "authored",
+    "defaultInput": {
+      "nodes": [
+        "h",
+        "e",
+        "a",
+        "d",
+        " ",
+        "w",
+        "i",
+        "t"
+      ]
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Linked list for \u201cCopy List with Random Pointer\u201d: each box points to the next.",
+        "state": {
+          "nums": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "nodes": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "result": null,
+          "highlights": {},
+          "pointers": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Pointer visits node h (index 0).",
+        "state": {
+          "nums": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "nodes": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "currentIndex": 0,
+          "currentValue": "h",
+          "result": null,
+          "highlights": {
+            "0": "current"
+          },
+          "pointers": {
+            "curr": 0
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Pointer visits node e (index 1).",
+        "state": {
+          "nums": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "nodes": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "currentIndex": 1,
+          "currentValue": "e",
+          "result": null,
+          "highlights": {
+            "1": "current"
+          },
+          "pointers": {
+            "curr": 1
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Pointer visits node a (index 2).",
+        "state": {
+          "nums": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "nodes": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "currentIndex": 2,
+          "currentValue": "a",
+          "result": null,
+          "highlights": {
+            "2": "current"
+          },
+          "pointers": {
+            "curr": 2
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Pointer visits node d (index 3).",
+        "state": {
+          "nums": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "nodes": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "currentIndex": 3,
+          "currentValue": "d",
+          "result": null,
+          "highlights": {
+            "3": "current"
+          },
+          "pointers": {
+            "curr": 3
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Pointer visits node   (index 4).",
+        "state": {
+          "nums": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "nodes": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "currentIndex": 4,
+          "currentValue": " ",
+          "result": null,
+          "highlights": {
+            "4": "current"
+          },
+          "pointers": {
+            "curr": 4
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Pointer visits node w (index 5).",
+        "state": {
+          "nums": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "nodes": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "currentIndex": 5,
+          "currentValue": "w",
+          "result": null,
+          "highlights": {
+            "5": "current"
+          },
+          "pointers": {
+            "curr": 5
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Pointer visits node i (index 6).",
+        "state": {
+          "nums": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "nodes": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "currentIndex": 6,
+          "currentValue": "i",
+          "result": null,
+          "highlights": {
+            "6": "current"
+          },
+          "pointers": {
+            "curr": 6
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Pointer visits node t (index 7).",
+        "state": {
+          "nums": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "nodes": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "currentIndex": 7,
+          "currentValue": "t",
+          "result": null,
+          "highlights": {
+            "7": "current"
+          },
+          "pointers": {
+            "curr": 7
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Done. Result: \"deep copy\".",
+        "state": {
+          "nums": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "nodes": [
+            "h",
+            "e",
+            "a",
+            "d",
+            " ",
+            "w",
+            "i",
+            "t"
+          ],
+          "result": "deep copy",
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done",
+            "6": "done",
+            "7": "done"
+          },
+          "pointers": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "remove-nth-node-from-end-of-list",
+    "add-two-numbers",
+    "linked-list-cycle"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Copy List with Random Pointer is the usual interview target: clear pointer rewriting on a linked list with competitive complexity (O(n) time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

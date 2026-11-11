@@ -1,0 +1,329 @@
+{
+  "id": 16,
+  "leetcodeNumber": 3,
+  "title": "Longest Substring Without Repeating Characters",
+  "slug": "longest-substring-without-repeating-characters",
+  "category": "sliding-window",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/longest-substring-without-repeating-characters/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Slide a window along a string. Inside the window, every letter must be unique. How wide can it get?",
+  "plainProblem": "Longest Substring Without Repeating Characters: Slide a window along a string. Worked example \u2014 input: s = \"abcabcbb\"; expected output: 3. Why: \"abc\" Interview pattern to name out loud: Sliding window.",
+  "examples": [
+    {
+      "input": "s = \"abcabcbb\"",
+      "output": "3",
+      "explanation": "\"abc\""
+    },
+    {
+      "input": "s = \"bbbbb\"",
+      "output": "1",
+      "explanation": "One char."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cLongest Substring Without Repeating Characters\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input s = \"abcabcbb\" should still produce 3."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: O(n)."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To find the length of the longest substring without repeating characters in the input string 's', we can use the sliding window approach. We use two pointers, 'left' and 'right', to represent the current window. As we move the 'right' pointer to the right, we expand the window and add characters to a set to keep track of unique characters in the window. If we encounter a repeating character, we move the 'left' pointer to the right to shrink the window until the repeating character is no longer in the window. At each step, we update the maximum length of the window (i.e., the length of the longest substring without repeating characters)."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Sliding window. Longest/shortest subarray or substring with a condition. Walk example `s = \"abcabcbb\"` \u2192 `3` while naming each variable, then code. Close with O(n) time and O(k) space."
+    }
+  ],
+  "pattern": {
+    "name": "Sliding window",
+    "whenToSpot": "Longest/shortest subarray or substring with a condition."
+  },
+  "solutions": {
+    "python": "# Longest Substring Without Repeating Characters\n# Idea: To find the length of the longest substring without repeating characters in the input string 's', we can use the sliding window approach. We use two pointers, 'left' and 'right', to represent the current window. As we mo\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def lengthOfLongestSubstring(self, s: str) -> int:\n        left, right = 0, 0\n        max_length = 0\n        unique_chars = set()\n\n        while right < len(s):\n            if s[right] not in unique_chars:\n                unique_chars.add(s[right])\n                max_length = max(max_length, right - left + 1)\n                right += 1\n            else:\n                unique_chars.remove(s[left])\n                left += 1\n\n        return max_length\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(n)",
+    "timeReason": "From the coded loops for \u201cLongest Substring Without Repeating Characters\u201d: O(n) matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "O(k)",
+    "spaceReason": "Extra memory is O(k) from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cLongest Substring Without Repeating Characters\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `s = \"abcabcbb\"` and check boundary indices / empty containers.",
+    "Second example `s = \"bbbbb\"` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Sliding window and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Sliding window.'",
+    "Narrate one example before typing.",
+    "Close with complexity: O(n) time, O(k) space, and why."
+  ],
+  "animation": {
+    "visualType": "array",
+    "tracerId": "authored",
+    "defaultInput": [
+      "a",
+      "b",
+      "c",
+      "a",
+      "b",
+      "c",
+      "b",
+      "b"
+    ],
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Lay out the array for \u201cLongest Substring Without Repeating Characters\u201d. Watch the pointer walk the answer into place.",
+        "state": {
+          "nums": [
+            "a",
+            "b",
+            "c",
+            "a",
+            "b",
+            "c",
+            "b",
+            "b"
+          ],
+          "result": null,
+          "highlights": {},
+          "currentIndex": null
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 0 holds a.",
+        "state": {
+          "nums": [
+            "a",
+            "b",
+            "c",
+            "a",
+            "b",
+            "c",
+            "b",
+            "b"
+          ],
+          "target": null,
+          "currentIndex": 0,
+          "currentValue": "a",
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 1 holds b.",
+        "state": {
+          "nums": [
+            "a",
+            "b",
+            "c",
+            "a",
+            "b",
+            "c",
+            "b",
+            "b"
+          ],
+          "target": null,
+          "currentIndex": 1,
+          "currentValue": "b",
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 2 holds c.",
+        "state": {
+          "nums": [
+            "a",
+            "b",
+            "c",
+            "a",
+            "b",
+            "c",
+            "b",
+            "b"
+          ],
+          "target": null,
+          "currentIndex": 2,
+          "currentValue": "c",
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 3 holds a.",
+        "state": {
+          "nums": [
+            "a",
+            "b",
+            "c",
+            "a",
+            "b",
+            "c",
+            "b",
+            "b"
+          ],
+          "target": null,
+          "currentIndex": 3,
+          "currentValue": "a",
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 4 holds b.",
+        "state": {
+          "nums": [
+            "a",
+            "b",
+            "c",
+            "a",
+            "b",
+            "c",
+            "b",
+            "b"
+          ],
+          "target": null,
+          "currentIndex": 4,
+          "currentValue": "b",
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 5 holds c.",
+        "state": {
+          "nums": [
+            "a",
+            "b",
+            "c",
+            "a",
+            "b",
+            "c",
+            "b",
+            "b"
+          ],
+          "target": null,
+          "currentIndex": 5,
+          "currentValue": "c",
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 6 holds b.",
+        "state": {
+          "nums": [
+            "a",
+            "b",
+            "c",
+            "a",
+            "b",
+            "c",
+            "b",
+            "b"
+          ],
+          "target": null,
+          "currentIndex": 6,
+          "currentValue": "b",
+          "result": null,
+          "highlights": {
+            "6": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 7 holds b.",
+        "state": {
+          "nums": [
+            "a",
+            "b",
+            "c",
+            "a",
+            "b",
+            "c",
+            "b",
+            "b"
+          ],
+          "target": null,
+          "currentIndex": 7,
+          "currentValue": "b",
+          "result": null,
+          "highlights": {
+            "7": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Answer settles: 3.",
+        "state": {
+          "nums": [
+            "a",
+            "b",
+            "c",
+            "a",
+            "b",
+            "c",
+            "b",
+            "b"
+          ],
+          "target": null,
+          "currentIndex": 7,
+          "result": 3,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done",
+            "6": "done",
+            "7": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "best-time-to-buy-and-sell-stock",
+    "longest-repeating-character-replacement",
+    "permutation-in-string"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Longest Substring Without Repeating Characters is the usual interview target: clear sliding window with competitive complexity (O(n) time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

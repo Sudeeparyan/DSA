@@ -1,0 +1,686 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ebe6dc;
+  --foreground: #14110f;
+  --muted: #5c534a;
+  --card: rgba(255, 252, 247, 0.78);
+  --border: rgba(30, 22, 14, 0.12);
+  --accent: #0b7a6f;
+  --accent-2: #d4550a;
+  --accent-soft: rgba(11, 122, 111, 0.14);
+  --ink: #0c1210;
+  --panel: #101814;
+  --panel-fg: #f3efe6;
+  --current: #e8b923;
+  --matched: #1f9d55;
+  --rejected: #d64545;
+  --remembered: #2b7bbf;
+  --glow: rgba(11, 122, 111, 0.18);
+  --hero-glow: rgba(212, 85, 10, 0.14);
+  --grid: rgba(20, 17, 15, 0.045);
+  --hangar: #121a16;
+  --copper: #c87941;
+}
+
+.dark {
+  --background: #0a0e0c;
+  --foreground: #efe9df;
+  --muted: #9aa89a;
+  --card: rgba(18, 28, 24, 0.86);
+  --border: rgba(239, 233, 223, 0.1);
+  --accent: #2ec4a8;
+  --accent-2: #ff8a3d;
+  --accent-soft: rgba(46, 196, 168, 0.16);
+  --ink: #efe9df;
+  --panel: #0d1512;
+  --panel-fg: #efe9df;
+  --current: #ffd43b;
+  --matched: #51cf66;
+  --rejected: #ff6b6b;
+  --remembered: #74c0fc;
+  --glow: rgba(46, 196, 168, 0.16);
+  --hero-glow: rgba(255, 138, 61, 0.12);
+  --grid: rgba(239, 233, 223, 0.035);
+  --hangar: #0b1210;
+  --copper: #e0a06a;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-card: var(--card);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-accent-soft: var(--accent-soft);
+  --color-ink: var(--ink);
+  --color-panel: var(--panel);
+  --color-panel-fg: var(--panel-fg);
+  --color-current: var(--current);
+  --color-matched: var(--matched);
+  --color-rejected: var(--rejected);
+  --color-remembered: var(--remembered);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-brand);
+  --font-mono: var(--font-code);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--foreground);
+  font-family: var(--font-body), "Segoe UI", sans-serif;
+  background:
+    radial-gradient(980px 560px at 8% -10%, var(--glow), transparent 58%),
+    radial-gradient(720px 480px at 96% 0%, var(--hero-glow), transparent 50%),
+    repeating-linear-gradient(
+      -12deg,
+      transparent,
+      transparent 31px,
+      var(--grid) 32px
+    ),
+    var(--background);
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--foreground);
+}
+
+h1,
+h2,
+h3,
+.brand-font {
+  font-family: var(--font-brand), var(--font-body), sans-serif;
+  letter-spacing: -0.03em;
+}
+
+.teach {
+  font-family: var(--font-teach), Georgia, serif;
+  line-height: 1.75;
+  font-size: 1.08rem;
+}
+
+.glass {
+  background: var(--card);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(14px);
+}
+
+.signal-btn {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0.7rem 1.25rem;
+  font-weight: 700;
+  transition: transform 160ms ease, background 160ms ease, color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.signal-btn:hover {
+  transform: translateY(-1px);
+}
+
+.signal-btn-primary {
+  background: var(--accent);
+  color: white;
+  box-shadow: 0 10px 28px -14px var(--accent);
+}
+
+.signal-btn-secondary {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--foreground);
+}
+
+.section-kicker {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* —— Mission hangar —— */
+.mission-topbar {
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in oklab, var(--card) 88%, transparent);
+  backdrop-filter: blur(16px);
+}
+
+.stage-rail {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.4rem;
+}
+
+.stage-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 3rem;
+  border-radius: 1rem;
+  border: 1px solid var(--border);
+  background: var(--card);
+  padding: 0.4rem 0.55rem;
+  text-align: left;
+  color: var(--muted);
+  transition: border-color 160ms ease, background 160ms ease, color 160ms ease;
+}
+
+.stage-pill-active {
+  border-color: color-mix(in oklab, var(--accent) 55%, var(--border));
+  background: var(--accent-soft);
+  color: var(--foreground);
+}
+
+.stage-pill-done {
+  border-color: color-mix(in oklab, var(--matched) 40%, var(--border));
+  color: var(--foreground);
+}
+
+.stage-index {
+  display: inline-flex;
+  height: 1.5rem;
+  width: 1.5rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--panel-fg);
+  font-family: var(--font-code), monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.hangar-panel {
+  border-radius: 1.75rem;
+  border: 1px solid var(--border);
+  background: linear-gradient(
+      160deg,
+      color-mix(in oklab, var(--accent) 10%, transparent),
+      transparent 42%
+    ),
+    var(--card);
+}
+
+.blueprint-grid {
+  background-image: linear-gradient(
+      rgba(11, 122, 111, 0.08) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(11, 122, 111, 0.08) 1px, transparent 1px);
+  background-size: 22px 22px;
+  pointer-events: none;
+}
+
+.dark .blueprint-grid {
+  background-image: linear-gradient(
+      rgba(46, 196, 168, 0.08) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(46, 196, 168, 0.08) 1px, transparent 1px);
+}
+
+.capsule-closed {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2rem;
+  border: 2px solid color-mix(in oklab, var(--accent) 45%, transparent);
+  background: var(--panel);
+  color: var(--panel-fg);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+}
+
+.capsule-pulse {
+  position: absolute;
+  inset: 18%;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--accent) 35%, transparent),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.capsule-half {
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--panel);
+  color: var(--panel-fg);
+  padding: 1.25rem;
+  text-align: left;
+  min-height: 11rem;
+}
+
+.capsule-half-accent {
+  border-color: color-mix(in oklab, var(--accent-2) 45%, transparent);
+}
+
+.example-block {
+  border-radius: 1.25rem;
+  border: 1px solid var(--border);
+  background: color-mix(in oklab, var(--background) 70%, var(--card));
+  padding: 1rem 1.1rem;
+}
+
+.example-out {
+  border-color: color-mix(in oklab, var(--accent-2) 35%, var(--border));
+  background: color-mix(in oklab, var(--accent-2) 8%, var(--card));
+}
+
+.rocket-bay {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 20rem;
+  border-radius: 1.5rem;
+  border: 1px dashed color-mix(in oklab, var(--accent) 40%, var(--border));
+  background: var(--panel);
+  padding: 1rem;
+}
+
+.rocket-part {
+  width: 100%;
+  border-radius: 1.15rem;
+  border: 2px solid;
+  background: color-mix(in oklab, var(--panel-fg) 4%, transparent);
+  padding: 1rem 1.1rem;
+  color: var(--panel-fg);
+  cursor: pointer;
+  text-align: left;
+}
+
+.rocket-part-open {
+  background: color-mix(in oklab, var(--panel-fg) 8%, transparent);
+}
+
+.rocket-part-badge {
+  display: inline-flex;
+  height: 1.75rem;
+  width: 1.75rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: #0c1210;
+  font-family: var(--font-code), monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.rocket-ghost {
+  margin-top: auto;
+  border-radius: 1rem;
+  border: 1px dashed rgba(255, 255, 255, 0.18);
+  padding: 1rem;
+  text-align: center;
+  color: rgba(243, 239, 230, 0.65);
+  font-size: 0.9rem;
+}
+
+.rocket-complete {
+  margin-top: 0.5rem;
+  border-radius: 1.15rem;
+  border: 1px solid color-mix(in oklab, var(--matched) 50%, transparent);
+  background: color-mix(in oklab, var(--matched) 18%, transparent);
+  padding: 1rem 1.15rem;
+  color: var(--panel-fg);
+}
+
+.parts-tray {
+  border-radius: 1.25rem;
+  border: 1px solid var(--border);
+  background: var(--card);
+  padding: 0.9rem;
+}
+
+.tray-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.7rem;
+  padding: 0.45rem 0.55rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.tray-item-used {
+  color: var(--matched);
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+.tray-item-next {
+  background: var(--accent-soft);
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.arena-frame {
+  border-radius: 1.85rem;
+  border: 1px solid var(--border);
+  background: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--accent) 8%, transparent),
+      transparent 30%
+    ),
+    var(--card);
+  padding: 0.85rem;
+  box-shadow: 0 24px 60px -36px color-mix(in oklab, var(--accent) 45%, transparent);
+}
+
+.arena-engine {
+  padding: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .arena-engine {
+    padding: 1.1rem;
+  }
+}
+
+.scene-stage {
+  background-image: radial-gradient(
+    circle at 50% 120%,
+    color-mix(in oklab, var(--accent) 12%, transparent),
+    transparent 55%
+  );
+}
+
+.blueprint-sealed {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  border: 2px dashed color-mix(in oklab, var(--accent) 45%, transparent);
+  background: var(--panel);
+  color: var(--panel-fg);
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.blueprint-sealed-glow {
+  position: absolute;
+  inset: 20%;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--accent-2) 30%, transparent),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.stat-tile {
+  border-radius: 1.5rem;
+  border: 1px solid var(--border);
+  background: var(--card);
+  padding: 1.25rem;
+}
+
+.check-panel {
+  border-radius: 1.5rem;
+  border: 1px solid var(--border);
+  background: var(--card);
+  padding: 1.25rem;
+}
+
+.check-panel-edge {
+  border-color: color-mix(in oklab, var(--remembered) 35%, var(--border));
+}
+
+.check-panel-warn {
+  border-color: color-mix(in oklab, var(--accent-2) 35%, var(--border));
+}
+
+.check-panel-tip {
+  border-color: color-mix(in oklab, var(--accent) 35%, var(--border));
+}
+
+/* —— Home launch map —— */
+.launch-hero {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+
+.launch-hero-orbit {
+  position: absolute;
+  inset: -20% -10% auto;
+  height: 70%;
+  background: radial-gradient(
+      circle at 30% 40%,
+      color-mix(in oklab, var(--accent) 22%, transparent),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 70% 30%,
+      color-mix(in oklab, var(--accent-2) 16%, transparent),
+      transparent 40%
+    );
+  pointer-events: none;
+}
+
+.mission-tile {
+  display: block;
+  border-radius: 1.4rem;
+  border: 1px solid var(--border);
+  background: var(--card);
+  padding: 1.15rem 1.2rem;
+  transition: transform 180ms ease, border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.mission-tile:hover {
+  transform: translateY(-3px);
+  border-color: transparent;
+  box-shadow: 0 18px 40px -28px var(--tile-accent, var(--accent));
+}
+
+@media (max-width: 640px) {
+  .stage-rail {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+  }
+
+  .stage-pill {
+    min-width: 7.5rem;
+    flex-shrink: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* —— Lesson theater —— */
+.theater-root {
+  position: relative;
+  min-height: calc(100vh - 4rem);
+  color: #f3efe6;
+  background: #070b09;
+  overflow: hidden;
+}
+
+.theater-sky {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(900px 480px at 15% 10%, rgba(46, 196, 168, 0.16), transparent 55%),
+    radial-gradient(700px 420px at 85% 0%, rgba(255, 138, 61, 0.12), transparent 50%),
+    radial-gradient(600px 500px at 50% 100%, rgba(232, 185, 35, 0.06), transparent 45%),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 27px,
+      rgba(255, 255, 255, 0.02) 28px
+    );
+}
+
+.theater-panel {
+  border-radius: 1.35rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(13, 21, 18, 0.82);
+  backdrop-filter: blur(10px);
+}
+
+.puzzle-block {
+  display: flex;
+  height: 4.5rem;
+  width: 4.5rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1.1rem;
+  border: 2px solid;
+  background: rgba(255, 255, 255, 0.04);
+  color: white;
+}
+
+@media (min-width: 640px) {
+  .puzzle-block {
+    height: 5.25rem;
+    width: 5.25rem;
+  }
+}
+
+.split-panel {
+  width: 100%;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(16, 24, 20, 0.9);
+  padding: 1.35rem 1.5rem;
+}
+
+.explode-card {
+  border-radius: 1.35rem;
+  border: 1px solid rgba(255, 212, 59, 0.35);
+  background: linear-gradient(
+    160deg,
+    rgba(255, 138, 61, 0.14),
+    rgba(13, 21, 18, 0.92)
+  );
+  padding: 1.25rem 1.4rem;
+}
+
+.teacher-bar {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(5, 9, 7, 0.92);
+  backdrop-filter: blur(16px);
+  position: sticky;
+  bottom: 0;
+}
+
+.teacher-avatar {
+  display: flex;
+  height: 2.75rem;
+  width: 2.75rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #04110e;
+  font-family: var(--font-brand), sans-serif;
+  font-weight: 800;
+}
+
+.play-fab {
+  min-height: 2.75rem;
+  border-radius: 999px;
+  background: var(--accent);
+  padding: 0 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: white;
+  box-shadow: 0 0 28px -8px var(--accent);
+}
+
+.play-chip {
+  min-height: 2.5rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.orbit-core {
+  border-radius: 999px;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.orbit-chip {
+  display: flex;
+  height: 2.75rem;
+  width: 5.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid;
+  background: rgba(10, 16, 14, 0.92);
+  color: white;
+}
+
+.home-demo-stage {
+  border-radius: 1.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(13, 21, 18, 0.75);
+  padding: 1.5rem 1.25rem 1.35rem;
+  box-shadow: 0 30px 80px -40px rgba(46, 196, 168, 0.45);
+}
+
+/* —— 3D Answer Stage (blender-skills cinema) —— */
+.answer-stage {
+  display: grid;
+  gap: 0.85rem;
+  width: 100%;
+  max-width: 56rem;
+  margin-inline: auto;
+}
+
+.answer-stage-canvas {
+  height: min(52vh, 420px);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: radial-gradient(
+      600px 280px at 50% 20%,
+      rgba(46, 196, 168, 0.12),
+      transparent 60%
+    ),
+    #070b09;
+}
+
+.answer-stage-hud {
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(13, 21, 18, 0.88);
+  padding: 1rem 1.15rem 1.1rem;
+}

@@ -1,0 +1,500 @@
+{
+  "id": 63,
+  "leetcodeNumber": 212,
+  "title": "Word Search II",
+  "slug": "word-search-ii",
+  "category": "tries",
+  "difficulty": "Hard",
+  "leetcodeUrl": "https://leetcode.com/problems/word-search-ii/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Picture the puzzle 'Word Search II'. Here is the clever trick in plain words: To find all the words from a given list that can be formed by a 2D board of characters, we can use a Trie (prefix tree) to efficiently search for words while traversing the board. We start by building a Trie from the giv We will still start slow, then use this trick so it becomes fast.",
+  "plainProblem": "Word Search II: Picture the puzzle 'Word Search II'. Worked example \u2014 input: board letters, words = [\"oath\",\"pea\",\"eat\",\"rain\"]; expected output: [\"eat\",\"oath\"]. Why: Found words. Interview pattern to name out loud: Trie (prefix tree).",
+  "examples": [
+    {
+      "input": "board letters, words = [\"oath\",\"pea\",\"eat\",\"rain\"]",
+      "output": "[\"eat\",\"oath\"]",
+      "explanation": "Found words."
+    },
+    {
+      "input": "empty words",
+      "output": "[]",
+      "explanation": "Nothing."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cWord Search II\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input board letters, words = [\"oath\",\"pea\",\"eat\",\"rain\"] should still produce [\"eat\",\"oath\"]."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To find all the words from a given list that can be formed by a 2D board of characters, we can use a Trie (prefix tree) to efficiently search for words while traversing the board. We start by building a Trie from the given list of words. Then, we perform a depth-first search (DFS) on the board, checking if the current path forms a valid prefix in the Trie. If it does, we continue the DFS until we find words or reach dead ends."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Trie (prefix tree). Many words sharing prefixes; autocomplete. Walk example `board letters, words = [\"oath\",\"pea\",\"eat\",\"rain\"]` \u2192 `[\"eat\",\"oath\"]` while naming each variable, then code. Close with See code time and See code space."
+    }
+  ],
+  "pattern": {
+    "name": "Trie (prefix tree)",
+    "whenToSpot": "Many words sharing prefixes; autocomplete."
+  },
+  "solutions": {
+    "python": "# Word Search II\n# Idea: To find all the words from a given list that can be formed by a 2D board of characters, we can use a Trie (prefix tree) to efficiently search for words while traversing the board. We start by building a Trie from the giv\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nfrom collections import Counter\nfrom itertools import chain, product\nfrom typing import List\n\n\nclass TrieNode:\n    def __init__(self):\n        self.children = {}  # Store child nodes for each character\n        self.refcnt = 0  # Count of references to this node\n        self.is_word = False  # Flag to indicate if a complete word ends at this node\n        self.is_rev = False  # Flag to indicate if a word should be reversed\n\n\nclass Trie:\n    def __init__(self):\n        self.root = TrieNode()  # Initialize the root of the trie\n\n    def insert(self, word, rev):\n        node = self.root\n        for c in word:\n            node = node.children.setdefault(c, TrieNode())\n            node.refcnt += 1\n        node.is_word = True\n        node.is_rev = rev\n\n    def remove(self, word):\n        node = self.root\n        for i, c in enumerate(word):\n            parent = node\n            node = node.children[c]\n\n            if node.refcnt == 1:\n                path = [(parent, c)]\n                for c in word[i + 1 :]:\n                    path.append((node, c))\n                    node = node.children[c]\n                for parent, c in path:\n                    parent.children.pop(c)\n                return\n            node.refcnt -= 1\n        node.is_word = False\n\n\nclass Solution:\n    def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:\n        res = []\n        n, m = len(board), len(board[0])\n        trie = Trie()\n\n        # Count characters on the board\n        boardcnt = Counter(chain(*board))\n\n        # Insert words into trie with appropriate orientation\n        for w, wrdcnt in ((w, Counter(w)) for w in words):\n            if any(wrdcnt[c] > boardcnt[c] for c in wrdcnt):\n                continue  # Skip if the word cannot be formed from the board\n            if wrdcnt[w[0]] < wrdcnt[w[-1]]:\n                trie.insert(w, False)\n            else:\n                trie.insert(w[::-1], True)\n\n        def dfs(r, c, parent) -> None:\n            if not (node := parent.children.get(board[r][c])):\n                return\n            path.append(board[r][c])\n            board[r][c] = \"#\"  # Mark visited cell\n\n            if node.is_word:\n                word = \"\".join(path)\n                res.append(word[::-1] if node.is_rev else word)\n                trie.remove(word)\n\n            # Explore neighboring cells\n            if r > 0:\n                dfs(r - 1, c, node)\n            if r < n - 1:\n                dfs(r + 1, c, node)\n            if c > 0:\n                dfs(r, c - 1, node)\n            if c < m - 1:\n                dfs(r, c + 1, node)\n\n            board[r][c] = path.pop()  # Backtrack and unmark cell\n\n        path = []\n        for r, c in product(range(n), range(m)):\n            dfs(r, c, trie.root)\n        return res\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "From the coded loops for \u201cWord Search II\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "See code",
+    "spaceReason": "Extra memory is See code from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cWord Search II\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `board letters, words = [\"oath\",\"pea\",\"eat\",\"rain\"]` and check boundary indices / empty containers.",
+    "Second example `empty words` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Trie (prefix tree) and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Trie (prefix tree).'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "trie",
+    "tracerId": "authored",
+    "defaultInput": {
+      "words": [
+        "oath",
+        "pea",
+        "eat",
+        "rain"
+      ]
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Trie for \u201cWord Search II\u201d. We grow character paths.",
+        "state": {
+          "path": [],
+          "nums": [],
+          "chars": [],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'oath': add character 'o'.",
+        "state": {
+          "path": [
+            "o"
+          ],
+          "chars": [
+            "o"
+          ],
+          "nums": [
+            "o"
+          ],
+          "currentIndex": 0,
+          "currentValue": "o",
+          "word": "oath",
+          "result": null,
+          "highlights": {
+            "0": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'oath': add character 'a'.",
+        "state": {
+          "path": [
+            "o",
+            "a"
+          ],
+          "chars": [
+            "o",
+            "a"
+          ],
+          "nums": [
+            "o",
+            "a"
+          ],
+          "currentIndex": 1,
+          "currentValue": "a",
+          "word": "oath",
+          "result": null,
+          "highlights": {
+            "1": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'oath': add character 't'.",
+        "state": {
+          "path": [
+            "o",
+            "a",
+            "t"
+          ],
+          "chars": [
+            "o",
+            "a",
+            "t"
+          ],
+          "nums": [
+            "o",
+            "a",
+            "t"
+          ],
+          "currentIndex": 2,
+          "currentValue": "t",
+          "word": "oath",
+          "result": null,
+          "highlights": {
+            "2": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'oath': add character 'h'.",
+        "state": {
+          "path": [
+            "o",
+            "a",
+            "t",
+            "h"
+          ],
+          "chars": [
+            "o",
+            "a",
+            "t",
+            "h"
+          ],
+          "nums": [
+            "o",
+            "a",
+            "t",
+            "h"
+          ],
+          "currentIndex": 3,
+          "currentValue": "h",
+          "word": "oath",
+          "result": null,
+          "highlights": {
+            "3": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'pea': add character 'p'.",
+        "state": {
+          "path": [
+            "p"
+          ],
+          "chars": [
+            "p"
+          ],
+          "nums": [
+            "p"
+          ],
+          "currentIndex": 0,
+          "currentValue": "p",
+          "word": "pea",
+          "result": null,
+          "highlights": {
+            "0": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'pea': add character 'e'.",
+        "state": {
+          "path": [
+            "p",
+            "e"
+          ],
+          "chars": [
+            "p",
+            "e"
+          ],
+          "nums": [
+            "p",
+            "e"
+          ],
+          "currentIndex": 1,
+          "currentValue": "e",
+          "word": "pea",
+          "result": null,
+          "highlights": {
+            "1": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'pea': add character 'a'.",
+        "state": {
+          "path": [
+            "p",
+            "e",
+            "a"
+          ],
+          "chars": [
+            "p",
+            "e",
+            "a"
+          ],
+          "nums": [
+            "p",
+            "e",
+            "a"
+          ],
+          "currentIndex": 2,
+          "currentValue": "a",
+          "word": "pea",
+          "result": null,
+          "highlights": {
+            "2": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'eat': add character 'e'.",
+        "state": {
+          "path": [
+            "e"
+          ],
+          "chars": [
+            "e"
+          ],
+          "nums": [
+            "e"
+          ],
+          "currentIndex": 0,
+          "currentValue": "e",
+          "word": "eat",
+          "result": null,
+          "highlights": {
+            "0": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'eat': add character 'a'.",
+        "state": {
+          "path": [
+            "e",
+            "a"
+          ],
+          "chars": [
+            "e",
+            "a"
+          ],
+          "nums": [
+            "e",
+            "a"
+          ],
+          "currentIndex": 1,
+          "currentValue": "a",
+          "word": "eat",
+          "result": null,
+          "highlights": {
+            "1": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'eat': add character 't'.",
+        "state": {
+          "path": [
+            "e",
+            "a",
+            "t"
+          ],
+          "chars": [
+            "e",
+            "a",
+            "t"
+          ],
+          "nums": [
+            "e",
+            "a",
+            "t"
+          ],
+          "currentIndex": 2,
+          "currentValue": "t",
+          "word": "eat",
+          "result": null,
+          "highlights": {
+            "2": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'rain': add character 'r'.",
+        "state": {
+          "path": [
+            "r"
+          ],
+          "chars": [
+            "r"
+          ],
+          "nums": [
+            "r"
+          ],
+          "currentIndex": 0,
+          "currentValue": "r",
+          "word": "rain",
+          "result": null,
+          "highlights": {
+            "0": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'rain': add character 'a'.",
+        "state": {
+          "path": [
+            "r",
+            "a"
+          ],
+          "chars": [
+            "r",
+            "a"
+          ],
+          "nums": [
+            "r",
+            "a"
+          ],
+          "currentIndex": 1,
+          "currentValue": "a",
+          "word": "rain",
+          "result": null,
+          "highlights": {
+            "1": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'rain': add character 'i'.",
+        "state": {
+          "path": [
+            "r",
+            "a",
+            "i"
+          ],
+          "chars": [
+            "r",
+            "a",
+            "i"
+          ],
+          "nums": [
+            "r",
+            "a",
+            "i"
+          ],
+          "currentIndex": 2,
+          "currentValue": "i",
+          "word": "rain",
+          "result": null,
+          "highlights": {
+            "2": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Word 'rain': add character 'n'.",
+        "state": {
+          "path": [
+            "r",
+            "a",
+            "i",
+            "n"
+          ],
+          "chars": [
+            "r",
+            "a",
+            "i",
+            "n"
+          ],
+          "nums": [
+            "r",
+            "a",
+            "i",
+            "n"
+          ],
+          "currentIndex": 3,
+          "currentValue": "n",
+          "word": "rain",
+          "result": null,
+          "highlights": {
+            "3": "remembered"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Trie built. Answer: [\"eat\", \"oath\"].",
+        "state": {
+          "path": [
+            "r",
+            "a",
+            "i",
+            "n"
+          ],
+          "chars": [
+            "r",
+            "a",
+            "i",
+            "n"
+          ],
+          "nums": [
+            "r",
+            "a",
+            "i",
+            "n"
+          ],
+          "result": [
+            "eat",
+            "oath"
+          ],
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "design-add-and-search-words-data-structure"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Word Search II is the usual interview target: clear trie (prefix tree) with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

@@ -1,0 +1,406 @@
+{
+  "id": 128,
+  "leetcodeNumber": 763,
+  "title": "Partition Labels",
+  "slug": "partition-labels",
+  "category": "greedy",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/partition-labels/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Picture the puzzle 'Partition Labels'. Here is the clever trick in plain words: We can solve this problem using a greedy approach. The idea is to traverse the string and keep track of the last index at which each character appears. While traversing, we maintain a current partition's start and end in We will still start slow, then use this trick so it becomes fast.",
+  "plainProblem": "Partition Labels: Picture the puzzle 'Partition Labels'. Worked example \u2014 input: s = \"ababcbacadefegdehijhklij\"; expected output: [9,7,8]. Why: Parts. Interview pattern to name out loud: Greedy choice.",
+  "examples": [
+    {
+      "input": "s = \"ababcbacadefegdehijhklij\"",
+      "output": "[9,7,8]",
+      "explanation": "Parts."
+    },
+    {
+      "input": "s = \"eccbbbbdec\"",
+      "output": "[10]",
+      "explanation": "One part."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cPartition Labels\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input s = \"ababcbacadefegdehijhklij\" should still produce [9,7,8]."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
+    },
+    {
+      "title": "Aha insight",
+      "body": "We can solve this problem using a greedy approach. The idea is to traverse the string and keep track of the last index at which each character appears. While traversing, we maintain a current partition's start and end indices. When the current index reaches the end index of the current partition, we add the length of the partition to the result list and update the start index for the next partition."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Greedy choice. Local best pick that still works globally. Walk example `s = \"ababcbacadefegdehijhklij\"` \u2192 `[9,7,8]` while naming each variable, then code. Close with See code time and See code space."
+    }
+  ],
+  "pattern": {
+    "name": "Greedy choice",
+    "whenToSpot": "Local best pick that still works globally."
+  },
+  "solutions": {
+    "python": "# Partition Labels\n# Idea: We can solve this problem using a greedy approach. The idea is to traverse the string and keep track of the last index at which each character appears. While traversing, we maintain a current partition's start and end in\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def partitionLabels(self, s: str) -> List[int]:\n        last_index = {}\n\n        for i, char in enumerate(s):\n            last_index[char] = i\n\n        result = []\n        start, end = 0, 0\n\n        for i, char in enumerate(s):\n            end = max(end, last_index[char])\n\n            if i == end:\n                result.append(end - start + 1)\n                start = end + 1\n\n        return result\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "From the coded loops for \u201cPartition Labels\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "See code",
+    "spaceReason": "Extra memory is See code from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cPartition Labels\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `s = \"ababcbacadefegdehijhklij\"` and check boundary indices / empty containers.",
+    "Second example `s = \"eccbbbbdec\"` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Greedy choice and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Greedy choice.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "array",
+    "tracerId": "authored",
+    "defaultInput": [
+      "a",
+      "b",
+      "a",
+      "b",
+      "c",
+      "b",
+      "a",
+      "c",
+      "a",
+      "d"
+    ],
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Lay out the array for \u201cPartition Labels\u201d. Watch the pointer walk the answer into place.",
+        "state": {
+          "nums": [
+            "a",
+            "b",
+            "a",
+            "b",
+            "c",
+            "b",
+            "a",
+            "c",
+            "a",
+            "d"
+          ],
+          "result": null,
+          "highlights": {},
+          "currentIndex": null
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 0 holds a.",
+        "state": {
+          "nums": [
+            "a",
+            "b",
+            "a",
+            "b",
+            "c",
+            "b",
+            "a",
+            "c",
+            "a",
+            "d"
+          ],
+          "target": null,
+          "currentIndex": 0,
+          "currentValue": "a",
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 1 holds b.",
+        "state": {
+          "nums": [
+            "a",
+            "b",
+            "a",
+            "b",
+            "c",
+            "b",
+            "a",
+            "c",
+            "a",
+            "d"
+          ],
+          "target": null,
+          "currentIndex": 1,
+          "currentValue": "b",
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 2 holds a.",
+        "state": {
+          "nums": [
+            "a",
+            "b",
+            "a",
+            "b",
+            "c",
+            "b",
+            "a",
+            "c",
+            "a",
+            "d"
+          ],
+          "target": null,
+          "currentIndex": 2,
+          "currentValue": "a",
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 3 holds b.",
+        "state": {
+          "nums": [
+            "a",
+            "b",
+            "a",
+            "b",
+            "c",
+            "b",
+            "a",
+            "c",
+            "a",
+            "d"
+          ],
+          "target": null,
+          "currentIndex": 3,
+          "currentValue": "b",
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 4 holds c.",
+        "state": {
+          "nums": [
+            "a",
+            "b",
+            "a",
+            "b",
+            "c",
+            "b",
+            "a",
+            "c",
+            "a",
+            "d"
+          ],
+          "target": null,
+          "currentIndex": 4,
+          "currentValue": "c",
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 5 holds b.",
+        "state": {
+          "nums": [
+            "a",
+            "b",
+            "a",
+            "b",
+            "c",
+            "b",
+            "a",
+            "c",
+            "a",
+            "d"
+          ],
+          "target": null,
+          "currentIndex": 5,
+          "currentValue": "b",
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 6 holds a.",
+        "state": {
+          "nums": [
+            "a",
+            "b",
+            "a",
+            "b",
+            "c",
+            "b",
+            "a",
+            "c",
+            "a",
+            "d"
+          ],
+          "target": null,
+          "currentIndex": 6,
+          "currentValue": "a",
+          "result": null,
+          "highlights": {
+            "6": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 7 holds c.",
+        "state": {
+          "nums": [
+            "a",
+            "b",
+            "a",
+            "b",
+            "c",
+            "b",
+            "a",
+            "c",
+            "a",
+            "d"
+          ],
+          "target": null,
+          "currentIndex": 7,
+          "currentValue": "c",
+          "result": null,
+          "highlights": {
+            "7": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 8 holds a.",
+        "state": {
+          "nums": [
+            "a",
+            "b",
+            "a",
+            "b",
+            "c",
+            "b",
+            "a",
+            "c",
+            "a",
+            "d"
+          ],
+          "target": null,
+          "currentIndex": 8,
+          "currentValue": "a",
+          "result": null,
+          "highlights": {
+            "8": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 9 holds d.",
+        "state": {
+          "nums": [
+            "a",
+            "b",
+            "a",
+            "b",
+            "c",
+            "b",
+            "a",
+            "c",
+            "a",
+            "d"
+          ],
+          "target": null,
+          "currentIndex": 9,
+          "currentValue": "d",
+          "result": null,
+          "highlights": {
+            "9": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Answer settles: [9, 7, 8].",
+        "state": {
+          "nums": [
+            "a",
+            "b",
+            "a",
+            "b",
+            "c",
+            "b",
+            "a",
+            "c",
+            "a",
+            "d"
+          ],
+          "target": null,
+          "currentIndex": 9,
+          "result": [
+            9,
+            7,
+            8
+          ],
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done",
+            "6": "done",
+            "7": "done",
+            "8": "done",
+            "9": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "merge-triplets-to-form-target-triplet",
+    "valid-parenthesis-string"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Partition Labels is the usual interview target: clear greedy choice with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

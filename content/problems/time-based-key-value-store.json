@@ -1,0 +1,402 @@
+{
+  "id": 33,
+  "leetcodeNumber": 981,
+  "title": "Time Based Key-Value Store",
+  "slug": "time-based-key-value-store",
+  "category": "binary-search",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/time-based-key-value-store/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Remember values with timestamps. Ask for a key at time t: latest value not after t.",
+  "plainProblem": "Time Based Key-Value Store: Remember values with timestamps. Worked example \u2014 input: set(\"foo\",\"bar\",1); get(\"foo\",1); expected output: \"bar\". Why: Exact time. Interview pattern to name out loud: Binary search (halving the range).",
+  "examples": [
+    {
+      "input": "set(\"foo\",\"bar\",1); get(\"foo\",1)",
+      "output": "\"bar\"",
+      "explanation": "Exact time."
+    },
+    {
+      "input": "set(\"foo\",\"bar2\",4); get(\"foo\",5)",
+      "output": "\"bar2\"",
+      "explanation": "Latest \u2264 t."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cTime Based Key-Value Store\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input set(\"foo\",\"bar\",1); get(\"foo\",1) should still produce \"bar\"."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To implement a time-based key-value store, we can use a dictionary to store the values associated with each key. For each key, we store a list of tuples representing the timestamp and the corresponding value. When querying a key at a specific timestamp, we perform binary search on the list of timestamps associated with that key to find the largest timestamp less than or equal to the given timestamp."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Binary search (halving the range). Sorted data or a monotonic yes/no answer. Walk example `set(\"foo\",\"bar\",1); get(\"foo\",1)` \u2192 `\"bar\"` while naming each variable, then code. Close with See code time and O(n) space."
+    }
+  ],
+  "pattern": {
+    "name": "Binary search (halving the range)",
+    "whenToSpot": "Sorted data or a monotonic yes/no answer."
+  },
+  "solutions": {
+    "python": "# Time Based Key-Value Store\n# Idea: To implement a time-based key-value store, we can use a dictionary to store the values associated with each key. For each key, we store a list of tuples representing the timestamp and the corresponding value. When queryi\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass TimeMap:\n    def __init__(self):\n        self.data = defaultdict(list)\n\n    def set(self, key: str, value: str, timestamp: int) -> None:\n        self.data[key].append((timestamp, value))\n\n    def get(self, key: str, timestamp: int) -> str:\n        values = self.data[key]\n        left, right = 0, len(values) - 1\n\n        while left <= right:\n            mid = left + (right - left) // 2\n            if values[mid][0] == timestamp:\n                return values[mid][1]\n            elif values[mid][0] < timestamp:\n                left = mid + 1\n            else:\n                right = mid - 1\n\n        if right >= 0:\n            return values[right][1]\n        return \"\"\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "From the coded loops for \u201cTime Based Key-Value Store\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "O(n)",
+    "spaceReason": "Extra memory is O(n) from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cTime Based Key-Value Store\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `set(\"foo\",\"bar\",1); get(\"foo\",1)` and check boundary indices / empty containers.",
+    "Second example `set(\"foo\",\"bar2\",4); get(\"foo\",5)` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Binary search (halving the range) and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Binary search (halving the range).'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, O(n) space, and why."
+  ],
+  "animation": {
+    "visualType": "array",
+    "tracerId": "authored",
+    "defaultInput": [
+      "s",
+      "e",
+      "t",
+      "(",
+      "\"",
+      "f",
+      "o",
+      "o",
+      "\"",
+      ","
+    ],
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Lay out the array for \u201cTime Based Key-Value Store\u201d. Watch the pointer walk the answer into place.",
+        "state": {
+          "nums": [
+            "s",
+            "e",
+            "t",
+            "(",
+            "\"",
+            "f",
+            "o",
+            "o",
+            "\"",
+            ","
+          ],
+          "result": null,
+          "highlights": {},
+          "currentIndex": null
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 0 holds s.",
+        "state": {
+          "nums": [
+            "s",
+            "e",
+            "t",
+            "(",
+            "\"",
+            "f",
+            "o",
+            "o",
+            "\"",
+            ","
+          ],
+          "target": null,
+          "currentIndex": 0,
+          "currentValue": "s",
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 1 holds e.",
+        "state": {
+          "nums": [
+            "s",
+            "e",
+            "t",
+            "(",
+            "\"",
+            "f",
+            "o",
+            "o",
+            "\"",
+            ","
+          ],
+          "target": null,
+          "currentIndex": 1,
+          "currentValue": "e",
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 2 holds t.",
+        "state": {
+          "nums": [
+            "s",
+            "e",
+            "t",
+            "(",
+            "\"",
+            "f",
+            "o",
+            "o",
+            "\"",
+            ","
+          ],
+          "target": null,
+          "currentIndex": 2,
+          "currentValue": "t",
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 3 holds (.",
+        "state": {
+          "nums": [
+            "s",
+            "e",
+            "t",
+            "(",
+            "\"",
+            "f",
+            "o",
+            "o",
+            "\"",
+            ","
+          ],
+          "target": null,
+          "currentIndex": 3,
+          "currentValue": "(",
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 4 holds \".",
+        "state": {
+          "nums": [
+            "s",
+            "e",
+            "t",
+            "(",
+            "\"",
+            "f",
+            "o",
+            "o",
+            "\"",
+            ","
+          ],
+          "target": null,
+          "currentIndex": 4,
+          "currentValue": "\"",
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 5 holds f.",
+        "state": {
+          "nums": [
+            "s",
+            "e",
+            "t",
+            "(",
+            "\"",
+            "f",
+            "o",
+            "o",
+            "\"",
+            ","
+          ],
+          "target": null,
+          "currentIndex": 5,
+          "currentValue": "f",
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 6 holds o.",
+        "state": {
+          "nums": [
+            "s",
+            "e",
+            "t",
+            "(",
+            "\"",
+            "f",
+            "o",
+            "o",
+            "\"",
+            ","
+          ],
+          "target": null,
+          "currentIndex": 6,
+          "currentValue": "o",
+          "result": null,
+          "highlights": {
+            "6": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 7 holds o.",
+        "state": {
+          "nums": [
+            "s",
+            "e",
+            "t",
+            "(",
+            "\"",
+            "f",
+            "o",
+            "o",
+            "\"",
+            ","
+          ],
+          "target": null,
+          "currentIndex": 7,
+          "currentValue": "o",
+          "result": null,
+          "highlights": {
+            "7": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 8 holds \".",
+        "state": {
+          "nums": [
+            "s",
+            "e",
+            "t",
+            "(",
+            "\"",
+            "f",
+            "o",
+            "o",
+            "\"",
+            ","
+          ],
+          "target": null,
+          "currentIndex": 8,
+          "currentValue": "\"",
+          "result": null,
+          "highlights": {
+            "8": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 9 holds ,.",
+        "state": {
+          "nums": [
+            "s",
+            "e",
+            "t",
+            "(",
+            "\"",
+            "f",
+            "o",
+            "o",
+            "\"",
+            ","
+          ],
+          "target": null,
+          "currentIndex": 9,
+          "currentValue": ",",
+          "result": null,
+          "highlights": {
+            "9": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Answer settles: \"bar\".",
+        "state": {
+          "nums": [
+            "s",
+            "e",
+            "t",
+            "(",
+            "\"",
+            "f",
+            "o",
+            "o",
+            "\"",
+            ","
+          ],
+          "target": null,
+          "currentIndex": 9,
+          "result": "bar",
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done",
+            "6": "done",
+            "7": "done",
+            "8": "done",
+            "9": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "search-in-rotated-sorted-array",
+    "median-of-two-sorted-arrays"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Time Based Key-Value Store is the usual interview target: clear binary search (halving the range) with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

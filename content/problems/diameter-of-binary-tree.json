@@ -1,0 +1,309 @@
+{
+  "id": 48,
+  "leetcodeNumber": 543,
+  "title": "Diameter of Binary Tree",
+  "slug": "diameter-of-binary-tree",
+  "category": "trees",
+  "difficulty": "Easy",
+  "leetcodeUrl": "https://leetcode.com/problems/diameter-of-binary-tree/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Longest path between any two balloon nodes \u2014 it might not even pass through the root.",
+  "plainProblem": "Diameter of Binary Tree: Longest path between any two balloon nodes \u2014 it might not even pass through the root. Worked example \u2014 input: root = [1,2,3,4,5]; expected output: 3. Why: Longest path edges. Interview pattern to name out loud: Tree DFS / BFS recursion.",
+  "examples": [
+    {
+      "input": "root = [1,2,3,4,5]",
+      "output": "3",
+      "explanation": "Longest path edges."
+    },
+    {
+      "input": "root = [1,2]",
+      "output": "1",
+      "explanation": "One edge."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cDiameter of Binary Tree\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input root = [1,2,3,4,5] should still produce 3."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: O(n)."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To find the diameter of a binary tree (the length of the longest path between any two nodes), we can use a recursive approach. For each node, the longest path passes either through the node or doesn't. The diameter is the maximum of three values: the diameter of the left subtree, the diameter of the right subtree, and the sum of the heights of the left and right subtrees (if the path passes through the node)."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Tree DFS / BFS recursion. Hierarchical nodes with left/right children. Walk example `root = [1,2,3,4,5]` \u2192 `3` while naming each variable, then code. Close with O(n) time and O(h) space."
+    }
+  ],
+  "pattern": {
+    "name": "Tree DFS / BFS recursion",
+    "whenToSpot": "Hierarchical nodes with left/right children."
+  },
+  "solutions": {
+    "python": "# Diameter of Binary Tree\n# Idea: To find the diameter of a binary tree (the length of the longest path between any two nodes), we can use a recursive approach. For each node, the longest path passes either through the node or doesn't. The diameter is th\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\n# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\n\nclass Solution:\n    def diameterOfBinaryTree(self, root: TreeNode) -> int:\n        def height(node):\n            if not node:\n                return 0\n            left_height = height(node.left)\n            right_height = height(node.right)\n            self.diameter = max(self.diameter, left_height + right_height)\n            return max(left_height, right_height) + 1\n\n        self.diameter = 0\n        height(root)\n        return self.diameter\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(n)",
+    "timeReason": "From the coded loops for \u201cDiameter of Binary Tree\u201d: O(n) matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "O(h)",
+    "spaceReason": "Extra memory is O(h) from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cDiameter of Binary Tree\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `root = [1,2,3,4,5]` and check boundary indices / empty containers.",
+    "Second example `root = [1,2]` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Tree DFS / BFS recursion and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Tree DFS / BFS recursion.'",
+    "Narrate one example before typing.",
+    "Close with complexity: O(n) time, O(h) space, and why."
+  ],
+  "animation": {
+    "visualType": "tree",
+    "tracerId": "authored",
+    "defaultInput": {
+      "root": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Binary tree for \u201cDiameter of Binary Tree\u201d starts empty on stage \u2014 we reveal levels.",
+        "state": {
+          "nodes": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "nums": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "visible": [],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Reveal node 1 at heap-index 0.",
+        "state": {
+          "nodes": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "nums": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "visible": [
+            1
+          ],
+          "currentIndex": 0,
+          "currentValue": 1,
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Reveal node 2 at heap-index 1.",
+        "state": {
+          "nodes": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "nums": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "visible": [
+            1,
+            2
+          ],
+          "currentIndex": 1,
+          "currentValue": 2,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Reveal node 3 at heap-index 2.",
+        "state": {
+          "nodes": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "nums": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "visible": [
+            1,
+            2,
+            3
+          ],
+          "currentIndex": 2,
+          "currentValue": 3,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Reveal node 4 at heap-index 3.",
+        "state": {
+          "nodes": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "nums": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "visible": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "currentIndex": 3,
+          "currentValue": 4,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Reveal node 5 at heap-index 4.",
+        "state": {
+          "nodes": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "nums": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "visible": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "currentIndex": 4,
+          "currentValue": 5,
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Tree fully revealed. Answer: 3.",
+        "state": {
+          "nodes": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "nums": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "visible": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "result": 3,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "maximum-depth-of-binary-tree",
+    "balanced-binary-tree",
+    "same-tree"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Diameter of Binary Tree is the usual interview target: clear tree dfs / bfs recursion with competitive complexity (O(n) time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

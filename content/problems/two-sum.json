@@ -1,0 +1,223 @@
+{
+  "id": 3,
+  "leetcodeNumber": 1,
+  "title": "Two Sum",
+  "slug": "two-sum",
+  "category": "arrays-hashing",
+  "difficulty": "Easy",
+  "leetcodeUrl": "https://leetcode.com/problems/two-sum/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "You have coins with numbers on them, and a piggy-bank goal (the target). You want two coins whose numbers add up exactly to the goal. As you look at each coin, you ask: 'Did I already see the partner coin I need?'",
+  "plainProblem": "Given a list of numbers and a target, return the indices of two different numbers that add up to the target. Exactly one solution exists. You may not use the same element twice.",
+  "examples": [
+    {
+      "input": "nums = [2,7,11,15], target = 9",
+      "output": "[0,1]",
+      "explanation": "2 + 7 = 9."
+    },
+    {
+      "input": "nums = [3,2,4], target = 6",
+      "output": "[1,2]",
+      "explanation": "2 + 4 = 6."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "Try every pair of indices. Correct, but about n\u00d7n checks."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Most pairs are useless. We redo a lot of adding."
+    },
+    {
+      "title": "Aha insight",
+      "body": "For the number in my hand, I only need target \u2212 that number. If I remembered past numbers in a map, I can check instantly."
+    },
+    {
+      "title": "Better idea",
+      "body": "Walk once. Store value \u2192 index in a hash map. When the needed partner is already stored, return both indices."
+    }
+  ],
+  "pattern": {
+    "name": "Hash set / hash map for seen items",
+    "whenToSpot": "You need fast lookups of values you already saw."
+  },
+  "solutions": {
+    "python": "class Solution:\n    def twoSum(self, nums: List[int], target: int) -> List[int]:\n        # Memory: number we saw \u2192 where we saw it (hash map)\n        prevMap = {}  # val -> index\n\n        # Look at each number with its index\n        for i, n in enumerate(nums):\n            # Partner we need so n + partner == target\n            diff = target - n\n            # Have we already seen that partner?\n            if diff in prevMap:\n                # Yes \u2014 return partner index and current index\n                return [prevMap[diff], i]\n            # No \u2014 remember this number for future partners\n            prevMap[n] = i\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(n)",
+    "timeReason": "Each number is processed once with average O(1) map lookups.",
+    "space": "O(n)",
+    "spaceReason": "The map may store every number until we find the pair."
+  },
+  "edgeCases": [
+    "Negatives and zeros are allowed.",
+    "The two numbers can be the same value at different indices (e.g. [3,3], target 6).",
+    "Answer indices can be in any order unless the problem says otherwise \u2014 here return the pair you find."
+  ],
+  "commonMistakes": [
+    "Returning the values instead of the indices.",
+    "Using the same index twice.",
+    "Building the whole map first when a one-pass map is enough (both work; one-pass is cleaner)."
+  ],
+  "interviewTips": [
+    "Start by stating the brute force, then upgrade to the hash map.",
+    "Write the invariant: 'map stores values I have already visited'.",
+    "Confirm there is exactly one answer so you can return immediately."
+  ],
+  "animation": {
+    "visualType": "hash",
+    "tracerId": "two-sum",
+    "defaultInput": {
+      "nums": [
+        2,
+        7,
+        11,
+        15
+      ],
+      "target": 9
+    },
+    "steps": [
+      {
+        "line": 2,
+        "caption": "Need two numbers that sum to 9.",
+        "state": {
+          "nums": [
+            2,
+            7,
+            11,
+            15
+          ],
+          "target": 9,
+          "map": {},
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 4,
+        "caption": "At index 0, value 2. Need 7.",
+        "state": {
+          "nums": [
+            2,
+            7,
+            11,
+            15
+          ],
+          "target": 9,
+          "map": {},
+          "currentIndex": 0,
+          "needed": 7,
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 8,
+        "caption": "Store 2 \u2192 0.",
+        "state": {
+          "nums": [
+            2,
+            7,
+            11,
+            15
+          ],
+          "target": 9,
+          "map": {
+            "2": 0
+          },
+          "currentIndex": 0,
+          "result": null,
+          "highlights": {
+            "0": "remembered"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "At index 1, value 7. Need 2.",
+        "state": {
+          "nums": [
+            2,
+            7,
+            11,
+            15
+          ],
+          "target": 9,
+          "map": {
+            "2": 0
+          },
+          "currentIndex": 1,
+          "needed": 2,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 6,
+        "caption": "Found 2 at index 0.",
+        "state": {
+          "nums": [
+            2,
+            7,
+            11,
+            15
+          ],
+          "target": 9,
+          "map": {
+            "2": 0
+          },
+          "result": [
+            0,
+            1
+          ],
+          "highlights": {
+            "0": "matched",
+            "1": "matched"
+          }
+        }
+      },
+      {
+        "line": 7,
+        "caption": "Return [0, 1].",
+        "state": {
+          "nums": [
+            2,
+            7,
+            11,
+            15
+          ],
+          "target": 9,
+          "map": {
+            "2": 0
+          },
+          "result": [
+            0,
+            1
+          ],
+          "highlights": {
+            "0": "matched",
+            "1": "matched"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "two-sum-ii-input-array-is-sorted",
+    "3sum",
+    "contains-duplicate"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "One-pass hash map is the interview gold standard: O(n) time, easy to explain. Sorting + two pointers loses original indices unless you track them \u2014 map is simpler here."
+}

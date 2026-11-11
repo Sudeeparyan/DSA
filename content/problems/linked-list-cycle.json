@@ -1,0 +1,250 @@
+{
+  "id": 41,
+  "leetcodeNumber": 141,
+  "title": "Linked List Cycle",
+  "slug": "linked-list-cycle",
+  "category": "linked-list",
+  "difficulty": "Easy",
+  "leetcodeUrl": "https://leetcode.com/problems/linked-list-cycle/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Do the arrows ever loop? A slow turtle and a fast rabbit will meet if there is a cycle.",
+  "plainProblem": "Linked List Cycle: Do the arrows ever loop? Worked example \u2014 input: head = [3,2,0,-4], pos = 1; expected output: true. Why: Cycle. Interview pattern to name out loud: Pointer rewriting on a linked list.",
+  "examples": [
+    {
+      "input": "head = [3,2,0,-4], pos = 1",
+      "output": "true",
+      "explanation": "Cycle."
+    },
+    {
+      "input": "head = [1], pos = -1",
+      "output": "false",
+      "explanation": "No cycle."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cLinked List Cycle\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input head = [3,2,0,-4], pos = 1 should still produce true."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: O(n)."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To detect a cycle in a linked list, we can use the Floyd's Tortoise and Hare algorithm. We maintain two pointers, 'slow' and 'fast', where 'slow' moves one step at a time and 'fast' moves two steps at a time. If there is a cycle in the linked list, the two pointers will eventually meet at some point. If there is no cycle, the 'fast' pointer will reach the end of the list."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Pointer rewriting on a linked list. Nodes with next pointers; reverse, merge, cycle. Walk example `head = [3,2,0,-4], pos = 1` \u2192 `true` while naming each variable, then code. Close with O(n) time and O(1) space."
+    }
+  ],
+  "pattern": {
+    "name": "Pointer rewriting on a linked list",
+    "whenToSpot": "Nodes with next pointers; reverse, merge, cycle."
+  },
+  "solutions": {
+    "python": "# Linked List Cycle\n# Idea: To detect a cycle in a linked list, we can use the Floyd's Tortoise and Hare algorithm. We maintain two pointers, 'slow' and 'fast', where 'slow' moves one step at a time and 'fast' moves two steps at a time. If there is\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\n# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, x):\n#         self.val = x\n#         self.next = None\n\n\nclass Solution:\n    def hasCycle(self, head: ListNode) -> bool:\n        if not head or not head.next:\n            return False\n\n        slow = head\n        fast = head.next\n\n        while slow != fast:\n            if not fast or not fast.next:\n                return False\n            slow = slow.next\n            fast = fast.next.next\n\n        return True\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(n)",
+    "timeReason": "From the coded loops for \u201cLinked List Cycle\u201d: O(n) matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "O(1)",
+    "spaceReason": "Extra memory is O(1) from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cLinked List Cycle\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `head = [3,2,0,-4], pos = 1` and check boundary indices / empty containers.",
+    "Second example `head = [1], pos = -1` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Pointer rewriting on a linked list and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Pointer rewriting on a linked list.'",
+    "Narrate one example before typing.",
+    "Close with complexity: O(n) time, O(1) space, and why."
+  ],
+  "animation": {
+    "visualType": "linkedList",
+    "tracerId": "authored",
+    "defaultInput": {
+      "nodes": [
+        3,
+        2,
+        0,
+        -4
+      ]
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Linked list for \u201cLinked List Cycle\u201d: each box points to the next.",
+        "state": {
+          "nums": [
+            3,
+            2,
+            0,
+            -4
+          ],
+          "nodes": [
+            3,
+            2,
+            0,
+            -4
+          ],
+          "result": null,
+          "highlights": {},
+          "pointers": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Pointer visits node 3 (index 0).",
+        "state": {
+          "nums": [
+            3,
+            2,
+            0,
+            -4
+          ],
+          "nodes": [
+            3,
+            2,
+            0,
+            -4
+          ],
+          "currentIndex": 0,
+          "currentValue": 3,
+          "result": null,
+          "highlights": {
+            "0": "current"
+          },
+          "pointers": {
+            "curr": 0
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Pointer visits node 2 (index 1).",
+        "state": {
+          "nums": [
+            3,
+            2,
+            0,
+            -4
+          ],
+          "nodes": [
+            3,
+            2,
+            0,
+            -4
+          ],
+          "currentIndex": 1,
+          "currentValue": 2,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          },
+          "pointers": {
+            "curr": 1
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Pointer visits node 0 (index 2).",
+        "state": {
+          "nums": [
+            3,
+            2,
+            0,
+            -4
+          ],
+          "nodes": [
+            3,
+            2,
+            0,
+            -4
+          ],
+          "currentIndex": 2,
+          "currentValue": 0,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          },
+          "pointers": {
+            "curr": 2
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Pointer visits node -4 (index 3).",
+        "state": {
+          "nums": [
+            3,
+            2,
+            0,
+            -4
+          ],
+          "nodes": [
+            3,
+            2,
+            0,
+            -4
+          ],
+          "currentIndex": 3,
+          "currentValue": -4,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          },
+          "pointers": {
+            "curr": 3
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Done. Result: true.",
+        "state": {
+          "nums": [
+            3,
+            2,
+            0,
+            -4
+          ],
+          "nodes": [
+            3,
+            2,
+            0,
+            -4
+          ],
+          "result": true,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done"
+          },
+          "pointers": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "add-two-numbers",
+    "find-the-duplicate-number",
+    "lru-cache"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Linked List Cycle is the usual interview target: clear pointer rewriting on a linked list with competitive complexity (O(n) time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

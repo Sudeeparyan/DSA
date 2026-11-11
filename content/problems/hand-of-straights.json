@@ -1,0 +1,367 @@
+{
+  "id": 126,
+  "leetcodeNumber": 846,
+  "title": "Hand of Straights",
+  "slug": "hand-of-straights",
+  "category": "greedy",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/hand-of-straights/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Picture the puzzle 'Hand of Straights'. Here is the clever trick in plain words: We can solve this problem using a greedy approach. The idea is to sort the hand and use a Counter to keep track of the frequency of each card. Then, for each card, we check if there are enough consecutive cards to form a We will still start slow, then use this trick so it becomes fast.",
+  "plainProblem": "Hand of Straights: Picture the puzzle 'Hand of Straights'. Worked example \u2014 input: hand = [1,2,3,6,2,3,4,7,8], groupSize = 3; expected output: true. Why: Groups. Interview pattern to name out loud: Greedy choice.",
+  "examples": [
+    {
+      "input": "hand = [1,2,3,6,2,3,4,7,8], groupSize = 3",
+      "output": "true",
+      "explanation": "Groups."
+    },
+    {
+      "input": "hand = [1,2,3,4,5], groupSize = 4",
+      "output": "false",
+      "explanation": "Cannot."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cHand of Straights\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input hand = [1,2,3,6,2,3,4,7,8], groupSize = 3 should still produce true."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
+    },
+    {
+      "title": "Aha insight",
+      "body": "We can solve this problem using a greedy approach. The idea is to sort the hand and use a Counter to keep track of the frequency of each card. Then, for each card, we check if there are enough consecutive cards to form a group of size W. If so, we decrement the frequencies accordingly. If not, the hand cannot be grouped and we return False."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Greedy choice. Local best pick that still works globally. Walk example `hand = [1,2,3,6,2,3,4,7,8], groupSize = 3` \u2192 `true` while naming each variable, then code. Close with See code time and See code space."
+    }
+  ],
+  "pattern": {
+    "name": "Greedy choice",
+    "whenToSpot": "Local best pick that still works globally."
+  },
+  "solutions": {
+    "python": "# Hand of Straights\n# Idea: We can solve this problem using a greedy approach. The idea is to sort the hand and use a Counter to keep track of the frequency of each card. Then, for each card, we check if there are enough consecutive cards to form a\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nfrom collections import Counter\n\n\nclass Solution:\n    def isNStraightHand(self, hand: List[int], W: int) -> bool:\n        if len(hand) % W != 0:\n            return False\n\n        counter = Counter(hand)\n        hand.sort()\n\n        for card in hand:\n            if counter[card] > 0:\n                for i in range(W):\n                    if counter[card + i] <= 0:\n                        return False\n                    counter[card + i] -= 1\n\n        return True\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "From the coded loops for \u201cHand of Straights\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "See code",
+    "spaceReason": "Extra memory is See code from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cHand of Straights\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `hand = [1,2,3,6,2,3,4,7,8], groupSize = 3` and check boundary indices / empty containers.",
+    "Second example `hand = [1,2,3,4,5], groupSize = 4` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Greedy choice and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Greedy choice.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "array",
+    "tracerId": "authored",
+    "defaultInput": {
+      "nums": [
+        1,
+        2,
+        3,
+        6,
+        2,
+        3,
+        4,
+        7,
+        8
+      ]
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Lay out the array for \u201cHand of Straights\u201d. Watch the pointer walk the answer into place.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            6,
+            2,
+            3,
+            4,
+            7,
+            8
+          ],
+          "result": null,
+          "highlights": {},
+          "currentIndex": null
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 0 holds 1.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            6,
+            2,
+            3,
+            4,
+            7,
+            8
+          ],
+          "target": null,
+          "currentIndex": 0,
+          "currentValue": 1,
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 1 holds 2.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            6,
+            2,
+            3,
+            4,
+            7,
+            8
+          ],
+          "target": null,
+          "currentIndex": 1,
+          "currentValue": 2,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 2 holds 3.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            6,
+            2,
+            3,
+            4,
+            7,
+            8
+          ],
+          "target": null,
+          "currentIndex": 2,
+          "currentValue": 3,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 3 holds 6.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            6,
+            2,
+            3,
+            4,
+            7,
+            8
+          ],
+          "target": null,
+          "currentIndex": 3,
+          "currentValue": 6,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 4 holds 2.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            6,
+            2,
+            3,
+            4,
+            7,
+            8
+          ],
+          "target": null,
+          "currentIndex": 4,
+          "currentValue": 2,
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 5 holds 3.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            6,
+            2,
+            3,
+            4,
+            7,
+            8
+          ],
+          "target": null,
+          "currentIndex": 5,
+          "currentValue": 3,
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 6 holds 4.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            6,
+            2,
+            3,
+            4,
+            7,
+            8
+          ],
+          "target": null,
+          "currentIndex": 6,
+          "currentValue": 4,
+          "result": null,
+          "highlights": {
+            "6": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 7 holds 7.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            6,
+            2,
+            3,
+            4,
+            7,
+            8
+          ],
+          "target": null,
+          "currentIndex": 7,
+          "currentValue": 7,
+          "result": null,
+          "highlights": {
+            "7": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 8 holds 8.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            6,
+            2,
+            3,
+            4,
+            7,
+            8
+          ],
+          "target": null,
+          "currentIndex": 8,
+          "currentValue": 8,
+          "result": null,
+          "highlights": {
+            "8": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Answer settles: true.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            6,
+            2,
+            3,
+            4,
+            7,
+            8
+          ],
+          "target": null,
+          "currentIndex": 8,
+          "result": true,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done",
+            "6": "done",
+            "7": "done",
+            "8": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "gas-station",
+    "merge-triplets-to-form-target-triplet",
+    "partition-labels"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Hand of Straights is the usual interview target: clear greedy choice with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

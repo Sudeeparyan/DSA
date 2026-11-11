@@ -1,0 +1,310 @@
+{
+  "id": 2,
+  "leetcodeNumber": 242,
+  "title": "Valid Anagram",
+  "slug": "valid-anagram",
+  "category": "arrays-hashing",
+  "difficulty": "Easy",
+  "leetcodeUrl": "https://leetcode.com/problems/valid-anagram/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Two piles of letter tiles. If you can rearrange pile A to look exactly like pile B, they are anagrams \u2014 same letters, same counts, maybe different order.",
+  "plainProblem": "Given two strings s and t, return true if t is an anagram of s (same characters with the same frequencies).",
+  "examples": [
+    {
+      "input": "s = \"anagram\", t = \"nagaram\"",
+      "output": "true",
+      "explanation": "Same multiset of letters."
+    },
+    {
+      "input": "s = \"rat\", t = \"car\"",
+      "output": "false",
+      "explanation": "Different letters."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "Sort both strings and compare. Easy to understand."
+    },
+    {
+      "title": "Why sorting may be enough",
+      "body": "Sorting is O(n log n). Fine for interviews, but counting can be linear."
+    },
+    {
+      "title": "Aha insight",
+      "body": "Anagrams have identical character counts. A hash map (or 26 counters) remembers frequencies."
+    },
+    {
+      "title": "Better idea",
+      "body": "Count letters in s, subtract letters in t (or compare two maps). If all counts end at zero, they match."
+    }
+  ],
+  "pattern": {
+    "name": "Hash set / hash map for seen items",
+    "whenToSpot": "You need fast lookups of values you already saw."
+  },
+  "solutions": {
+    "python": "class Solution:\n    def isAnagram(self, s: str, t: str) -> bool:\n        # Different lengths can never be anagrams\n        if len(s) != len(t):\n            return False\n\n        # Count letters in each string (hash maps)\n        countS, countT = {}, {}\n\n        for i in range(len(s)):\n            # Add one for this letter in s\n            countS[s[i]] = 1 + countS.get(s[i], 0)\n            # Add one for this letter in t\n            countT[t[i]] = 1 + countT.get(t[i], 0)\n        # Compare the two notebooks of counts\n        return countS == countT\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(n)",
+    "timeReason": "We scan each string once; map updates are average O(1).",
+    "space": "O(1)",
+    "spaceReason": "If we only use lowercase English letters, 26 counters are constant space (or O(k) for alphabet size)."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cValid Anagram\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `s = \"anagram\", t = \"nagaram\"` and check boundary indices / empty containers.",
+    "Second example `s = \"rat\", t = \"car\"` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Hash set / hash map for seen items and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Name the pattern: Hash set / hash map for seen items.",
+    "Walk example 1 aloud before coding.",
+    "State O(n) time and O(1) space at the end."
+  ],
+  "animation": {
+    "visualType": "hash",
+    "tracerId": "authored",
+    "defaultInput": {
+      "nums": [
+        "a",
+        "n",
+        "a",
+        "g",
+        "r",
+        "a",
+        "m"
+      ]
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Empty memory shelf for \u201cValid Anagram\u201d. We remember what we have already seen.",
+        "state": {
+          "nums": [
+            "a",
+            "n",
+            "a",
+            "g",
+            "r",
+            "a",
+            "m"
+          ],
+          "seen": [],
+          "map": {},
+          "target": null,
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at a at index 0.",
+        "state": {
+          "nums": [
+            "a",
+            "n",
+            "a",
+            "g",
+            "r",
+            "a",
+            "m"
+          ],
+          "seen": [],
+          "map": {},
+          "target": null,
+          "currentIndex": 0,
+          "currentValue": "a",
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "New value. Dock a onto the memory shelf.",
+        "state": {
+          "nums": [
+            "a",
+            "n",
+            "a",
+            "g",
+            "r",
+            "a",
+            "m"
+          ],
+          "seen": [
+            "a"
+          ],
+          "map": {
+            "a": 0
+          },
+          "currentIndex": 0,
+          "result": null,
+          "highlights": {
+            "0": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at n at index 1.",
+        "state": {
+          "nums": [
+            "a",
+            "n",
+            "a",
+            "g",
+            "r",
+            "a",
+            "m"
+          ],
+          "seen": [
+            "a"
+          ],
+          "map": {
+            "a": 0
+          },
+          "target": null,
+          "currentIndex": 1,
+          "currentValue": "n",
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "New value. Dock n onto the memory shelf.",
+        "state": {
+          "nums": [
+            "a",
+            "n",
+            "a",
+            "g",
+            "r",
+            "a",
+            "m"
+          ],
+          "seen": [
+            "a",
+            "n"
+          ],
+          "map": {
+            "a": 0,
+            "n": 1
+          },
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at a at index 2.",
+        "state": {
+          "nums": [
+            "a",
+            "n",
+            "a",
+            "g",
+            "r",
+            "a",
+            "m"
+          ],
+          "seen": [
+            "a",
+            "n"
+          ],
+          "map": {
+            "a": 0,
+            "n": 1
+          },
+          "target": null,
+          "currentIndex": 2,
+          "currentValue": "a",
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Have we seen a before? Yes \u2014 duplicate found.",
+        "state": {
+          "nums": [
+            "a",
+            "n",
+            "a",
+            "g",
+            "r",
+            "a",
+            "m"
+          ],
+          "seen": [
+            "a",
+            "n"
+          ],
+          "map": {
+            "a": 0,
+            "n": 1
+          },
+          "currentIndex": 2,
+          "result": true,
+          "highlights": {
+            "2": "matched"
+          }
+        }
+      },
+      {
+        "line": 5,
+        "caption": "Return true.",
+        "state": {
+          "nums": [
+            "a",
+            "n",
+            "a",
+            "g",
+            "r",
+            "a",
+            "m"
+          ],
+          "seen": [
+            "a",
+            "n"
+          ],
+          "map": {
+            "a": 0,
+            "n": 1
+          },
+          "target": null,
+          "result": true,
+          "highlights": {
+            "2": "matched"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "contains-duplicate",
+    "two-sum",
+    "group-anagrams"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "Counting with a hash map (or 26-length array) is the classic O(n) interview answer. Mention sorting as a clear alternative."
+}

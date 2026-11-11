@@ -1,0 +1,253 @@
+{
+  "id": 134,
+  "leetcodeNumber": 253,
+  "title": "Meeting Rooms II",
+  "slug": "meeting-rooms-ii",
+  "category": "intervals",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/meeting-rooms-ii/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Picture the puzzle 'Meeting Rooms II'. Here is the clever trick in plain words: We can solve this problem using a priority queue (min-heap). First, we sort the intervals based on their start times. We then iterate through the sorted intervals and maintain a min-heap of end times of ongoing meetings. We will still start slow, then use this trick so it becomes fast.",
+  "plainProblem": "Meeting Rooms II: Picture the puzzle 'Meeting Rooms II'. Worked example \u2014 input: intervals = [[0,30],[5,10],[15,20]]; expected output: 2. Why: Rooms needed. Interview pattern to name out loud: Sort + sweep intervals.",
+  "examples": [
+    {
+      "input": "intervals = [[0,30],[5,10],[15,20]]",
+      "output": "2",
+      "explanation": "Rooms needed."
+    },
+    {
+      "input": "intervals = [[7,10],[2,4]]",
+      "output": "1",
+      "explanation": "One room."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cMeeting Rooms II\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input intervals = [[0,30],[5,10],[15,20]] should still produce 2."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
+    },
+    {
+      "title": "Aha insight",
+      "body": "We can solve this problem using a priority queue (min-heap). First, we sort the intervals based on their start times. We then iterate through the sorted intervals and maintain a min-heap of end times of ongoing meetings. For each interval, if the start time is greater than or equal to the smallest end time in the min-heap, it means the current meeting can reuse an existing room, so we pop the smallest end time from the min-heap. If not, we need to allocate a new room. After processing all intervals, the size of the min-heap gives us the minimum number of meeting rooms required."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Sort + sweep intervals. Overlapping time ranges. Walk example `intervals = [[0,30],[5,10],[15,20]]` \u2192 `2` while naming each variable, then code. Close with See code time and See code space."
+    }
+  ],
+  "pattern": {
+    "name": "Sort + sweep intervals",
+    "whenToSpot": "Overlapping time ranges."
+  },
+  "solutions": {
+    "python": "# Meeting Rooms II\n# Idea: We can solve this problem using a priority queue (min-heap). First, we sort the intervals based on their start times. We then iterate through the sorted intervals and maintain a min-heap of end times of ongoing meetings.\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nimport heapq\n\n\nclass Solution:\n    def minMeetingRooms(self, intervals: List[List[int]]) -> int:\n        if not intervals:\n            return 0\n\n        intervals.sort(key=lambda x: x[0])\n        min_heap = []\n        # Heap ops keep min/max ready\n        heapq.heappush(min_heap, intervals[0][1])\n\n        for i in range(1, len(intervals)):\n            if intervals[i][0] >= min_heap[0]:\n                heapq.heappop(min_heap)\n            heapq.heappush(min_heap, intervals[i][1])\n\n        return len(min_heap)\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "From the coded loops for \u201cMeeting Rooms II\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "See code",
+    "spaceReason": "Extra memory is See code from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cMeeting Rooms II\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `intervals = [[0,30],[5,10],[15,20]]` and check boundary indices / empty containers.",
+    "Second example `intervals = [[7,10],[2,4]]` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Sort + sweep intervals and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Sort + sweep intervals.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "intervals",
+    "tracerId": "authored",
+    "defaultInput": {
+      "intervals": [
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          8,
+          10
+        ]
+      ]
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Intervals for \u201cMeeting Rooms II\u201d on a timeline.",
+        "state": {
+          "intervals": [
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              6
+            ],
+            [
+              8,
+              10
+            ]
+          ],
+          "nums": [
+            1,
+            3,
+            2,
+            6,
+            8,
+            10
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Focus interval 0: [1, 3].",
+        "state": {
+          "intervals": [
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              6
+            ],
+            [
+              8,
+              10
+            ]
+          ],
+          "nums": [
+            1,
+            3
+          ],
+          "currentIndex": 0,
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Focus interval 1: [2, 6].",
+        "state": {
+          "intervals": [
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              6
+            ],
+            [
+              8,
+              10
+            ]
+          ],
+          "nums": [
+            2,
+            6
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Focus interval 2: [8, 10].",
+        "state": {
+          "intervals": [
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              6
+            ],
+            [
+              8,
+              10
+            ]
+          ],
+          "nums": [
+            8,
+            10
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Merged / decided. Answer: 2.",
+        "state": {
+          "intervals": [
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              6
+            ],
+            [
+              8,
+              10
+            ]
+          ],
+          "nums": [
+            1,
+            3,
+            2,
+            6,
+            8,
+            10
+          ],
+          "result": 2,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "meeting-rooms",
+    "minimum-interval-to-include-each-query"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Meeting Rooms II is the usual interview target: clear sort + sweep intervals with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

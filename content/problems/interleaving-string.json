@@ -1,0 +1,296 @@
+{
+  "id": 116,
+  "leetcodeNumber": 97,
+  "title": "Interleaving String",
+  "slug": "interleaving-string",
+  "category": "2d-dp",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/interleaving-string/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Picture the puzzle 'Interleaving String'. Here is the clever trick in plain words: The key idea is to use dynamic programming to determine whether s3 can be formed by interleaving s1 and s2. We will still start slow, then use this trick so it becomes fast.",
+  "plainProblem": "Interleaving String: Picture the puzzle 'Interleaving String'. Worked example \u2014 input: s1 = \"aabcc\", s2 = \"dbbca\", s3 = \"aadbbcbcac\"; expected output: true. Why: Interleave. Interview pattern to name out loud: 2-D dynamic programming.",
+  "examples": [
+    {
+      "input": "s1 = \"aabcc\", s2 = \"dbbca\", s3 = \"aadbbcbcac\"",
+      "output": "true",
+      "explanation": "Interleave."
+    },
+    {
+      "input": "s3 = \"aadbbbaccc\"",
+      "output": "false",
+      "explanation": "Impossible."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cInterleaving String\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input s1 = \"aabcc\", s2 = \"dbbca\", s3 = \"aadbbcbcac\" should still produce true."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
+    },
+    {
+      "title": "Aha insight",
+      "body": "The key idea is to use dynamic programming to determine whether s3 can be formed by interleaving s1 and s2."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to 2-D dynamic programming. Two changing indices; fill a table. Walk example `s1 = \"aabcc\", s2 = \"dbbca\", s3 = \"aadbbcbcac\"` \u2192 `true` while naming each variable, then code. Close with See code time and O(m * n) space."
+    }
+  ],
+  "pattern": {
+    "name": "2-D dynamic programming",
+    "whenToSpot": "Two changing indices; fill a table."
+  },
+  "solutions": {
+    "python": "# Interleaving String\n# Idea: The key idea is to use dynamic programming to determine whether s3 can be formed by interleaving s1 and s2.\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def isInterleave(self, s1: str, s2: str, s3: str) -> bool:\n        # Get the lengths of s1, s2, and s3.\n        m, n, p = len(s1), len(s2), len(s3)\n\n        # If the sum of lengths of s1 and s2 is not equal to the length of s3, return False.\n        if m + n != p:\n            return False\n\n        # Initialize a 2D DP array dp of size (m + 1) x (n + 1) to store intermediate results.\n        # Table of answers to smaller problems (DP)\n        dp = [[False] * (n + 1) for _ in range(m + 1)]\n\n        # Base case: dp[0][0] is True since two empty strings can form an empty string.\n        dp[0][0] = True\n\n        # Fill in the first row of dp.\n        for j in range(1, n + 1):\n            dp[0][j] = dp[0][j - 1] and s2[j - 1] == s3[j - 1]\n\n        # Fill in the first column of dp.\n        for i in range(1, m + 1):\n            dp[i][0] = dp[i - 1][0] and s1[i - 1] == s3[i - 1]\n\n        # Fill in the rest of dp.\n        for i in range(1, m + 1):\n            for j in range(1, n + 1):\n                # For dp[i][j] to be True, one of the following conditions must be met:\n                # 1. dp[i-1][j] is True and s1[i-1] matches s3[i+j-1].\n                # 2. dp[i][j-1] is True and s2[j-1] matches s3[i+j-1].\n                dp[i][j] = (dp[i - 1][j] and s1[i - 1] == s3[i + j - 1]) or (\n                    dp[i][j - 1] and s2[j - 1] == s3[i + j - 1]\n                )\n\n        # The result is stored in dp[m][n].\n        return dp[m][n]\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "From the coded loops for \u201cInterleaving String\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "O(m * n)",
+    "spaceReason": "Extra memory is O(m * n) from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cInterleaving String\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `s1 = \"aabcc\", s2 = \"dbbca\", s3 = \"aadbbcbcac\"` and check boundary indices / empty containers.",
+    "Second example `s3 = \"aadbbbaccc\"` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming 2-D dynamic programming and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like 2-D dynamic programming.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, O(m * n) space, and why."
+  ],
+  "animation": {
+    "visualType": "dp",
+    "tracerId": "authored",
+    "defaultInput": {
+      "n": 5
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "DP row for \u201cInterleaving String\u201d. dp[0] starts as the base case.",
+        "state": {
+          "nums": [
+            1,
+            1,
+            2,
+            3,
+            5,
+            8
+          ],
+          "table": [
+            [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "result": null,
+          "highlights": {
+            "0": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Fill dp[1] using earlier answers \u2192 1.",
+        "state": {
+          "nums": [
+            1,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "table": [
+            [
+              1,
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Fill dp[2] using earlier answers \u2192 2.",
+        "state": {
+          "nums": [
+            1,
+            1,
+            2,
+            0,
+            0,
+            0
+          ],
+          "table": [
+            [
+              1,
+              1,
+              2,
+              0,
+              0,
+              0
+            ]
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Fill dp[3] using earlier answers \u2192 3.",
+        "state": {
+          "nums": [
+            1,
+            1,
+            2,
+            3,
+            0,
+            0
+          ],
+          "table": [
+            [
+              1,
+              1,
+              2,
+              3,
+              0,
+              0
+            ]
+          ],
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Fill dp[4] using earlier answers \u2192 5.",
+        "state": {
+          "nums": [
+            1,
+            1,
+            2,
+            3,
+            5,
+            0
+          ],
+          "table": [
+            [
+              1,
+              1,
+              2,
+              3,
+              5,
+              0
+            ]
+          ],
+          "currentIndex": 4,
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Fill dp[5] using earlier answers \u2192 8.",
+        "state": {
+          "nums": [
+            1,
+            1,
+            2,
+            3,
+            5,
+            8
+          ],
+          "table": [
+            [
+              1,
+              1,
+              2,
+              3,
+              5,
+              8
+            ]
+          ],
+          "currentIndex": 5,
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "DP finished. Answer: true.",
+        "state": {
+          "nums": [
+            1,
+            1,
+            2,
+            3,
+            5,
+            8
+          ],
+          "table": [
+            [
+              1,
+              1,
+              2,
+              3,
+              5,
+              8
+            ]
+          ],
+          "result": true,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "target-sum",
+    "longest-increasing-path-in-a-matrix",
+    "distinct-subsequences"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Interleaving String is the usual interview target: clear 2-d dynamic programming with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

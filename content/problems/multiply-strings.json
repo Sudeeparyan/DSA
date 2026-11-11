@@ -1,0 +1,149 @@
+{
+  "id": 142,
+  "leetcodeNumber": 43,
+  "title": "Multiply Strings",
+  "slug": "multiply-strings",
+  "category": "math-geometry",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/multiply-strings/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Picture the puzzle 'Multiply Strings'. Here is the clever trick in plain words: The problem is to multiply two given non-negative integers represented as strings. We can perform multiplication digit by digit, similar to how we do multiplication manually. We start from the least significant digits an We will still start slow, then use this trick so it becomes fast.",
+  "plainProblem": "Multiply Strings: Picture the puzzle 'Multiply Strings'. Worked example \u2014 input: num1 = \"2\", num2 = \"3\"; expected output: \"6\". Why: Product. Interview pattern to name out loud: Math / matrix geometry.",
+  "examples": [
+    {
+      "input": "num1 = \"2\", num2 = \"3\"",
+      "output": "\"6\"",
+      "explanation": "Product."
+    },
+    {
+      "input": "num1 = \"123\", num2 = \"456\"",
+      "output": "\"56088\"",
+      "explanation": "Product."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cMultiply Strings\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input num1 = \"2\", num2 = \"3\" should still produce \"6\"."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
+    },
+    {
+      "title": "Aha insight",
+      "body": "The problem is to multiply two given non-negative integers represented as strings. We can perform multiplication digit by digit, similar to how we do multiplication manually. We start from the least significant digits and move towards the most significant digits. We use two nested loops to multiply each pair of digits and keep track of carry values."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Math / matrix geometry. Rotate, spiral, primes, counting bits of structure. Walk example `num1 = \"2\", num2 = \"3\"` \u2192 `\"6\"` while naming each variable, then code. Close with See code time and See code space."
+    }
+  ],
+  "pattern": {
+    "name": "Math / matrix geometry",
+    "whenToSpot": "Rotate, spiral, primes, counting bits of structure."
+  },
+  "solutions": {
+    "python": "# Multiply Strings\n# Idea: The problem is to multiply two given non-negative integers represented as strings. We can perform multiplication digit by digit, similar to how we do multiplication manually. We start from the least significant digits an\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def multiply(self, num1: str, num2: str) -> str:\n        if num1 == \"0\" or num2 == \"0\":\n            return \"0\"\n\n        m, n = len(num1), len(num2)\n        result = [0] * (m + n)\n\n        for i in range(m - 1, -1, -1):\n            for j in range(n - 1, -1, -1):\n                product = int(num1[i]) * int(num2[j])\n                sum_val = product + result[i + j + 1]\n                result[i + j + 1] = sum_val % 10\n                result[i + j] += sum_val // 10\n\n        return \"\".join(map(str, result)).lstrip(\"0\")\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "From the coded loops for \u201cMultiply Strings\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "See code",
+    "spaceReason": "Extra memory is See code from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cMultiply Strings\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `num1 = \"2\", num2 = \"3\"` and check boundary indices / empty containers.",
+    "Second example `num1 = \"123\", num2 = \"456\"` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Math / matrix geometry and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Math / matrix geometry.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "array",
+    "tracerId": "authored",
+    "defaultInput": {
+      "nums": []
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Lay out the array for \u201cMultiply Strings\u201d. Watch the pointer walk the answer into place.",
+        "state": {
+          "nums": [],
+          "result": null,
+          "highlights": {},
+          "currentIndex": null
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Answer settles: \"6\".",
+        "state": {
+          "nums": [],
+          "target": null,
+          "currentIndex": 0,
+          "result": "6",
+          "highlights": {}
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Trace the highlighted cell once more before we move on. (Multiply Strings: beat 3)",
+        "state": {
+          "nums": [],
+          "target": null,
+          "currentIndex": 0,
+          "result": "6",
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Same structure, new focus \u2014 this beat locks the idea in. (Multiply Strings: beat 4)",
+        "state": {
+          "nums": [],
+          "target": null,
+          "currentIndex": 0,
+          "result": "6",
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "One more look: every highlighted piece earned its place. (Multiply Strings: beat 5)",
+        "state": {
+          "nums": [],
+          "target": null,
+          "currentIndex": 0,
+          "result": "6",
+          "highlights": {
+            "0": "current"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "powx-n",
+    "detect-squares"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Multiply Strings is the usual interview target: clear math / matrix geometry with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

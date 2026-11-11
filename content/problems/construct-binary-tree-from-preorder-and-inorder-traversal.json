@@ -1,0 +1,183 @@
+{
+  "id": 58,
+  "leetcodeNumber": 105,
+  "title": "Construct Binary Tree from Preorder and Inorder Traversal",
+  "slug": "construct-binary-tree-from-preorder-and-inorder-traversal",
+  "category": "trees",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Picture the puzzle 'Construct Binary Tree from Preorder and Inorder Traversal'. Here is the clever trick in plain words: To construct a binary tree from its preorder and inorder traversals, we can use a recursive approach. The first element in the preorder list is the root of the current subtree. We locate its position in the inorder list We will still start slow, then use this trick so it becomes fast.",
+  "plainProblem": "Construct Binary Tree from Preorder and Inorder Traversal: Picture the puzzle 'Construct Binary Tree from Preorder and Inorder Traversal'. Worked example \u2014 input: preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]; expected output: [3,9,20,null,null,15,7]. Why: Built tree. Interview pattern to name out loud: Tree DFS / BFS recursion.",
+  "examples": [
+    {
+      "input": "preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]",
+      "output": "[3,9,20,null,null,15,7]",
+      "explanation": "Built tree."
+    },
+    {
+      "input": "preorder = [-1], inorder = [-1]",
+      "output": "[-1]",
+      "explanation": "Single."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cConstruct Binary Tree from Preorder and Inorder Traversal\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input preorder = [3,9,20,15,7], inorder = [9,3,15,20,7] should still produce [3,9,20,null,null,15,7]."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: O(n)."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To construct a binary tree from its preorder and inorder traversals, we can use a recursive approach. The first element in the preorder list is the root of the current subtree. We locate its position in the inorder list to determine the left and right subtrees. We recursively construct the left and right subtrees for each subtree."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Tree DFS / BFS recursion. Hierarchical nodes with left/right children. Walk example `preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]` \u2192 `[3,9,20,null,null,15,7]` while naming each variable, then code. Close with O(n) time and O(n) space."
+    }
+  ],
+  "pattern": {
+    "name": "Tree DFS / BFS recursion",
+    "whenToSpot": "Hierarchical nodes with left/right children."
+  },
+  "solutions": {
+    "python": "# Construct Binary Tree from Preorder and Inorder Traversal\n# Idea: To construct a binary tree from its preorder and inorder traversals, we can use a recursive approach. The first element in the preorder list is the root of the current subtree. We locate its position in the inorder list \u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\n# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\n\n\nclass Solution:\n    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:\n        if not preorder or not inorder:\n            return None\n\n        root_val = preorder.pop(0)\n        root = TreeNode(root_val)\n        root_index = inorder.index(root_val)\n\n        root.left = self.buildTree(preorder, inorder[:root_index])\n        root.right = self.buildTree(preorder, inorder[root_index + 1 :])\n\n        return root\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(n)",
+    "timeReason": "From the coded loops for \u201cConstruct Binary Tree from Preorder and Inorder Traversal\u201d: O(n) matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "O(n)",
+    "spaceReason": "Extra memory is O(n) from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cConstruct Binary Tree from Preorder and Inorder Traversal\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]` and check boundary indices / empty containers.",
+    "Second example `preorder = [-1], inorder = [-1]` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Tree DFS / BFS recursion and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Tree DFS / BFS recursion.'",
+    "Narrate one example before typing.",
+    "Close with complexity: O(n) time, O(n) space, and why."
+  ],
+  "animation": {
+    "visualType": "tree",
+    "tracerId": "authored",
+    "defaultInput": {
+      "root": []
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Binary tree for \u201cConstruct Binary Tree from Preorder and Inorder Traversal\u201d starts empty on stage \u2014 we reveal levels.",
+        "state": {
+          "nodes": [],
+          "nums": [],
+          "visible": [],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Tree fully revealed. Answer: [3, 9, 20, null, null, 15, 7].",
+        "state": {
+          "nodes": [],
+          "nums": [],
+          "visible": [],
+          "result": [
+            3,
+            9,
+            20,
+            null,
+            null,
+            15,
+            7
+          ],
+          "highlights": {}
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Trace the highlighted cell once more before we move on. (Construct Binary Tree from Preorder and Inorder Traversal: beat 3)",
+        "state": {
+          "nodes": [],
+          "nums": [],
+          "visible": [],
+          "result": [
+            3,
+            9,
+            20,
+            null,
+            null,
+            15,
+            7
+          ],
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Same structure, new focus \u2014 this beat locks the idea in. (Construct Binary Tree from Preorder and Inorder Traversal: beat 4)",
+        "state": {
+          "nodes": [],
+          "nums": [],
+          "visible": [],
+          "result": [
+            3,
+            9,
+            20,
+            null,
+            null,
+            15,
+            7
+          ],
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "One more look: every highlighted piece earned its place. (Construct Binary Tree from Preorder and Inorder Traversal: beat 5)",
+        "state": {
+          "nodes": [],
+          "nums": [],
+          "visible": [],
+          "result": [
+            3,
+            9,
+            20,
+            null,
+            null,
+            15,
+            7
+          ],
+          "highlights": {
+            "0": "current"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "kth-smallest-element-in-a-bst",
+    "binary-tree-maximum-path-sum",
+    "serialize-and-deserialize-binary-tree"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Construct Binary Tree from Preorder and Inorder Traversal is the usual interview target: clear tree dfs / bfs recursion with competitive complexity (O(n) time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

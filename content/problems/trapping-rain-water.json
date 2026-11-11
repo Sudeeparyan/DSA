@@ -1,0 +1,401 @@
+{
+  "id": 14,
+  "leetcodeNumber": 42,
+  "title": "Trapping Rain Water",
+  "slug": "trapping-rain-water",
+  "category": "two-pointers",
+  "difficulty": "Hard",
+  "leetcodeUrl": "https://leetcode.com/problems/trapping-rain-water/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Picture the puzzle 'Trapping Rain Water'. Here is the clever trick in plain words: To find the amount of trapped rainwater in the given elevation histogram represented by the input array 'height', we can use a two-pointer approach. We initialize two pointers, one at the beginning of the array (left) an We will still start slow, then use this trick so it becomes fast.",
+  "plainProblem": "Trapping Rain Water: Picture the puzzle 'Trapping Rain Water'. Worked example \u2014 input: height = [0,1,0,2,1,0,1,3,2,1,2,1]; expected output: 6. Why: Trapped units. Interview pattern to name out loud: Two pointers from both ends (or slow/fast).",
+  "examples": [
+    {
+      "input": "height = [0,1,0,2,1,0,1,3,2,1,2,1]",
+      "output": "6",
+      "explanation": "Trapped units."
+    },
+    {
+      "input": "height = [4,2,0,3,2,5]",
+      "output": "9",
+      "explanation": "Trapped units."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cTrapping Rain Water\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input height = [0,1,0,2,1,0,1,3,2,1,2,1] should still produce 6."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: O(n)."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To find the amount of trapped rainwater in the given elevation histogram represented by the input array 'height', we can use a two-pointer approach. We initialize two pointers, one at the beginning of the array (left) and the other at the end of the array (right). We also initialize two variables to keep track of the maximum left height and maximum right height seen so far. While the left pointer is less than the right pointer, we compare the height at the left and right pointers. If the height at the left pointer is less than or equal to the height at the right pointer, it means we can trap water between the left pointer and the maximum left height. Otherwise, we can trap water between the right pointer and the maximum right height. At each step, we update the trapped water amount and move the pointers and update the maximum heights accordingly."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Two pointers from both ends (or slow/fast). Sorted array, palindrome, or pair-sum hints. Walk example `height = [0,1,0,2,1,0,1,3,2,1,2,1]` \u2192 `6` while naming each variable, then code. Close with O(n) time and O(1) space."
+    }
+  ],
+  "pattern": {
+    "name": "Two pointers from both ends (or slow/fast)",
+    "whenToSpot": "Sorted array, palindrome, or pair-sum hints."
+  },
+  "solutions": {
+    "python": "# Trapping Rain Water\n# Idea: To find the amount of trapped rainwater in the given elevation histogram represented by the input array 'height', we can use a two-pointer approach. We initialize two pointers, one at the beginning of the array (left) an\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def trap(self, height: List[int]) -> int:\n        left, right = 0, len(height) - 1\n        max_left, max_right = 0, 0\n        trapped_water = 0\n\n        while left < right:\n            if height[left] <= height[right]:\n                if height[left] >= max_left:\n                    max_left = height[left]\n                else:\n                    trapped_water += max_left - height[left]\n                left += 1\n            else:\n                if height[right] >= max_right:\n                    max_right = height[right]\n                else:\n                    trapped_water += max_right - height[right]\n                right -= 1\n\n        return trapped_water\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(n)",
+    "timeReason": "From the coded loops for \u201cTrapping Rain Water\u201d: O(n) matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "O(1)",
+    "spaceReason": "Extra memory is O(1) from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cTrapping Rain Water\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `height = [0,1,0,2,1,0,1,3,2,1,2,1]` and check boundary indices / empty containers.",
+    "Second example `height = [4,2,0,3,2,5]` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Two pointers from both ends (or slow/fast) and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Two pointers from both ends (or slow/fast).'",
+    "Narrate one example before typing.",
+    "Close with complexity: O(n) time, O(1) space, and why."
+  ],
+  "animation": {
+    "visualType": "array",
+    "tracerId": "authored",
+    "defaultInput": [
+      0,
+      1,
+      0,
+      2,
+      1,
+      0,
+      1,
+      3,
+      2,
+      1
+    ],
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Lay out the array for \u201cTrapping Rain Water\u201d. Watch the pointer walk the answer into place.",
+        "state": {
+          "nums": [
+            0,
+            1,
+            0,
+            2,
+            1,
+            0,
+            1,
+            3,
+            2,
+            1
+          ],
+          "result": null,
+          "highlights": {},
+          "currentIndex": null
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 0 holds 0.",
+        "state": {
+          "nums": [
+            0,
+            1,
+            0,
+            2,
+            1,
+            0,
+            1,
+            3,
+            2,
+            1
+          ],
+          "target": null,
+          "currentIndex": 0,
+          "currentValue": 0,
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 1 holds 1.",
+        "state": {
+          "nums": [
+            0,
+            1,
+            0,
+            2,
+            1,
+            0,
+            1,
+            3,
+            2,
+            1
+          ],
+          "target": null,
+          "currentIndex": 1,
+          "currentValue": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 2 holds 0.",
+        "state": {
+          "nums": [
+            0,
+            1,
+            0,
+            2,
+            1,
+            0,
+            1,
+            3,
+            2,
+            1
+          ],
+          "target": null,
+          "currentIndex": 2,
+          "currentValue": 0,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 3 holds 2.",
+        "state": {
+          "nums": [
+            0,
+            1,
+            0,
+            2,
+            1,
+            0,
+            1,
+            3,
+            2,
+            1
+          ],
+          "target": null,
+          "currentIndex": 3,
+          "currentValue": 2,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 4 holds 1.",
+        "state": {
+          "nums": [
+            0,
+            1,
+            0,
+            2,
+            1,
+            0,
+            1,
+            3,
+            2,
+            1
+          ],
+          "target": null,
+          "currentIndex": 4,
+          "currentValue": 1,
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 5 holds 0.",
+        "state": {
+          "nums": [
+            0,
+            1,
+            0,
+            2,
+            1,
+            0,
+            1,
+            3,
+            2,
+            1
+          ],
+          "target": null,
+          "currentIndex": 5,
+          "currentValue": 0,
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 6 holds 1.",
+        "state": {
+          "nums": [
+            0,
+            1,
+            0,
+            2,
+            1,
+            0,
+            1,
+            3,
+            2,
+            1
+          ],
+          "target": null,
+          "currentIndex": 6,
+          "currentValue": 1,
+          "result": null,
+          "highlights": {
+            "6": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 7 holds 3.",
+        "state": {
+          "nums": [
+            0,
+            1,
+            0,
+            2,
+            1,
+            0,
+            1,
+            3,
+            2,
+            1
+          ],
+          "target": null,
+          "currentIndex": 7,
+          "currentValue": 3,
+          "result": null,
+          "highlights": {
+            "7": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 8 holds 2.",
+        "state": {
+          "nums": [
+            0,
+            1,
+            0,
+            2,
+            1,
+            0,
+            1,
+            3,
+            2,
+            1
+          ],
+          "target": null,
+          "currentIndex": 8,
+          "currentValue": 2,
+          "result": null,
+          "highlights": {
+            "8": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 9 holds 1.",
+        "state": {
+          "nums": [
+            0,
+            1,
+            0,
+            2,
+            1,
+            0,
+            1,
+            3,
+            2,
+            1
+          ],
+          "target": null,
+          "currentIndex": 9,
+          "currentValue": 1,
+          "result": null,
+          "highlights": {
+            "9": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Answer settles: 6.",
+        "state": {
+          "nums": [
+            0,
+            1,
+            0,
+            2,
+            1,
+            0,
+            1,
+            3,
+            2,
+            1
+          ],
+          "target": null,
+          "currentIndex": 9,
+          "result": 6,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done",
+            "6": "done",
+            "7": "done",
+            "8": "done",
+            "9": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "container-with-most-water"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Trapping Rain Water is the usual interview target: clear two pointers from both ends (or slow/fast) with competitive complexity (O(n) time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

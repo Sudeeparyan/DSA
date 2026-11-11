@@ -1,0 +1,221 @@
+{
+  "id": 77,
+  "leetcodeNumber": 131,
+  "title": "Palindrome Partitioning",
+  "slug": "palindrome-partitioning",
+  "category": "backtracking",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/palindrome-partitioning/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Picture the puzzle 'Palindrome Partitioning'. Here is the clever trick in plain words: To partition a given string into palindromic substrings, we can use backtracking. Starting from each position in the string, we check if the substring from that position to the end is a palindrome. If it is, we recursive We will still start slow, then use this trick so it becomes fast.",
+  "plainProblem": "Palindrome Partitioning: Picture the puzzle 'Palindrome Partitioning'. Worked example \u2014 input: s = \"aab\"; expected output: [[\"a\",\"a\",\"b\"],[\"aa\",\"b\"]]. Why: Pal parts. Interview pattern to name out loud: Backtracking (try \u2192 explore \u2192 undo).",
+  "examples": [
+    {
+      "input": "s = \"aab\"",
+      "output": "[[\"a\",\"a\",\"b\"],[\"aa\",\"b\"]]",
+      "explanation": "Pal parts."
+    },
+    {
+      "input": "s = \"a\"",
+      "output": "[[\"a\"]]",
+      "explanation": "Single."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cPalindrome Partitioning\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input s = \"aab\" should still produce [[\"a\",\"a\",\"b\"],[\"aa\",\"b\"]]."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To partition a given string into palindromic substrings, we can use backtracking. Starting from each position in the string, we check if the substring from that position to the end is a palindrome. If it is, we recursively partition the remaining substring and continue the process. We keep track of the current partition in a list and store valid partitions in the result."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Backtracking (try \u2192 explore \u2192 undo). Build all combinations / permutations / placements. Walk example `s = \"aab\"` \u2192 `[[\"a\",\"a\",\"b\"],[\"aa\",\"b\"]]` while naming each variable, then code. Close with See code time and See code space."
+    }
+  ],
+  "pattern": {
+    "name": "Backtracking (try \u2192 explore \u2192 undo)",
+    "whenToSpot": "Build all combinations / permutations / placements."
+  },
+  "solutions": {
+    "python": "# Palindrome Partitioning\n# Idea: To partition a given string into palindromic substrings, we can use backtracking. Starting from each position in the string, we check if the substring from that position to the end is a palindrome. If it is, we recursive\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def partition(self, s: str) -> List[List[str]]:\n        def is_palindrome(sub):\n            return sub == sub[::-1]\n\n        def backtrack(start, partition):\n            if start == len(s):\n                result.append(partition[:])  # Append a copy of the current partition\n                return\n\n            for end in range(start + 1, len(s) + 1):\n                sub = s[start:end]\n                if is_palindrome(sub):\n                    partition.append(sub)\n                    backtrack(end, partition)\n                    partition.pop()  # Backtrack\n\n        result = []\n        backtrack(0, [])\n        return result\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "From the coded loops for \u201cPalindrome Partitioning\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "See code",
+    "spaceReason": "Extra memory is See code from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cPalindrome Partitioning\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `s = \"aab\"` and check boundary indices / empty containers.",
+    "Second example `s = \"a\"` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Backtracking (try \u2192 explore \u2192 undo) and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Backtracking (try \u2192 explore \u2192 undo).'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "backtracking",
+    "tracerId": "authored",
+    "defaultInput": {
+      "s": [
+        "a",
+        "a",
+        "b"
+      ]
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Backtracking for \u201cPalindrome Partitioning\u201d. Try a choice, then undo if it fails.",
+        "state": {
+          "nums": [
+            "a",
+            "a",
+            "b"
+          ],
+          "path": [],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Choose a \u2192 path ['a'].",
+        "state": {
+          "nums": [
+            "a",
+            "a",
+            "b"
+          ],
+          "path": [
+            "a"
+          ],
+          "currentIndex": 0,
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Choose a \u2192 path ['a', 'a'].",
+        "state": {
+          "nums": [
+            "a",
+            "a",
+            "b"
+          ],
+          "path": [
+            "a",
+            "a"
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Choose b \u2192 path ['a', 'a', 'b'].",
+        "state": {
+          "nums": [
+            "a",
+            "a",
+            "b"
+          ],
+          "path": [
+            "a",
+            "a",
+            "b"
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Path looks valid so far: ['a', 'a', 'b'].",
+        "state": {
+          "nums": [
+            "a",
+            "a",
+            "b"
+          ],
+          "path": [
+            "a",
+            "a",
+            "b"
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "matched"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "Collected answers: [[\"a\", \"a\", \"b\"], [\"aa\", \"b\"]].",
+        "state": {
+          "nums": [
+            "a",
+            "a",
+            "b"
+          ],
+          "path": [
+            "a",
+            "a",
+            "b"
+          ],
+          "result": [
+            [
+              "a",
+              "a",
+              "b"
+            ],
+            [
+              "aa",
+              "b"
+            ]
+          ],
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "word-search",
+    "letter-combinations-of-a-phone-number",
+    "n-queens"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Palindrome Partitioning is the usual interview target: clear backtracking (try \u2192 explore \u2192 undo) with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

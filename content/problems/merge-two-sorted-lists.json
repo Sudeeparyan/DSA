@@ -1,0 +1,218 @@
+{
+  "id": 36,
+  "leetcodeNumber": 21,
+  "title": "Merge Two Sorted Lists",
+  "slug": "merge-two-sorted-lists",
+  "category": "linked-list",
+  "difficulty": "Easy",
+  "leetcodeUrl": "https://leetcode.com/problems/merge-two-sorted-lists/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Picture the puzzle 'Merge Two Sorted Lists'. Here is the clever trick in plain words: To merge two sorted linked lists 'l1' and 'l2', we can create a new linked list 'dummy' to hold the merged result. We maintain two pointers, 'current' and 'prev', to traverse through the two input lists. At each step, we We will still start slow, then use this trick so it becomes fast.",
+  "plainProblem": "Merge Two Sorted Lists: Picture the puzzle 'Merge Two Sorted Lists'. Worked example \u2014 input: list1 = [1,2,4], list2 = [1,3,4]; expected output: [1,1,2,3,4,4]. Why: Merged. Interview pattern to name out loud: Pointer rewriting on a linked list.",
+  "examples": [
+    {
+      "input": "list1 = [1,2,4], list2 = [1,3,4]",
+      "output": "[1,1,2,3,4,4]",
+      "explanation": "Merged."
+    },
+    {
+      "input": "list1 = [], list2 = [0]",
+      "output": "[0]",
+      "explanation": "One empty."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cMerge Two Sorted Lists\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input list1 = [1,2,4], list2 = [1,3,4] should still produce [1,1,2,3,4,4]."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: O(n)."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To merge two sorted linked lists 'l1' and 'l2', we can create a new linked list 'dummy' to hold the merged result. We maintain two pointers, 'current' and 'prev', to traverse through the two input lists. At each step, we compare the values at the 'current' pointers of 'l1' and 'l2', and add the smaller value to the 'dummy' list. We then move the 'current' pointer of the list with the smaller value one step forward. After iterating through both lists, if any list still has remaining elements, we append them to the 'dummy' list."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Pointer rewriting on a linked list. Nodes with next pointers; reverse, merge, cycle. Walk example `list1 = [1,2,4], list2 = [1,3,4]` \u2192 `[1,1,2,3,4,4]` while naming each variable, then code. Close with O(n) time and O(1) space."
+    }
+  ],
+  "pattern": {
+    "name": "Pointer rewriting on a linked list",
+    "whenToSpot": "Nodes with next pointers; reverse, merge, cycle."
+  },
+  "solutions": {
+    "python": "# Merge Two Sorted Lists\n# Idea: To merge two sorted linked lists 'l1' and 'l2', we can create a new linked list 'dummy' to hold the merged result. We maintain two pointers, 'current' and 'prev', to traverse through the two input lists. At each step, we\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\n# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\n\n\nclass Solution:\n    def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:\n        dummy = ListNode()\n        current = dummy\n\n        while l1 and l2:\n            if l1.val < l2.val:\n                current.next = l1\n                l1 = l1.next\n            else:\n                current.next = l2\n                l2 = l2.next\n            current = current.next\n\n        if l1:\n            current.next = l1\n        elif l2:\n            current.next = l2\n\n        return dummy.next\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(n)",
+    "timeReason": "From the coded loops for \u201cMerge Two Sorted Lists\u201d: O(n) matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "O(1)",
+    "spaceReason": "Extra memory is O(1) from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cMerge Two Sorted Lists\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `list1 = [1,2,4], list2 = [1,3,4]` and check boundary indices / empty containers.",
+    "Second example `list1 = [], list2 = [0]` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Pointer rewriting on a linked list and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Pointer rewriting on a linked list.'",
+    "Narrate one example before typing.",
+    "Close with complexity: O(n) time, O(1) space, and why."
+  ],
+  "animation": {
+    "visualType": "linkedList",
+    "tracerId": "authored",
+    "defaultInput": {
+      "nodes": [
+        1,
+        2,
+        4
+      ]
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Linked list for \u201cMerge Two Sorted Lists\u201d: each box points to the next.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            4
+          ],
+          "nodes": [
+            1,
+            2,
+            4
+          ],
+          "result": null,
+          "highlights": {},
+          "pointers": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Pointer visits node 1 (index 0).",
+        "state": {
+          "nums": [
+            1,
+            2,
+            4
+          ],
+          "nodes": [
+            1,
+            2,
+            4
+          ],
+          "currentIndex": 0,
+          "currentValue": 1,
+          "result": null,
+          "highlights": {
+            "0": "current"
+          },
+          "pointers": {
+            "curr": 0
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Pointer visits node 2 (index 1).",
+        "state": {
+          "nums": [
+            1,
+            2,
+            4
+          ],
+          "nodes": [
+            1,
+            2,
+            4
+          ],
+          "currentIndex": 1,
+          "currentValue": 2,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          },
+          "pointers": {
+            "curr": 1
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Pointer visits node 4 (index 2).",
+        "state": {
+          "nums": [
+            1,
+            2,
+            4
+          ],
+          "nodes": [
+            1,
+            2,
+            4
+          ],
+          "currentIndex": 2,
+          "currentValue": 4,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          },
+          "pointers": {
+            "curr": 2
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Done. Result: [1, 1, 2, 3, 4, 4].",
+        "state": {
+          "nums": [
+            1,
+            2,
+            4
+          ],
+          "nodes": [
+            1,
+            2,
+            4
+          ],
+          "result": [
+            1,
+            1,
+            2,
+            3,
+            4,
+            4
+          ],
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done"
+          },
+          "pointers": {}
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "reverse-linked-list",
+    "reorder-list",
+    "remove-nth-node-from-end-of-list"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Merge Two Sorted Lists is the usual interview target: clear pointer rewriting on a linked list with competitive complexity (O(n) time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

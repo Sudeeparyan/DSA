@@ -1,0 +1,367 @@
+{
+  "id": 23,
+  "leetcodeNumber": 150,
+  "title": "Evaluate Reverse Polish Notation",
+  "slug": "evaluate-reverse-polish-notation",
+  "category": "stack",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/evaluate-reverse-polish-notation/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Tokens in RPN: numbers wait on a stack; an operator pops two, computes, pushes back.",
+  "plainProblem": "Evaluate Reverse Polish Notation: Tokens in RPN: numbers wait on a stack; an operator pops two, computes, pushes back. Worked example \u2014 input: tokens = [\"2\",\"1\",\"+\",\"3\",\"*\"]; expected output: 9. Why: (2+1)*3 Interview pattern to name out loud: Stack (last-in, first-out pile).",
+  "examples": [
+    {
+      "input": "tokens = [\"2\",\"1\",\"+\",\"3\",\"*\"]",
+      "output": "9",
+      "explanation": "(2+1)*3"
+    },
+    {
+      "input": "tokens = [\"4\",\"13\",\"5\",\"/\",\"+\"]",
+      "output": "6",
+      "explanation": "4+(13/5)"
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cEvaluate Reverse Polish Notation\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input tokens = [\"2\",\"1\",\"+\",\"3\",\"*\"] should still produce 9."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: O(n)."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To evaluate a given reverse Polish notation expression, we can use a stack data structure. We iterate through the tokens in the expression, and for each token, if it is a number, we push it onto the stack. If it is an operator ('+', '-', '*', '/'), we pop the top two elements from the stack, apply the operator to them, and push the result back onto the stack. At the end, the top element of the stack will be the final result of the expression."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Stack (last-in, first-out pile). Matching brackets, next greater element, undo order. Walk example `tokens = [\"2\",\"1\",\"+\",\"3\",\"*\"]` \u2192 `9` while naming each variable, then code. Close with O(n) time and O(n) space."
+    }
+  ],
+  "pattern": {
+    "name": "Stack (last-in, first-out pile)",
+    "whenToSpot": "Matching brackets, next greater element, undo order."
+  },
+  "solutions": {
+    "python": "# Evaluate Reverse Polish Notation\n# Idea: To evaluate a given reverse Polish notation expression, we can use a stack data structure. We iterate through the tokens in the expression, and for each token, if it is a number, we push it onto the stack. If it is an op\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def evalRPN(self, tokens: List[str]) -> int:\n        # Last-in-first-out pile (stack)\n        stack = []\n\n        for token in tokens:\n            if token.isdigit() or (token[0] == \"-\" and token[1:].isdigit()):\n                stack.append(int(token))\n            else:\n                num2 = stack.pop()\n                num1 = stack.pop()\n                if token == \"+\":\n                    stack.append(num1 + num2)\n                elif token == \"-\":\n                    stack.append(num1 - num2)\n                elif token == \"*\":\n                    stack.append(num1 * num2)\n                elif token == \"/\":\n                    stack.append(int(num1 / num2))\n\n        return stack[0]\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(n)",
+    "timeReason": "From the coded loops for \u201cEvaluate Reverse Polish Notation\u201d: O(n) matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "O(n)",
+    "spaceReason": "Extra memory is O(n) from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cEvaluate Reverse Polish Notation\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `tokens = [\"2\",\"1\",\"+\",\"3\",\"*\"]` and check boundary indices / empty containers.",
+    "Second example `tokens = [\"4\",\"13\",\"5\",\"/\",\"+\"]` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Stack (last-in, first-out pile) and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Stack (last-in, first-out pile).'",
+    "Narrate one example before typing.",
+    "Close with complexity: O(n) time, O(n) space, and why."
+  ],
+  "animation": {
+    "visualType": "stack",
+    "tracerId": "authored",
+    "defaultInput": [
+      "2",
+      "1",
+      "+",
+      "3",
+      "*"
+    ],
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Empty stack for \u201cEvaluate Reverse Polish Notation\u201d. Openers push; closers pop when they match.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "+",
+            "3",
+            "*"
+          ],
+          "stack": [],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Read '2' at index 0.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "+",
+            "3",
+            "*"
+          ],
+          "stack": [],
+          "currentIndex": 0,
+          "currentValue": "2",
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Push 2. Stack now holds candidates.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "+",
+            "3",
+            "*"
+          ],
+          "stack": [
+            "2"
+          ],
+          "currentIndex": 0,
+          "result": null,
+          "highlights": {
+            "0": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Read '1' at index 1.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "+",
+            "3",
+            "*"
+          ],
+          "stack": [
+            "2"
+          ],
+          "currentIndex": 1,
+          "currentValue": "1",
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Push 1. Stack now holds candidates.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "+",
+            "3",
+            "*"
+          ],
+          "stack": [
+            "2",
+            "1"
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Read '+' at index 2.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "+",
+            "3",
+            "*"
+          ],
+          "stack": [
+            "2",
+            "1"
+          ],
+          "currentIndex": 2,
+          "currentValue": "+",
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Push +. Stack now holds candidates.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "+",
+            "3",
+            "*"
+          ],
+          "stack": [
+            "2",
+            "1",
+            "+"
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Read '3' at index 3.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "+",
+            "3",
+            "*"
+          ],
+          "stack": [
+            "2",
+            "1",
+            "+"
+          ],
+          "currentIndex": 3,
+          "currentValue": "3",
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Push 3. Stack now holds candidates.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "+",
+            "3",
+            "*"
+          ],
+          "stack": [
+            "2",
+            "1",
+            "+",
+            "3"
+          ],
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Read '*' at index 4.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "+",
+            "3",
+            "*"
+          ],
+          "stack": [
+            "2",
+            "1",
+            "+",
+            "3"
+          ],
+          "currentIndex": 4,
+          "currentValue": "*",
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Push *. Stack now holds candidates.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "+",
+            "3",
+            "*"
+          ],
+          "stack": [
+            "2",
+            "1",
+            "+",
+            "3",
+            "*"
+          ],
+          "currentIndex": 4,
+          "result": null,
+          "highlights": {
+            "4": "remembered"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "Final answer: 9.",
+        "state": {
+          "chars": [
+            "2",
+            "1",
+            "+",
+            "3",
+            "*"
+          ],
+          "stack": [
+            "2",
+            "1",
+            "+",
+            "3",
+            "*"
+          ],
+          "result": 9,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "min-stack",
+    "generate-parentheses",
+    "daily-temperatures"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Evaluate Reverse Polish Notation is the usual interview target: clear stack (last-in, first-out pile) with competitive complexity (O(n) time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

@@ -1,0 +1,364 @@
+{
+  "id": 13,
+  "leetcodeNumber": 11,
+  "title": "Container with Most Water",
+  "slug": "container-with-most-water",
+  "category": "two-pointers",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/container-with-most-water/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Vertical sticks in a row. Choose two sticks as walls; rainwater forms a rectangle. Maximize the water.",
+  "plainProblem": "Container with Most Water: Vertical sticks in a row. Worked example \u2014 input: height = [1,8,6,2,5,4,8,3,7]; expected output: 49. Why: Best area. Interview pattern to name out loud: Two pointers from both ends (or slow/fast).",
+  "examples": [
+    {
+      "input": "height = [1,8,6,2,5,4,8,3,7]",
+      "output": "49",
+      "explanation": "Best area."
+    },
+    {
+      "input": "height = [1,1]",
+      "output": "1",
+      "explanation": "Only pair."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cContainer with Most Water\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input height = [1,8,6,2,5,4,8,3,7] should still produce 49."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: O(n)."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To find the maximum area of water that can be held between two vertical lines, we can use a two-pointer approach. We initialize two pointers, one at the beginning of the input array (left) and the other at the end of the array (right). The area between the two vertical lines is calculated as the minimum of the heights at the two pointers multiplied by the distance between them. We then update the maximum area found so far and move the pointer with the smaller height towards the other pointer. We continue this process until the two pointers meet or cross each other."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Two pointers from both ends (or slow/fast). Sorted array, palindrome, or pair-sum hints. Walk example `height = [1,8,6,2,5,4,8,3,7]` \u2192 `49` while naming each variable, then code. Close with O(n) time and O(1) space."
+    }
+  ],
+  "pattern": {
+    "name": "Two pointers from both ends (or slow/fast)",
+    "whenToSpot": "Sorted array, palindrome, or pair-sum hints."
+  },
+  "solutions": {
+    "python": "# Container with Most Water\n# Idea: To find the maximum area of water that can be held between two vertical lines, we can use a two-pointer approach. We initialize two pointers, one at the beginning of the input array (left) and the other at the end of the\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def maxArea(self, height: List[int]) -> int:\n        left, right = 0, len(height) - 1\n        max_area = 0\n\n        while left < right:\n            current_area = min(height[left], height[right]) * (right - left)\n            max_area = max(max_area, current_area)\n\n            if height[left] < height[right]:\n                left += 1\n            else:\n                right -= 1\n\n        return max_area\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(n)",
+    "timeReason": "From the coded loops for \u201cContainer with Most Water\u201d: O(n) matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "O(1)",
+    "spaceReason": "Extra memory is O(1) from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cContainer with Most Water\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `height = [1,8,6,2,5,4,8,3,7]` and check boundary indices / empty containers.",
+    "Second example `height = [1,1]` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Two pointers from both ends (or slow/fast) and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Two pointers from both ends (or slow/fast).'",
+    "Narrate one example before typing.",
+    "Close with complexity: O(n) time, O(1) space, and why."
+  ],
+  "animation": {
+    "visualType": "array",
+    "tracerId": "authored",
+    "defaultInput": [
+      1,
+      8,
+      6,
+      2,
+      5,
+      4,
+      8,
+      3,
+      7
+    ],
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Lay out the array for \u201cContainer with Most Water\u201d. Watch the pointer walk the answer into place.",
+        "state": {
+          "nums": [
+            1,
+            8,
+            6,
+            2,
+            5,
+            4,
+            8,
+            3,
+            7
+          ],
+          "result": null,
+          "highlights": {},
+          "currentIndex": null
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 0 holds 1.",
+        "state": {
+          "nums": [
+            1,
+            8,
+            6,
+            2,
+            5,
+            4,
+            8,
+            3,
+            7
+          ],
+          "target": null,
+          "currentIndex": 0,
+          "currentValue": 1,
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 1 holds 8.",
+        "state": {
+          "nums": [
+            1,
+            8,
+            6,
+            2,
+            5,
+            4,
+            8,
+            3,
+            7
+          ],
+          "target": null,
+          "currentIndex": 1,
+          "currentValue": 8,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 2 holds 6.",
+        "state": {
+          "nums": [
+            1,
+            8,
+            6,
+            2,
+            5,
+            4,
+            8,
+            3,
+            7
+          ],
+          "target": null,
+          "currentIndex": 2,
+          "currentValue": 6,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 3 holds 2.",
+        "state": {
+          "nums": [
+            1,
+            8,
+            6,
+            2,
+            5,
+            4,
+            8,
+            3,
+            7
+          ],
+          "target": null,
+          "currentIndex": 3,
+          "currentValue": 2,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 4 holds 5.",
+        "state": {
+          "nums": [
+            1,
+            8,
+            6,
+            2,
+            5,
+            4,
+            8,
+            3,
+            7
+          ],
+          "target": null,
+          "currentIndex": 4,
+          "currentValue": 5,
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 5 holds 4.",
+        "state": {
+          "nums": [
+            1,
+            8,
+            6,
+            2,
+            5,
+            4,
+            8,
+            3,
+            7
+          ],
+          "target": null,
+          "currentIndex": 5,
+          "currentValue": 4,
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 6 holds 8.",
+        "state": {
+          "nums": [
+            1,
+            8,
+            6,
+            2,
+            5,
+            4,
+            8,
+            3,
+            7
+          ],
+          "target": null,
+          "currentIndex": 6,
+          "currentValue": 8,
+          "result": null,
+          "highlights": {
+            "6": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 7 holds 3.",
+        "state": {
+          "nums": [
+            1,
+            8,
+            6,
+            2,
+            5,
+            4,
+            8,
+            3,
+            7
+          ],
+          "target": null,
+          "currentIndex": 7,
+          "currentValue": 3,
+          "result": null,
+          "highlights": {
+            "7": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 8 holds 7.",
+        "state": {
+          "nums": [
+            1,
+            8,
+            6,
+            2,
+            5,
+            4,
+            8,
+            3,
+            7
+          ],
+          "target": null,
+          "currentIndex": 8,
+          "currentValue": 7,
+          "result": null,
+          "highlights": {
+            "8": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Answer settles: 49.",
+        "state": {
+          "nums": [
+            1,
+            8,
+            6,
+            2,
+            5,
+            4,
+            8,
+            3,
+            7
+          ],
+          "target": null,
+          "currentIndex": 8,
+          "result": 49,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done",
+            "6": "done",
+            "7": "done",
+            "8": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "3sum",
+    "trapping-rain-water"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Container with Most Water is the usual interview target: clear two pointers from both ends (or slow/fast) with competitive complexity (O(n) time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

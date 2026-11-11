@@ -1,0 +1,343 @@
+{
+  "id": 76,
+  "leetcodeNumber": 79,
+  "title": "Word Search",
+  "slug": "word-search",
+  "category": "backtracking",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/word-search/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "A letter grid like a word search puzzle. Can your finger trace the word without reusing a square?",
+  "plainProblem": "Word Search: A letter grid like a word search puzzle. Worked example \u2014 input: board = [[\"A\",\"B\",\"C\",\"E\"],[\"S\",\"F\",\"C\",\"S\"],[\"A\",\"D\",\"E\",\"E\"]], word = \"ABCCED\"; expected output: true. Why: Path exists. Interview pattern to name out loud: Backtracking (try \u2192 explore \u2192 undo).",
+  "examples": [
+    {
+      "input": "board = [[\"A\",\"B\",\"C\",\"E\"],[\"S\",\"F\",\"C\",\"S\"],[\"A\",\"D\",\"E\",\"E\"]], word = \"ABCCED\"",
+      "output": "true",
+      "explanation": "Path exists."
+    },
+    {
+      "input": "same board, word = \"ABCB\"",
+      "output": "false",
+      "explanation": "Reuse forbidden."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cWord Search\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input board = [[\"A\",\"B\",\"C\",\"E\"],[\"S\",\"F\",\"C\",\"S\"],[\"A\",\"D\",\"E\",\"E\"]], word = \"ABCCED\" should still produce true."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To determine if a given word exists in the 2D board, we can perform a depth-first search (DFS) from each cell in the board. At each cell, we check if the current character of the word matches the character in the cell. If it does, we mark the cell as visited, recursively search its neighboring cells, and backtrack if the search is unsuccessful. We repeat this process for all cells in the board."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Backtracking (try \u2192 explore \u2192 undo). Build all combinations / permutations / placements. Walk example `board = [[\"A\",\"B\",\"C\",\"E\"],[\"S\",\"F\",\"C\",\"S\"],[\"A\",\"D\",\"E\",\"E\"]], word = \"ABCCED\"` \u2192 `true` while naming each variable, then code. Close with See code time and See code space."
+    }
+  ],
+  "pattern": {
+    "name": "Backtracking (try \u2192 explore \u2192 undo)",
+    "whenToSpot": "Build all combinations / permutations / placements."
+  },
+  "solutions": {
+    "python": "# Word Search\n# Idea: To determine if a given word exists in the 2D board, we can perform a depth-first search (DFS) from each cell in the board. At each cell, we check if the current character of the word matches the character in the cell. I\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def exist(self, board: List[List[str]], word: str) -> bool:\n        def dfs(row, col, index):\n            if index == len(word):\n                return True\n\n            if (\n                row < 0\n                or row >= len(board)\n                or col < 0\n                or col >= len(board[0])\n                or board[row][col] != word[index]\n            ):\n                return False\n\n            original_char = board[row][col]\n            board[row][col] = \"#\"  # Mark the cell as visited\n\n            found = (\n                dfs(row + 1, col, index + 1)\n                or dfs(row - 1, col, index + 1)\n                or dfs(row, col + 1, index + 1)\n                or dfs(row, col - 1, index + 1)\n            )\n\n            board[row][col] = original_char  # Backtrack\n\n            return found\n\n        for row in range(len(board)):\n            for col in range(len(board[0])):\n                if board[row][col] == word[0] and dfs(row, col, 0):\n                    return True\n\n        return False\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "From the coded loops for \u201cWord Search\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "See code",
+    "spaceReason": "Extra memory is See code from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cWord Search\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `board = [[\"A\",\"B\",\"C\",\"E\"],[\"S\",\"F\",\"C\",\"S\"],[\"A\",\"D\",\"E\",\"E\"]], word = \"ABCCED\"` and check boundary indices / empty containers.",
+    "Second example `same board, word = \"ABCB\"` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Backtracking (try \u2192 explore \u2192 undo) and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Backtracking (try \u2192 explore \u2192 undo).'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "backtracking",
+    "tracerId": "authored",
+    "defaultInput": {
+      "word": [
+        "A",
+        "B",
+        "C",
+        "C",
+        "E",
+        "D"
+      ]
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Backtracking for \u201cWord Search\u201d. Try a choice, then undo if it fails.",
+        "state": {
+          "nums": [
+            "A",
+            "B",
+            "C",
+            "C",
+            "E",
+            "D"
+          ],
+          "path": [],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Choose A \u2192 path ['A'].",
+        "state": {
+          "nums": [
+            "A",
+            "B",
+            "C",
+            "C",
+            "E",
+            "D"
+          ],
+          "path": [
+            "A"
+          ],
+          "currentIndex": 0,
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Choose B \u2192 path ['A', 'B'].",
+        "state": {
+          "nums": [
+            "A",
+            "B",
+            "C",
+            "C",
+            "E",
+            "D"
+          ],
+          "path": [
+            "A",
+            "B"
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Choose C \u2192 path ['A', 'B', 'C'].",
+        "state": {
+          "nums": [
+            "A",
+            "B",
+            "C",
+            "C",
+            "E",
+            "D"
+          ],
+          "path": [
+            "A",
+            "B",
+            "C"
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Path looks valid so far: ['A', 'B', 'C'].",
+        "state": {
+          "nums": [
+            "A",
+            "B",
+            "C",
+            "C",
+            "E",
+            "D"
+          ],
+          "path": [
+            "A",
+            "B",
+            "C"
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "matched"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Choose C \u2192 path ['A', 'B', 'C', 'C'].",
+        "state": {
+          "nums": [
+            "A",
+            "B",
+            "C",
+            "C",
+            "E",
+            "D"
+          ],
+          "path": [
+            "A",
+            "B",
+            "C",
+            "C"
+          ],
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Choose E \u2192 path ['A', 'B', 'C', 'C', 'E'].",
+        "state": {
+          "nums": [
+            "A",
+            "B",
+            "C",
+            "C",
+            "E",
+            "D"
+          ],
+          "path": [
+            "A",
+            "B",
+            "C",
+            "C",
+            "E"
+          ],
+          "currentIndex": 4,
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Choose D \u2192 path ['A', 'B', 'C', 'C', 'E', 'D'].",
+        "state": {
+          "nums": [
+            "A",
+            "B",
+            "C",
+            "C",
+            "E",
+            "D"
+          ],
+          "path": [
+            "A",
+            "B",
+            "C",
+            "C",
+            "E",
+            "D"
+          ],
+          "currentIndex": 5,
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Path looks valid so far: ['A', 'B', 'C', 'C', 'E', 'D'].",
+        "state": {
+          "nums": [
+            "A",
+            "B",
+            "C",
+            "C",
+            "E",
+            "D"
+          ],
+          "path": [
+            "A",
+            "B",
+            "C",
+            "C",
+            "E",
+            "D"
+          ],
+          "currentIndex": 5,
+          "result": null,
+          "highlights": {
+            "5": "matched"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "Collected answers: true.",
+        "state": {
+          "nums": [
+            "A",
+            "B",
+            "C",
+            "C",
+            "E",
+            "D"
+          ],
+          "path": [
+            "A",
+            "B",
+            "C",
+            "C",
+            "E",
+            "D"
+          ],
+          "result": true,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "combination-sum-ii",
+    "palindrome-partitioning",
+    "letter-combinations-of-a-phone-number"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Word Search is the usual interview target: clear backtracking (try \u2192 explore \u2192 undo) with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

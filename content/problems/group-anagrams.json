@@ -1,0 +1,527 @@
+{
+  "id": 4,
+  "leetcodeNumber": 49,
+  "title": "Group Anagrams",
+  "slug": "group-anagrams",
+  "category": "arrays-hashing",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/group-anagrams/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "A box of words. Words that are rearrangements of each other sit at the same lunch table. We need every table of anagram friends.",
+  "plainProblem": "Group strings that are anagrams of each other. Return the groups in any order.",
+  "examples": [
+    {
+      "input": "strs = [\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"]",
+      "output": "[[\"bat\"],[\"nat\",\"tan\"],[\"ate\",\"eat\",\"tea\"]]",
+      "explanation": "Grouped by signature."
+    },
+    {
+      "input": "strs = [\"\"]",
+      "output": "[[\"\"]]",
+      "explanation": "One empty string."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "Compare every pair to see if they are anagrams. Too many comparisons."
+    },
+    {
+      "title": "Aha insight",
+      "body": "Anagrams share a signature: sorted letters, or a count tuple."
+    },
+    {
+      "title": "Better idea",
+      "body": "Map signature \u2192 list of words. One pass builds all groups."
+    },
+    {
+      "title": "Why it is fast",
+      "body": "Each word is processed once; sorting letters of a word costs its length."
+    }
+  ],
+  "pattern": {
+    "name": "Hash set / hash map for seen items",
+    "whenToSpot": "You need fast lookups of values you already saw."
+  },
+  "solutions": {
+    "python": "# Group Anagrams \u2014 interview-friendly solution from NeetCode 150 repo\n# Comments explain the idea; logic is unchanged.\n\nclass Solution:\n    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:\n        anagrams_map = {}\n\n        for word in strs:\n            sorted_word = \"\".join(sorted(word))\n            if sorted_word in anagrams_map:\n                anagrams_map[sorted_word].append(word)\n            else:\n                anagrams_map[sorted_word] = [word]\n\n        return list(anagrams_map.values())\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(n * k log k)",
+    "timeReason": "n words; sorting each word of length k costs k log k (count-signature is O(n*k)).",
+    "space": "O(n * k)",
+    "spaceReason": "We store all words in the groups map."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cGroup Anagrams\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `strs = [\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"]` and check boundary indices / empty containers.",
+    "Second example `strs = [\"\"]` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Hash set / hash map for seen items and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Name the pattern: Hash set / hash map for seen items.",
+    "Walk example 1 aloud before coding.",
+    "State O(n * k log k) time and O(n * k) space at the end."
+  ],
+  "animation": {
+    "visualType": "hash",
+    "tracerId": "authored",
+    "defaultInput": {
+      "nums": [
+        "eat",
+        "tea",
+        "tan",
+        "ate",
+        "nat",
+        "bat"
+      ]
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Empty memory shelf for \u201cGroup Anagrams\u201d. We remember what we have already seen.",
+        "state": {
+          "nums": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ],
+          "seen": [],
+          "map": {},
+          "target": null,
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at eat at index 0.",
+        "state": {
+          "nums": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ],
+          "seen": [],
+          "map": {},
+          "target": null,
+          "currentIndex": 0,
+          "currentValue": "eat",
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "New value. Dock eat onto the memory shelf.",
+        "state": {
+          "nums": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ],
+          "seen": [
+            "eat"
+          ],
+          "map": {
+            "eat": 0
+          },
+          "currentIndex": 0,
+          "result": null,
+          "highlights": {
+            "0": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at tea at index 1.",
+        "state": {
+          "nums": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ],
+          "seen": [
+            "eat"
+          ],
+          "map": {
+            "eat": 0
+          },
+          "target": null,
+          "currentIndex": 1,
+          "currentValue": "tea",
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "New value. Dock tea onto the memory shelf.",
+        "state": {
+          "nums": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ],
+          "seen": [
+            "eat",
+            "tea"
+          ],
+          "map": {
+            "eat": 0,
+            "tea": 1
+          },
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at tan at index 2.",
+        "state": {
+          "nums": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ],
+          "seen": [
+            "eat",
+            "tea"
+          ],
+          "map": {
+            "eat": 0,
+            "tea": 1
+          },
+          "target": null,
+          "currentIndex": 2,
+          "currentValue": "tan",
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "New value. Dock tan onto the memory shelf.",
+        "state": {
+          "nums": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ],
+          "seen": [
+            "eat",
+            "tea",
+            "tan"
+          ],
+          "map": {
+            "eat": 0,
+            "tea": 1,
+            "tan": 2
+          },
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at ate at index 3.",
+        "state": {
+          "nums": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ],
+          "seen": [
+            "eat",
+            "tea",
+            "tan"
+          ],
+          "map": {
+            "eat": 0,
+            "tea": 1,
+            "tan": 2
+          },
+          "target": null,
+          "currentIndex": 3,
+          "currentValue": "ate",
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "New value. Dock ate onto the memory shelf.",
+        "state": {
+          "nums": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ],
+          "seen": [
+            "eat",
+            "tea",
+            "tan",
+            "ate"
+          ],
+          "map": {
+            "eat": 0,
+            "tea": 1,
+            "tan": 2,
+            "ate": 3
+          },
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at nat at index 4.",
+        "state": {
+          "nums": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ],
+          "seen": [
+            "eat",
+            "tea",
+            "tan",
+            "ate"
+          ],
+          "map": {
+            "eat": 0,
+            "tea": 1,
+            "tan": 2,
+            "ate": 3
+          },
+          "target": null,
+          "currentIndex": 4,
+          "currentValue": "nat",
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "New value. Dock nat onto the memory shelf.",
+        "state": {
+          "nums": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ],
+          "seen": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat"
+          ],
+          "map": {
+            "eat": 0,
+            "tea": 1,
+            "tan": 2,
+            "ate": 3,
+            "nat": 4
+          },
+          "currentIndex": 4,
+          "result": null,
+          "highlights": {
+            "4": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Look at bat at index 5.",
+        "state": {
+          "nums": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ],
+          "seen": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat"
+          ],
+          "map": {
+            "eat": 0,
+            "tea": 1,
+            "tan": 2,
+            "ate": 3,
+            "nat": 4
+          },
+          "target": null,
+          "currentIndex": 5,
+          "currentValue": "bat",
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "New value. Dock bat onto the memory shelf.",
+        "state": {
+          "nums": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ],
+          "seen": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ],
+          "map": {
+            "eat": 0,
+            "tea": 1,
+            "tan": 2,
+            "ate": 3,
+            "nat": 4,
+            "bat": 5
+          },
+          "currentIndex": 5,
+          "result": null,
+          "highlights": {
+            "5": "remembered"
+          }
+        }
+      },
+      {
+        "line": 5,
+        "caption": "Scan complete. Result: [[\"bat\"], [\"nat\", \"tan\"], [\"ate\", \"eat\", \"tea\"]].",
+        "state": {
+          "nums": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ],
+          "seen": [
+            "eat",
+            "tea",
+            "tan",
+            "ate",
+            "nat",
+            "bat"
+          ],
+          "map": {
+            "eat": 0,
+            "tea": 1,
+            "tan": 2,
+            "ate": 3,
+            "nat": 4,
+            "bat": 5
+          },
+          "target": null,
+          "result": [
+            [
+              "bat"
+            ],
+            [
+              "nat",
+              "tan"
+            ],
+            [
+              "ate",
+              "eat",
+              "tea"
+            ]
+          ],
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "two-sum",
+    "top-k-frequent-elements",
+    "product-of-array-except-self"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "Signature via sorted string or 26-count tuple is optimal interview style. Prefer count tuple if you want strictly O(n*k)."
+}

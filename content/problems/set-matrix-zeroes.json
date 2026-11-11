@@ -1,0 +1,345 @@
+{
+  "id": 138,
+  "leetcodeNumber": 73,
+  "title": "Set Matrix Zeroes",
+  "slug": "set-matrix-zeroes",
+  "category": "math-geometry",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/set-matrix-zeroes/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Picture the puzzle 'Set Matrix Zeroes'. Here is the clever trick in plain words: To set the entire row and column to zeros if an element in the matrix is zero, we can use two sets to keep track of the rows and columns that need to be set to zero. We iterate through the matrix and mark the correspondi We will still start slow, then use this trick so it becomes fast.",
+  "plainProblem": "Set Matrix Zeroes: Picture the puzzle 'Set Matrix Zeroes'. Worked example \u2014 input: matrix = [[1,1,1],[1,0,1],[1,1,1]]; expected output: [[1,0,1],[0,0,0],[1,0,1]]. Why: Cross zeros. Interview pattern to name out loud: Math / matrix geometry.",
+  "examples": [
+    {
+      "input": "matrix = [[1,1,1],[1,0,1],[1,1,1]]",
+      "output": "[[1,0,1],[0,0,0],[1,0,1]]",
+      "explanation": "Cross zeros."
+    },
+    {
+      "input": "matrix = [[0,1,2,0],[3,4,5,2],[1,3,1,5]]",
+      "output": "[[0,0,0,0],[0,4,5,0],[0,3,1,0]]",
+      "explanation": "Multiple zeros."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cSet Matrix Zeroes\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input matrix = [[1,1,1],[1,0,1],[1,1,1]] should still produce [[1,0,1],[0,0,0],[1,0,1]]."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To set the entire row and column to zeros if an element in the matrix is zero, we can use two sets to keep track of the rows and columns that need to be set to zero. We iterate through the matrix and mark the corresponding rows and columns in the sets. Then, we iterate through the matrix again and set the elements to zero if their row or column is marked."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Math / matrix geometry. Rotate, spiral, primes, counting bits of structure. Walk example `matrix = [[1,1,1],[1,0,1],[1,1,1]]` \u2192 `[[1,0,1],[0,0,0],[1,0,1]]` while naming each variable, then code. Close with See code time and See code space."
+    }
+  ],
+  "pattern": {
+    "name": "Math / matrix geometry",
+    "whenToSpot": "Rotate, spiral, primes, counting bits of structure."
+  },
+  "solutions": {
+    "python": "# Set Matrix Zeroes\n# Idea: To set the entire row and column to zeros if an element in the matrix is zero, we can use two sets to keep track of the rows and columns that need to be set to zero. We iterate through the matrix and mark the correspondi\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def setZeroes(self, matrix: List[List[int]]) -> None:\n        \"\"\"\n        Do not return anything, modify matrix in-place instead.\n        \"\"\"\n        rows, cols = len(matrix), len(matrix[0])\n        zero_rows, zero_cols = set(), set()\n\n        # Mark rows and columns that need to be set to zero\n        for i in range(rows):\n            for j in range(cols):\n                if matrix[i][j] == 0:\n                    zero_rows.add(i)\n                    zero_cols.add(j)\n\n        # Set elements to zero based on marked rows and columns\n        for i in range(rows):\n            for j in range(cols):\n                if i in zero_rows or j in zero_cols:\n                    matrix[i][j] = 0\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "From the coded loops for \u201cSet Matrix Zeroes\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "See code",
+    "spaceReason": "Extra memory is See code from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cSet Matrix Zeroes\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `matrix = [[1,1,1],[1,0,1],[1,1,1]]` and check boundary indices / empty containers.",
+    "Second example `matrix = [[0,1,2,0],[3,4,5,2],[1,3,1,5]]` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Math / matrix geometry and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Math / matrix geometry.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "array",
+    "tracerId": "authored",
+    "defaultInput": [
+      "[",
+      "[",
+      "1",
+      ",",
+      "1",
+      ",",
+      "1",
+      "]"
+    ],
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Lay out the array for \u201cSet Matrix Zeroes\u201d. Watch the pointer walk the answer into place.",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "1",
+            ",",
+            "1",
+            "]"
+          ],
+          "result": null,
+          "highlights": {},
+          "currentIndex": null
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 0 holds [.",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "1",
+            ",",
+            "1",
+            "]"
+          ],
+          "target": null,
+          "currentIndex": 0,
+          "currentValue": "[",
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 1 holds [.",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "1",
+            ",",
+            "1",
+            "]"
+          ],
+          "target": null,
+          "currentIndex": 1,
+          "currentValue": "[",
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 2 holds 1.",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "1",
+            ",",
+            "1",
+            "]"
+          ],
+          "target": null,
+          "currentIndex": 2,
+          "currentValue": "1",
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 3 holds ,.",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "1",
+            ",",
+            "1",
+            "]"
+          ],
+          "target": null,
+          "currentIndex": 3,
+          "currentValue": ",",
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 4 holds 1.",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "1",
+            ",",
+            "1",
+            "]"
+          ],
+          "target": null,
+          "currentIndex": 4,
+          "currentValue": "1",
+          "result": null,
+          "highlights": {
+            "4": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 5 holds ,.",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "1",
+            ",",
+            "1",
+            "]"
+          ],
+          "target": null,
+          "currentIndex": 5,
+          "currentValue": ",",
+          "result": null,
+          "highlights": {
+            "5": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 6 holds 1.",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "1",
+            ",",
+            "1",
+            "]"
+          ],
+          "target": null,
+          "currentIndex": 6,
+          "currentValue": "1",
+          "result": null,
+          "highlights": {
+            "6": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Index 7 holds ].",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "1",
+            ",",
+            "1",
+            "]"
+          ],
+          "target": null,
+          "currentIndex": 7,
+          "currentValue": "]",
+          "result": null,
+          "highlights": {
+            "7": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Answer settles: [[1, 0, 1], [0, 0, 0], [1, 0, 1]].",
+        "state": {
+          "nums": [
+            "[",
+            "[",
+            "1",
+            ",",
+            "1",
+            ",",
+            "1",
+            "]"
+          ],
+          "target": null,
+          "currentIndex": 7,
+          "result": [
+            [
+              1,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              1
+            ]
+          ],
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done",
+            "4": "done",
+            "5": "done",
+            "6": "done",
+            "7": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "spiral-matrix",
+    "happy-number",
+    "plus-one"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Set Matrix Zeroes is the usual interview target: clear math / matrix geometry with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

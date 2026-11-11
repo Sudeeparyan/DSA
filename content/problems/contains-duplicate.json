@@ -1,0 +1,361 @@
+{
+  "id": 1,
+  "leetcodeNumber": 217,
+  "title": "Contains Duplicate",
+  "slug": "contains-duplicate",
+  "category": "arrays-hashing",
+  "difficulty": "Easy",
+  "leetcodeUrl": "https://leetcode.com/problems/contains-duplicate/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "You have a big toy box. You pick up toys one by one. For each toy, you ask: 'Have I already seen this exact toy before?' If yes, you shout 'Duplicate!' If you finish the whole box with no matches, every toy is unique.",
+  "plainProblem": "You are given a list of numbers. Return true if any number appears at least twice. Return false if every number is unique.",
+  "examples": [
+    {
+      "input": "nums = [1,2,3,1]",
+      "output": "true",
+      "explanation": "1 appears twice."
+    },
+    {
+      "input": "nums = [1,2,3,4]",
+      "output": "false",
+      "explanation": "All unique."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "Compare every number with every other number. It works, but if the list has n items you do about n\u00d7n checks. That gets slow fast."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Looking at pairs means the work grows like a square. Interviewers want better than that when they can."
+    },
+    {
+      "title": "Aha insight",
+      "body": "What if we keep a notebook of numbers we already saw? Checking the notebook must be quick \u2014 that notebook is a hash set."
+    },
+    {
+      "title": "Better idea",
+      "body": "Walk the list once. If the number is already in the set, return true. If not, add it. One pass, fast lookups."
+    }
+  ],
+  "pattern": {
+    "name": "Hash set / hash map for seen items",
+    "whenToSpot": "You need fast lookups of values you already saw."
+  },
+  "solutions": {
+    "python": "class Solution:\n    def containsDuplicate(self, nums: List[int]) -> bool:\n        # Notebook of numbers we have already seen (hash set)\n        hashset = set()\n\n        # Look at each number in the list, one by one\n        for n in nums:\n            # Have we seen this number before?\n            if n in hashset:\n                # Yes \u2014 found a duplicate\n                return True\n            # No \u2014 remember it for later\n            hashset.add(n)\n        # Finished the list with no duplicates\n        return False\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "O(n)",
+    "timeReason": "We look at every item once, so time grows with the list length.",
+    "space": "O(n)",
+    "spaceReason": "In the worst case the set remembers every unique number."
+  },
+  "edgeCases": [
+    "Empty list \u2192 false (nothing can duplicate).",
+    "One element \u2192 false.",
+    "All same values \u2192 true on the second item.",
+    "Negatives and zeros are normal numbers too."
+  ],
+  "commonMistakes": [
+    "Sorting first without saying the extra time cost (sorting is O(n log n)).",
+    "Using a list for 'seen' instead of a set \u2014 lookups become slow.",
+    "Forgetting to add the number after you check it."
+  ],
+  "interviewTips": [
+    "Say out loud: 'I need O(1) average lookups, so I will use a hash set.'",
+    "Mention the trade-off: extra memory for speed.",
+    "Offer the sorting alternative if the interviewer asks about less memory."
+  ],
+  "animation": {
+    "visualType": "hash",
+    "tracerId": "contains-duplicate",
+    "defaultInput": [
+      1,
+      2,
+      3,
+      1
+    ],
+    "steps": [
+      {
+        "line": 2,
+        "caption": "Empty notebook (hash set).",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            1
+          ],
+          "seen": [],
+          "currentIndex": null,
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 4,
+        "caption": "Look at 1 at index 0.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            1
+          ],
+          "seen": [],
+          "currentIndex": 0,
+          "currentValue": 1,
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 5,
+        "caption": "Seen 1 before? No.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            1
+          ],
+          "seen": [],
+          "currentIndex": 0,
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 7,
+        "caption": "Remember 1.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            1
+          ],
+          "seen": [
+            1
+          ],
+          "currentIndex": 0,
+          "result": null,
+          "highlights": {
+            "0": "remembered"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "Look at 2 at index 1.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            1
+          ],
+          "seen": [
+            1
+          ],
+          "currentIndex": 1,
+          "currentValue": 2,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 5,
+        "caption": "Seen 2 before? No.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            1
+          ],
+          "seen": [
+            1
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 7,
+        "caption": "Remember 2.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            1
+          ],
+          "seen": [
+            1,
+            2
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "remembered"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "Look at 3 at index 2.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            1
+          ],
+          "seen": [
+            1,
+            2
+          ],
+          "currentIndex": 2,
+          "currentValue": 3,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 5,
+        "caption": "Seen 3 before? No.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            1
+          ],
+          "seen": [
+            1,
+            2
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 7,
+        "caption": "Remember 3.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            1
+          ],
+          "seen": [
+            1,
+            2,
+            3
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "remembered"
+          }
+        }
+      },
+      {
+        "line": 4,
+        "caption": "Look at 1 at index 3.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            1
+          ],
+          "seen": [
+            1,
+            2,
+            3
+          ],
+          "currentIndex": 3,
+          "currentValue": 1,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 5,
+        "caption": "Seen 1 before? Yes!",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            1
+          ],
+          "seen": [
+            1,
+            2,
+            3
+          ],
+          "currentIndex": 3,
+          "result": true,
+          "highlights": {
+            "3": "matched"
+          }
+        }
+      },
+      {
+        "line": 6,
+        "caption": "Return True.",
+        "state": {
+          "nums": [
+            1,
+            2,
+            3,
+            1
+          ],
+          "seen": [
+            1,
+            2,
+            3
+          ],
+          "currentIndex": 3,
+          "result": true,
+          "highlights": {
+            "3": "matched"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "valid-anagram",
+    "two-sum",
+    "longest-consecutive-sequence"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "Hash-set one-pass is the standard Google-friendly answer: simple code, O(n) time, clear trade-off vs sorting. Prefer this over nested loops. Sorting is acceptable as a follow-up if they constrain memory."
+}

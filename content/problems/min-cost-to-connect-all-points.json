@@ -1,0 +1,353 @@
+{
+  "id": 94,
+  "leetcodeNumber": 1584,
+  "title": "Min Cost to Connect All Points",
+  "slug": "min-cost-to-connect-all-points",
+  "category": "advanced-graphs",
+  "difficulty": "Medium",
+  "leetcodeUrl": "https://leetcode.com/problems/min-cost-to-connect-all-points/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "Picture the puzzle 'Min Cost to Connect All Points'. Here is the clever trick in plain words: The problem can be solved using Kruskal's algorithm for finding the Minimum Spanning Tree (MST) of a graph. We start by calculating the distances between all pairs of points and then sort these distances along with their We will still start slow, then use this trick so it becomes fast.",
+  "plainProblem": "Min Cost to Connect All Points: Picture the puzzle 'Min Cost to Connect All Points'. Worked example \u2014 input: points = [[0,0],[2,2],[3,10],[5,2],[7,0]]; expected output: 20. Why: MST cost. Interview pattern to name out loud: Dijkstra / topological sort.",
+  "examples": [
+    {
+      "input": "points = [[0,0],[2,2],[3,10],[5,2],[7,0]]",
+      "output": "20",
+      "explanation": "MST cost."
+    },
+    {
+      "input": "points = [[3,12],[-2,5],[-4,1]]",
+      "output": "18",
+      "explanation": "MST cost."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cMin Cost to Connect All Points\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input points = [[0,0],[2,2],[3,10],[5,2],[7,0]] should still produce 20."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
+    },
+    {
+      "title": "Aha insight",
+      "body": "The problem can be solved using Kruskal's algorithm for finding the Minimum Spanning Tree (MST) of a graph. We start by calculating the distances between all pairs of points and then sort these distances along with their corresponding pairs. We initialize an empty MST and iterate through the sorted distances. For each distance, we check if the two points belong to different connected components in the MST using Union-Find. If they do, we add the distance to the MST and merge the components. We continue this process until all points are connected."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to Dijkstra / topological sort. Weighted shortest paths or course-order constraints. Walk example `points = [[0,0],[2,2],[3,10],[5,2],[7,0]]` \u2192 `20` while naming each variable, then code. Close with See code time and See code space."
+    }
+  ],
+  "pattern": {
+    "name": "Dijkstra / topological sort",
+    "whenToSpot": "Weighted shortest paths or course-order constraints."
+  },
+  "solutions": {
+    "python": "# Min Cost to Connect All Points\n# Idea: The problem can be solved using Kruskal's algorithm for finding the Minimum Spanning Tree (MST) of a graph. We start by calculating the distances between all pairs of points and then sort these distances along with their\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def minCostConnectPoints(self, points: List[List[int]]) -> int:\n        def distance(p1, p2):\n            return abs(p1[0] - p2[0]) + abs(p1[1] - p2[1])\n\n        n = len(points)\n        distances = []\n\n        for i in range(n):\n            for j in range(i + 1, n):\n                distances.append((distance(points[i], points[j]), i, j))\n\n        distances.sort()\n        parent = list(range(n))\n        rank = [0] * n\n        mst_cost = 0\n\n        def find(node):\n            if parent[node] != node:\n                parent[node] = find(parent[node])\n            return parent[node]\n\n        def union(node1, node2):\n            root1 = find(node1)\n            root2 = find(node2)\n            if root1 != root2:\n                if rank[root1] > rank[root2]:\n                    parent[root2] = root1\n                else:\n                    parent[root1] = root2\n                    if rank[root1] == rank[root2]:\n                        rank[root2] += 1\n\n        for distance, u, v in distances:\n            if find(u) != find(v):\n                union(u, v)\n                mst_cost += distance\n\n        return mst_cost\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "From the coded loops for \u201cMin Cost to Connect All Points\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "See code",
+    "spaceReason": "Extra memory is See code from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cMin Cost to Connect All Points\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `points = [[0,0],[2,2],[3,10],[5,2],[7,0]]` and check boundary indices / empty containers.",
+    "Second example `points = [[3,12],[-2,5],[-4,1]]` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming Dijkstra / topological sort and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like Dijkstra / topological sort.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, See code space, and why."
+  ],
+  "animation": {
+    "visualType": "graph",
+    "tracerId": "authored",
+    "defaultInput": {
+      "n": 4,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          0
+        ]
+      ]
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "Graph for \u201cMin Cost to Connect All Points\u201d. Nodes on stage; we walk edges.",
+        "state": {
+          "nums": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "nodes": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              0
+            ]
+          ],
+          "result": null,
+          "highlights": {}
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit node 0.",
+        "state": {
+          "nums": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "nodes": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              0
+            ]
+          ],
+          "currentIndex": 0,
+          "result": null,
+          "highlights": {
+            "0": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit node 1.",
+        "state": {
+          "nums": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "nodes": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              0
+            ]
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit node 2.",
+        "state": {
+          "nums": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "nodes": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              0
+            ]
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Visit node 3.",
+        "state": {
+          "nums": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "nodes": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              0
+            ]
+          ],
+          "currentIndex": 3,
+          "result": null,
+          "highlights": {
+            "3": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "Traversal complete. Answer: 20.",
+        "state": {
+          "nums": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "nodes": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              0
+            ]
+          ],
+          "result": 20,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done",
+            "3": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "reconstruct-itinerary",
+    "network-delay-time",
+    "swim-in-rising-water"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Min Cost to Connect All Points is the usual interview target: clear dijkstra / topological sort with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}

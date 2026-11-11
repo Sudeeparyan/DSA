@@ -1,0 +1,227 @@
+{
+  "id": 99,
+  "leetcodeNumber": 70,
+  "title": "Climbing Stairs",
+  "slug": "climbing-stairs",
+  "category": "1d-dp",
+  "difficulty": "Easy",
+  "leetcodeUrl": "https://leetcode.com/problems/climbing-stairs/",
+  "neetcodeVideoUrl": null,
+  "kidExplanation": "A staircase. You can climb 1 or 2 steps at a time. How many different hop patterns reach the top?",
+  "plainProblem": "Climbing Stairs: A staircase. Worked example \u2014 input: n = 2; expected output: 2. Why: 1+1 or 2. Interview pattern to name out loud: 1-D dynamic programming.",
+  "examples": [
+    {
+      "input": "n = 2",
+      "output": "2",
+      "explanation": "1+1 or 2."
+    },
+    {
+      "input": "n = 3",
+      "output": "3",
+      "explanation": "Three ways."
+    }
+  ],
+  "thinkingSteps": [
+    {
+      "title": "Brute force idea",
+      "body": "For \u201cClimbing Stairs\u201d, first say a correct slow approach: scan or retry every candidate until the example works by hand. Input n = 2 should still produce 2."
+    },
+    {
+      "title": "Why it is slow",
+      "body": "Count the nested work. If each choice restarts a full scan, time blows up. Name the cost before optimizing \u2014 interviewers want that honesty. Target after the insight: See code."
+    },
+    {
+      "title": "Aha insight",
+      "body": "To climb to the n-th stair, you have two options, 1. You can climb from the (n-1)-th stair. 2. You can climb from the (n-2)-th stair. So, the number of ways to reach the n-th stair is the sum of the number of ways to reach the (n-1)-th and (n-2)-th stairs. This forms a Fibonacci sequence where f(n) = f(n-1) + f(n-2)."
+    },
+    {
+      "title": "Better idea",
+      "body": "Commit to 1-D dynamic programming. Answer depends on smaller answers along one line. Walk example `n = 2` \u2192 `2` while naming each variable, then code. Close with See code time and O(1) space."
+    }
+  ],
+  "pattern": {
+    "name": "1-D dynamic programming",
+    "whenToSpot": "Answer depends on smaller answers along one line."
+  },
+  "solutions": {
+    "python": "# Climbing Stairs\n# Idea: To climb to the n-th stair, you have two options, 1. You can climb from the (n-1)-th stair. 2. You can climb from the (n-2)-th stair. So, the number of ways to reach the n-th stair is the sum of the number of ways to rea\u2026\n# Line comments below keep the same logic as the NeetCode 150 repo solution.\n\nclass Solution:\n    def climbStairs(self, n: int) -> int:\n        if n <= 2:\n            return n\n\n        prev1 = 1  # Number of ways to reach the 1st stair\n        prev2 = 2  # Number of ways to reach the 2nd stair\n\n        for i in range(3, n + 1):\n            current = prev1 + prev2\n            prev1, prev2 = prev2, current  # Update for the next iteration\n\n        return prev2  # Number of ways to reach the n-th stair\n",
+    "cpp": null,
+    "rust": null
+  },
+  "complexity": {
+    "time": "See code",
+    "timeReason": "From the coded loops for \u201cClimbing Stairs\u201d: See code matches how many elements / states each pass touches (say this out loud in the interview).",
+    "space": "O(1)",
+    "spaceReason": "Extra memory is O(1) from the structures this solution allocates (hash maps, stacks, DP rows, recursion depth) \u2014 not counting the input itself."
+  },
+  "edgeCases": [
+    "Smallest legal input for \u201cClimbing Stairs\u201d \u2014 confirm the base answer before the main loop.",
+    "Replay example `n = 2` and check boundary indices / empty containers.",
+    "Second example `n = 3` often hides duplicates, ties, or already-sorted cases."
+  ],
+  "commonMistakes": [
+    "Jumping into code before naming 1-D dynamic programming and the complexity target.",
+    "Off-by-one errors on indices, windows, or inclusive/exclusive bounds.",
+    "Mutating a set/map/list while iterating it, or forgetting the undo step in backtracking."
+  ],
+  "interviewTips": [
+    "Open with: 'This looks like 1-D dynamic programming.'",
+    "Narrate one example before typing.",
+    "Close with complexity: See code time, O(1) space, and why."
+  ],
+  "animation": {
+    "visualType": "dp",
+    "tracerId": "authored",
+    "defaultInput": {
+      "n": 2
+    },
+    "steps": [
+      {
+        "line": 1,
+        "caption": "DP row for \u201cClimbing Stairs\u201d. dp[0] starts as the base case.",
+        "state": {
+          "nums": [
+            1,
+            1,
+            2
+          ],
+          "table": [
+            [
+              1,
+              0,
+              0
+            ]
+          ],
+          "result": null,
+          "highlights": {
+            "0": "remembered"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Fill dp[1] using earlier answers \u2192 1.",
+        "state": {
+          "nums": [
+            1,
+            1,
+            0
+          ],
+          "table": [
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "currentIndex": 1,
+          "result": null,
+          "highlights": {
+            "1": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Fill dp[2] using earlier answers \u2192 2.",
+        "state": {
+          "nums": [
+            1,
+            1,
+            2
+          ],
+          "table": [
+            [
+              1,
+              1,
+              2
+            ]
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Hold the DP row \u2014 each cell is built only from earlier answers.",
+        "state": {
+          "nums": [
+            1,
+            1,
+            2
+          ],
+          "table": [
+            [
+              1,
+              1,
+              2
+            ]
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 2,
+        "caption": "Hold the DP row \u2014 each cell is built only from earlier answers.",
+        "state": {
+          "nums": [
+            1,
+            1,
+            2
+          ],
+          "table": [
+            [
+              1,
+              1,
+              2
+            ]
+          ],
+          "currentIndex": 2,
+          "result": null,
+          "highlights": {
+            "2": "current"
+          }
+        }
+      },
+      {
+        "line": 3,
+        "caption": "DP finished. Answer: 2.",
+        "state": {
+          "nums": [
+            1,
+            1,
+            2
+          ],
+          "table": [
+            [
+              1,
+              1,
+              2
+            ]
+          ],
+          "result": 2,
+          "highlights": {
+            "0": "done",
+            "1": "done",
+            "2": "done"
+          }
+        }
+      }
+    ]
+  },
+  "relatedProblems": [
+    "min-cost-climbing-stairs",
+    "house-robber"
+  ],
+  "hasStory": true,
+  "hasAnimation": true,
+  "hasCode": true,
+  "interviewApproachNotes": "NeetCode's published approach for Climbing Stairs is the usual interview target: clear 1-d dynamic programming with competitive complexity (See code time). Prefer readable code over micro-optimizations; explain trade-offs if a simpler slower method exists."
+}
