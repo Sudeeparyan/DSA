@@ -1,0 +1,60 @@
+{
+ "id": 138,
+ "number": 73,
+ "title": "Set Matrix Zeroes",
+ "slug": "set-matrix-zeroes",
+ "category": "math-geometry",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/set-matrix-zeroes/",
+ "pattern": "Record first, change afterwards",
+ "statement": "Given an `m × n` matrix, if an element is `0`, set its **entire row and column** to `0`. Do it in place.",
+ "example": {
+  "input": "matrix = [[0,1,2,0],[3,4,5,2],[1,3,1,5]]",
+  "output": "[[0,0,0,0],[0,4,5,0],[0,3,1,0]]",
+  "why": "The zeros at (0, 0) and (0, 3) clear row 0 and columns 0 and 3."
+ },
+ "more": [
+  {
+   "input": "matrix = [[1,1,1],[1,0,1],[1,1,1]]",
+   "output": "[[1,0,1],[0,0,0],[1,0,1]]"
+  },
+  {
+   "input": "matrix = [[1,2],[3,4]]",
+   "output": "[[1,2],[3,4]]"
+  },
+  {
+   "input": "matrix = [[0]]",
+   "output": "[[0]]"
+  },
+  {
+   "input": "matrix = [[1,0,3]]",
+   "output": "[[0,0,0]]"
+  }
+ ],
+ "idea": [
+  "Writing zeros while scanning is a trap: a freshly written 0 is indistinguishable from an original one and would wipe out further rows and columns.",
+  "So separate the two jobs. **Pass 1**: only look, and record which rows and which columns contain an original 0.",
+  "**Pass 2**: set every cell to 0 whose row or column was recorded."
+ ],
+ "code": "class Solution:\n    def setZeroes(self, matrix: List[List[int]]) -> None:\n        \"\"\"\n        Do not return anything, modify matrix in-place instead.\n        \"\"\"\n        rows, cols = len(matrix), len(matrix[0])\n        zero_rows, zero_cols = set(), set()\n\n        # Mark rows and columns that need to be set to zero\n        for i in range(rows):\n            for j in range(cols):\n                if matrix[i][j] == 0:\n                    zero_rows.add(i)\n                    zero_cols.add(j)\n\n        # Set elements to zero based on marked rows and columns\n        for i in range(rows):\n            for j in range(cols):\n                if i in zero_rows or j in zero_cols:\n                    matrix[i][j] = 0",
+ "complexity": {
+  "time": "O(m · n)",
+  "timeWhy": "Two passes over the matrix.",
+  "space": "O(m + n)",
+  "spaceWhy": "The two sets. (The first row and column of the matrix itself can serve as the markers to reach O(1).)"
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`matrix = [[0,1,2,0],[3,4,5,2],[1,3,1,5]]`**. Each step runs one highlighted line of the code.","views":[{"t":"grid","id":"matrix","title":"matrix  (orange = in a recorded row or column)","cells":[[{"v":"0"},{"v":"1"},{"v":"2"},{"v":"0"}],[{"v":"3"},{"v":"4"},{"v":"5"},{"v":"2"}],[{"v":"1"},{"v":"3"},{"v":"1"},{"v":"5"}]]}]},
+  {"line":7,"text":"Pass 1 only **records** where the zeros are: `zero_rows` and `zero_cols` collect the rows and columns that must be cleared. Nothing is changed yet.","views":[{"t":"grid","id":"matrix","title":"matrix  (orange = in a recorded row or column)","cells":[[{"v":"0"},{"v":"1"},{"v":"2"},{"v":"0"}],[{"v":"3"},{"v":"4"},{"v":"5"},{"v":"2"}],[{"v":"1"},{"v":"3"},{"v":"1"},{"v":"5"}]]},{"t":"vars","id":"vars","items":[{"k":"zero_rows","v":"[]"},{"k":"zero_cols","v":"[]"}]}]},
+  {"line":14,"text":"(0, 0) is 0 → remember **row 0** and **column 0**.","views":[{"t":"grid","id":"matrix","title":"matrix  (orange = in a recorded row or column)","cells":[[{"v":"0","tone":"cur"},{"v":"1","tone":"mark"},{"v":"2","tone":"mark"},{"v":"0","tone":"mark"}],[{"v":"3","tone":"mark"},{"v":"4"},{"v":"5"},{"v":"2"}],[{"v":"1","tone":"mark"},{"v":"3"},{"v":"1"},{"v":"5"}]]},{"t":"vars","id":"vars","items":[{"k":"zero_rows","v":"[0]","changed":true},{"k":"zero_cols","v":"[0]","changed":true}]}]},
+  {"line":14,"text":"(0, 3) is 0 → remember **row 0** and **column 3**.","views":[{"t":"grid","id":"matrix","title":"matrix  (orange = in a recorded row or column)","cells":[[{"v":"0","tone":"mark"},{"v":"1","tone":"mark"},{"v":"2","tone":"mark"},{"v":"0","tone":"cur"}],[{"v":"3","tone":"mark"},{"v":"4"},{"v":"5"},{"v":"2","tone":"mark"}],[{"v":"1","tone":"mark"},{"v":"3"},{"v":"1"},{"v":"5","tone":"mark"}]]},{"t":"vars","id":"vars","items":[{"k":"zero_rows","v":"[0]"},{"k":"zero_cols","v":"[0, 3]","changed":true}]}]},
+  {"line":17,"text":"Pass 1 is done. Pass 2: go through every cell again and clear it if its row or its column was recorded.","views":[{"t":"grid","id":"matrix","title":"matrix  (orange = in a recorded row or column)","cells":[[{"v":"0","tone":"mark"},{"v":"1","tone":"mark"},{"v":"2","tone":"mark"},{"v":"0","tone":"cur"}],[{"v":"3","tone":"mark"},{"v":"4"},{"v":"5"},{"v":"2","tone":"mark"}],[{"v":"1","tone":"mark"},{"v":"3"},{"v":"1"},{"v":"5","tone":"mark"}]]},{"t":"vars","id":"vars","items":[{"k":"zero_rows","v":"[0]"},{"k":"zero_cols","v":"[0, 3]"}]}]},
+  {"line":20,"text":"(0, 1) lies in recorded row 0 → set it to 0.","views":[{"t":"grid","id":"matrix","title":"matrix  (orange = in a recorded row or column)","cells":[[{"v":"0","tone":"mark"},{"v":"0","tone":"bad"},{"v":"2","tone":"mark"},{"v":"0","tone":"mark"}],[{"v":"3","tone":"mark"},{"v":"4"},{"v":"5"},{"v":"2","tone":"mark"}],[{"v":"1","tone":"mark"},{"v":"3"},{"v":"1"},{"v":"5","tone":"mark"}]]},{"t":"vars","id":"vars","items":[{"k":"zero_rows","v":"[0]"},{"k":"zero_cols","v":"[0, 3]"}]}]},
+  {"line":20,"text":"(0, 2) lies in recorded row 0 → set it to 0.","views":[{"t":"grid","id":"matrix","title":"matrix  (orange = in a recorded row or column)","cells":[[{"v":"0","tone":"mark"},{"v":"0","tone":"mark"},{"v":"0","tone":"bad"},{"v":"0","tone":"mark"}],[{"v":"3","tone":"mark"},{"v":"4"},{"v":"5"},{"v":"2","tone":"mark"}],[{"v":"1","tone":"mark"},{"v":"3"},{"v":"1"},{"v":"5","tone":"mark"}]]},{"t":"vars","id":"vars","items":[{"k":"zero_rows","v":"[0]"},{"k":"zero_cols","v":"[0, 3]"}]}]},
+  {"line":20,"text":"(1, 0) lies in recorded column 0 → set it to 0.","views":[{"t":"grid","id":"matrix","title":"matrix  (orange = in a recorded row or column)","cells":[[{"v":"0","tone":"mark"},{"v":"0","tone":"mark"},{"v":"0","tone":"mark"},{"v":"0","tone":"mark"}],[{"v":"0","tone":"bad"},{"v":"4"},{"v":"5"},{"v":"2","tone":"mark"}],[{"v":"1","tone":"mark"},{"v":"3"},{"v":"1"},{"v":"5","tone":"mark"}]]},{"t":"vars","id":"vars","items":[{"k":"zero_rows","v":"[0]"},{"k":"zero_cols","v":"[0, 3]"}]}]},
+  {"line":20,"text":"(1, 3) lies in recorded column 3 → set it to 0.","views":[{"t":"grid","id":"matrix","title":"matrix  (orange = in a recorded row or column)","cells":[[{"v":"0","tone":"mark"},{"v":"0","tone":"mark"},{"v":"0","tone":"mark"},{"v":"0","tone":"mark"}],[{"v":"0","tone":"mark"},{"v":"4"},{"v":"5"},{"v":"0","tone":"bad"}],[{"v":"1","tone":"mark"},{"v":"3"},{"v":"1"},{"v":"5","tone":"mark"}]]},{"t":"vars","id":"vars","items":[{"k":"zero_rows","v":"[0]"},{"k":"zero_cols","v":"[0, 3]"}]}]},
+  {"line":20,"text":"(2, 0) lies in recorded column 0 → set it to 0.","views":[{"t":"grid","id":"matrix","title":"matrix  (orange = in a recorded row or column)","cells":[[{"v":"0","tone":"mark"},{"v":"0","tone":"mark"},{"v":"0","tone":"mark"},{"v":"0","tone":"mark"}],[{"v":"0","tone":"mark"},{"v":"4"},{"v":"5"},{"v":"0","tone":"mark"}],[{"v":"0","tone":"bad"},{"v":"3"},{"v":"1"},{"v":"5","tone":"mark"}]]},{"t":"vars","id":"vars","items":[{"k":"zero_rows","v":"[0]"},{"k":"zero_cols","v":"[0, 3]"}]}]},
+  {"line":20,"text":"(2, 3) lies in recorded column 3 → set it to 0.","views":[{"t":"grid","id":"matrix","title":"matrix  (orange = in a recorded row or column)","cells":[[{"v":"0","tone":"mark"},{"v":"0","tone":"mark"},{"v":"0","tone":"mark"},{"v":"0","tone":"mark"}],[{"v":"0","tone":"mark"},{"v":"4"},{"v":"5"},{"v":"0","tone":"mark"}],[{"v":"0","tone":"mark"},{"v":"3"},{"v":"1"},{"v":"0","tone":"bad"}]]},{"t":"vars","id":"vars","items":[{"k":"zero_rows","v":"[0]"},{"k":"zero_cols","v":"[0, 3]"}]}]},
+  {"line":17,"text":"Done. Every row and column that contained a 0 is cleared. The matrix was changed in place, so nothing is returned.","views":[{"t":"grid","id":"matrix","title":"matrix  (orange = in a recorded row or column)","cells":[[{"v":"0","tone":"mark"},{"v":"0","tone":"mark"},{"v":"0","tone":"mark"},{"v":"0","tone":"mark"}],[{"v":"0","tone":"mark"},{"v":"4"},{"v":"5"},{"v":"0","tone":"mark"}],[{"v":"0","tone":"mark"},{"v":"3"},{"v":"1"},{"v":"0","tone":"cur"}]]},{"t":"vars","id":"vars","items":[{"k":"zero_rows","v":"[0]"},{"k":"zero_cols","v":"[0, 3]"}]}],"final":true}
+ ]
+}

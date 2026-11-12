@@ -1,0 +1,66 @@
+{
+ "id": 150,
+ "number": 7,
+ "title": "Reverse Integer",
+ "slug": "reverse-integer",
+ "category": "bit-manipulation",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/reverse-integer/",
+ "pattern": "Pop the last digit, push it onto the result",
+ "statement": "Given a signed 32-bit integer `x`, return `x` with its digits reversed. If the reversed value does not fit into a signed 32-bit integer, return `0`.",
+ "example": {
+  "input": "x = -123",
+  "output": "-321",
+  "why": "The digits 1, 2, 3 are reversed to 3, 2, 1; the sign stays."
+ },
+ "more": [
+  {
+   "input": "x = 123",
+   "output": "321"
+  },
+  {
+   "input": "x = 120",
+   "output": "21"
+  },
+  {
+   "input": "x = 0",
+   "output": "0"
+  },
+  {
+   "input": "x = 1534236469",
+   "output": "0"
+  },
+  {
+   "input": "x = -2147483648",
+   "output": "0"
+  },
+  {
+   "input": "x = 1463847412",
+   "output": "2147483641"
+  }
+ ],
+ "idea": [
+  "`x % 10` is the last digit of `x`, and `x // 10` removes it. That is a **pop** from the end of the number.",
+  "`reversed_num * 10 + digit` appends a digit to the end of the result — a **push**. Popping from one number and pushing onto the other reverses the order.",
+  "Before each push, check that it will not exceed the 32-bit limit; if it would, the answer is 0. The sign is put aside at the start and restored at the end."
+ ],
+ "code": "class Solution:\n    def reverse(self, x: int) -> int:\n        INT_MAX = 2**31 - 1\n        INT_MIN = -(2**31)\n\n        reversed_num = 0\n        sign = 1 if x > 0 else -1\n        x = abs(x)\n\n        while x != 0:\n            pop = x % 10\n            x //= 10\n\n            if reversed_num > (INT_MAX - pop) // 10:\n                return 0\n\n            reversed_num = reversed_num * 10 + pop\n\n        return reversed_num * sign",
+ "complexity": {
+  "time": "O(log x)",
+  "timeWhy": "One round per digit of x.",
+  "space": "O(1)",
+  "spaceWhy": "A few numbers."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`x = -123`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"x","title":"x  (digits still to be moved)","cells":[{"v":"-"},{"v":"1"},{"v":"2"},{"v":"3"}],"idx":false}]},
+  {"line":8,"text":"Remember the sign (`sign` = -1) and continue with the absolute value 123.","views":[{"t":"array","id":"x","title":"x  (digits still to be moved)","cells":[{"v":"1"},{"v":"2"},{"v":"3"}],"idx":false},{"t":"array","id":"rev","title":"reversed_num","cells":[{"v":"0","tone":"good"}],"idx":false},{"t":"vars","id":"vars","items":[{"k":"sign","v":"-1"}]}]},
+  {"line":12,"text":"**Pop** the last digit: `x % 10` = 3. What remains: x = 12.","views":[{"t":"array","id":"x","title":"x  (digits still to be moved)","cells":[{"v":"1"},{"v":"2"}],"idx":false},{"t":"array","id":"rev","title":"reversed_num","cells":[{"v":"0","tone":"good"}],"idx":false},{"t":"vars","id":"vars","items":[{"k":"pop","v":"3"},{"k":"sign","v":"-1"}]}]},
+  {"line":17,"text":"**Push** it onto the result: 0 × 10 + 3 = **3**.","views":[{"t":"array","id":"x","title":"x  (digits still to be moved)","cells":[{"v":"1"},{"v":"2"}],"idx":false},{"t":"array","id":"rev","title":"reversed_num","cells":[{"v":"3","tone":"good"}],"idx":false},{"t":"vars","id":"vars","items":[{"k":"pop","v":"3"},{"k":"sign","v":"-1"}]}]},
+  {"line":12,"text":"**Pop** the last digit: `x % 10` = 2. What remains: x = 1.","views":[{"t":"array","id":"x","title":"x  (digits still to be moved)","cells":[{"v":"1"}],"idx":false},{"t":"array","id":"rev","title":"reversed_num","cells":[{"v":"3","tone":"good"}],"idx":false},{"t":"vars","id":"vars","items":[{"k":"pop","v":"2","changed":true},{"k":"sign","v":"-1"}]}]},
+  {"line":17,"text":"**Push** it onto the result: 3 × 10 + 2 = **32**.","views":[{"t":"array","id":"x","title":"x  (digits still to be moved)","cells":[{"v":"1"}],"idx":false},{"t":"array","id":"rev","title":"reversed_num","cells":[{"v":"3"},{"v":"2","tone":"good"}],"idx":false},{"t":"vars","id":"vars","items":[{"k":"pop","v":"2"},{"k":"sign","v":"-1"}]}]},
+  {"line":12,"text":"**Pop** the last digit: `x % 10` = 1. What remains: x = 0.","views":[{"t":"array","id":"x","title":"x  (digits still to be moved)","cells":[{"v":"0"}],"idx":false},{"t":"array","id":"rev","title":"reversed_num","cells":[{"v":"3"},{"v":"2","tone":"good"}],"idx":false},{"t":"vars","id":"vars","items":[{"k":"pop","v":"1","changed":true},{"k":"sign","v":"-1"}]}]},
+  {"line":17,"text":"**Push** it onto the result: 32 × 10 + 1 = **321**.","views":[{"t":"array","id":"x","title":"x  (digits still to be moved)","cells":[{"v":"0"}],"idx":false},{"t":"array","id":"rev","title":"reversed_num","cells":[{"v":"3"},{"v":"2"},{"v":"1","tone":"good"}],"idx":false},{"t":"vars","id":"vars","items":[{"k":"pop","v":"1"},{"k":"sign","v":"-1"}]}]},
+  {"line":19,"text":"All digits have been moved. Restore the sign: 321 × -1 = **-321**.","views":[{"t":"array","id":"x","title":"x  (digits still to be moved)","cells":[{"v":"0"}],"idx":false},{"t":"array","id":"rev","title":"reversed_num","cells":[{"v":"3"},{"v":"2"},{"v":"1","tone":"good"}],"idx":false},{"t":"vars","id":"vars","items":[{"k":"pop","v":"1"},{"k":"sign","v":"-1"}]}]},
+  {"line":19,"text":"Done — the answer is **`-321`**. The digits 1, 2, 3 are reversed to 3, 2, 1; the sign stays.","views":[{"t":"array","id":"x","title":"x  (digits still to be moved)","cells":[{"v":"0"}],"idx":false},{"t":"array","id":"rev","title":"reversed_num","cells":[{"v":"3"},{"v":"2"},{"v":"1","tone":"good"}],"idx":false},{"t":"vars","id":"vars","items":[{"k":"pop","v":"1"},{"k":"sign","v":"-1"}]}],"final":true}
+ ]
+}

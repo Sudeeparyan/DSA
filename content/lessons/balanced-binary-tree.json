@@ -1,0 +1,58 @@
+{
+ "id": 49,
+ "number": 110,
+ "title": "Balanced Binary Tree",
+ "slug": "balanced-binary-tree",
+ "category": "trees",
+ "difficulty": "Easy",
+ "url": "https://leetcode.com/problems/balanced-binary-tree/",
+ "pattern": "Tree recursion: height with an early failure signal",
+ "statement": "A binary tree is **height-balanced** if, at every node, the heights of the left and right subtrees differ by at most 1. Return `True` if the given tree is balanced.",
+ "example": {
+  "input": "root = [1,2,2,3,3,None,None,4,4]",
+  "output": "False",
+  "why": "At the root the left subtree has height 3 and the right subtree height 1 — a difference of 2."
+ },
+ "more": [
+  {
+   "input": "root = [3,9,20,None,None,15,7]",
+   "output": "True"
+  },
+  {
+   "input": "root = None",
+   "output": "True"
+  },
+  {
+   "input": "root = [1,2,2,3,None,None,3,4,None,None,4]",
+   "output": "False"
+  }
+ ],
+ "idea": [
+  "Balance is a statement about heights, so compute heights bottom-up with recursion.",
+  "At each node compare the two subtree heights. If they differ by more than 1, the tree is unbalanced.",
+  "To report that upward without a second return value, this solution returns **infinity** as a failure signal. Infinity survives every `max(...) + 1`, so it reaches the root."
+ ],
+ "code": "class Solution:\n    def isBalanced(self, root: TreeNode) -> bool:\n        def height(node):\n            if not node:\n                return 0\n            left_height = height(node.left)\n            right_height = height(node.right)\n            if abs(left_height - right_height) > 1:\n                return float(\"inf\")  # Indicate imbalance\n            return max(left_height, right_height) + 1\n\n        return height(root) != float(\"inf\")",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "Each node is visited once; the balance check reuses the heights already computed.",
+  "space": "O(h)",
+  "spaceWhy": "The recursion stack is as deep as the tree's height h."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`root = [1,2,2,3,3,None,None,4,4]`**. Each step runs one highlighted line of the code.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3},{"id":2,"v":"2","l":4,"r":5},{"id":3,"v":"2"},{"id":4,"v":"3","l":6,"r":7},{"id":5,"v":"3"},{"id":6,"v":"4"},{"id":7,"v":"4"}],"roots":[1]}]},
+  {"line":4,"text":"An empty spot has height 0.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"win"},{"id":2,"v":"2","l":4,"r":5,"tone":"win"},{"id":3,"v":"2"},{"id":4,"v":"3","l":6,"r":7,"tone":"win"},{"id":5,"v":"3"},{"id":6,"v":"4","tone":"win"},{"id":7,"v":"4"}],"roots":[1]}]},
+  {"line":8,"text":"Node 4 is a leaf: both sides have height 0, so it is balanced and has height 1.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"win"},{"id":2,"v":"2","l":4,"r":5,"tone":"win"},{"id":3,"v":"2"},{"id":4,"v":"3","l":6,"r":7,"tone":"win"},{"id":5,"v":"3"},{"id":6,"v":"4","tone":"cur"},{"id":7,"v":"4"}],"roots":[1]}]},
+  {"line":8,"text":"Node 4 is a leaf: both sides have height 0, so it is balanced and has height 1.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"win"},{"id":2,"v":"2","l":4,"r":5,"tone":"win"},{"id":3,"v":"2"},{"id":4,"v":"3","l":6,"r":7,"tone":"win"},{"id":5,"v":"3"},{"id":6,"v":"4","badge":"1"},{"id":7,"v":"4","tone":"cur"}],"roots":[1]}]},
+  {"line":8,"text":"At node 3: left height 1, right height 1. They differ by 0, which is allowed.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"win"},{"id":2,"v":"2","l":4,"r":5,"tone":"win"},{"id":3,"v":"2"},{"id":4,"v":"3","l":6,"r":7,"tone":"cur"},{"id":5,"v":"3"},{"id":6,"v":"4","badge":"1"},{"id":7,"v":"4","badge":"1"}],"roots":[1]}]},
+  {"line":10,"text":"Node 3 reports its height: max(1, 1) + 1 = **2**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"win"},{"id":2,"v":"2","l":4,"r":5,"tone":"win"},{"id":3,"v":"2"},{"id":4,"v":"3","l":6,"r":7,"tone":"cur"},{"id":5,"v":"3"},{"id":6,"v":"4","badge":"1"},{"id":7,"v":"4","badge":"1"}],"roots":[1]}]},
+  {"line":8,"text":"Node 3 is a leaf: both sides have height 0, so it is balanced and has height 1.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"win"},{"id":2,"v":"2","l":4,"r":5,"tone":"win"},{"id":3,"v":"2"},{"id":4,"v":"3","l":6,"r":7,"badge":"2"},{"id":5,"v":"3","tone":"cur"},{"id":6,"v":"4","badge":"1"},{"id":7,"v":"4","badge":"1"}],"roots":[1]}]},
+  {"line":8,"text":"At node 2: left height 2, right height 1. They differ by 1, which is allowed.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"win"},{"id":2,"v":"2","l":4,"r":5,"tone":"cur"},{"id":3,"v":"2"},{"id":4,"v":"3","l":6,"r":7,"badge":"2"},{"id":5,"v":"3","badge":"1"},{"id":6,"v":"4","badge":"1"},{"id":7,"v":"4","badge":"1"}],"roots":[1]}]},
+  {"line":10,"text":"Node 2 reports its height: max(2, 1) + 1 = **3**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"win"},{"id":2,"v":"2","l":4,"r":5,"tone":"cur"},{"id":3,"v":"2"},{"id":4,"v":"3","l":6,"r":7,"badge":"2"},{"id":5,"v":"3","badge":"1"},{"id":6,"v":"4","badge":"1"},{"id":7,"v":"4","badge":"1"}],"roots":[1]}]},
+  {"line":8,"text":"Node 2 is a leaf: both sides have height 0, so it is balanced and has height 1.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"win"},{"id":2,"v":"2","l":4,"r":5,"badge":"3"},{"id":3,"v":"2","tone":"cur"},{"id":4,"v":"3","l":6,"r":7,"badge":"2"},{"id":5,"v":"3","badge":"1"},{"id":6,"v":"4","badge":"1"},{"id":7,"v":"4","badge":"1"}],"roots":[1]}]},
+  {"line":8,"text":"At node 1: left height 3, right height 1. They differ by 2 — **more than 1**. The tree is unbalanced here.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"bad"},{"id":2,"v":"2","l":4,"r":5,"badge":"3"},{"id":3,"v":"2","badge":"1"},{"id":4,"v":"3","l":6,"r":7,"badge":"2"},{"id":5,"v":"3","badge":"1"},{"id":6,"v":"4","badge":"1"},{"id":7,"v":"4","badge":"1"}],"roots":[1]}]},
+  {"line":9,"text":"Report **infinity** upward: a signal that something below is unbalanced.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"bad"},{"id":2,"v":"2","l":4,"r":5,"badge":"3"},{"id":3,"v":"2","badge":"1"},{"id":4,"v":"3","l":6,"r":7,"badge":"2"},{"id":5,"v":"3","badge":"1"},{"id":6,"v":"4","badge":"1"},{"id":7,"v":"4","badge":"1"}],"roots":[1]}]},
+  {"line":12,"text":"The root came back with infinity, so somewhere two sides differed by more than 1 → **False**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"badge":"∞"},{"id":2,"v":"2","l":4,"r":5,"badge":"3"},{"id":3,"v":"2","badge":"1"},{"id":4,"v":"3","l":6,"r":7,"badge":"2"},{"id":5,"v":"3","badge":"1"},{"id":6,"v":"4","badge":"1"},{"id":7,"v":"4","badge":"1"}],"roots":[1]}]},
+  {"line":12,"text":"Done — the answer is **`False`**. At the root the left subtree has height 3 and the right subtree height 1 — a difference of 2.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"badge":"∞"},{"id":2,"v":"2","l":4,"r":5,"badge":"3"},{"id":3,"v":"2","badge":"1"},{"id":4,"v":"3","l":6,"r":7,"badge":"2"},{"id":5,"v":"3","badge":"1"},{"id":6,"v":"4","badge":"1"},{"id":7,"v":"4","badge":"1"}],"roots":[1]}],"final":true}
+ ]
+}

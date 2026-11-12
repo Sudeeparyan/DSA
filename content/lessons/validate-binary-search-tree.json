@@ -1,0 +1,59 @@
+{
+ "id": 56,
+ "number": 98,
+ "title": "Validate Binary Search Tree",
+ "slug": "validate-binary-search-tree",
+ "category": "trees",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/validate-binary-search-tree/",
+ "pattern": "In-order traversal must be increasing",
+ "statement": "Return `True` if a binary tree is a valid **binary search tree**: for every node, all values in its left subtree are smaller and all values in its right subtree are larger.",
+ "example": {
+  "input": "root = [5,3,8,1,6]",
+  "output": "False",
+  "why": "6 sits in the left subtree of 5 but is larger than 5 — even though it is correctly to the right of 3."
+ },
+ "more": [
+  {
+   "input": "root = [2,1,3]",
+   "output": "True"
+  },
+  {
+   "input": "root = [5,1,4,None,None,3,6]",
+   "output": "False"
+  },
+  {
+   "input": "root = [1,1]",
+   "output": "False"
+  },
+  {
+   "input": "root = [5,3,8,1,4]",
+   "output": "True"
+  }
+ ],
+ "idea": [
+  "Checking each node only against its own children is **not enough**: a node deep in the left subtree must still be smaller than the root far above it.",
+  "Key fact: reading a BST *in order* (left subtree, then the node, then right subtree) produces the values in strictly increasing order.",
+  "So do an in-order walk and remember the previous value. The moment a value is not larger than the one before it, the tree is not a BST."
+ ],
+ "code": "class Solution:\n    def isValidBST(self, root: TreeNode) -> bool:\n        def inorder_traversal(node, prev):\n            if not node:\n                return True\n\n            if not inorder_traversal(node.left, prev):\n                return False\n\n            if prev[0] is not None and node.val <= prev[0]:\n                return False\n            prev[0] = node.val\n\n            return inorder_traversal(node.right, prev)\n\n        prev = [None]\n        return inorder_traversal(root, prev)",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "Each node is read at most once.",
+  "space": "O(h)",
+  "spaceWhy": "The recursion stack is as deep as the tree's height h."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`root = [5,3,8,1,6]`**. Each step runs one highlighted line of the code.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"5","l":2,"r":3},{"id":2,"v":"3","l":4,"r":5},{"id":3,"v":"8"},{"id":4,"v":"1"},{"id":5,"v":"6"}],"roots":[1]},{"t":"items","id":"seq","title":"values read so far, in order","items":[]}]},
+  {"line":16,"text":"Reading a BST **in order** (left subtree, node, right subtree) must give increasing values. `prev` remembers the last value read.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"5","l":2,"r":3},{"id":2,"v":"3","l":4,"r":5},{"id":3,"v":"8"},{"id":4,"v":"1"},{"id":5,"v":"6"}],"roots":[1]},{"t":"items","id":"seq","title":"values read so far, in order","items":[]}]},
+  {"line":7,"text":"Before node 5 itself is read, everything in its **left** subtree comes first.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"5","l":2,"r":3,"tone":"cur"},{"id":2,"v":"3","l":4,"r":5},{"id":3,"v":"8"},{"id":4,"v":"1"},{"id":5,"v":"6"}],"roots":[1]},{"t":"items","id":"seq","title":"values read so far, in order","items":[]}]},
+  {"line":7,"text":"Before node 3 itself is read, everything in its **left** subtree comes first.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"5","l":2,"r":3,"tone":"win"},{"id":2,"v":"3","l":4,"r":5,"tone":"cur"},{"id":3,"v":"8"},{"id":4,"v":"1"},{"id":5,"v":"6"}],"roots":[1]},{"t":"items","id":"seq","title":"values read so far, in order","items":[]}]},
+  {"line":10,"text":"Read node 1: the very first value, so the smallest.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"5","l":2,"r":3,"tone":"win"},{"id":2,"v":"3","l":4,"r":5,"tone":"win"},{"id":3,"v":"8"},{"id":4,"v":"1","tone":"good"},{"id":5,"v":"6"}],"roots":[1]},{"t":"items","id":"seq","title":"values read so far, in order","items":[]}]},
+  {"line":10,"text":"Read node 3. The value before it was 1 and 3 is larger — still in order.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"5","l":2,"r":3,"tone":"win"},{"id":2,"v":"3","l":4,"r":5,"tone":"good"},{"id":3,"v":"8"},{"id":4,"v":"1"},{"id":5,"v":"6"}],"roots":[1]},{"t":"items","id":"seq","title":"values read so far, in order","items":[{"v":"1"}]}]},
+  {"line":14,"text":"Node 3 is read. Continue with its **right** subtree.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"5","l":2,"r":3,"tone":"win"},{"id":2,"v":"3","l":4,"r":5,"tone":"cur"},{"id":3,"v":"8"},{"id":4,"v":"1"},{"id":5,"v":"6"}],"roots":[1]},{"t":"items","id":"seq","title":"values read so far, in order","items":[{"v":"1"},{"v":"3"}]}]},
+  {"line":10,"text":"Read node 6. The value before it was 3 and 6 is larger — still in order.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"5","l":2,"r":3,"tone":"win"},{"id":2,"v":"3","l":4,"r":5,"tone":"win"},{"id":3,"v":"8"},{"id":4,"v":"1"},{"id":5,"v":"6","tone":"good"}],"roots":[1]},{"t":"items","id":"seq","title":"values read so far, in order","items":[{"v":"1"},{"v":"3"}]}]},
+  {"line":10,"text":"Read node 5. The value before it was 6, and 5 is **not larger**. The order is broken, so this is not a BST.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"5","l":2,"r":3,"tone":"bad"},{"id":2,"v":"3","l":4,"r":5},{"id":3,"v":"8"},{"id":4,"v":"1"},{"id":5,"v":"6"}],"roots":[1]},{"t":"items","id":"seq","title":"values read so far, in order","items":[{"v":"1"},{"v":"3"},{"v":"6"}]}]},
+  {"line":11,"text":"Return **False** — every caller above passes it straight on.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"5","l":2,"r":3,"tone":"bad"},{"id":2,"v":"3","l":4,"r":5},{"id":3,"v":"8"},{"id":4,"v":"1"},{"id":5,"v":"6"}],"roots":[1]},{"t":"items","id":"seq","title":"values read so far, in order","items":[{"v":"1"},{"v":"3"},{"v":"6"}]}]},
+  {"line":17,"text":"Done — the answer is **`False`**. 6 sits in the left subtree of 5 but is larger than 5 — even though it is correctly to the right of 3.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"5","l":2,"r":3},{"id":2,"v":"3","l":4,"r":5},{"id":3,"v":"8"},{"id":4,"v":"1"},{"id":5,"v":"6"}],"roots":[1]},{"t":"items","id":"seq","title":"values read so far, in order","items":[{"v":"1"},{"v":"3"},{"v":"6"}]}],"final":true}
+ ]
+}

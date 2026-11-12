@@ -1,0 +1,55 @@
+{
+ "id": 1,
+ "number": 217,
+ "title": "Contains Duplicate",
+ "slug": "contains-duplicate",
+ "category": "arrays-hashing",
+ "difficulty": "Easy",
+ "url": "https://leetcode.com/problems/contains-duplicate/",
+ "pattern": "Hash set of seen values",
+ "statement": "Given an integer array `nums`, return `True` if any value appears **at least twice**, and `False` if every element is different.",
+ "example": {
+  "input": "nums = [1,2,3,1]",
+  "output": "True",
+  "why": "The value 1 appears at index 0 and again at index 3."
+ },
+ "more": [
+  {
+   "input": "nums = [1,2,3,4]",
+   "output": "False"
+  },
+  {
+   "input": "nums = [1,1,1,3,3,4,3,2,4,2]",
+   "output": "True"
+  },
+  {
+   "input": "nums = [7]",
+   "output": "False"
+  }
+ ],
+ "idea": [
+  "Comparing every number with every other number works, but that is O(n²) comparisons.",
+  "What we really need is a fast way to ask *have I seen this number before?*",
+  "A **hash set** answers that in O(1). Walk the list once: if the current number is already in the set it is a duplicate; otherwise add it and move on."
+ ],
+ "code": "class Solution:\n    def containsDuplicate(self, nums: List[int]) -> bool:\n        hashset = set()\n\n        for n in nums:\n            if n in hashset:\n                return True\n            hashset.add(n)\n        return False",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "One pass; each set lookup and insert takes O(1) on average.",
+  "space": "O(n)",
+  "spaceWhy": "If all numbers are different, the set ends up holding every one of them."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`nums = [1,2,3,1]`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2"},{"v":"3"},{"v":"1"}]}]},
+  {"line":3,"text":"Start with an empty **hash set**. It will hold every number we have already walked past.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2"},{"v":"3"},{"v":"1"}]},{"t":"map","id":"hashset","title":"hashset  (numbers seen so far)","kind":"set","entries":[]}]},
+  {"line":6,"text":"Is 1 already in the set? No — this is the first time we see 1.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1","tone":"cur"},{"v":"2"},{"v":"3"},{"v":"1"}],"ptrs":[{"name":"n","at":0}]},{"t":"map","id":"hashset","title":"hashset  (numbers seen so far)","kind":"set","entries":[]}]},
+  {"line":8,"text":"Add 1 to the set, so a later copy of it will be recognised instantly.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1","tone":"cur"},{"v":"2"},{"v":"3"},{"v":"1"}],"ptrs":[{"name":"n","at":0}]},{"t":"map","id":"hashset","title":"hashset  (numbers seen so far)","kind":"set","entries":[{"k":"1","tone":"cur"}]}]},
+  {"line":6,"text":"Is 2 already in the set? No — this is the first time we see 2.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1","tone":"seen"},{"v":"2","tone":"cur"},{"v":"3"},{"v":"1"}],"ptrs":[{"name":"n","at":1}]},{"t":"map","id":"hashset","title":"hashset  (numbers seen so far)","kind":"set","entries":[{"k":"1"}]}]},
+  {"line":8,"text":"Add 2 to the set, so a later copy of it will be recognised instantly.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1","tone":"seen"},{"v":"2","tone":"cur"},{"v":"3"},{"v":"1"}],"ptrs":[{"name":"n","at":1}]},{"t":"map","id":"hashset","title":"hashset  (numbers seen so far)","kind":"set","entries":[{"k":"1"},{"k":"2","tone":"cur"}]}]},
+  {"line":6,"text":"Is 3 already in the set? No — this is the first time we see 3.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1","tone":"seen"},{"v":"2","tone":"seen"},{"v":"3","tone":"cur"},{"v":"1"}],"ptrs":[{"name":"n","at":2}]},{"t":"map","id":"hashset","title":"hashset  (numbers seen so far)","kind":"set","entries":[{"k":"1"},{"k":"2"}]}]},
+  {"line":8,"text":"Add 3 to the set, so a later copy of it will be recognised instantly.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1","tone":"seen"},{"v":"2","tone":"seen"},{"v":"3","tone":"cur"},{"v":"1"}],"ptrs":[{"name":"n","at":2}]},{"t":"map","id":"hashset","title":"hashset  (numbers seen so far)","kind":"set","entries":[{"k":"1"},{"k":"2"},{"k":"3","tone":"cur"}]}]},
+  {"line":6,"text":"Is 1 already in the set? **Yes** — we have met 1 before, so the list has a duplicate.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1","tone":"good"},{"v":"2","tone":"seen"},{"v":"3","tone":"seen"},{"v":"1","tone":"good"}],"ptrs":[{"name":"n","at":3}]},{"t":"map","id":"hashset","title":"hashset  (numbers seen so far)","kind":"set","entries":[{"k":"1","tone":"good"},{"k":"2"},{"k":"3"}]}]},
+  {"line":7,"text":"Return **True** straight away. There is no need to look at the rest of the list.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1","tone":"good"},{"v":"2","tone":"seen"},{"v":"3","tone":"seen"},{"v":"1","tone":"good"}],"ptrs":[{"name":"n","at":3}]},{"t":"map","id":"hashset","title":"hashset  (numbers seen so far)","kind":"set","entries":[{"k":"1","tone":"good"},{"k":"2"},{"k":"3"}]}]},
+  {"line":7,"text":"Done — the answer is **`True`**. The value 1 appears at index 0 and again at index 3.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1","tone":"good"},{"v":"2","tone":"seen"},{"v":"3","tone":"seen"},{"v":"1","tone":"good"}],"ptrs":[{"name":"n","at":3}]},{"t":"map","id":"hashset","title":"hashset  (numbers seen so far)","kind":"set","entries":[{"k":"1","tone":"good"},{"k":"2"},{"k":"3"}]}],"final":true}
+ ]
+}

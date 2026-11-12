@@ -1,0 +1,57 @@
+{
+ "id": 100,
+ "number": 746,
+ "title": "Min Cost Climbing Stairs",
+ "slug": "min-cost-climbing-stairs",
+ "category": "1d-dp",
+ "difficulty": "Easy",
+ "url": "https://leetcode.com/problems/min-cost-climbing-stairs/",
+ "pattern": "DP: cheapest way to stand on each step",
+ "statement": "`cost[i]` is the price of stepping on stair `i`. After paying it you may climb **one or two** stairs. You may start on stair 0 or stair 1. Return the minimum total cost to reach the top (the floor just past the last stair).",
+ "example": {
+  "input": "cost = [10,15,20,5,30]",
+  "output": "20",
+  "why": "Start on stair 1 (pay 15), jump to stair 3 (pay 5), then jump over stair 4 to the top: 15 + 5 = 20."
+ },
+ "more": [
+  {
+   "input": "cost = [10,15,20]",
+   "output": "15"
+  },
+  {
+   "input": "cost = [1,100,1,1,1,100,1,1,100,1]",
+   "output": "6"
+  },
+  {
+   "input": "cost = [0,0]",
+   "output": "0"
+  },
+  {
+   "input": "cost = [5,3]",
+   "output": "3"
+  }
+ ],
+ "idea": [
+  "Let `dp[i]` be the cheapest total for **standing on stair i** (its own cost included).",
+  "You arrive on stair `i` from stair `i − 1` or stair `i − 2`. Come from whichever was cheaper, then pay `cost[i]`: `dp[i] = min(dp[i − 1], dp[i − 2]) + cost[i]`.",
+  "The top is reached from either of the last two stairs for free, so the answer is the smaller of their totals."
+ ],
+ "code": "class Solution:\n    def minCostClimbingStairs(self, cost: List[int]) -> int:\n        n = len(cost)\n        if n <= 1:\n            return 0  # No cost if there are 0 or 1 stairs\n\n        dp = [0] * n  # Initialize a list to store minimum costs\n\n        # Base cases\n        dp[0] = cost[0]\n        dp[1] = cost[1]\n\n        for i in range(2, n):\n            dp[i] = min(dp[i - 1], dp[i - 2]) + cost[i]\n\n        return min(dp[n - 1], dp[n - 2])",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "One pass over the stairs.",
+  "space": "O(n)",
+  "spaceWhy": "The dp array (two variables would be enough, since only the last two entries are used)."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`cost = [10,15,20,5,30]`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"cost","title":"cost","cells":[{"v":"10"},{"v":"15"},{"v":"20"},{"v":"5"},{"v":"30"}]}]},
+  {"line":7,"text":"`dp[i]` will hold the cheapest total cost to be standing on stair i.","views":[{"t":"array","id":"cost","title":"cost","cells":[{"v":"10"},{"v":"15"},{"v":"20"},{"v":"5"},{"v":"30"}]},{"t":"array","id":"dp","title":"dp[i] = cheapest total to stand on stair i","cells":[{"v":"0"},{"v":"0"},{"v":"0"},{"v":"0"},{"v":"0"}]}]},
+  {"line":10,"text":"You may start on stair 0: the only cost is the stair itself, 10.","views":[{"t":"array","id":"cost","title":"cost","cells":[{"v":"10","tone":"cur"},{"v":"15"},{"v":"20"},{"v":"5"},{"v":"30"}]},{"t":"array","id":"dp","title":"dp[i] = cheapest total to stand on stair i","cells":[{"v":"10","tone":"good"},{"v":"0"},{"v":"0"},{"v":"0"},{"v":"0"}]}]},
+  {"line":11,"text":"You may also start directly on stair 1: cost 15.","views":[{"t":"array","id":"cost","title":"cost","cells":[{"v":"10"},{"v":"15","tone":"cur"},{"v":"20"},{"v":"5"},{"v":"30"}]},{"t":"array","id":"dp","title":"dp[i] = cheapest total to stand on stair i","cells":[{"v":"10"},{"v":"15","tone":"good"},{"v":"0"},{"v":"0"},{"v":"0"}]}]},
+  {"line":14,"text":"Stair 2 is reached from stair 1 (total 15) or stair 0 (total 10). Come from the cheaper one and pay this stair: 10 + 20 = **30**.","views":[{"t":"array","id":"cost","title":"cost","cells":[{"v":"10"},{"v":"15"},{"v":"20"},{"v":"5"},{"v":"30"}],"ptrs":[{"name":"i","at":2}]},{"t":"array","id":"dp","title":"dp[i] = cheapest total to stand on stair i","cells":[{"v":"10","tone":"alt"},{"v":"15","tone":"alt"},{"v":"30","tone":"good"},{"v":"0"},{"v":"0"}]}]},
+  {"line":14,"text":"Stair 3 is reached from stair 2 (total 30) or stair 1 (total 15). Come from the cheaper one and pay this stair: 15 + 5 = **20**.","views":[{"t":"array","id":"cost","title":"cost","cells":[{"v":"10"},{"v":"15"},{"v":"20"},{"v":"5"},{"v":"30"}],"ptrs":[{"name":"i","at":3}]},{"t":"array","id":"dp","title":"dp[i] = cheapest total to stand on stair i","cells":[{"v":"10"},{"v":"15","tone":"alt"},{"v":"30","tone":"alt"},{"v":"20","tone":"good"},{"v":"0"}]}]},
+  {"line":14,"text":"Stair 4 is reached from stair 3 (total 20) or stair 2 (total 30). Come from the cheaper one and pay this stair: 20 + 30 = **50**.","views":[{"t":"array","id":"cost","title":"cost","cells":[{"v":"10"},{"v":"15"},{"v":"20"},{"v":"5"},{"v":"30"}],"ptrs":[{"name":"i","at":4}]},{"t":"array","id":"dp","title":"dp[i] = cheapest total to stand on stair i","cells":[{"v":"10"},{"v":"15"},{"v":"30","tone":"alt"},{"v":"20","tone":"alt"},{"v":"50","tone":"good"}]}]},
+  {"line":16,"text":"The top lies just past the last stair. It can be reached from stair 4 (total 50) or from stair 3 (total 20) without paying anything more. The cheaper one: **20**.","views":[{"t":"array","id":"cost","title":"cost","cells":[{"v":"10"},{"v":"15"},{"v":"20"},{"v":"5"},{"v":"30"}],"ptrs":[{"name":"i","at":4}]},{"t":"array","id":"dp","title":"dp[i] = cheapest total to stand on stair i","cells":[{"v":"10"},{"v":"15"},{"v":"30"},{"v":"20","tone":"alt"},{"v":"50","tone":"alt"}]}]},
+  {"line":16,"text":"Done — the answer is **`20`**. Start on stair 1 (pay 15), jump to stair 3 (pay 5), then jump over stair 4 to the top: 15 + 5 = 20.","views":[{"t":"array","id":"cost","title":"cost","cells":[{"v":"10"},{"v":"15"},{"v":"20"},{"v":"5"},{"v":"30"}],"ptrs":[{"name":"i","at":4}]},{"t":"array","id":"dp","title":"dp[i] = cheapest total to stand on stair i","cells":[{"v":"10"},{"v":"15"},{"v":"30"},{"v":"20","tone":"alt"},{"v":"50","tone":"alt"}]}],"final":true}
+ ]
+}

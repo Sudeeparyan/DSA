@@ -1,0 +1,60 @@
+{
+ "id": 142,
+ "number": 43,
+ "title": "Multiply Strings",
+ "slug": "multiply-strings",
+ "category": "math-geometry",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/multiply-strings/",
+ "pattern": "Grade-school multiplication, digit by digit",
+ "statement": "Two non-negative integers are given as strings `num1` and `num2`. Return their product as a string — without converting the whole strings to integers.",
+ "example": {
+  "input": "num1 = \"23\", num2 = \"45\"",
+  "output": "\"1035\"",
+  "why": "23 × 45 = 1035."
+ },
+ "more": [
+  {
+   "input": "num1 = \"2\", num2 = \"3\"",
+   "output": "\"6\""
+  },
+  {
+   "input": "num1 = \"123\", num2 = \"456\"",
+   "output": "\"56088\""
+  },
+  {
+   "input": "num1 = \"0\", num2 = \"52\"",
+   "output": "\"0\""
+  },
+  {
+   "input": "num1 = \"999\", num2 = \"999\"",
+   "output": "\"998001\""
+  },
+  {
+   "input": "num1 = \"9\", num2 = \"9\"",
+   "output": "\"81\""
+  }
+ ],
+ "idea": [
+  "Multiply the way it is done on paper: every digit of `num1` times every digit of `num2`.",
+  "Where does each small product go? Digit `i` of `num1` times digit `j` of `num2` contributes to position **`i + j + 1`** of the result, and its carry to position **`i + j`**. (An m-digit number times an n-digit number has at most m + n digits.)",
+  "Working from the right, add each product to what is already in its cell, keep the last digit there and push the carry one cell to the left."
+ ],
+ "code": "class Solution:\n    def multiply(self, num1: str, num2: str) -> str:\n        if num1 == \"0\" or num2 == \"0\":\n            return \"0\"\n\n        m, n = len(num1), len(num2)\n        result = [0] * (m + n)\n\n        for i in range(m - 1, -1, -1):\n            for j in range(n - 1, -1, -1):\n                product = int(num1[i]) * int(num2[j])\n                sum_val = product + result[i + j + 1]\n                result[i + j + 1] = sum_val % 10\n                result[i + j] += sum_val // 10\n\n        return \"\".join(map(str, result)).lstrip(\"0\")",
+ "complexity": {
+  "time": "O(m · n)",
+  "timeWhy": "Every pair of digits is multiplied once.",
+  "space": "O(m + n)",
+  "spaceWhy": "The result array."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`num1 = \"23\", num2 = \"45\"`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"num1","title":"num1","cells":[{"v":"2"},{"v":"3"}]},{"t":"array","id":"num2","title":"num2","cells":[{"v":"4"},{"v":"5"}]}]},
+  {"line":7,"text":"A 2-digit number times a 2-digit number has at most 4 digits, so `result` gets 4 cells. The product of digit i and digit j belongs in cell **i + j + 1**; its carry goes to cell **i + j**.","views":[{"t":"array","id":"num1","title":"num1","cells":[{"v":"2"},{"v":"3"}]},{"t":"array","id":"num2","title":"num2","cells":[{"v":"4"},{"v":"5"}]},{"t":"array","id":"result","title":"result  (one digit per cell)","cells":[{"v":"0"},{"v":"0"},{"v":"0"},{"v":"0"}]}]},
+  {"line":14,"text":"3 × 5 = 15. Add what is already in cell 3: 15. Keep its last digit **5** in cell 3 and carry **1** into cell 2.","views":[{"t":"array","id":"num1","title":"num1","cells":[{"v":"2"},{"v":"3"}],"ptrs":[{"name":"i","at":1}]},{"t":"array","id":"num2","title":"num2","cells":[{"v":"4"},{"v":"5"}],"ptrs":[{"name":"j","at":1}]},{"t":"array","id":"result","title":"result  (one digit per cell)","cells":[{"v":"0"},{"v":"0"},{"v":"1","tone":"alt"},{"v":"5","tone":"cur"}]}]},
+  {"line":14,"text":"3 × 4 = 12. Add what is already in cell 2: 13. Keep its last digit **3** in cell 2 and carry **1** into cell 1.","views":[{"t":"array","id":"num1","title":"num1","cells":[{"v":"2"},{"v":"3"}],"ptrs":[{"name":"i","at":1}]},{"t":"array","id":"num2","title":"num2","cells":[{"v":"4"},{"v":"5"}],"ptrs":[{"name":"j","at":0}]},{"t":"array","id":"result","title":"result  (one digit per cell)","cells":[{"v":"0"},{"v":"1","tone":"alt"},{"v":"3","tone":"cur"},{"v":"5"}]}]},
+  {"line":14,"text":"2 × 5 = 10. Add what is already in cell 2: 13. Keep its last digit **3** in cell 2 and carry **1** into cell 1.","views":[{"t":"array","id":"num1","title":"num1","cells":[{"v":"2"},{"v":"3"}],"ptrs":[{"name":"i","at":0}]},{"t":"array","id":"num2","title":"num2","cells":[{"v":"4"},{"v":"5"}],"ptrs":[{"name":"j","at":1}]},{"t":"array","id":"result","title":"result  (one digit per cell)","cells":[{"v":"0"},{"v":"2","tone":"alt"},{"v":"3","tone":"cur"},{"v":"5"}]}]},
+  {"line":14,"text":"2 × 4 = 8. Add what is already in cell 1: 10. Keep its last digit **0** in cell 1 and carry **1** into cell 0.","views":[{"t":"array","id":"num1","title":"num1","cells":[{"v":"2"},{"v":"3"}],"ptrs":[{"name":"i","at":0}]},{"t":"array","id":"num2","title":"num2","cells":[{"v":"4"},{"v":"5"}],"ptrs":[{"name":"j","at":0}]},{"t":"array","id":"result","title":"result  (one digit per cell)","cells":[{"v":"1","tone":"alt"},{"v":"0","tone":"cur"},{"v":"3"},{"v":"5"}]}]},
+  {"line":16,"text":"Join the cells into a string and strip leading zeros: **1035**.","views":[{"t":"array","id":"num1","title":"num1","cells":[{"v":"2"},{"v":"3"}],"ptrs":[{"name":"i","at":0}]},{"t":"array","id":"num2","title":"num2","cells":[{"v":"4"},{"v":"5"}],"ptrs":[{"name":"j","at":0}]},{"t":"array","id":"result","title":"result  (one digit per cell)","cells":[{"v":"1"},{"v":"0"},{"v":"3"},{"v":"5"}]}]},
+  {"line":16,"text":"Done — the answer is **`\"1035\"`**. 23 × 45 = 1035.","views":[{"t":"array","id":"num1","title":"num1","cells":[{"v":"2"},{"v":"3"}],"ptrs":[{"name":"i","at":0}]},{"t":"array","id":"num2","title":"num2","cells":[{"v":"4"},{"v":"5"}],"ptrs":[{"name":"j","at":0}]},{"t":"array","id":"result","title":"result  (one digit per cell)","cells":[{"v":"1"},{"v":"0"},{"v":"3"},{"v":"5"}]}],"final":true}
+ ]
+}

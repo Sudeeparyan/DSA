@@ -1,0 +1,65 @@
+{
+ "id": 116,
+ "number": 97,
+ "title": "Interleaving String",
+ "slug": "interleaving-string",
+ "category": "2d-dp",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/interleaving-string/",
+ "pattern": "2-D DP over prefixes of both strings",
+ "statement": "Return `True` if `s3` can be formed by **interleaving** `s1` and `s2`: merging them while keeping the letters of each string in their original order.",
+ "example": {
+  "input": "s1 = \"ab\", s2 = \"ac\", s3 = \"aacb\"",
+  "output": "True",
+  "why": "Take `a` from s2, `a` from s1, `c` from s2 and `b` from s1: together they spell `aacb`."
+ },
+ "more": [
+  {
+   "input": "s1 = \"aabcc\", s2 = \"dbbca\", s3 = \"aadbbcbcac\"",
+   "output": "True"
+  },
+  {
+   "input": "s1 = \"aabcc\", s2 = \"dbbca\", s3 = \"aadbbbaccc\"",
+   "output": "False"
+  },
+  {
+   "input": "s1 = \"\", s2 = \"\", s3 = \"\"",
+   "output": "True"
+  },
+  {
+   "input": "s1 = \"a\", s2 = \"\", s3 = \"c\"",
+   "output": "False"
+  },
+  {
+   "input": "s1 = \"a\", s2 = \"b\", s3 = \"abc\"",
+   "output": "False"
+  }
+ ],
+ "idea": [
+  "Let `dp[i][j]` say whether the first `i` letters of `s1` and the first `j` letters of `s2` can be interleaved into the first `i + j` letters of `s3`.",
+  "The last letter of that prefix of `s3` came either from `s1` or from `s2`. From `s1`: then `s1[i − 1]` must equal it and `dp[i − 1][j]` must be True. From `s2`: `s2[j − 1]` must equal it and `dp[i][j − 1]` must be True.",
+  "The top row uses only `s2` and the left column only `s1`. The bottom-right cell covers all three strings completely."
+ ],
+ "code": "class Solution:\n    def isInterleave(self, s1: str, s2: str, s3: str) -> bool:\n        # Get the lengths of s1, s2, and s3.\n        m, n, p = len(s1), len(s2), len(s3)\n\n        # If the sum of lengths of s1 and s2 is not equal to the length of s3, return False.\n        if m + n != p:\n            return False\n\n        # Initialize a 2D DP array dp of size (m + 1) x (n + 1) to store intermediate results.\n        dp = [[False] * (n + 1) for _ in range(m + 1)]\n\n        # Base case: dp[0][0] is True since two empty strings can form an empty string.\n        dp[0][0] = True\n\n        # Fill in the first row of dp.\n        for j in range(1, n + 1):\n            dp[0][j] = dp[0][j - 1] and s2[j - 1] == s3[j - 1]\n\n        # Fill in the first column of dp.\n        for i in range(1, m + 1):\n            dp[i][0] = dp[i - 1][0] and s1[i - 1] == s3[i - 1]\n\n        # Fill in the rest of dp.\n        for i in range(1, m + 1):\n            for j in range(1, n + 1):\n                # For dp[i][j] to be True, one of the following conditions must be met:\n                # 1. dp[i-1][j] is True and s1[i-1] matches s3[i+j-1].\n                # 2. dp[i][j-1] is True and s2[j-1] matches s3[i+j-1].\n                dp[i][j] = (dp[i - 1][j] and s1[i - 1] == s3[i + j - 1]) or (\n                    dp[i][j - 1] and s2[j - 1] == s3[i + j - 1]\n                )\n\n        # The result is stored in dp[m][n].\n        return dp[m][n]",
+ "complexity": {
+  "time": "O(m · n)",
+  "timeWhy": "One cell per pair of prefix lengths.",
+  "space": "O(m · n)",
+  "spaceWhy": "The table has (m + 1) × (n + 1) cells; one row would be enough, since only the row above is read."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`s1 = \"ab\", s2 = \"ac\", s3 = \"aacb\"`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"s3","title":"s3","cells":[{"v":"a"},{"v":"a"},{"v":"c"},{"v":"b"}]}]},
+  {"line":7,"text":"The lengths fit: 2 + 2 = 4. Now build the table.","views":[{"t":"array","id":"s3","title":"s3","cells":[{"v":"a"},{"v":"a"},{"v":"c"},{"v":"b"}]}]},
+  {"line":14,"text":"Nothing from `s1` and nothing from `s2` form the empty prefix of `s3`: **True**.","views":[{"t":"grid","id":"dp","title":"dp[i][j]: can s1[:i] and s2[:j] be merged into s3[:i + j]?","cells":[[{"v":"T","tone":"good"},{"v":"F"},{"v":"F"}],[{"v":"F"},{"v":"F"},{"v":"F"}],[{"v":"F"},{"v":"F"},{"v":"F"}]],"rows":["ø","a","b"],"cols":["ø","a","c"]},{"t":"array","id":"s3","title":"s3","cells":[{"v":"a"},{"v":"a"},{"v":"c"},{"v":"b"}]}]},
+  {"line":18,"text":"Top row — only `s2` is used: `a` must equal the start of `s3`, `a`. The cell to the left is True, and the new letters are `a` and `a` → **True**.","views":[{"t":"grid","id":"dp","title":"dp[i][j]: can s1[:i] and s2[:j] be merged into s3[:i + j]?","cells":[[{"v":"T","tone":"alt"},{"v":"T","tone":"cur"},{"v":"F"}],[{"v":"F"},{"v":"F"},{"v":"F"}],[{"v":"F"},{"v":"F"},{"v":"F"}]],"rows":["ø","a","b"],"cols":["ø","a","c"]},{"t":"array","id":"s3","title":"s3","cells":[{"v":"a","tone":"cur"},{"v":"a"},{"v":"c"},{"v":"b"}]}]},
+  {"line":18,"text":"Top row — only `s2` is used: `ac` must equal the start of `s3`, `aa`. The cell to the left is True, and the new letters are `c` and `a` → **False**.","views":[{"t":"grid","id":"dp","title":"dp[i][j]: can s1[:i] and s2[:j] be merged into s3[:i + j]?","cells":[[{"v":"T","tone":"seen"},{"v":"T","tone":"alt"},{"v":"F","tone":"cur"}],[{"v":"F"},{"v":"F"},{"v":"F"}],[{"v":"F"},{"v":"F"},{"v":"F"}]],"rows":["ø","a","b"],"cols":["ø","a","c"]},{"t":"array","id":"s3","title":"s3","cells":[{"v":"a"},{"v":"a","tone":"cur"},{"v":"c"},{"v":"b"}]}]},
+  {"line":22,"text":"Left column — only `s1` is used: `a` must equal the start of `s3`, `a`. The cell above is True, and the new letters are `a` and `a` → **True**.","views":[{"t":"grid","id":"dp","title":"dp[i][j]: can s1[:i] and s2[:j] be merged into s3[:i + j]?","cells":[[{"v":"T","tone":"alt"},{"v":"T","tone":"seen"},{"v":"F"}],[{"v":"T","tone":"cur"},{"v":"F"},{"v":"F"}],[{"v":"F"},{"v":"F"},{"v":"F"}]],"rows":["ø","a","b"],"cols":["ø","a","c"]},{"t":"array","id":"s3","title":"s3","cells":[{"v":"a","tone":"cur"},{"v":"a"},{"v":"c"},{"v":"b"}]}]},
+  {"line":22,"text":"Left column — only `s1` is used: `ab` must equal the start of `s3`, `aa`. The cell above is True, and the new letters are `b` and `a` → **False**.","views":[{"t":"grid","id":"dp","title":"dp[i][j]: can s1[:i] and s2[:j] be merged into s3[:i + j]?","cells":[[{"v":"T","tone":"seen"},{"v":"T","tone":"seen"},{"v":"F"}],[{"v":"T","tone":"alt"},{"v":"F"},{"v":"F"}],[{"v":"F","tone":"cur"},{"v":"F"},{"v":"F"}]],"rows":["ø","a","b"],"cols":["ø","a","c"]},{"t":"array","id":"s3","title":"s3","cells":[{"v":"a"},{"v":"a","tone":"cur"},{"v":"c"},{"v":"b"}]}]},
+  {"line":30,"text":"Cell (1, 1): the letter to produce is `s3[1]` = `a`. Take it **from s1** (`a` matches) — the rest is the cell above, which is True → **True**.","views":[{"t":"grid","id":"dp","title":"dp[i][j]: can s1[:i] and s2[:j] be merged into s3[:i + j]?","cells":[[{"v":"T","tone":"seen"},{"v":"T","tone":"alt"},{"v":"F"}],[{"v":"T","tone":"alt"},{"v":"T","tone":"cur"},{"v":"F"}],[{"v":"F"},{"v":"F"},{"v":"F"}]],"rows":["ø","a","b"],"cols":["ø","a","c"]},{"t":"array","id":"s3","title":"s3","cells":[{"v":"a"},{"v":"a","tone":"cur"},{"v":"c"},{"v":"b"}]}]},
+  {"line":30,"text":"Cell (1, 2): the letter to produce is `s3[2]` = `c`. Take it **from s2** (`c` matches) — the rest is the cell to the left, which is True → **True**.","views":[{"t":"grid","id":"dp","title":"dp[i][j]: can s1[:i] and s2[:j] be merged into s3[:i + j]?","cells":[[{"v":"T","tone":"seen"},{"v":"T","tone":"seen"},{"v":"F","tone":"alt"}],[{"v":"T","tone":"seen"},{"v":"T","tone":"alt"},{"v":"T","tone":"cur"}],[{"v":"F"},{"v":"F"},{"v":"F"}]],"rows":["ø","a","b"],"cols":["ø","a","c"]},{"t":"array","id":"s3","title":"s3","cells":[{"v":"a"},{"v":"a"},{"v":"c","tone":"cur"},{"v":"b"}]}]},
+  {"line":30,"text":"Cell (2, 1): the letter to produce is `s3[2]` = `c`. From s1 it would be `b` (cell above: True), from s2 `a` (cell to the left: False). Neither option works → **False**.","views":[{"t":"grid","id":"dp","title":"dp[i][j]: can s1[:i] and s2[:j] be merged into s3[:i + j]?","cells":[[{"v":"T","tone":"seen"},{"v":"T","tone":"seen"},{"v":"F"}],[{"v":"T","tone":"seen"},{"v":"T","tone":"alt"},{"v":"T","tone":"seen"}],[{"v":"F","tone":"alt"},{"v":"F","tone":"cur"},{"v":"F"}]],"rows":["ø","a","b"],"cols":["ø","a","c"]},{"t":"array","id":"s3","title":"s3","cells":[{"v":"a"},{"v":"a"},{"v":"c","tone":"cur"},{"v":"b"}]}]},
+  {"line":30,"text":"Cell (2, 2): the letter to produce is `s3[3]` = `b`. Take it **from s1** (`b` matches) — the rest is the cell above, which is True → **True**.","views":[{"t":"grid","id":"dp","title":"dp[i][j]: can s1[:i] and s2[:j] be merged into s3[:i + j]?","cells":[[{"v":"T","tone":"seen"},{"v":"T","tone":"seen"},{"v":"F"}],[{"v":"T","tone":"seen"},{"v":"T","tone":"seen"},{"v":"T","tone":"alt"}],[{"v":"F"},{"v":"F","tone":"alt"},{"v":"T","tone":"cur"}]],"rows":["ø","a","b"],"cols":["ø","a","c"]},{"t":"array","id":"s3","title":"s3","cells":[{"v":"a"},{"v":"a"},{"v":"c"},{"v":"b","tone":"cur"}]}]},
+  {"line":35,"text":"The bottom-right cell uses all of `s1`, `s2` and `s3` → **True**.","views":[{"t":"grid","id":"dp","title":"dp[i][j]: can s1[:i] and s2[:j] be merged into s3[:i + j]?","cells":[[{"v":"T","tone":"seen"},{"v":"T","tone":"seen"},{"v":"F"}],[{"v":"T","tone":"seen"},{"v":"T","tone":"seen"},{"v":"T","tone":"seen"}],[{"v":"F"},{"v":"F"},{"v":"T","tone":"good"}]],"rows":["ø","a","b"],"cols":["ø","a","c"]},{"t":"array","id":"s3","title":"s3","cells":[{"v":"a"},{"v":"a"},{"v":"c"},{"v":"b"}]}]},
+  {"line":35,"text":"Done — the answer is **`True`**. Take `a` from s2, `a` from s1, `c` from s2 and `b` from s1: together they spell `aacb`.","views":[{"t":"grid","id":"dp","title":"dp[i][j]: can s1[:i] and s2[:j] be merged into s3[:i + j]?","cells":[[{"v":"T","tone":"seen"},{"v":"T","tone":"seen"},{"v":"F"}],[{"v":"T","tone":"seen"},{"v":"T","tone":"seen"},{"v":"T","tone":"seen"}],[{"v":"F"},{"v":"F"},{"v":"T","tone":"good"}]],"rows":["ø","a","b"],"cols":["ø","a","c"]},{"t":"array","id":"s3","title":"s3","cells":[{"v":"a"},{"v":"a"},{"v":"c"},{"v":"b"}]}],"final":true}
+ ]
+}

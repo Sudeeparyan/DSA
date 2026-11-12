@@ -1,0 +1,68 @@
+{
+ "id": 102,
+ "number": 213,
+ "title": "House Robber II",
+ "slug": "house-robber-ii",
+ "category": "1d-dp",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/house-robber-ii/",
+ "pattern": "Circular street = two straight-line problems",
+ "statement": "Same rule as House Robber — never rob two adjacent houses — but now the houses stand in a **circle**, so the first and the last house are neighbours too. Return the maximum amount you can rob.",
+ "example": {
+  "input": "nums = [2,7,9,3,1]",
+  "output": "11",
+  "why": "On a straight street 2 + 9 + 1 = 12 would work, but in a circle house 0 and house 4 are neighbours. The best is 2 + 9 = 11."
+ },
+ "more": [
+  {
+   "input": "nums = [2,3,2]",
+   "output": "3"
+  },
+  {
+   "input": "nums = [1,2,3,1]",
+   "output": "4"
+  },
+  {
+   "input": "nums = [1,2,3]",
+   "output": "3"
+  },
+  {
+   "input": "nums = [7]",
+   "output": "7"
+  },
+  {
+   "input": "nums = [1,2]",
+   "output": "2"
+  }
+ ],
+ "idea": [
+  "The only new rule: the first and the last house cannot **both** be robbed.",
+  "So one of them is certainly left alone. Case A: house 0 is left out → an ordinary straight street of houses `1 … n − 1`. Case B: the last house is left out → a straight street of houses `0 … n − 2`.",
+  "Solve both with the ordinary House Robber (here with two variables instead of an array) and return the larger result."
+ ],
+ "code": "class Solution:\n    def rob(self, nums: List[int]) -> int:\n        def houseRobber(nums: List[int]) -> int:\n            n = len(nums)\n            if n == 0:\n                return 0\n            if n == 1:\n                return nums[0]\n\n            prev = 0\n            curr = 0\n\n            for num in nums:\n                temp = curr\n                curr = max(prev + num, curr)\n                prev = temp\n\n            return curr\n\n        if len(nums) == 1:\n            return nums[0]\n\n        # Rob first house and exclude the last house, or exclude the first house and rob the last house.\n        return max(houseRobber(nums[1:]), houseRobber(nums[:-1]))",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "Two passes over the houses.",
+  "space": "O(n)",
+  "spaceWhy": "The two slices; the robbing itself uses only two variables."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`nums = [2,7,9,3,1]`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"houses","title":"nums  (a circle: the last house is next to the first)","cells":[{"v":"2","n":2},{"v":"7","n":7},{"v":"9","n":9},{"v":"3","n":3},{"v":"1","n":1}],"bars":true,"max":9}]},
+  {"line":20,"text":"The street is a circle, so house 0 and house 4 are neighbours — they can never both be robbed. Split into two straight-line problems: one **without house 0**, one **without the last house**.","views":[{"t":"array","id":"houses","title":"nums  (a circle: the last house is next to the first)","cells":[{"v":"2","n":2},{"v":"7","n":7},{"v":"9","n":9},{"v":"3","n":3},{"v":"1","n":1}],"bars":true,"max":9}]},
+  {"line":11,"text":"**Run 1 — leave out house 0**: houses 1 … 4 form a straight street [7, 9, 3, 1]. `curr` is the best loot so far, `prev` the best loot not using the previous house.","views":[{"t":"array","id":"houses","title":"nums  (a circle: the last house is next to the first)","cells":[{"v":"2","n":2},{"v":"7","n":7},{"v":"9","n":9},{"v":"3","n":3},{"v":"1","n":1}],"ptrs":[{"name":"num","at":0}],"ranges":[{"from":1,"to":4,"label":"this run","tone":"win"}],"bars":true,"max":9},{"t":"vars","id":"vars","items":[{"k":"prev","v":"0"},{"k":"curr","v":"0"}]}]},
+  {"line":16,"text":"House with 7. **Rob it**: 0 + 7 = 7 (best without the previous house, plus this one). **Skip it**: 0. Keep the larger → `curr` = **7**.","views":[{"t":"array","id":"houses","title":"nums  (a circle: the last house is next to the first)","cells":[{"v":"2","n":2},{"v":"7","n":7},{"v":"9","n":9},{"v":"3","n":3},{"v":"1","n":1}],"ptrs":[{"name":"num","at":1}],"ranges":[{"from":1,"to":4,"label":"this run","tone":"win"}],"bars":true,"max":9},{"t":"vars","id":"vars","items":[{"k":"prev","v":"0"},{"k":"curr","v":"7","changed":true}]}]},
+  {"line":16,"text":"House with 9. **Rob it**: 0 + 9 = 9 (best without the previous house, plus this one). **Skip it**: 7. Keep the larger → `curr` = **9**.","views":[{"t":"array","id":"houses","title":"nums  (a circle: the last house is next to the first)","cells":[{"v":"2","n":2},{"v":"7","n":7},{"v":"9","n":9},{"v":"3","n":3},{"v":"1","n":1}],"ptrs":[{"name":"num","at":2}],"ranges":[{"from":1,"to":4,"label":"this run","tone":"win"}],"bars":true,"max":9},{"t":"vars","id":"vars","items":[{"k":"prev","v":"7","changed":true},{"k":"curr","v":"9","changed":true}]}]},
+  {"line":16,"text":"House with 3. **Rob it**: 7 + 3 = 10 (best without the previous house, plus this one). **Skip it**: 9. Keep the larger → `curr` = **10**.","views":[{"t":"array","id":"houses","title":"nums  (a circle: the last house is next to the first)","cells":[{"v":"2","n":2},{"v":"7","n":7},{"v":"9","n":9},{"v":"3","n":3},{"v":"1","n":1}],"ptrs":[{"name":"num","at":3}],"ranges":[{"from":1,"to":4,"label":"this run","tone":"win"}],"bars":true,"max":9},{"t":"vars","id":"vars","items":[{"k":"prev","v":"9","changed":true},{"k":"curr","v":"10","changed":true}]}]},
+  {"line":16,"text":"House with 1. **Rob it**: 9 + 1 = 10 (best without the previous house, plus this one). **Skip it**: 10. Keep the larger → `curr` = **10**.","views":[{"t":"array","id":"houses","title":"nums  (a circle: the last house is next to the first)","cells":[{"v":"2","n":2},{"v":"7","n":7},{"v":"9","n":9},{"v":"3","n":3},{"v":"1","n":1}],"ptrs":[{"name":"num","at":4}],"ranges":[{"from":1,"to":4,"label":"this run","tone":"win"}],"bars":true,"max":9},{"t":"vars","id":"vars","items":[{"k":"prev","v":"10","changed":true},{"k":"curr","v":"10"}]}]},
+  {"line":18,"text":"This run's best: **10**.","views":[{"t":"array","id":"houses","title":"nums  (a circle: the last house is next to the first)","cells":[{"v":"2","n":2},{"v":"7","n":7},{"v":"9","n":9},{"v":"3","n":3},{"v":"1","n":1}],"ptrs":[{"name":"num","at":5}],"ranges":[{"from":1,"to":4,"label":"this run","tone":"win"}],"bars":true,"max":9},{"t":"vars","id":"vars","items":[{"k":"prev","v":"10"},{"k":"curr","v":"10"}]}]},
+  {"line":11,"text":"**Run 2 — leave out the last house**: houses 0 … 3 form a straight street [2, 7, 9, 3]. Same procedure.","views":[{"t":"array","id":"houses","title":"nums  (a circle: the last house is next to the first)","cells":[{"v":"2","n":2},{"v":"7","n":7},{"v":"9","n":9},{"v":"3","n":3},{"v":"1","n":1}],"ptrs":[{"name":"num","at":-1}],"ranges":[{"from":0,"to":3,"label":"this run","tone":"win"}],"bars":true,"max":9},{"t":"vars","id":"vars","items":[{"k":"prev","v":"0","changed":true},{"k":"curr","v":"0","changed":true}]}]},
+  {"line":16,"text":"House with 2. **Rob it**: 0 + 2 = 2 (best without the previous house, plus this one). **Skip it**: 0. Keep the larger → `curr` = **2**.","views":[{"t":"array","id":"houses","title":"nums  (a circle: the last house is next to the first)","cells":[{"v":"2","n":2},{"v":"7","n":7},{"v":"9","n":9},{"v":"3","n":3},{"v":"1","n":1}],"ptrs":[{"name":"num","at":0}],"ranges":[{"from":0,"to":3,"label":"this run","tone":"win"}],"bars":true,"max":9},{"t":"vars","id":"vars","items":[{"k":"prev","v":"0"},{"k":"curr","v":"2","changed":true}]}]},
+  {"line":16,"text":"House with 7. **Rob it**: 0 + 7 = 7 (best without the previous house, plus this one). **Skip it**: 2. Keep the larger → `curr` = **7**.","views":[{"t":"array","id":"houses","title":"nums  (a circle: the last house is next to the first)","cells":[{"v":"2","n":2},{"v":"7","n":7},{"v":"9","n":9},{"v":"3","n":3},{"v":"1","n":1}],"ptrs":[{"name":"num","at":1}],"ranges":[{"from":0,"to":3,"label":"this run","tone":"win"}],"bars":true,"max":9},{"t":"vars","id":"vars","items":[{"k":"prev","v":"2","changed":true},{"k":"curr","v":"7","changed":true}]}]},
+  {"line":16,"text":"House with 9. **Rob it**: 2 + 9 = 11 (best without the previous house, plus this one). **Skip it**: 7. Keep the larger → `curr` = **11**.","views":[{"t":"array","id":"houses","title":"nums  (a circle: the last house is next to the first)","cells":[{"v":"2","n":2},{"v":"7","n":7},{"v":"9","n":9},{"v":"3","n":3},{"v":"1","n":1}],"ptrs":[{"name":"num","at":2}],"ranges":[{"from":0,"to":3,"label":"this run","tone":"win"}],"bars":true,"max":9},{"t":"vars","id":"vars","items":[{"k":"prev","v":"7","changed":true},{"k":"curr","v":"11","changed":true}]}]},
+  {"line":16,"text":"House with 3. **Rob it**: 7 + 3 = 10 (best without the previous house, plus this one). **Skip it**: 11. Keep the larger → `curr` = **11**.","views":[{"t":"array","id":"houses","title":"nums  (a circle: the last house is next to the first)","cells":[{"v":"2","n":2},{"v":"7","n":7},{"v":"9","n":9},{"v":"3","n":3},{"v":"1","n":1}],"ptrs":[{"name":"num","at":3}],"ranges":[{"from":0,"to":3,"label":"this run","tone":"win"}],"bars":true,"max":9},{"t":"vars","id":"vars","items":[{"k":"prev","v":"11","changed":true},{"k":"curr","v":"11"}]}]},
+  {"line":18,"text":"This run's best: **11**.","views":[{"t":"array","id":"houses","title":"nums  (a circle: the last house is next to the first)","cells":[{"v":"2","n":2},{"v":"7","n":7},{"v":"9","n":9},{"v":"3","n":3},{"v":"1","n":1}],"ptrs":[{"name":"num","at":4}],"ranges":[{"from":0,"to":3,"label":"this run","tone":"win"}],"bars":true,"max":9},{"t":"vars","id":"vars","items":[{"k":"prev","v":"11"},{"k":"curr","v":"11"}]}]},
+  {"line":24,"text":"Without house 0 the best is 10; without the last house it is 11. The answer is the larger: **11**.","views":[{"t":"array","id":"houses","title":"nums  (a circle: the last house is next to the first)","cells":[{"v":"2","n":2},{"v":"7","n":7},{"v":"9","n":9},{"v":"3","n":3},{"v":"1","n":1}],"bars":true,"max":9}]},
+  {"line":24,"text":"Done — the answer is **`11`**. On a straight street 2 + 9 + 1 = 12 would work, but in a circle house 0 and house 4 are neighbours. The best is 2 + 9 = 11.","views":[{"t":"array","id":"houses","title":"nums  (a circle: the last house is next to the first)","cells":[{"v":"2","n":2},{"v":"7","n":7},{"v":"9","n":9},{"v":"3","n":3},{"v":"1","n":1}],"bars":true,"max":9}],"final":true}
+ ]
+}

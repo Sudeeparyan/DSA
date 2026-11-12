@@ -1,0 +1,58 @@
+{
+ "id": 132,
+ "number": 435,
+ "title": "Non-overlapping Intervals",
+ "slug": "non-overlapping-intervals",
+ "category": "intervals",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/non-overlapping-intervals/",
+ "pattern": "Greedy: keep the interval that ends first",
+ "statement": "Given a list of intervals, return the **minimum number of intervals to remove** so that the rest do not overlap. Intervals that only touch (`[1, 2]` and `[2, 3]`) do not overlap.",
+ "example": {
+  "input": "intervals = [[1,2],[2,3],[3,4],[1,3]]",
+  "output": "1",
+  "why": "Removing [1, 3] leaves [1, 2], [2, 3], [3, 4], which only touch."
+ },
+ "more": [
+  {
+   "input": "intervals = [[1,2],[1,2],[1,2]]",
+   "output": "2"
+  },
+  {
+   "input": "intervals = [[1,2],[2,3]]",
+   "output": "0"
+  },
+  {
+   "input": "intervals = [[1,100],[11,22],[1,11],[2,12]]",
+   "output": "2"
+  },
+  {
+   "input": "intervals = [[0,2],[1,3],[2,4],[3,5],[4,6]]",
+   "output": "2"
+  }
+ ],
+ "idea": [
+  "Removing as few as possible means **keeping as many as possible**.",
+  "Sort by **end** time. The interval that ends earliest leaves the most room for everything after it, so keeping it is never a mistake.",
+  "Then go through the rest: an interval that starts at or after the end of the last kept one fits — keep it. Otherwise it overlaps and is removed. The answer is the total minus the number kept."
+ ],
+ "code": "class Solution:\n    def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:\n        if not intervals:\n            return 0\n\n        intervals.sort(key=lambda x: x[1])\n        non_overlapping = 1  # Count of non-overlapping intervals\n        prev_end = intervals[0][1]\n\n        for i in range(1, len(intervals)):\n            if intervals[i][0] >= prev_end:\n                non_overlapping += 1\n                prev_end = intervals[i][1]\n\n        return len(intervals) - non_overlapping",
+ "complexity": {
+  "time": "O(n log n)",
+  "timeWhy": "Sorting dominates; the scan afterwards is a single pass.",
+  "space": "O(1)",
+  "spaceWhy": "A counter and one end time (besides the sort)."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`intervals = [[1,2],[2,3],[3,4],[1,3]]`**. Each step runs one highlighted line of the code.","views":[{"t":"intervals","id":"intervals","title":"intervals  (green = kept, red = removed)","rows":[{"label":"intervals","items":[{"a":1,"b":2},{"a":2,"b":3},{"a":3,"b":4},{"a":1,"b":3}]}],"min":1,"max":4}]},
+  {"line":6,"text":"Sort by **end** time. The interval that finishes first blocks the least of what comes after it.","views":[{"t":"intervals","id":"intervals","title":"intervals  (green = kept, red = removed)","rows":[{"label":"intervals","items":[{"a":1,"b":2},{"a":2,"b":3},{"a":1,"b":3},{"a":3,"b":4}]}],"min":1,"max":4}]},
+  {"line":8,"text":"Keep the first interval [1, 2] — it ends earliest. `prev_end` = 2 marks where the last kept interval ends.","views":[{"t":"intervals","id":"intervals","title":"intervals  (green = kept, red = removed)","rows":[{"label":"intervals","items":[{"a":1,"b":2,"tone":"good"},{"a":2,"b":3},{"a":1,"b":3},{"a":3,"b":4}]}],"marks":[{"x":2,"label":"prev_end"}],"min":1,"max":4},{"t":"vars","id":"vars","items":[{"k":"non_overlapping","v":"1"},{"k":"prev_end","v":"2"}]}]},
+  {"line":11,"text":"[2, 3] starts at 2, not before `prev_end` = 2: it does **not overlap** the last kept interval. Keep it.","views":[{"t":"intervals","id":"intervals","title":"intervals  (green = kept, red = removed)","rows":[{"label":"intervals","items":[{"a":1,"b":2,"tone":"good"},{"a":2,"b":3,"tone":"cur"},{"a":1,"b":3},{"a":3,"b":4}]}],"marks":[{"x":2,"label":"prev_end"}],"min":1,"max":4},{"t":"vars","id":"vars","items":[{"k":"non_overlapping","v":"1"},{"k":"prev_end","v":"2"}]}]},
+  {"line":13,"text":"Now 2 intervals are kept, and the last one ends at `prev_end` = 3.","views":[{"t":"intervals","id":"intervals","title":"intervals  (green = kept, red = removed)","rows":[{"label":"intervals","items":[{"a":1,"b":2,"tone":"good"},{"a":2,"b":3,"tone":"cur"},{"a":1,"b":3},{"a":3,"b":4}]}],"marks":[{"x":3,"label":"prev_end"}],"min":1,"max":4},{"t":"vars","id":"vars","items":[{"k":"non_overlapping","v":"2","changed":true},{"k":"prev_end","v":"3","changed":true}]}]},
+  {"line":11,"text":"[1, 3] starts at 1, before `prev_end` = 3: it **overlaps** the last kept interval. Remove it — it ends later than the one we kept, so it would only block more.","views":[{"t":"intervals","id":"intervals","title":"intervals  (green = kept, red = removed)","rows":[{"label":"intervals","items":[{"a":1,"b":2,"tone":"good"},{"a":2,"b":3,"tone":"good"},{"a":1,"b":3,"tone":"cur"},{"a":3,"b":4}]}],"marks":[{"x":3,"label":"prev_end"}],"min":1,"max":4},{"t":"vars","id":"vars","items":[{"k":"non_overlapping","v":"2"},{"k":"prev_end","v":"3"}]}]},
+  {"line":11,"text":"[3, 4] starts at 3, not before `prev_end` = 3: it does **not overlap** the last kept interval. Keep it.","views":[{"t":"intervals","id":"intervals","title":"intervals  (green = kept, red = removed)","rows":[{"label":"intervals","items":[{"a":1,"b":2,"tone":"good"},{"a":2,"b":3,"tone":"good"},{"a":1,"b":3,"tone":"bad"},{"a":3,"b":4,"tone":"cur"}]}],"marks":[{"x":3,"label":"prev_end"}],"min":1,"max":4},{"t":"vars","id":"vars","items":[{"k":"non_overlapping","v":"2"},{"k":"prev_end","v":"3"}]}]},
+  {"line":13,"text":"Now 3 intervals are kept, and the last one ends at `prev_end` = 4.","views":[{"t":"intervals","id":"intervals","title":"intervals  (green = kept, red = removed)","rows":[{"label":"intervals","items":[{"a":1,"b":2,"tone":"good"},{"a":2,"b":3,"tone":"good"},{"a":1,"b":3,"tone":"bad"},{"a":3,"b":4,"tone":"cur"}]}],"marks":[{"x":4,"label":"prev_end"}],"min":1,"max":4},{"t":"vars","id":"vars","items":[{"k":"non_overlapping","v":"3","changed":true},{"k":"prev_end","v":"4","changed":true}]}]},
+  {"line":15,"text":"3 of the 4 intervals can stay, so **1** must be removed.","views":[{"t":"intervals","id":"intervals","title":"intervals  (green = kept, red = removed)","rows":[{"label":"intervals","items":[{"a":1,"b":2,"tone":"good"},{"a":2,"b":3,"tone":"good"},{"a":1,"b":3,"tone":"bad"},{"a":3,"b":4,"tone":"cur"}]}],"marks":[{"x":4,"label":"prev_end"}],"min":1,"max":4},{"t":"vars","id":"vars","items":[{"k":"non_overlapping","v":"3"},{"k":"prev_end","v":"4"}]}]},
+  {"line":15,"text":"Done — the answer is **`1`**. Removing [1, 3] leaves [1, 2], [2, 3], [3, 4], which only touch.","views":[{"t":"intervals","id":"intervals","title":"intervals  (green = kept, red = removed)","rows":[{"label":"intervals","items":[{"a":1,"b":2,"tone":"good"},{"a":2,"b":3,"tone":"good"},{"a":1,"b":3,"tone":"bad"},{"a":3,"b":4,"tone":"cur"}]}],"marks":[{"x":4,"label":"prev_end"}],"min":1,"max":4},{"t":"vars","id":"vars","items":[{"k":"non_overlapping","v":"3"},{"k":"prev_end","v":"4"}]}],"final":true}
+ ]
+}

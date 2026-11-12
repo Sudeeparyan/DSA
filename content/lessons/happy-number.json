@@ -1,0 +1,61 @@
+{
+ "id": 139,
+ "number": 202,
+ "title": "Happy Number",
+ "slug": "happy-number",
+ "category": "math-geometry",
+ "difficulty": "Easy",
+ "url": "https://leetcode.com/problems/happy-number/",
+ "pattern": "Cycle detection with slow and fast pointers",
+ "statement": "Replace a number by the **sum of the squares of its digits**, and repeat. A number is *happy* if this process reaches `1`. Otherwise it loops forever without ever reaching 1. Return `True` if `n` is happy.",
+ "example": {
+  "input": "n = 19",
+  "output": "True",
+  "why": "19 → 82 → 68 → 100 → 1."
+ },
+ "more": [
+  {
+   "input": "n = 2",
+   "output": "False"
+  },
+  {
+   "input": "n = 1",
+   "output": "True"
+  },
+  {
+   "input": "n = 7",
+   "output": "True"
+  },
+  {
+   "input": "n = 4",
+   "output": "False"
+  },
+  {
+   "input": "n = 100",
+   "output": "True"
+  }
+ ],
+ "idea": [
+  "Each number leads to exactly one next number, like a linked list. The chain either arrives at 1 (and then stays there, since 1² = 1) or runs into a **cycle**.",
+  "A cycle can be detected without remembering every number seen: let `slow` advance one step at a time and `fast` two steps. In a cycle, `fast` eventually catches up with `slow`.",
+  "So loop until `fast` reaches 1 (happy) or `fast` meets `slow` (a cycle that does not contain 1)."
+ ],
+ "code": "class Solution:\n    def isHappy(self, n: int) -> bool:\n        def get_next(num):\n            next_num = 0\n            while num > 0:\n                num, digit = divmod(num, 10)\n                next_num += digit**2\n            return next_num\n\n        slow, fast = n, get_next(n)\n\n        while fast != 1 and slow != fast:\n            slow = get_next(slow)\n            fast = get_next(get_next(fast))\n\n        return fast == 1",
+ "complexity": {
+  "time": "O(log n)",
+  "timeWhy": "The numbers shrink very quickly (any number below 1000 maps to at most 243), and the cycle is short.",
+  "space": "O(1)",
+  "spaceWhy": "Two numbers — no set of seen values."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`n = 19`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"chain","title":"the chain: each number → sum of its squared digits","cells":[{"v":"19"},{"v":"82"},{"v":"68"},{"v":"100"},{"v":"1"}],"idx":false}]},
+  {"line":10,"text":"`slow` starts on 19. `fast` starts one step ahead: 1² + 9² = **82**.","views":[{"t":"array","id":"chain","title":"the chain: each number → sum of its squared digits","cells":[{"v":"19"},{"v":"82"},{"v":"68"},{"v":"100"},{"v":"1"}],"ptrs":[{"name":"slow","at":0},{"name":"fast","at":1}],"idx":false},{"t":"vars","id":"vars","items":[{"k":"slow","v":"19"},{"k":"fast","v":"82"}]}]},
+  {"line":13,"text":"`slow` moves **one** step: 1² + 9² = **82**.","views":[{"t":"array","id":"chain","title":"the chain: each number → sum of its squared digits","cells":[{"v":"19"},{"v":"82"},{"v":"68"},{"v":"100"},{"v":"1"}],"ptrs":[{"name":"slow","at":1},{"name":"fast","at":1}],"idx":false},{"t":"vars","id":"vars","items":[{"k":"slow","v":"82","changed":true},{"k":"fast","v":"82"}]}]},
+  {"line":14,"text":"`fast` moves **two** steps: 82 → 68 → **100**.","views":[{"t":"array","id":"chain","title":"the chain: each number → sum of its squared digits","cells":[{"v":"19"},{"v":"82"},{"v":"68"},{"v":"100"},{"v":"1"}],"ptrs":[{"name":"slow","at":1},{"name":"fast","at":3}],"idx":false},{"t":"vars","id":"vars","items":[{"k":"slow","v":"82"},{"k":"fast","v":"100","changed":true}]}]},
+  {"line":13,"text":"`slow` moves **one** step: 8² + 2² = **68**.","views":[{"t":"array","id":"chain","title":"the chain: each number → sum of its squared digits","cells":[{"v":"19"},{"v":"82"},{"v":"68"},{"v":"100"},{"v":"1"}],"ptrs":[{"name":"slow","at":2},{"name":"fast","at":3}],"idx":false},{"t":"vars","id":"vars","items":[{"k":"slow","v":"68","changed":true},{"k":"fast","v":"100"}]}]},
+  {"line":14,"text":"`fast` moves **two** steps: 100 → 1 → **1**.","views":[{"t":"array","id":"chain","title":"the chain: each number → sum of its squared digits","cells":[{"v":"19"},{"v":"82"},{"v":"68"},{"v":"100"},{"v":"1"}],"ptrs":[{"name":"slow","at":2},{"name":"fast","at":4}],"idx":false},{"t":"vars","id":"vars","items":[{"k":"slow","v":"68"},{"k":"fast","v":"1","changed":true}]}]},
+  {"line":12,"text":"`fast` has reached **1**. The chain ends there, so the number is happy.","views":[{"t":"array","id":"chain","title":"the chain: each number → sum of its squared digits","cells":[{"v":"19"},{"v":"82"},{"v":"68"},{"v":"100"},{"v":"1"}],"ptrs":[{"name":"slow","at":2},{"name":"fast","at":4}],"idx":false},{"t":"vars","id":"vars","items":[{"k":"slow","v":"68"},{"k":"fast","v":"1"}]}]},
+  {"line":16,"text":"The chain reached 1, so the number is happy → **True**.","views":[{"t":"array","id":"chain","title":"the chain: each number → sum of its squared digits","cells":[{"v":"19"},{"v":"82"},{"v":"68"},{"v":"100"},{"v":"1"}],"ptrs":[{"name":"slow","at":2},{"name":"fast","at":4}],"idx":false},{"t":"vars","id":"vars","items":[{"k":"slow","v":"68"},{"k":"fast","v":"1"}]}]},
+  {"line":16,"text":"Done — the answer is **`True`**. 19 → 82 → 68 → 100 → 1.","views":[{"t":"array","id":"chain","title":"the chain: each number → sum of its squared digits","cells":[{"v":"19"},{"v":"82"},{"v":"68"},{"v":"100"},{"v":"1"}],"ptrs":[{"name":"slow","at":2},{"name":"fast","at":4}],"idx":false},{"t":"vars","id":"vars","items":[{"k":"slow","v":"68"},{"k":"fast","v":"1"}]}],"final":true}
+ ]
+}

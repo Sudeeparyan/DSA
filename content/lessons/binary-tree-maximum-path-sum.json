@@ -1,0 +1,59 @@
+{
+ "id": 59,
+ "number": 124,
+ "title": "Binary Tree Maximum Path Sum",
+ "slug": "binary-tree-maximum-path-sum",
+ "category": "trees",
+ "difficulty": "Hard",
+ "url": "https://leetcode.com/problems/binary-tree-maximum-path-sum/",
+ "pattern": "Tree recursion: best single branch vs best bending path",
+ "statement": "A **path** is any chain of connected nodes in a binary tree (it need not pass through the root, and it may not visit a node twice). Return the largest possible sum of the values along a path.",
+ "example": {
+  "input": "root = [-10,9,20,None,None,15,7]",
+  "output": "42",
+  "why": "The best path is 15 → 20 → 7, with sum 42. Going up through −10 would only lower it."
+ },
+ "more": [
+  {
+   "input": "root = [1,2,3]",
+   "output": "6"
+  },
+  {
+   "input": "root = [-3]",
+   "output": "-3"
+  },
+  {
+   "input": "root = [2,-1]",
+   "output": "2"
+  }
+ ],
+ "idea": [
+  "Every path has one highest node where it *bends*: it may come up one branch, pass through the node, and go down the other branch.",
+  "For each node compute the best sum of a **single branch** going downward from it. A branch with a negative sum is simply not taken (count it as 0).",
+  "At each node, `left branch + node + right branch` is the best path bending there — compare it with the best so far. But to its parent a node can offer only **one** branch, because a path cannot fork."
+ ],
+ "code": "class Solution:\n    def maxPathSum(self, root: TreeNode) -> int:\n        def maxPathSumHelper(node):\n            if not node:\n                return 0\n\n            left_sum = max(0, maxPathSumHelper(node.left))\n            right_sum = max(0, maxPathSumHelper(node.right))\n\n            self.max_sum = max(self.max_sum, left_sum + right_sum + node.val)\n\n            return max(left_sum, right_sum) + node.val\n\n        self.max_sum = float(\"-inf\")\n        maxPathSumHelper(root)\n\n        return self.max_sum",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "Every node is visited once.",
+  "space": "O(h)",
+  "spaceWhy": "The recursion stack is as deep as the tree's height h."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`root = [-10,9,20,None,None,15,7]`**. Each step runs one highlighted line of the code.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"-10","l":2,"r":3},{"id":2,"v":"9"},{"id":3,"v":"20","l":4,"r":5},{"id":4,"v":"15"},{"id":5,"v":"7"}],"roots":[1]}]},
+  {"line":14,"text":"`self.max_sum` keeps the best path found so far. The small labels that will appear beside nodes are the best **single branch** each node can offer its parent.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"-10","l":2,"r":3},{"id":2,"v":"9"},{"id":3,"v":"20","l":4,"r":5},{"id":4,"v":"15"},{"id":5,"v":"7"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"self.max_sum","v":"-∞"}]}]},
+  {"line":4,"text":"An empty spot adds nothing: 0.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"-10","l":2,"r":3,"tone":"win"},{"id":2,"v":"9","tone":"win"},{"id":3,"v":"20","l":4,"r":5},{"id":4,"v":"15"},{"id":5,"v":"7"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"self.max_sum","v":"-∞"}]}]},
+  {"line":10,"text":"At node 9: the best branch down-left is worth 0 and down-right 0 (a negative branch is dropped, counting as 0). The path bending here sums to 0 + 9 + 0 = **9**. Best so far: **9**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"-10","l":2,"r":3,"tone":"win"},{"id":2,"v":"9","tone":"cur"},{"id":3,"v":"20","l":4,"r":5},{"id":4,"v":"15"},{"id":5,"v":"7"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"self.max_sum","v":"9","changed":true},{"k":"left_sum","v":"0"},{"k":"right_sum","v":"0"}]}]},
+  {"line":12,"text":"A path cannot fork, so node 9 offers its parent only its better branch: max(0, 0) + 9 = **9**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"-10","l":2,"r":3,"tone":"win"},{"id":2,"v":"9","tone":"cur"},{"id":3,"v":"20","l":4,"r":5},{"id":4,"v":"15"},{"id":5,"v":"7"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"self.max_sum","v":"9"},{"k":"left_sum","v":"0"},{"k":"right_sum","v":"0"}]}]},
+  {"line":10,"text":"At node 15: the best branch down-left is worth 0 and down-right 0 (a negative branch is dropped, counting as 0). The path bending here sums to 0 + 15 + 0 = **15**. Best so far: **15**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"-10","l":2,"r":3,"tone":"win"},{"id":2,"v":"9","badge":"9"},{"id":3,"v":"20","l":4,"r":5,"tone":"win"},{"id":4,"v":"15","tone":"cur"},{"id":5,"v":"7"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"self.max_sum","v":"15","changed":true},{"k":"left_sum","v":"0"},{"k":"right_sum","v":"0"}]}]},
+  {"line":12,"text":"A path cannot fork, so node 15 offers its parent only its better branch: max(0, 0) + 15 = **15**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"-10","l":2,"r":3,"tone":"win"},{"id":2,"v":"9","badge":"9"},{"id":3,"v":"20","l":4,"r":5,"tone":"win"},{"id":4,"v":"15","tone":"cur"},{"id":5,"v":"7"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"self.max_sum","v":"15"},{"k":"left_sum","v":"0"},{"k":"right_sum","v":"0"}]}]},
+  {"line":10,"text":"At node 7: the best branch down-left is worth 0 and down-right 0 (a negative branch is dropped, counting as 0). The path bending here sums to 0 + 7 + 0 = **7**. Best so far: **15**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"-10","l":2,"r":3,"tone":"win"},{"id":2,"v":"9","badge":"9"},{"id":3,"v":"20","l":4,"r":5,"tone":"win"},{"id":4,"v":"15","badge":"15"},{"id":5,"v":"7","tone":"cur"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"self.max_sum","v":"15"},{"k":"left_sum","v":"0"},{"k":"right_sum","v":"0"}]}]},
+  {"line":12,"text":"A path cannot fork, so node 7 offers its parent only its better branch: max(0, 0) + 7 = **7**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"-10","l":2,"r":3,"tone":"win"},{"id":2,"v":"9","badge":"9"},{"id":3,"v":"20","l":4,"r":5,"tone":"win"},{"id":4,"v":"15","badge":"15"},{"id":5,"v":"7","tone":"cur"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"self.max_sum","v":"15"},{"k":"left_sum","v":"0"},{"k":"right_sum","v":"0"}]}]},
+  {"line":10,"text":"At node 20: the best branch down-left is worth 15 and down-right 7 (a negative branch is dropped, counting as 0). The path bending here sums to 15 + 20 + 7 = **42**. Best so far: **42**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"-10","l":2,"r":3,"tone":"win"},{"id":2,"v":"9","badge":"9"},{"id":3,"v":"20","l":4,"r":5,"tone":"cur"},{"id":4,"v":"15","badge":"15"},{"id":5,"v":"7","badge":"7"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"self.max_sum","v":"42","changed":true},{"k":"left_sum","v":"15","changed":true},{"k":"right_sum","v":"7","changed":true}]}]},
+  {"line":12,"text":"A path cannot fork, so node 20 offers its parent only its better branch: max(15, 7) + 20 = **35**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"-10","l":2,"r":3,"tone":"win"},{"id":2,"v":"9","badge":"9"},{"id":3,"v":"20","l":4,"r":5,"tone":"cur"},{"id":4,"v":"15","badge":"15"},{"id":5,"v":"7","badge":"7"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"self.max_sum","v":"42"},{"k":"left_sum","v":"15"},{"k":"right_sum","v":"7"}]}]},
+  {"line":10,"text":"At node -10: the best branch down-left is worth 9 and down-right 35 (a negative branch is dropped, counting as 0). The path bending here sums to 9 + -10 + 35 = **34**. Best so far: **42**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"-10","l":2,"r":3,"tone":"cur"},{"id":2,"v":"9","badge":"9"},{"id":3,"v":"20","l":4,"r":5,"badge":"35"},{"id":4,"v":"15","badge":"15"},{"id":5,"v":"7","badge":"7"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"self.max_sum","v":"42"},{"k":"left_sum","v":"9","changed":true},{"k":"right_sum","v":"35","changed":true}]}]},
+  {"line":12,"text":"A path cannot fork, so node -10 offers its parent only its better branch: max(9, 35) + -10 = **25**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"-10","l":2,"r":3,"tone":"cur"},{"id":2,"v":"9","badge":"9"},{"id":3,"v":"20","l":4,"r":5,"badge":"35"},{"id":4,"v":"15","badge":"15"},{"id":5,"v":"7","badge":"7"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"self.max_sum","v":"42"},{"k":"left_sum","v":"9"},{"k":"right_sum","v":"35"}]}]},
+  {"line":17,"text":"The best path anywhere in the tree sums to **42**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"-10","l":2,"r":3,"badge":"25"},{"id":2,"v":"9","badge":"9"},{"id":3,"v":"20","l":4,"r":5,"badge":"35"},{"id":4,"v":"15","badge":"15"},{"id":5,"v":"7","badge":"7"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"self.max_sum","v":"42"}]}]},
+  {"line":17,"text":"Done — the answer is **`42`**. The best path is 15 → 20 → 7, with sum 42. Going up through −10 would only lower it.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"-10","l":2,"r":3,"badge":"25"},{"id":2,"v":"9","badge":"9"},{"id":3,"v":"20","l":4,"r":5,"badge":"35"},{"id":4,"v":"15","badge":"15"},{"id":5,"v":"7","badge":"7"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"self.max_sum","v":"42"}]}],"final":true}
+ ]
+}

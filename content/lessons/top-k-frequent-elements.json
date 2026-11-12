@@ -1,0 +1,61 @@
+{
+ "id": 5,
+ "number": 347,
+ "title": "Top K Frequent Elements",
+ "slug": "top-k-frequent-elements",
+ "category": "arrays-hashing",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/top-k-frequent-elements/",
+ "pattern": "Count, then keep the top k in a min-heap",
+ "statement": "Given an integer array `nums` and an integer `k`, return the `k` values that appear **most often**. The answer may be in any order.",
+ "example": {
+  "input": "nums = [5,3,3,5,5,8], k = 2",
+  "output": "[3,5]",
+  "why": "5 appears three times and 3 appears twice; 8 appears only once."
+ },
+ "more": [
+  {
+   "input": "nums = [1], k = 1",
+   "output": "[1]"
+  },
+  {
+   "input": "nums = [1,1,1,2,2,3], k = 2",
+   "output": "[1,2]"
+  },
+  {
+   "input": "nums = [4,4,6,6,6,7], k = 1",
+   "output": "[6]"
+  }
+ ],
+ "idea": [
+  "First count how often every number appears, with a hash map.",
+  "We then need the k largest counts. Sorting all of them works, but we never need the full order — only the top k.",
+  "Keep a **min-heap of size k**. Its top is the *weakest* candidate. Push each (count, number); whenever the heap grows past k, pop the top. What survives is the top k."
+ ],
+ "code": "import heapq\n\nclass Solution:\n    def topKFrequent(self, nums: List[int], k: int) -> List[int]:\n        frequency_map = {}\n        for num in nums:\n            frequency_map[num] = frequency_map.get(num, 0) + 1\n\n        min_heap = []\n        for num, frequency in frequency_map.items():\n            heapq.heappush(min_heap, (frequency, num))\n            if len(min_heap) > k:\n                heapq.heappop(min_heap)\n\n        return [num for frequency, num in min_heap]",
+ "complexity": {
+  "time": "O(n log k)",
+  "timeWhy": "Counting is O(n). Each distinct number is pushed into a heap that never holds more than k + 1 items.",
+  "space": "O(n)",
+  "spaceWhy": "The count map can hold every distinct number; the heap holds at most k + 1."
+ },
+ "steps": [
+  {"line":4,"text":"Our example: **`nums = [5,3,3,5,5,8], k = 2`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"5"},{"v":"3"},{"v":"3"},{"v":"5"},{"v":"5"},{"v":"8"}]}]},
+  {"line":5,"text":"Step 1: count how often each number appears.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"5"},{"v":"3"},{"v":"3"},{"v":"5"},{"v":"5"},{"v":"8"}]},{"t":"map","id":"frequency_map","title":"frequency_map  (number → count)","kind":"map","entries":[]}]},
+  {"line":7,"text":"Count 5: seen 1 time so far.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"5","tone":"cur"},{"v":"3"},{"v":"3"},{"v":"5"},{"v":"5"},{"v":"8"}],"ptrs":[{"name":"num","at":0}]},{"t":"map","id":"frequency_map","title":"frequency_map  (number → count)","kind":"map","entries":[{"k":"5","v":"1","tone":"cur"}]}]},
+  {"line":7,"text":"Count 3: seen 1 time so far.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"5","tone":"dim"},{"v":"3","tone":"cur"},{"v":"3"},{"v":"5"},{"v":"5"},{"v":"8"}],"ptrs":[{"name":"num","at":1}]},{"t":"map","id":"frequency_map","title":"frequency_map  (number → count)","kind":"map","entries":[{"k":"5","v":"1"},{"k":"3","v":"1","tone":"cur"}]}]},
+  {"line":7,"text":"Count 3: seen 2 times so far.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"5","tone":"dim"},{"v":"3","tone":"dim"},{"v":"3","tone":"cur"},{"v":"5"},{"v":"5"},{"v":"8"}],"ptrs":[{"name":"num","at":2}]},{"t":"map","id":"frequency_map","title":"frequency_map  (number → count)","kind":"map","entries":[{"k":"5","v":"1"},{"k":"3","v":"2","tone":"cur"}]}]},
+  {"line":7,"text":"Count 5: seen 2 times so far.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"5","tone":"dim"},{"v":"3","tone":"dim"},{"v":"3","tone":"dim"},{"v":"5","tone":"cur"},{"v":"5"},{"v":"8"}],"ptrs":[{"name":"num","at":3}]},{"t":"map","id":"frequency_map","title":"frequency_map  (number → count)","kind":"map","entries":[{"k":"5","v":"2","tone":"cur"},{"k":"3","v":"2"}]}]},
+  {"line":7,"text":"Count 5: seen 3 times so far.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"5","tone":"dim"},{"v":"3","tone":"dim"},{"v":"3","tone":"dim"},{"v":"5","tone":"dim"},{"v":"5","tone":"cur"},{"v":"8"}],"ptrs":[{"name":"num","at":4}]},{"t":"map","id":"frequency_map","title":"frequency_map  (number → count)","kind":"map","entries":[{"k":"5","v":"3","tone":"cur"},{"k":"3","v":"2"}]}]},
+  {"line":7,"text":"Count 8: seen 1 time so far.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"5","tone":"dim"},{"v":"3","tone":"dim"},{"v":"3","tone":"dim"},{"v":"5","tone":"dim"},{"v":"5","tone":"dim"},{"v":"8","tone":"cur"}],"ptrs":[{"name":"num","at":5}]},{"t":"map","id":"frequency_map","title":"frequency_map  (number → count)","kind":"map","entries":[{"k":"5","v":"3"},{"k":"3","v":"2"},{"k":"8","v":"1","tone":"cur"}]}]},
+  {"line":9,"text":"Step 2: keep only the best **k = 2** candidates. In a min-heap ordered by count, the *least* frequent candidate is always on top, ready to be thrown out.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"5","tone":"dim"},{"v":"3","tone":"dim"},{"v":"3","tone":"dim"},{"v":"5","tone":"dim"},{"v":"5","tone":"dim"},{"v":"8","tone":"dim"}]},{"t":"map","id":"frequency_map","title":"frequency_map  (number → count)","kind":"map","entries":[{"k":"5","v":"3"},{"k":"3","v":"2"},{"k":"8","v":"1"}]},{"t":"tree","id":"min_heap","title":"min_heap of (count, number): smallest count on top","nodes":[],"roots":[],"shape":"circle"}]},
+  {"line":11,"text":"Push (3, 5): number 5 with count 3.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"5","tone":"dim"},{"v":"3","tone":"dim"},{"v":"3","tone":"dim"},{"v":"5","tone":"dim"},{"v":"5","tone":"dim"},{"v":"8","tone":"dim"}]},{"t":"map","id":"frequency_map","title":"frequency_map  (number → count)","kind":"map","entries":[{"k":"5","v":"3","tone":"cur"},{"k":"3","v":"2"},{"k":"8","v":"1"}]},{"t":"tree","id":"min_heap","title":"min_heap of (count, number): smallest count on top","nodes":[{"id":1,"v":"(3,5)"}],"roots":[1],"shape":"box"}]},
+  {"line":12,"text":"The heap holds 1 entry — not more than k = 2 — so everyone stays.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"5","tone":"dim"},{"v":"3","tone":"dim"},{"v":"3","tone":"dim"},{"v":"5","tone":"dim"},{"v":"5","tone":"dim"},{"v":"8","tone":"dim"}]},{"t":"map","id":"frequency_map","title":"frequency_map  (number → count)","kind":"map","entries":[{"k":"5","v":"3"},{"k":"3","v":"2"},{"k":"8","v":"1"}]},{"t":"tree","id":"min_heap","title":"min_heap of (count, number): smallest count on top","nodes":[{"id":1,"v":"(3,5)"}],"roots":[1],"shape":"box"}]},
+  {"line":11,"text":"Push (2, 3): number 3 with count 2.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"5","tone":"dim"},{"v":"3","tone":"dim"},{"v":"3","tone":"dim"},{"v":"5","tone":"dim"},{"v":"5","tone":"dim"},{"v":"8","tone":"dim"}]},{"t":"map","id":"frequency_map","title":"frequency_map  (number → count)","kind":"map","entries":[{"k":"5","v":"3"},{"k":"3","v":"2","tone":"cur"},{"k":"8","v":"1"}]},{"t":"tree","id":"min_heap","title":"min_heap of (count, number): smallest count on top","nodes":[{"id":1,"v":"(2,3)","l":2},{"id":2,"v":"(3,5)"}],"roots":[1],"shape":"box"}]},
+  {"line":12,"text":"The heap holds 2 entries — not more than k = 2 — so everyone stays.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"5","tone":"dim"},{"v":"3","tone":"dim"},{"v":"3","tone":"dim"},{"v":"5","tone":"dim"},{"v":"5","tone":"dim"},{"v":"8","tone":"dim"}]},{"t":"map","id":"frequency_map","title":"frequency_map  (number → count)","kind":"map","entries":[{"k":"5","v":"3"},{"k":"3","v":"2"},{"k":"8","v":"1"}]},{"t":"tree","id":"min_heap","title":"min_heap of (count, number): smallest count on top","nodes":[{"id":1,"v":"(2,3)","l":2},{"id":2,"v":"(3,5)"}],"roots":[1],"shape":"box"}]},
+  {"line":11,"text":"Push (1, 8): number 8 with count 1.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"5","tone":"dim"},{"v":"3","tone":"dim"},{"v":"3","tone":"dim"},{"v":"5","tone":"dim"},{"v":"5","tone":"dim"},{"v":"8","tone":"dim"}]},{"t":"map","id":"frequency_map","title":"frequency_map  (number → count)","kind":"map","entries":[{"k":"5","v":"3"},{"k":"3","v":"2"},{"k":"8","v":"1","tone":"cur"}]},{"t":"tree","id":"min_heap","title":"min_heap of (count, number): smallest count on top","nodes":[{"id":1,"v":"(1,8)","l":2,"r":3},{"id":2,"v":"(3,5)"},{"id":3,"v":"(2,3)"}],"roots":[1],"shape":"box"}]},
+  {"line":13,"text":"The heap holds 3 entries, one more than k = 2. Pop the top: number 8, which has the **smallest count** (1).","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"5","tone":"dim"},{"v":"3","tone":"dim"},{"v":"3","tone":"dim"},{"v":"5","tone":"dim"},{"v":"5","tone":"dim"},{"v":"8","tone":"dim"}]},{"t":"map","id":"frequency_map","title":"frequency_map  (number → count)","kind":"map","entries":[{"k":"5","v":"3"},{"k":"3","v":"2"},{"k":"8","v":"1"}]},{"t":"tree","id":"min_heap","title":"min_heap of (count, number): smallest count on top","nodes":[{"id":1,"v":"(2,3)","l":2},{"id":2,"v":"(3,5)"}],"roots":[1],"shape":"box"}]},
+  {"line":15,"text":"The 2 numbers still in the heap are the most frequent ones: **[3, 5]**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"5","tone":"dim"},{"v":"3","tone":"dim"},{"v":"3","tone":"dim"},{"v":"5","tone":"dim"},{"v":"5","tone":"dim"},{"v":"8","tone":"dim"}]},{"t":"map","id":"frequency_map","title":"frequency_map  (number → count)","kind":"map","entries":[{"k":"5","v":"3"},{"k":"3","v":"2"},{"k":"8","v":"1"}]},{"t":"tree","id":"min_heap","title":"min_heap of (count, number): smallest count on top","nodes":[{"id":1,"v":"(2,3)","l":2},{"id":2,"v":"(3,5)"}],"roots":[1],"shape":"box"}]},
+  {"line":15,"text":"Done — the answer is **`[3,5]`**. 5 appears three times and 3 appears twice; 8 appears only once.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"5","tone":"dim"},{"v":"3","tone":"dim"},{"v":"3","tone":"dim"},{"v":"5","tone":"dim"},{"v":"5","tone":"dim"},{"v":"8","tone":"dim"}]},{"t":"map","id":"frequency_map","title":"frequency_map  (number → count)","kind":"map","entries":[{"k":"5","v":"3"},{"k":"3","v":"2"},{"k":"8","v":"1"}]},{"t":"tree","id":"min_heap","title":"min_heap of (count, number): smallest count on top","nodes":[{"id":1,"v":"(2,3)","l":2},{"id":2,"v":"(3,5)"}],"roots":[1],"shape":"box"}],"final":true}
+ ]
+}

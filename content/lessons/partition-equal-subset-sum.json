@@ -1,0 +1,66 @@
+{
+ "id": 110,
+ "number": 416,
+ "title": "Partition Equal Subset Sum",
+ "slug": "partition-equal-subset-sum",
+ "category": "1d-dp",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/partition-equal-subset-sum/",
+ "pattern": "0/1 knapsack: which sums are reachable?",
+ "statement": "Given an array of positive integers `nums`, return `True` if it can be split into two subsets whose sums are **equal**.",
+ "example": {
+  "input": "nums = [1,5,11,5]",
+  "output": "True",
+  "why": "{1, 5, 5} and {11} both sum to 11."
+ },
+ "more": [
+  {
+   "input": "nums = [1,2,3,5]",
+   "output": "False"
+  },
+  {
+   "input": "nums = [1,2,5]",
+   "output": "False"
+  },
+  {
+   "input": "nums = [2,2]",
+   "output": "True"
+  },
+  {
+   "input": "nums = [3,3,3,4,5]",
+   "output": "True"
+  },
+  {
+   "input": "nums = [100]",
+   "output": "False"
+  }
+ ],
+ "idea": [
+  "Two equal halves must each sum to `total / 2`. If the total is odd, that is impossible. Otherwise the question becomes: **can some of the numbers add up to exactly `total / 2`?** (The rest then automatically forms the other half.)",
+  "Keep a table `dp[x]`: *can the numbers looked at so far reach the sum x?* Initially only 0 is reachable (take nothing).",
+  "Each new number `num` makes `x` reachable whenever `x − num` already was. Going through the sums **from high to low** ensures the same number is not used twice."
+ ],
+ "code": "class Solution:\n    def canPartition(self, nums: List[int]) -> bool:\n        total_sum = sum(nums)\n\n        # If the total sum is odd, it's impossible to partition into two equal subsets.\n        if total_sum % 2 != 0:\n            return False\n\n        target_sum = total_sum // 2\n\n        # Initialize a dynamic programming array dp with all values set to False.\n        dp = [False] * (target_sum + 1)\n\n        # It's always possible to achieve a sum of 0 using an empty subset.\n        dp[0] = True\n\n        for num in nums:\n            for i in range(target_sum, num - 1, -1):\n                # If it's possible to achieve a sum of 'i - num' using a subset,\n                # then it's also possible to achieve a sum of 'i' using a subset.\n                dp[i] = dp[i] or dp[i - num]\n\n        return dp[target_sum]",
+ "complexity": {
+  "time": "O(n × sum)",
+  "timeWhy": "For every number, every sum up to total / 2 is checked once.",
+  "space": "O(sum)",
+  "spaceWhy": "One boolean per possible sum."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`nums = [1,5,11,5]`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"5"},{"v":"11"},{"v":"5"}]}]},
+  {"line":6,"text":"The total is 22, so each half must sum to 11. Question: can some of the numbers add up to exactly 11?","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"5"},{"v":"11"},{"v":"5"}]},{"t":"vars","id":"vars","items":[{"k":"total_sum","v":"22"}]}]},
+  {"line":15,"text":"`dp[x]` = *is the sum x reachable?* Before using any number only 0 is reachable (take nothing).","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"5"},{"v":"11"},{"v":"5"}],"ptrs":[{"name":"num","at":-1}]},{"t":"array","id":"dp","title":"dp[x] = can some of the numbers seen so far add up to x?","cells":[{"v":"T","tone":"seen"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"}]},{"t":"vars","id":"vars","items":[{"k":"total_sum","v":"22"},{"k":"target_sum","v":"11"}]}]},
+  {"line":17,"text":"Now allow the number **1**. Any reachable sum x makes x + 1 reachable too. The sums are scanned from 11 downward, so 1 cannot be counted twice.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"5"},{"v":"11"},{"v":"5"}],"ptrs":[{"name":"num","at":0}]},{"t":"array","id":"dp","title":"dp[x] = can some of the numbers seen so far add up to x?","cells":[{"v":"T","tone":"seen"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"}]},{"t":"vars","id":"vars","items":[{"k":"total_sum","v":"22"},{"k":"target_sum","v":"11"}]}]},
+  {"line":21,"text":"Sum 0 was reachable, so with 1 the sum **1** becomes reachable.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"5"},{"v":"11"},{"v":"5"}],"ptrs":[{"name":"num","at":0}]},{"t":"array","id":"dp","title":"dp[x] = can some of the numbers seen so far add up to x?","cells":[{"v":"T","tone":"alt"},{"v":"T","tone":"good"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"}],"ptrs":[{"name":"i","at":1}]},{"t":"vars","id":"vars","items":[{"k":"total_sum","v":"22"},{"k":"target_sum","v":"11"}]}]},
+  {"line":17,"text":"Now allow the number **5**. Any reachable sum x makes x + 5 reachable too. The sums are scanned from 11 downward, so 5 cannot be counted twice.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"5"},{"v":"11"},{"v":"5"}],"ptrs":[{"name":"num","at":1}]},{"t":"array","id":"dp","title":"dp[x] = can some of the numbers seen so far add up to x?","cells":[{"v":"T","tone":"seen"},{"v":"T","tone":"seen"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"}],"ptrs":[{"name":"i","at":1}]},{"t":"vars","id":"vars","items":[{"k":"total_sum","v":"22"},{"k":"target_sum","v":"11"}]}]},
+  {"line":21,"text":"Sum 1 was reachable, so with 5 the sum **6** becomes reachable.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"5"},{"v":"11"},{"v":"5"}],"ptrs":[{"name":"num","at":1}]},{"t":"array","id":"dp","title":"dp[x] = can some of the numbers seen so far add up to x?","cells":[{"v":"T","tone":"seen"},{"v":"T","tone":"alt"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"T","tone":"good"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"}],"ptrs":[{"name":"i","at":6}]},{"t":"vars","id":"vars","items":[{"k":"total_sum","v":"22"},{"k":"target_sum","v":"11"}]}]},
+  {"line":21,"text":"Sum 0 was reachable, so with 5 the sum **5** becomes reachable.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"5"},{"v":"11"},{"v":"5"}],"ptrs":[{"name":"num","at":1}]},{"t":"array","id":"dp","title":"dp[x] = can some of the numbers seen so far add up to x?","cells":[{"v":"T","tone":"alt"},{"v":"T","tone":"seen"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"T","tone":"good"},{"v":"T","tone":"seen"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"}],"ptrs":[{"name":"i","at":5}]},{"t":"vars","id":"vars","items":[{"k":"total_sum","v":"22"},{"k":"target_sum","v":"11"}]}]},
+  {"line":17,"text":"Now allow the number **11**. Any reachable sum x makes x + 11 reachable too. The sums are scanned from 11 downward, so 11 cannot be counted twice.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"5"},{"v":"11"},{"v":"5"}],"ptrs":[{"name":"num","at":2}]},{"t":"array","id":"dp","title":"dp[x] = can some of the numbers seen so far add up to x?","cells":[{"v":"T","tone":"seen"},{"v":"T","tone":"seen"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"T","tone":"seen"},{"v":"T","tone":"seen"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"}],"ptrs":[{"name":"i","at":5}]},{"t":"vars","id":"vars","items":[{"k":"total_sum","v":"22"},{"k":"target_sum","v":"11"}]}]},
+  {"line":21,"text":"Sum 0 was reachable, so with 11 the sum **11** becomes reachable.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"5"},{"v":"11"},{"v":"5"}],"ptrs":[{"name":"num","at":2}]},{"t":"array","id":"dp","title":"dp[x] = can some of the numbers seen so far add up to x?","cells":[{"v":"T","tone":"alt"},{"v":"T","tone":"seen"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"T","tone":"seen"},{"v":"T","tone":"seen"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"T","tone":"good"}],"ptrs":[{"name":"i","at":11}]},{"t":"vars","id":"vars","items":[{"k":"total_sum","v":"22"},{"k":"target_sum","v":"11"}]}]},
+  {"line":17,"text":"Now allow the number **5**. Any reachable sum x makes x + 5 reachable too. The sums are scanned from 11 downward, so 5 cannot be counted twice.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"5"},{"v":"11"},{"v":"5"}],"ptrs":[{"name":"num","at":3}]},{"t":"array","id":"dp","title":"dp[x] = can some of the numbers seen so far add up to x?","cells":[{"v":"T","tone":"seen"},{"v":"T","tone":"seen"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"T","tone":"seen"},{"v":"T","tone":"seen"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"T","tone":"seen"}],"ptrs":[{"name":"i","at":11}]},{"t":"vars","id":"vars","items":[{"k":"total_sum","v":"22"},{"k":"target_sum","v":"11"}]}]},
+  {"line":21,"text":"Sum 5 was reachable, so with 5 the sum **10** becomes reachable.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"5"},{"v":"11"},{"v":"5"}],"ptrs":[{"name":"num","at":3}]},{"t":"array","id":"dp","title":"dp[x] = can some of the numbers seen so far add up to x?","cells":[{"v":"T","tone":"seen"},{"v":"T","tone":"seen"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"T","tone":"alt"},{"v":"T","tone":"seen"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"T","tone":"good"},{"v":"T","tone":"seen"}],"ptrs":[{"name":"i","at":10}]},{"t":"vars","id":"vars","items":[{"k":"total_sum","v":"22"},{"k":"target_sum","v":"11"}]}]},
+  {"line":23,"text":"`dp[11]` is True: some numbers add up to 11, and the rest make up the other half → **True**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"5"},{"v":"11"},{"v":"5"}],"ptrs":[{"name":"num","at":4}]},{"t":"array","id":"dp","title":"dp[x] = can some of the numbers seen so far add up to x?","cells":[{"v":"T","tone":"seen"},{"v":"T","tone":"seen"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"T","tone":"seen"},{"v":"T","tone":"seen"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"T","tone":"seen"},{"v":"T","tone":"good"}],"ptrs":[{"name":"i","at":5}]},{"t":"vars","id":"vars","items":[{"k":"total_sum","v":"22"},{"k":"target_sum","v":"11"}]}]},
+  {"line":23,"text":"Done — the answer is **`True`**. {1, 5, 5} and {11} both sum to 11.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"5"},{"v":"11"},{"v":"5"}],"ptrs":[{"name":"num","at":4}]},{"t":"array","id":"dp","title":"dp[x] = can some of the numbers seen so far add up to x?","cells":[{"v":"T","tone":"seen"},{"v":"T","tone":"seen"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"T","tone":"seen"},{"v":"T","tone":"seen"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"T","tone":"seen"},{"v":"T","tone":"good"}],"ptrs":[{"name":"i","at":5}]},{"t":"vars","id":"vars","items":[{"k":"total_sum","v":"22"},{"k":"target_sum","v":"11"}]}],"final":true}
+ ]
+}

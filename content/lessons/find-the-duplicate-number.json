@@ -1,0 +1,54 @@
+{
+ "id": 42,
+ "number": 287,
+ "title": "Find the Duplicate Number",
+ "slug": "find-the-duplicate-number",
+ "category": "linked-list",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/find-the-duplicate-number/",
+ "pattern": "Cycle detection on index → value links",
+ "statement": "`nums` holds n + 1 integers, each between 1 and n, so at least one value must repeat. Exactly one value is repeated (possibly several times). Find it **without modifying the array** and using only constant extra space.",
+ "example": {
+  "input": "nums = [1,3,4,2,2]",
+  "output": "2",
+  "why": "The value 2 appears at index 3 and at index 4."
+ },
+ "more": [
+  {
+   "input": "nums = [3,1,3,4,2]",
+   "output": "3"
+  },
+  {
+   "input": "nums = [1,1]",
+   "output": "1"
+  },
+  {
+   "input": "nums = [2,2,2,2,2]",
+   "output": "2"
+  }
+ ],
+ "idea": [
+  "Read every value as a pointer: from index `i`, go to index `nums[i]`. Starting at index 0 this traces a path.",
+  "Two indexes hold the duplicate value, so two arrows lead to the same place. That makes the path loop — and the **entrance of the loop is the duplicate**.",
+  "Find the loop with slow/fast pointers (Floyd's algorithm). Then restart one pointer from the beginning and move both one hop at a time: they meet exactly at the entrance."
+ ],
+ "code": "class Solution:\n    def findDuplicate(self, nums: List[int]) -> int:\n        slow = nums[0]\n        fast = nums[0]\n\n        # Move slow and fast pointers\n        while True:\n            slow = nums[slow]\n            fast = nums[nums[fast]]\n            if slow == fast:\n                break\n\n        # Find the entrance of the cycle\n        slow = nums[0]\n        while slow != fast:\n            slow = nums[slow]\n            fast = nums[fast]\n\n        return slow",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "Both phases walk at most a few times around the path.",
+  "space": "O(1)",
+  "spaceWhy": "Two index variables; the array is never changed."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`nums = [1,3,4,2,2]`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"3"},{"v":"4"},{"v":"2"},{"v":"2"}]},{"t":"graph","id":"graph","title":"arrow: index i → index nums[i]","nodes":[{"id":"0","v":"0","x":-4.4,"y":0},{"id":"1","v":"1","x":-2.2,"y":0},{"id":"2","v":"2","x":2.2,"y":0},{"id":"3","v":"3","x":0,"y":0},{"id":"4","v":"4","x":4.4,"y":0}],"edges":[{"a":"0","b":"1"},{"a":"1","b":"3"},{"a":"2","b":"4"},{"a":"3","b":"2"},{"a":"4","b":"2"}],"directed":true}]},
+  {"line":4,"text":"Follow the arrows *index → value*. Two indexes hold the same value, so two arrows lead to the same place and the path runs into a **loop**. Both runners take the first hop from index 0 to 1.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"3"},{"v":"4"},{"v":"2"},{"v":"2"}],"ptrs":[{"name":"slow","at":1},{"name":"fast","at":1}]},{"t":"graph","id":"graph","title":"arrow: index i → index nums[i]","nodes":[{"id":"0","v":"0","x":-4.4,"y":0},{"id":"1","v":"1","x":-2.2,"y":0,"tone":"alt"},{"id":"2","v":"2","x":2.2,"y":0},{"id":"3","v":"3","x":0,"y":0},{"id":"4","v":"4","x":4.4,"y":0}],"edges":[{"a":"0","b":"1"},{"a":"1","b":"3"},{"a":"2","b":"4"},{"a":"3","b":"2"},{"a":"4","b":"2"}],"directed":true}]},
+  {"line":9,"text":"`slow` takes one hop to 3; `fast` takes two hops to 2.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"3"},{"v":"4"},{"v":"2"},{"v":"2"}],"ptrs":[{"name":"slow","at":3},{"name":"fast","at":2}]},{"t":"graph","id":"graph","title":"arrow: index i → index nums[i]","nodes":[{"id":"0","v":"0","x":-4.4,"y":0},{"id":"1","v":"1","x":-2.2,"y":0},{"id":"2","v":"2","x":2.2,"y":0,"tone":"alt"},{"id":"3","v":"3","x":0,"y":0,"tone":"cur"},{"id":"4","v":"4","x":4.4,"y":0}],"edges":[{"a":"0","b":"1"},{"a":"1","b":"3"},{"a":"2","b":"4"},{"a":"3","b":"2"},{"a":"4","b":"2"}],"directed":true}]},
+  {"line":9,"text":"`slow` takes one hop to 2; `fast` takes two hops to 2.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"3"},{"v":"4"},{"v":"2"},{"v":"2"}],"ptrs":[{"name":"slow","at":2},{"name":"fast","at":2}]},{"t":"graph","id":"graph","title":"arrow: index i → index nums[i]","nodes":[{"id":"0","v":"0","x":-4.4,"y":0},{"id":"1","v":"1","x":-2.2,"y":0},{"id":"2","v":"2","x":2.2,"y":0,"tone":"alt"},{"id":"3","v":"3","x":0,"y":0},{"id":"4","v":"4","x":4.4,"y":0}],"edges":[{"a":"0","b":"1"},{"a":"1","b":"3"},{"a":"2","b":"4"},{"a":"3","b":"2"},{"a":"4","b":"2"}],"directed":true}]},
+  {"line":14,"text":"They met inside the loop, at 2. Now send `slow` back to the start. From here both move **one hop at a time**, and they will meet exactly where the loop is entered.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"3"},{"v":"4"},{"v":"2"},{"v":"2"}],"ptrs":[{"name":"slow","at":1},{"name":"fast","at":2}]},{"t":"graph","id":"graph","title":"arrow: index i → index nums[i]","nodes":[{"id":"0","v":"0","x":-4.4,"y":0},{"id":"1","v":"1","x":-2.2,"y":0,"tone":"cur"},{"id":"2","v":"2","x":2.2,"y":0,"tone":"alt"},{"id":"3","v":"3","x":0,"y":0},{"id":"4","v":"4","x":4.4,"y":0}],"edges":[{"a":"0","b":"1"},{"a":"1","b":"3"},{"a":"2","b":"4"},{"a":"3","b":"2"},{"a":"4","b":"2"}],"directed":true}]},
+  {"line":17,"text":"One hop each: `slow` → 3, `fast` → 4.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"3"},{"v":"4"},{"v":"2"},{"v":"2"}],"ptrs":[{"name":"slow","at":3},{"name":"fast","at":4}]},{"t":"graph","id":"graph","title":"arrow: index i → index nums[i]","nodes":[{"id":"0","v":"0","x":-4.4,"y":0},{"id":"1","v":"1","x":-2.2,"y":0},{"id":"2","v":"2","x":2.2,"y":0},{"id":"3","v":"3","x":0,"y":0,"tone":"cur"},{"id":"4","v":"4","x":4.4,"y":0,"tone":"alt"}],"edges":[{"a":"0","b":"1"},{"a":"1","b":"3"},{"a":"2","b":"4"},{"a":"3","b":"2"},{"a":"4","b":"2"}],"directed":true}]},
+  {"line":17,"text":"One hop each: `slow` → 2, `fast` → 2.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"3"},{"v":"4"},{"v":"2"},{"v":"2"}],"ptrs":[{"name":"slow","at":2},{"name":"fast","at":2}]},{"t":"graph","id":"graph","title":"arrow: index i → index nums[i]","nodes":[{"id":"0","v":"0","x":-4.4,"y":0},{"id":"1","v":"1","x":-2.2,"y":0},{"id":"2","v":"2","x":2.2,"y":0,"tone":"alt"},{"id":"3","v":"3","x":0,"y":0},{"id":"4","v":"4","x":4.4,"y":0}],"edges":[{"a":"0","b":"1"},{"a":"1","b":"3"},{"a":"2","b":"4"},{"a":"3","b":"2"},{"a":"4","b":"2"}],"directed":true}]},
+  {"line":15,"text":"They meet at **2**. Two different arrows lead here, which means two indexes hold the value 2.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"3"},{"v":"4"},{"v":"2"},{"v":"2"}],"ptrs":[{"name":"slow","at":2},{"name":"fast","at":2}]},{"t":"graph","id":"graph","title":"arrow: index i → index nums[i]","nodes":[{"id":"0","v":"0","x":-4.4,"y":0},{"id":"1","v":"1","x":-2.2,"y":0},{"id":"2","v":"2","x":2.2,"y":0,"tone":"good"},{"id":"3","v":"3","x":0,"y":0},{"id":"4","v":"4","x":4.4,"y":0}],"edges":[{"a":"0","b":"1"},{"a":"1","b":"3"},{"a":"2","b":"4"},{"a":"3","b":"2"},{"a":"4","b":"2"}],"directed":true}]},
+  {"line":19,"text":"The repeated number is **2**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"3"},{"v":"4"},{"v":"2"},{"v":"2"}],"ptrs":[{"name":"slow","at":2},{"name":"fast","at":2}]},{"t":"graph","id":"graph","title":"arrow: index i → index nums[i]","nodes":[{"id":"0","v":"0","x":-4.4,"y":0},{"id":"1","v":"1","x":-2.2,"y":0},{"id":"2","v":"2","x":2.2,"y":0,"tone":"good"},{"id":"3","v":"3","x":0,"y":0},{"id":"4","v":"4","x":4.4,"y":0}],"edges":[{"a":"0","b":"1"},{"a":"1","b":"3"},{"a":"2","b":"4"},{"a":"3","b":"2"},{"a":"4","b":"2"}],"directed":true}]},
+  {"line":19,"text":"Done — the answer is **`2`**. The value 2 appears at index 3 and at index 4.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"3"},{"v":"4"},{"v":"2"},{"v":"2"}],"ptrs":[{"name":"slow","at":2},{"name":"fast","at":2}]},{"t":"graph","id":"graph","title":"arrow: index i → index nums[i]","nodes":[{"id":"0","v":"0","x":-4.4,"y":0},{"id":"1","v":"1","x":-2.2,"y":0},{"id":"2","v":"2","x":2.2,"y":0,"tone":"good"},{"id":"3","v":"3","x":0,"y":0},{"id":"4","v":"4","x":4.4,"y":0}],"edges":[{"a":"0","b":"1"},{"a":"1","b":"3"},{"a":"2","b":"4"},{"a":"3","b":"2"},{"a":"4","b":"2"}],"directed":true}],"final":true}
+ ]
+}

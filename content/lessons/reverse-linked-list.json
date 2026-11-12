@@ -1,0 +1,62 @@
+{
+ "id": 35,
+ "number": 206,
+ "title": "Reverse Linked List",
+ "slug": "reverse-linked-list",
+ "category": "linked-list",
+ "difficulty": "Easy",
+ "url": "https://leetcode.com/problems/reverse-linked-list/",
+ "pattern": "Three pointers: prev / current / next",
+ "statement": "Given the `head` of a singly linked list, reverse the list and return the new head.",
+ "example": {
+  "input": "head = [1,2,3]",
+  "output": "[3,2,1]",
+  "why": "Every arrow now points the other way, so the old tail (3) is the new head."
+ },
+ "more": [
+  {
+   "input": "head = [1,2]",
+   "output": "[2,1]"
+  },
+  {
+   "input": "head = None",
+   "output": "[]"
+  },
+  {
+   "input": "head = [1,2,3,4,5]",
+   "output": "[5,4,3,2,1]"
+  }
+ ],
+ "idea": [
+  "Each node only knows its `next`. Reversing the list means making every arrow point the other way.",
+  "Walk the list once with three pointers: `prev` (head of the part already reversed), `current` (the node being flipped) and `next_node` (a saved copy of the way forward).",
+  "For each node: **save** its next → **flip** its arrow back to `prev` → **slide** `prev` and `current` one step forward."
+ ],
+ "code": "class Solution:\n    def reverseList(self, head: ListNode) -> ListNode:\n        prev = None\n        current = head\n\n        while current:\n            next_node = current.next\n            current.next = prev\n            prev = current\n            current = next_node\n\n        return prev",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "Each node is visited exactly once.",
+  "space": "O(1)",
+  "spaceWhy": "Only three pointers are used, no matter how long the list is."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`head = [1,2,3]`**. Each step runs one highlighted line of the code.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"next":2},{"id":2,"v":"2","x":1,"y":0,"next":3},{"id":3,"v":"3","x":2,"y":0}]}]},
+  {"line":3,"text":"`prev` is the head of the part that is **already reversed**. Nothing is reversed yet, so it starts as None.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"next":2},{"id":2,"v":"2","x":1,"y":0,"next":3},{"id":3,"v":"3","x":2,"y":0}],"ptrs":[{"name":"prev","at":null}]}]},
+  {"line":4,"text":"`current` is the node we are about to flip. Start at the head, node 1.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"next":2,"tone":"cur"},{"id":2,"v":"2","x":1,"y":0,"next":3},{"id":3,"v":"3","x":2,"y":0}],"ptrs":[{"name":"prev","at":null},{"name":"current","at":1}]}]},
+  {"line":7,"text":"We are about to overwrite `current.next`, so first **save** where it points: `next_node` = node 2. Without this we would lose the rest of the list.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"next":2,"tone":"cur"},{"id":2,"v":"2","x":1,"y":0,"next":3},{"id":3,"v":"3","x":2,"y":0}],"ptrs":[{"name":"prev","at":null},{"name":"current","at":1},{"name":"next_node","at":2}]}]},
+  {"line":8,"text":"**Flip the arrow**: node 1 now points back to None instead of forward.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"tone":"cur"},{"id":2,"v":"2","x":1,"y":0,"next":3},{"id":3,"v":"3","x":2,"y":0}],"ptrs":[{"name":"prev","at":null},{"name":"current","at":1},{"name":"next_node","at":2}]}]},
+  {"line":9,"text":"Node 1 is now the head of the reversed part, so move `prev` onto it.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"tone":"cur"},{"id":2,"v":"2","x":1,"y":0,"next":3},{"id":3,"v":"3","x":2,"y":0}],"ptrs":[{"name":"prev","at":1},{"name":"current","at":1},{"name":"next_node","at":2}]}]},
+  {"line":10,"text":"Step forward using the saved pointer: `current` = node 2.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"tone":"good"},{"id":2,"v":"2","x":1,"y":0,"next":3,"tone":"cur"},{"id":3,"v":"3","x":2,"y":0}],"ptrs":[{"name":"prev","at":1},{"name":"current","at":2},{"name":"next_node","at":2}]}]},
+  {"line":7,"text":"We are about to overwrite `current.next`, so first **save** where it points: `next_node` = node 3. Without this we would lose the rest of the list.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"tone":"good"},{"id":2,"v":"2","x":1,"y":0,"next":3,"tone":"cur"},{"id":3,"v":"3","x":2,"y":0}],"ptrs":[{"name":"prev","at":1},{"name":"current","at":2},{"name":"next_node","at":3}]}]},
+  {"line":8,"text":"**Flip the arrow**: node 2 now points back to node 1 instead of forward.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"tone":"good"},{"id":2,"v":"2","x":1,"y":0,"next":1,"tone":"cur"},{"id":3,"v":"3","x":2,"y":0}],"ptrs":[{"name":"prev","at":1},{"name":"current","at":2},{"name":"next_node","at":3}]}]},
+  {"line":9,"text":"Node 2 is now the head of the reversed part, so move `prev` onto it.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"tone":"good"},{"id":2,"v":"2","x":1,"y":0,"next":1,"tone":"cur"},{"id":3,"v":"3","x":2,"y":0}],"ptrs":[{"name":"prev","at":2},{"name":"current","at":2},{"name":"next_node","at":3}]}]},
+  {"line":10,"text":"Step forward using the saved pointer: `current` = node 3.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"tone":"good"},{"id":2,"v":"2","x":1,"y":0,"next":1,"tone":"good"},{"id":3,"v":"3","x":2,"y":0,"tone":"cur"}],"ptrs":[{"name":"prev","at":2},{"name":"current","at":3},{"name":"next_node","at":3}]}]},
+  {"line":7,"text":"We are about to overwrite `current.next`, so first **save** where it points: `next_node` = None. Without this we would lose the rest of the list.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"tone":"good"},{"id":2,"v":"2","x":1,"y":0,"next":1,"tone":"good"},{"id":3,"v":"3","x":2,"y":0,"tone":"cur"}],"ptrs":[{"name":"prev","at":2},{"name":"current","at":3},{"name":"next_node","at":null}]}]},
+  {"line":8,"text":"**Flip the arrow**: node 3 now points back to node 2 instead of forward.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"tone":"good"},{"id":2,"v":"2","x":1,"y":0,"next":1,"tone":"good"},{"id":3,"v":"3","x":2,"y":0,"next":2,"tone":"cur"}],"ptrs":[{"name":"prev","at":2},{"name":"current","at":3},{"name":"next_node","at":null}]}]},
+  {"line":9,"text":"Node 3 is now the head of the reversed part, so move `prev` onto it.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"tone":"good"},{"id":2,"v":"2","x":1,"y":0,"next":1,"tone":"good"},{"id":3,"v":"3","x":2,"y":0,"next":2,"tone":"cur"}],"ptrs":[{"name":"prev","at":3},{"name":"current","at":3},{"name":"next_node","at":null}]}]},
+  {"line":10,"text":"Step forward using the saved pointer: `current` = None.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"tone":"good"},{"id":2,"v":"2","x":1,"y":0,"next":1,"tone":"good"},{"id":3,"v":"3","x":2,"y":0,"next":2,"tone":"good"}],"ptrs":[{"name":"prev","at":3},{"name":"current","at":null},{"name":"next_node","at":null}]}]},
+  {"line":6,"text":"`current` is None — we walked off the end, so every arrow has been flipped.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"tone":"good"},{"id":2,"v":"2","x":1,"y":0,"next":1,"tone":"good"},{"id":3,"v":"3","x":2,"y":0,"next":2,"tone":"good"}],"ptrs":[{"name":"prev","at":3},{"name":"current","at":null},{"name":"next_node","at":null}]}]},
+  {"line":12,"text":"`prev` is on node 3, the new head. Return it.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"tone":"good"},{"id":2,"v":"2","x":1,"y":0,"next":1,"tone":"good"},{"id":3,"v":"3","x":2,"y":0,"next":2,"tone":"good"}],"ptrs":[{"name":"prev","at":3},{"name":"current","at":null},{"name":"next_node","at":null}]}]},
+  {"line":12,"text":"Done — the answer is **`[3,2,1]`**. Every arrow now points the other way, so the old tail (3) is the new head.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"tone":"good"},{"id":2,"v":"2","x":1,"y":0,"next":1,"tone":"good"},{"id":3,"v":"3","x":2,"y":0,"next":2,"tone":"good"}],"ptrs":[{"name":"prev","at":3},{"name":"current","at":null},{"name":"next_node","at":null}]}],"final":true}
+ ]
+}

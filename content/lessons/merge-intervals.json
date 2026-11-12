@@ -1,0 +1,55 @@
+{
+ "id": 131,
+ "number": 56,
+ "title": "Merge Intervals",
+ "slug": "merge-intervals",
+ "category": "intervals",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/merge-intervals/",
+ "pattern": "Sort by start, then sweep",
+ "statement": "Given a list of intervals `[start, end]`, merge all intervals that overlap and return the resulting list of non-overlapping intervals that covers the same ranges.",
+ "example": {
+  "input": "intervals = [[1,3],[8,10],[2,6],[15,18]]",
+  "output": "[[1,6],[8,10],[15,18]]",
+  "why": "[1,3] and [2,6] overlap and become [1,6]; the other two touch nothing."
+ },
+ "more": [
+  {
+   "input": "intervals = [[1,4],[4,5]]",
+   "output": "[[1,5]]"
+  },
+  {
+   "input": "intervals = [[1,4],[2,3]]",
+   "output": "[[1,4]]"
+  },
+  {
+   "input": "intervals = [[5,6]]",
+   "output": "[[5,6]]"
+  }
+ ],
+ "idea": [
+  "Unsorted, any interval might overlap any other one. **Sort by start time** and overlapping intervals end up next to each other.",
+  "Keep the last merged interval. The next interval overlaps it exactly when it **starts no later than the last one ends**.",
+  "Overlap → stretch the last interval's end to the larger of the two ends. No overlap → the next interval starts a new group."
+ ],
+ "code": "class Solution:\n    def merge(self, intervals: List[List[int]]) -> List[List[int]]:\n        if not intervals:\n            return []\n\n        intervals.sort(key=lambda x: x[0])\n        result = [intervals[0]]\n\n        for interval in intervals[1:]:\n            if interval[0] <= result[-1][1]:\n                result[-1][1] = max(result[-1][1], interval[1])\n            else:\n                result.append(interval)\n\n        return result",
+ "complexity": {
+  "time": "O(n log n)",
+  "timeWhy": "Sorting dominates; the merge pass afterwards is a single O(n) sweep.",
+  "space": "O(n)",
+  "spaceWhy": "The result list can hold up to n intervals when nothing overlaps."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`intervals = [[1,3],[8,10],[2,6],[15,18]]`**. Each step runs one highlighted line of the code.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":1,"b":3},{"a":8,"b":10},{"a":2,"b":6},{"a":15,"b":18}]}],"min":1,"max":18}]},
+  {"line":6,"text":"Sort by start time. Now intervals that overlap sit **next to each other**, so one left-to-right pass is enough.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":1,"b":3},{"a":2,"b":6},{"a":8,"b":10},{"a":15,"b":18}]}],"min":1,"max":18}]},
+  {"line":7,"text":"Start the answer with the first interval [1, 3]. `result[-1]` is always the group we are still growing.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":1,"b":3,"tone":"cur"},{"a":2,"b":6},{"a":8,"b":10},{"a":15,"b":18}]},{"label":"result","items":[{"a":1,"b":3,"tone":"good"}]}],"min":1,"max":18}]},
+  {"line":10,"text":"[2, 6] starts at 2, which is **not after** [1, 3] ends (3) — they **overlap**.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":1,"b":3},{"a":2,"b":6,"tone":"cur"},{"a":8,"b":10},{"a":15,"b":18}]},{"label":"result","items":[{"a":1,"b":3,"tone":"alt"}]}],"min":1,"max":18}]},
+  {"line":11,"text":"Merge: the group's end becomes max(3, 6) = 6. The group is now [1, 6].","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":1,"b":3},{"a":2,"b":6,"tone":"cur"},{"a":8,"b":10},{"a":15,"b":18}]},{"label":"result","items":[{"a":1,"b":6,"tone":"good"}]}],"min":1,"max":18}]},
+  {"line":10,"text":"[8, 10] starts at 8, **after** [1, 6] ends (6) — no overlap.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":1,"b":3},{"a":2,"b":6},{"a":8,"b":10,"tone":"cur"},{"a":15,"b":18}]},{"label":"result","items":[{"a":1,"b":6,"tone":"alt"}]}],"min":1,"max":18}]},
+  {"line":13,"text":"[8, 10] starts a **new group**: append it to the result.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":1,"b":3},{"a":2,"b":6},{"a":8,"b":10,"tone":"cur"},{"a":15,"b":18}]},{"label":"result","items":[{"a":1,"b":6},{"a":8,"b":10,"tone":"good"}]}],"min":1,"max":18}]},
+  {"line":10,"text":"[15, 18] starts at 15, **after** [8, 10] ends (10) — no overlap.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":1,"b":3},{"a":2,"b":6},{"a":8,"b":10},{"a":15,"b":18,"tone":"cur"}]},{"label":"result","items":[{"a":1,"b":6},{"a":8,"b":10,"tone":"alt"}]}],"min":1,"max":18}]},
+  {"line":13,"text":"[15, 18] starts a **new group**: append it to the result.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":1,"b":3},{"a":2,"b":6},{"a":8,"b":10},{"a":15,"b":18,"tone":"cur"}]},{"label":"result","items":[{"a":1,"b":6},{"a":8,"b":10},{"a":15,"b":18,"tone":"good"}]}],"min":1,"max":18}]},
+  {"line":15,"text":"All intervals processed. Return the merged list **[[1, 6], [8, 10], [15, 18]]**.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":1,"b":3},{"a":2,"b":6},{"a":8,"b":10},{"a":15,"b":18}]},{"label":"result","items":[{"a":1,"b":6},{"a":8,"b":10},{"a":15,"b":18}]}],"min":1,"max":18}]},
+  {"line":15,"text":"Done — the answer is **`[[1,6],[8,10],[15,18]]`**. [1,3] and [2,6] overlap and become [1,6]; the other two touch nothing.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":1,"b":3},{"a":2,"b":6},{"a":8,"b":10},{"a":15,"b":18}]},{"label":"result","items":[{"a":1,"b":6},{"a":8,"b":10},{"a":15,"b":18}]}],"min":1,"max":18}],"final":true}
+ ]
+}

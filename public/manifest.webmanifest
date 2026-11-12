@@ -1,11 +1,11 @@
 {
-  "name": "NeetCode 150 Learn",
-  "short_name": "NC150",
-  "description": "Kid-simple animated NeetCode 150 study companion",
+  "name": "NeetCode 150, step by step",
+  "short_name": "NeetCode 150",
+  "description": "Understand every NeetCode 150 problem: the question in plain words, the key idea, and a 3D walkthrough of the real solution.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f3f7f4",
-  "theme_color": "#0f766e",
+  "background_color": "#0b1018",
+  "theme_color": "#0b1018",
   "icons": [
     {
       "src": "/icons/icon-192.png",

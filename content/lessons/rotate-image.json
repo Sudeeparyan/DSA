@@ -1,0 +1,53 @@
+{
+ "id": 136,
+ "number": 48,
+ "title": "Rotate Image",
+ "slug": "rotate-image",
+ "category": "math-geometry",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/rotate-image/",
+ "pattern": "Transpose, then reverse each row",
+ "statement": "Rotate an `n × n` matrix by **90 degrees clockwise**, in place (without allocating a second matrix).",
+ "example": {
+  "input": "matrix = [[1,2,3],[4,5,6],[7,8,9]]",
+  "output": "[[7,4,1],[8,5,2],[9,6,3]]",
+  "why": "The first column, read from the bottom up (7, 4, 1), has become the first row."
+ },
+ "more": [
+  {
+   "input": "matrix = [[5,1,9,11],\n          [2,4,8,10],\n          [13,3,6,7],\n          [15,14,12,16]]",
+   "output": "[[15,13,2,5],[14,3,4,1],[12,6,8,9],[16,7,10,11]]"
+  },
+  {
+   "input": "matrix = [[1]]",
+   "output": "[[1]]"
+  },
+  {
+   "input": "matrix = [[1,2],[3,4]]",
+   "output": "[[3,1],[4,2]]"
+  }
+ ],
+ "idea": [
+  "Moving every element straight to its rotated position needs careful four-way swaps. Two simple mirror operations give the same result.",
+  "**Transpose** the matrix: swap `matrix[i][j]` with `matrix[j][i]`, mirroring it across the main diagonal. Rows become columns.",
+  "Then **reverse every row**. Together: element `(i, j)` goes to `(j, i)` and then to `(j, n − 1 − i)` — exactly a clockwise quarter turn."
+ ],
+ "code": "class Solution:\n    def rotate(self, matrix: List[List[int]]) -> None:\n        \"\"\"\n        Do not return anything, modify matrix in-place instead.\n        \"\"\"\n        n = len(matrix)\n\n        # Transpose the matrix\n        for i in range(n):\n            for j in range(i, n):\n                matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]\n\n        # Reverse each row\n        for i in range(n):\n            matrix[i].reverse()",
+ "complexity": {
+  "time": "O(n²)",
+  "timeWhy": "Every cell is touched a constant number of times.",
+  "space": "O(1)",
+  "spaceWhy": "Only swaps inside the matrix."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`matrix = [[1,2,3],[4,5,6],[7,8,9]]`**. Each step runs one highlighted line of the code.","views":[{"t":"grid","id":"matrix","title":"matrix","cells":[[{"v":"1"},{"v":"2"},{"v":"3"}],[{"v":"4"},{"v":"5"},{"v":"6"}],[{"v":"7"},{"v":"8"},{"v":"9"}]]}]},
+  {"line":6,"text":"A 90° clockwise rotation = **transpose** (mirror across the diagonal from top-left to bottom-right), then **reverse each row**. Step 1: transpose.","views":[{"t":"grid","id":"matrix","title":"matrix","cells":[[{"v":"1"},{"v":"2"},{"v":"3"}],[{"v":"4"},{"v":"5"},{"v":"6"}],[{"v":"7"},{"v":"8"},{"v":"9"}]]}]},
+  {"line":11,"text":"Swap (0, 1) with its mirror cell (1, 0): 2 and 4 trade places.","views":[{"t":"grid","id":"matrix","title":"matrix","cells":[[{"v":"1"},{"v":"4","tone":"cur"},{"v":"3"}],[{"v":"2","tone":"alt"},{"v":"5"},{"v":"6"}],[{"v":"7"},{"v":"8"},{"v":"9"}]]}]},
+  {"line":11,"text":"Swap (0, 2) with its mirror cell (2, 0): 3 and 7 trade places.","views":[{"t":"grid","id":"matrix","title":"matrix","cells":[[{"v":"1"},{"v":"4"},{"v":"7","tone":"cur"}],[{"v":"2"},{"v":"5"},{"v":"6"}],[{"v":"3","tone":"alt"},{"v":"8"},{"v":"9"}]]}]},
+  {"line":11,"text":"Swap (1, 2) with its mirror cell (2, 1): 6 and 8 trade places.","views":[{"t":"grid","id":"matrix","title":"matrix","cells":[[{"v":"1"},{"v":"4"},{"v":"7"}],[{"v":"2"},{"v":"5"},{"v":"8","tone":"cur"}],[{"v":"3"},{"v":"6","tone":"alt"},{"v":"9"}]]}]},
+  {"line":15,"text":"The matrix is transposed: its rows have become its columns. Step 2: reverse each row. Row 0: [1, 4, 7] → **[7, 4, 1]**.","views":[{"t":"grid","id":"matrix","title":"matrix","cells":[[{"v":"7","tone":"good"},{"v":"4","tone":"good"},{"v":"1","tone":"good"}],[{"v":"2"},{"v":"5"},{"v":"8"}],[{"v":"3","tone":"alt"},{"v":"6"},{"v":"9"}]]}]},
+  {"line":15,"text":"Reverse row 1: [2, 5, 8] → **[8, 5, 2]**.","views":[{"t":"grid","id":"matrix","title":"matrix","cells":[[{"v":"7"},{"v":"4"},{"v":"1"}],[{"v":"8","tone":"good"},{"v":"5","tone":"good"},{"v":"2","tone":"good"}],[{"v":"3"},{"v":"6","tone":"alt"},{"v":"9"}]]}]},
+  {"line":15,"text":"Reverse row 2: [3, 6, 9] → **[9, 6, 3]**.","views":[{"t":"grid","id":"matrix","title":"matrix","cells":[[{"v":"7"},{"v":"4"},{"v":"1"}],[{"v":"8"},{"v":"5"},{"v":"2"}],[{"v":"9","tone":"good"},{"v":"6","tone":"good"},{"v":"3","tone":"good"}]]}]},
+  {"line":14,"text":"Done. The matrix is rotated 90° clockwise: `[[7, 4, 1], [8, 5, 2], [9, 6, 3]]`. It was changed in place, so nothing is returned.","views":[{"t":"grid","id":"matrix","title":"matrix","cells":[[{"v":"7"},{"v":"4"},{"v":"1"}],[{"v":"8"},{"v":"5"},{"v":"2"}],[{"v":"9"},{"v":"6"},{"v":"3","tone":"alt"}]]}],"final":true}
+ ]
+}

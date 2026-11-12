@@ -1,0 +1,59 @@
+{
+ "id": 48,
+ "number": 543,
+ "title": "Diameter of Binary Tree",
+ "slug": "diameter-of-binary-tree",
+ "category": "trees",
+ "difficulty": "Easy",
+ "url": "https://leetcode.com/problems/diameter-of-binary-tree/",
+ "pattern": "Tree recursion: return height, track best path",
+ "statement": "Return the **diameter** of a binary tree: the number of edges on the longest path between any two nodes. The path does not have to pass through the root.",
+ "example": {
+  "input": "root = [1,2,3,4,5]",
+  "output": "3",
+  "why": "The path 4 → 2 → 1 → 3 has three edges (so does 5 → 2 → 1 → 3)."
+ },
+ "more": [
+  {
+   "input": "root = [1,2]",
+   "output": "1"
+  },
+  {
+   "input": "root = [1]",
+   "output": "0"
+  },
+  {
+   "input": "root = [1,2,None,3,4,5,None,None,6]",
+   "output": "4"
+  }
+ ],
+ "idea": [
+  "Every path has one highest node where it *bends*: it comes up from the left subtree and goes down into the right subtree.",
+  "The longest path bending at a node has `height(left) + height(right)` edges.",
+  "So compute every node's height recursively, and at each node also check `left height + right height` against the best diameter seen so far."
+ ],
+ "code": "class Solution:\n    def diameterOfBinaryTree(self, root: TreeNode) -> int:\n        def height(node):\n            if not node:\n                return 0\n            left_height = height(node.left)\n            right_height = height(node.right)\n            self.diameter = max(self.diameter, left_height + right_height)\n            return max(left_height, right_height) + 1\n\n        self.diameter = 0\n        height(root)\n        return self.diameter",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "Each node's height is computed once.",
+  "space": "O(h)",
+  "spaceWhy": "The recursion stack is as deep as the tree's height h."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`root = [1,2,3,4,5]`**. Each step runs one highlighted line of the code.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3},{"id":2,"v":"2","l":4,"r":5},{"id":3,"v":"3"},{"id":4,"v":"4"},{"id":5,"v":"5"}],"roots":[1]}]},
+  {"line":11,"text":"`self.diameter` keeps the longest path found so far. The small labels that will appear beside nodes are their **heights**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3},{"id":2,"v":"2","l":4,"r":5},{"id":3,"v":"3"},{"id":4,"v":"4"},{"id":5,"v":"5"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"self.diameter","v":"0"}]}]},
+  {"line":4,"text":"An empty spot has height 0.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"win"},{"id":2,"v":"2","l":4,"r":5,"tone":"win"},{"id":3,"v":"3"},{"id":4,"v":"4","tone":"win"},{"id":5,"v":"5"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"self.diameter","v":"0"}]}]},
+  {"line":8,"text":"At node 4: left height 0, right height 0. The longest path that bends here has 0 + 0 = **0** edges. Best so far: **0**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"win"},{"id":2,"v":"2","l":4,"r":5,"tone":"win"},{"id":3,"v":"3"},{"id":4,"v":"4","tone":"cur"},{"id":5,"v":"5"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"self.diameter","v":"0"}]}]},
+  {"line":9,"text":"Node 4 reports its own height to its parent: max(0, 0) + 1 = **1**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"win"},{"id":2,"v":"2","l":4,"r":5,"tone":"win"},{"id":3,"v":"3"},{"id":4,"v":"4","tone":"cur"},{"id":5,"v":"5"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"self.diameter","v":"0"}]}]},
+  {"line":8,"text":"At node 5: left height 0, right height 0. The longest path that bends here has 0 + 0 = **0** edges. Best so far: **0**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"win"},{"id":2,"v":"2","l":4,"r":5,"tone":"win"},{"id":3,"v":"3"},{"id":4,"v":"4","badge":"1"},{"id":5,"v":"5","tone":"cur"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"self.diameter","v":"0"}]}]},
+  {"line":9,"text":"Node 5 reports its own height to its parent: max(0, 0) + 1 = **1**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"win"},{"id":2,"v":"2","l":4,"r":5,"tone":"win"},{"id":3,"v":"3"},{"id":4,"v":"4","badge":"1"},{"id":5,"v":"5","tone":"cur"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"self.diameter","v":"0"}]}]},
+  {"line":8,"text":"At node 2: left height 1, right height 1. The longest path that bends here has 1 + 1 = **2** edges. Best so far: **2**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"win"},{"id":2,"v":"2","l":4,"r":5,"tone":"cur"},{"id":3,"v":"3"},{"id":4,"v":"4","badge":"1"},{"id":5,"v":"5","badge":"1"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"self.diameter","v":"2","changed":true}]}]},
+  {"line":9,"text":"Node 2 reports its own height to its parent: max(1, 1) + 1 = **2**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"win"},{"id":2,"v":"2","l":4,"r":5,"tone":"cur"},{"id":3,"v":"3"},{"id":4,"v":"4","badge":"1"},{"id":5,"v":"5","badge":"1"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"self.diameter","v":"2"}]}]},
+  {"line":8,"text":"At node 3: left height 0, right height 0. The longest path that bends here has 0 + 0 = **0** edges. Best so far: **2**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"win"},{"id":2,"v":"2","l":4,"r":5,"badge":"2"},{"id":3,"v":"3","tone":"cur"},{"id":4,"v":"4","badge":"1"},{"id":5,"v":"5","badge":"1"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"self.diameter","v":"2"}]}]},
+  {"line":9,"text":"Node 3 reports its own height to its parent: max(0, 0) + 1 = **1**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"win"},{"id":2,"v":"2","l":4,"r":5,"badge":"2"},{"id":3,"v":"3","tone":"cur"},{"id":4,"v":"4","badge":"1"},{"id":5,"v":"5","badge":"1"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"self.diameter","v":"2"}]}]},
+  {"line":8,"text":"At node 1: left height 2, right height 1. The longest path that bends here has 2 + 1 = **3** edges. Best so far: **3**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"cur"},{"id":2,"v":"2","l":4,"r":5,"badge":"2"},{"id":3,"v":"3","badge":"1"},{"id":4,"v":"4","badge":"1"},{"id":5,"v":"5","badge":"1"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"self.diameter","v":"3","changed":true}]}]},
+  {"line":9,"text":"Node 1 reports its own height to its parent: max(2, 1) + 1 = **3**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"cur"},{"id":2,"v":"2","l":4,"r":5,"badge":"2"},{"id":3,"v":"3","badge":"1"},{"id":4,"v":"4","badge":"1"},{"id":5,"v":"5","badge":"1"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"self.diameter","v":"3"}]}]},
+  {"line":13,"text":"The longest path found anywhere in the tree has **3** edges.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"badge":"3"},{"id":2,"v":"2","l":4,"r":5,"badge":"2"},{"id":3,"v":"3","badge":"1"},{"id":4,"v":"4","badge":"1"},{"id":5,"v":"5","badge":"1"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"self.diameter","v":"3"}]}]},
+  {"line":13,"text":"Done — the answer is **`3`**. The path 4 → 2 → 1 → 3 has three edges (so does 5 → 2 → 1 → 3).","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"badge":"3"},{"id":2,"v":"2","l":4,"r":5,"badge":"2"},{"id":3,"v":"3","badge":"1"},{"id":4,"v":"4","badge":"1"},{"id":5,"v":"5","badge":"1"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"self.diameter","v":"3"}]}],"final":true}
+ ]
+}

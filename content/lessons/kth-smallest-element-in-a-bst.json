@@ -1,0 +1,60 @@
+{
+ "id": 57,
+ "number": 230,
+ "title": "Kth Smallest Element in a BST",
+ "slug": "kth-smallest-element-in-a-bst",
+ "category": "trees",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/kth-smallest-element-in-a-bst/",
+ "pattern": "In-order walk with a stack, stopping at the k-th value",
+ "statement": "Given the root of a **binary search tree** and an integer `k`, return the `k`-th smallest value in the tree (k = 1 means the smallest).",
+ "example": {
+  "input": "root = [5,3,6,2,4,None,None,1], k = 3",
+  "output": "3",
+  "why": "In sorted order the values are 1, 2, 3, 4, 5, 6, and the third is 3."
+ },
+ "more": [
+  {
+   "input": "root = [3,1,4,None,2], k = 1",
+   "output": "1"
+  },
+  {
+   "input": "root = [1], k = 1",
+   "output": "1"
+  },
+  {
+   "input": "root = [5,3,6,2,4,None,None,1], k = 6",
+   "output": "6"
+  }
+ ],
+ "idea": [
+  "In a BST, everything left of a node is smaller and everything right of it is larger.",
+  "So reading the tree **in order** — left subtree, the node, right subtree — lists the values from smallest to largest.",
+  "The whole list is not needed. Walk the tree in order with a stack, count the values as they come out, and **stop at the k-th one**."
+ ],
+ "code": "class Solution:\n    def kthSmallest(self, root: TreeNode, k: int) -> int:\n        stack = []\n        current = root\n\n        while stack or current:\n            # Go left as far as possible: smaller values come first\n            while current:\n                stack.append(current)\n                current = current.left\n\n            # The node on top of the stack is the next value in sorted order\n            current = stack.pop()\n            k -= 1\n            if k == 0:\n                return current.val\n\n            # Everything in its right subtree comes next\n            current = current.right",
+ "complexity": {
+  "time": "O(h + k)",
+  "timeWhy": "The walk first goes down the height h of the tree, then stops after k values instead of visiting all n nodes.",
+  "space": "O(h)",
+  "spaceWhy": "The stack holds at most one node per level of the tree."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`root = [5,3,6,2,4,None,None,1], k = 3`**. Each step runs one highlighted line of the code.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"5","l":2,"r":3},{"id":2,"v":"3","l":4,"r":5},{"id":4,"v":"2","l":6},{"id":6,"v":"1"},{"id":5,"v":"4"},{"id":3,"v":"6"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"k","v":"3"}]}]},
+  {"line":3,"text":"An in-order walk visits a BST from the smallest value to the largest. The stack remembers the nodes we passed on the way down and still have to come back to.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"5","l":2,"r":3},{"id":2,"v":"3","l":4,"r":5},{"id":4,"v":"2","l":6},{"id":6,"v":"1"},{"id":5,"v":"4"},{"id":3,"v":"6"}],"roots":[1]},{"t":"stack","id":"stack","title":"stack  (nodes waiting for their turn)","kind":"stack","items":[]},{"t":"vars","id":"vars","items":[{"k":"k","v":"3"}]}]},
+  {"line":9,"text":"Node 5 must wait: everything in its left subtree is smaller and comes first. Push it and keep going left.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"5","l":2,"r":3,"tone":"cur"},{"id":2,"v":"3","l":4,"r":5},{"id":4,"v":"2","l":6},{"id":6,"v":"1"},{"id":5,"v":"4"},{"id":3,"v":"6"}],"roots":[1],"ptrs":[{"name":"current","at":1}]},{"t":"stack","id":"stack","title":"stack  (nodes waiting for their turn)","kind":"stack","items":[{"id":1,"v":"5"}]},{"t":"vars","id":"vars","items":[{"k":"k","v":"3"}]}]},
+  {"line":9,"text":"Node 3 must wait: everything in its left subtree is smaller and comes first. Push it and keep going left.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"5","l":2,"r":3,"tone":"mark"},{"id":2,"v":"3","l":4,"r":5,"tone":"cur"},{"id":4,"v":"2","l":6},{"id":6,"v":"1"},{"id":5,"v":"4"},{"id":3,"v":"6"}],"roots":[1],"ptrs":[{"name":"current","at":2}]},{"t":"stack","id":"stack","title":"stack  (nodes waiting for their turn)","kind":"stack","items":[{"id":1,"v":"5"},{"id":2,"v":"3"}]},{"t":"vars","id":"vars","items":[{"k":"k","v":"3"}]}]},
+  {"line":9,"text":"Node 2 must wait: everything in its left subtree is smaller and comes first. Push it and keep going left.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"5","l":2,"r":3,"tone":"mark"},{"id":2,"v":"3","l":4,"r":5,"tone":"mark"},{"id":4,"v":"2","l":6,"tone":"cur"},{"id":6,"v":"1"},{"id":5,"v":"4"},{"id":3,"v":"6"}],"roots":[1],"ptrs":[{"name":"current","at":4}]},{"t":"stack","id":"stack","title":"stack  (nodes waiting for their turn)","kind":"stack","items":[{"id":1,"v":"5"},{"id":2,"v":"3"},{"id":3,"v":"2"}]},{"t":"vars","id":"vars","items":[{"k":"k","v":"3"}]}]},
+  {"line":9,"text":"Node 1 goes on the stack too, but it has nothing to its left — so it will be the next one to come off.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"5","l":2,"r":3,"tone":"mark"},{"id":2,"v":"3","l":4,"r":5,"tone":"mark"},{"id":4,"v":"2","l":6,"tone":"mark"},{"id":6,"v":"1","tone":"cur"},{"id":5,"v":"4"},{"id":3,"v":"6"}],"roots":[1],"ptrs":[{"name":"current","at":6}]},{"t":"stack","id":"stack","title":"stack  (nodes waiting for their turn)","kind":"stack","items":[{"id":1,"v":"5"},{"id":2,"v":"3"},{"id":3,"v":"2"},{"id":4,"v":"1"}]},{"t":"vars","id":"vars","items":[{"k":"k","v":"3"}]}]},
+  {"line":13,"text":"There is nothing further to the left, so the node on top of the stack is the **next value in sorted order**: 1. Take it off.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"5","l":2,"r":3,"tone":"mark"},{"id":2,"v":"3","l":4,"r":5,"tone":"mark"},{"id":4,"v":"2","l":6,"tone":"mark"},{"id":6,"v":"1","tone":"cur"},{"id":5,"v":"4"},{"id":3,"v":"6"}],"roots":[1],"ptrs":[{"name":"current","at":6}]},{"t":"stack","id":"stack","title":"stack  (nodes waiting for their turn)","kind":"stack","items":[{"id":1,"v":"5"},{"id":2,"v":"3"},{"id":3,"v":"2"}]},{"t":"vars","id":"vars","items":[{"k":"k","v":"3"}]}]},
+  {"line":14,"text":"Count it: 1 is the **1st smallest** value. Still 2 values to go.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"5","l":2,"r":3,"tone":"mark"},{"id":2,"v":"3","l":4,"r":5,"tone":"mark"},{"id":4,"v":"2","l":6,"tone":"mark"},{"id":6,"v":"1","tone":"cur"},{"id":5,"v":"4"},{"id":3,"v":"6"}],"roots":[1],"ptrs":[{"name":"current","at":6}]},{"t":"stack","id":"stack","title":"stack  (nodes waiting for their turn)","kind":"stack","items":[{"id":1,"v":"5"},{"id":2,"v":"3"},{"id":3,"v":"2"}]},{"t":"vars","id":"vars","items":[{"k":"k","v":"2","changed":true}]}]},
+  {"line":19,"text":"Node 1 has no right subtree, so the next value in sorted order is the node waiting on top of the stack.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"5","l":2,"r":3,"tone":"mark"},{"id":2,"v":"3","l":4,"r":5,"tone":"mark"},{"id":4,"v":"2","l":6,"tone":"mark"},{"id":6,"v":"1","tone":"seen"},{"id":5,"v":"4"},{"id":3,"v":"6"}],"roots":[1]},{"t":"stack","id":"stack","title":"stack  (nodes waiting for their turn)","kind":"stack","items":[{"id":1,"v":"5"},{"id":2,"v":"3"},{"id":3,"v":"2"}]},{"t":"vars","id":"vars","items":[{"k":"k","v":"2"}]}]},
+  {"line":13,"text":"There is nothing further to the left, so the node on top of the stack is the **next value in sorted order**: 2. Take it off.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"5","l":2,"r":3,"tone":"mark"},{"id":2,"v":"3","l":4,"r":5,"tone":"mark"},{"id":4,"v":"2","l":6,"tone":"cur"},{"id":6,"v":"1","tone":"seen"},{"id":5,"v":"4"},{"id":3,"v":"6"}],"roots":[1],"ptrs":[{"name":"current","at":4}]},{"t":"stack","id":"stack","title":"stack  (nodes waiting for their turn)","kind":"stack","items":[{"id":1,"v":"5"},{"id":2,"v":"3"}]},{"t":"vars","id":"vars","items":[{"k":"k","v":"2"}]}]},
+  {"line":14,"text":"Count it: 2 is the **2nd smallest** value. Still 1 value to go.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"5","l":2,"r":3,"tone":"mark"},{"id":2,"v":"3","l":4,"r":5,"tone":"mark"},{"id":4,"v":"2","l":6,"tone":"cur"},{"id":6,"v":"1","tone":"seen"},{"id":5,"v":"4"},{"id":3,"v":"6"}],"roots":[1],"ptrs":[{"name":"current","at":4}]},{"t":"stack","id":"stack","title":"stack  (nodes waiting for their turn)","kind":"stack","items":[{"id":1,"v":"5"},{"id":2,"v":"3"}]},{"t":"vars","id":"vars","items":[{"k":"k","v":"1","changed":true}]}]},
+  {"line":19,"text":"Node 2 has no right subtree, so the next value in sorted order is the node waiting on top of the stack.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"5","l":2,"r":3,"tone":"mark"},{"id":2,"v":"3","l":4,"r":5,"tone":"mark"},{"id":4,"v":"2","l":6,"tone":"seen"},{"id":6,"v":"1","tone":"seen"},{"id":5,"v":"4"},{"id":3,"v":"6"}],"roots":[1]},{"t":"stack","id":"stack","title":"stack  (nodes waiting for their turn)","kind":"stack","items":[{"id":1,"v":"5"},{"id":2,"v":"3"}]},{"t":"vars","id":"vars","items":[{"k":"k","v":"1"}]}]},
+  {"line":13,"text":"There is nothing further to the left, so the node on top of the stack is the **next value in sorted order**: 3. Take it off.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"5","l":2,"r":3,"tone":"mark"},{"id":2,"v":"3","l":4,"r":5,"tone":"cur"},{"id":4,"v":"2","l":6,"tone":"seen"},{"id":6,"v":"1","tone":"seen"},{"id":5,"v":"4"},{"id":3,"v":"6"}],"roots":[1],"ptrs":[{"name":"current","at":2}]},{"t":"stack","id":"stack","title":"stack  (nodes waiting for their turn)","kind":"stack","items":[{"id":1,"v":"5"}]},{"t":"vars","id":"vars","items":[{"k":"k","v":"1"}]}]},
+  {"line":14,"text":"Count it: 3 is the **3rd smallest** value. That is the one we want.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"5","l":2,"r":3,"tone":"mark"},{"id":2,"v":"3","l":4,"r":5,"tone":"cur"},{"id":4,"v":"2","l":6,"tone":"seen"},{"id":6,"v":"1","tone":"seen"},{"id":5,"v":"4"},{"id":3,"v":"6"}],"roots":[1],"ptrs":[{"name":"current","at":2}]},{"t":"stack","id":"stack","title":"stack  (nodes waiting for their turn)","kind":"stack","items":[{"id":1,"v":"5"}]},{"t":"vars","id":"vars","items":[{"k":"k","v":"0","changed":true}]}]},
+  {"line":16,"text":"k has reached 0, so the answer is **3**. The rest of the tree is never visited.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"5","l":2,"r":3,"tone":"mark"},{"id":2,"v":"3","l":4,"r":5,"tone":"good"},{"id":4,"v":"2","l":6,"tone":"seen"},{"id":6,"v":"1","tone":"seen"},{"id":5,"v":"4"},{"id":3,"v":"6"}],"roots":[1],"ptrs":[{"name":"current","at":2}]},{"t":"stack","id":"stack","title":"stack  (nodes waiting for their turn)","kind":"stack","items":[{"id":1,"v":"5"}]},{"t":"vars","id":"vars","items":[{"k":"k","v":"0"}]}]},
+  {"line":16,"text":"Done — the answer is **`3`**. In sorted order the values are 1, 2, 3, 4, 5, 6, and the third is 3.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"5","l":2,"r":3,"tone":"mark"},{"id":2,"v":"3","l":4,"r":5,"tone":"good"},{"id":4,"v":"2","l":6,"tone":"seen"},{"id":6,"v":"1","tone":"seen"},{"id":5,"v":"4"},{"id":3,"v":"6"}],"roots":[1],"ptrs":[{"name":"current","at":2}]},{"t":"stack","id":"stack","title":"stack  (nodes waiting for their turn)","kind":"stack","items":[{"id":1,"v":"5"}]},{"t":"vars","id":"vars","items":[{"k":"k","v":"0"}]}],"final":true}
+ ]
+}

@@ -1,0 +1,57 @@
+{
+ "id": 145,
+ "number": 191,
+ "title": "Number of 1 Bits",
+ "slug": "number-of-1-bits",
+ "category": "bit-manipulation",
+ "difficulty": "Easy",
+ "url": "https://leetcode.com/problems/number-of-1-bits/",
+ "pattern": "Read the lowest bit, then shift",
+ "statement": "Given a positive integer `n`, return how many `1` bits its binary representation contains (its *Hamming weight*).",
+ "example": {
+  "input": "n = 11",
+  "output": "3",
+  "why": "11 in binary is 1011, which contains three 1s."
+ },
+ "more": [
+  {
+   "input": "n = 128",
+   "output": "1"
+  },
+  {
+   "input": "n = 2147483645",
+   "output": "30"
+  },
+  {
+   "input": "n = 1",
+   "output": "1"
+  }
+ ],
+ "idea": [
+  "A number is stored as bits. `n & 1` keeps only the **lowest** bit — it is 1 exactly when the last binary digit is 1.",
+  "`n >> 1` shifts every bit one place to the right: the lowest bit drops off and the next one takes its place.",
+  "Repeat *read the lowest bit, then shift* until nothing is left (n becomes 0), adding up the bits we read."
+ ],
+ "code": "class Solution:\n    def hammingWeight(self, n: int) -> int:\n        count = 0\n        while n:\n            count += n & 1\n            n = n >> 1\n        return count",
+ "complexity": {
+  "time": "O(log n)",
+  "timeWhy": "One loop per binary digit of n — at most 32 for a 32-bit integer.",
+  "space": "O(1)",
+  "spaceWhy": "Only a counter is stored."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`n = 11`**. Each step runs one highlighted line of the code.","views":[{"t":"bits","id":"bits","rows":[{"label":"n","bits":"00001011","v":"11"},{"label":"n & 1","bits":"00000001","v":"1","tone":"cur"}],"hi":[7]}]},
+  {"line":3,"text":"`count` will hold the number of 1 bits. In binary, 11 is `00001011`.","views":[{"t":"bits","id":"bits","rows":[{"label":"n","bits":"00001011","v":"11"},{"label":"n & 1","bits":"00000001","v":"1","tone":"cur"}],"hi":[7]},{"t":"vars","id":"vars","items":[{"k":"count","v":"0"}]}]},
+  {"line":5,"text":"`n & 1` reads the **lowest bit** of n, which is 1. Add it: `count` = **1**.","views":[{"t":"bits","id":"bits","rows":[{"label":"n","bits":"00001011","v":"11"},{"label":"n & 1","bits":"00000001","v":"1","tone":"cur"}],"hi":[7]},{"t":"vars","id":"vars","items":[{"k":"count","v":"1","changed":true}]}]},
+  {"line":6,"text":"Shift right by one. The bit we just counted falls off and the next bit moves into the lowest place. n is now 5 (`00000101`).","views":[{"t":"bits","id":"bits","rows":[{"label":"n","bits":"00000101","v":"5"},{"label":"n & 1","bits":"00000001","v":"1","tone":"cur"}],"hi":[7]},{"t":"vars","id":"vars","items":[{"k":"count","v":"1"}]}]},
+  {"line":5,"text":"`n & 1` reads the **lowest bit** of n, which is 1. Add it: `count` = **2**.","views":[{"t":"bits","id":"bits","rows":[{"label":"n","bits":"00000101","v":"5"},{"label":"n & 1","bits":"00000001","v":"1","tone":"cur"}],"hi":[7]},{"t":"vars","id":"vars","items":[{"k":"count","v":"2","changed":true}]}]},
+  {"line":6,"text":"Shift right by one. The bit we just counted falls off and the next bit moves into the lowest place. n is now 2 (`00000010`).","views":[{"t":"bits","id":"bits","rows":[{"label":"n","bits":"00000010","v":"2"},{"label":"n & 1","bits":"00000000","v":"0","tone":"cur"}],"hi":[7]},{"t":"vars","id":"vars","items":[{"k":"count","v":"2"}]}]},
+  {"line":5,"text":"`n & 1` reads the **lowest bit** of n, which is 0. Add it: `count` = **2**.","views":[{"t":"bits","id":"bits","rows":[{"label":"n","bits":"00000010","v":"2"},{"label":"n & 1","bits":"00000000","v":"0","tone":"cur"}],"hi":[7]},{"t":"vars","id":"vars","items":[{"k":"count","v":"2"}]}]},
+  {"line":6,"text":"Shift right by one. The bit we just counted falls off and the next bit moves into the lowest place. n is now 1 (`00000001`).","views":[{"t":"bits","id":"bits","rows":[{"label":"n","bits":"00000001","v":"1"},{"label":"n & 1","bits":"00000001","v":"1","tone":"cur"}],"hi":[7]},{"t":"vars","id":"vars","items":[{"k":"count","v":"2"}]}]},
+  {"line":5,"text":"`n & 1` reads the **lowest bit** of n, which is 1. Add it: `count` = **3**.","views":[{"t":"bits","id":"bits","rows":[{"label":"n","bits":"00000001","v":"1"},{"label":"n & 1","bits":"00000001","v":"1","tone":"cur"}],"hi":[7]},{"t":"vars","id":"vars","items":[{"k":"count","v":"3","changed":true}]}]},
+  {"line":6,"text":"Shift right by one. The bit we just counted falls off and the next bit moves into the lowest place. n is now 0 (`00000000`).","views":[{"t":"bits","id":"bits","rows":[{"label":"n","bits":"00000000","v":"0"},{"label":"n & 1","bits":"00000000","v":"0","tone":"cur"}],"hi":[7]},{"t":"vars","id":"vars","items":[{"k":"count","v":"3"}]}]},
+  {"line":4,"text":"n is 0 — there are no bits left to read.","views":[{"t":"bits","id":"bits","rows":[{"label":"n","bits":"00000000","v":"0"},{"label":"n & 1","bits":"00000000","v":"0","tone":"cur"}],"hi":[7]},{"t":"vars","id":"vars","items":[{"k":"count","v":"3"}]}]},
+  {"line":7,"text":"We counted **3** one-bits.","views":[{"t":"bits","id":"bits","rows":[{"label":"n","bits":"00000000","v":"0"},{"label":"n & 1","bits":"00000000","v":"0","tone":"cur"}],"hi":[7]},{"t":"vars","id":"vars","items":[{"k":"count","v":"3"}]}]},
+  {"line":7,"text":"Done — the answer is **`3`**. 11 in binary is 1011, which contains three 1s.","views":[{"t":"bits","id":"bits","rows":[{"label":"n","bits":"00000000","v":"0"},{"label":"n & 1","bits":"00000000","v":"0","tone":"cur"}],"hi":[7]},{"t":"vars","id":"vars","items":[{"k":"count","v":"3"}]}],"final":true}
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "id": 15,
+ "number": 121,
+ "title": "Best Time to Buy & Sell Stock",
+ "slug": "best-time-to-buy-and-sell-stock",
+ "category": "sliding-window",
+ "difficulty": "Easy",
+ "url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/",
+ "pattern": "Track the lowest price so far",
+ "statement": "`prices[i]` is a stock's price on day `i`. You may buy on one day and sell on a **later** day. Return the largest profit possible, or 0 if no profit can be made.",
+ "example": {
+  "input": "prices = [7,1,5,3,6,4]",
+  "output": "5",
+  "why": "Buy on day 1 at price 1 and sell on day 4 at price 6: 6 − 1 = 5."
+ },
+ "more": [
+  {
+   "input": "prices = [7,6,4,3,1]",
+   "output": "0"
+  },
+  {
+   "input": "prices = [2,4,1]",
+   "output": "2"
+  },
+  {
+   "input": "prices = []",
+   "output": "0"
+  }
+ ],
+ "idea": [
+  "Trying every (buy day, sell day) pair is O(n²).",
+  "If we sell today, the best day to have bought is simply the **cheapest day before today**.",
+  "So walk through the days once, remembering the lowest price seen so far. Each day, check the profit of selling today and keep the best."
+ ],
+ "code": "class Solution:\n    def maxProfit(self, prices: List[int]) -> int:\n        if not prices:\n            return 0\n\n        min_price = float(\"inf\")\n        max_profit = 0\n\n        for price in prices:\n            min_price = min(min_price, price)\n            max_profit = max(max_profit, price - min_price)\n\n        return max_profit",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "One pass over the prices.",
+  "space": "O(1)",
+  "spaceWhy": "Only the lowest price and the best profit are stored."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`prices = [7,1,5,3,6,4]`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"prices","title":"prices","cells":[{"v":"7","n":7},{"v":"1","n":1},{"v":"5","n":5},{"v":"3","n":3},{"v":"6","n":6},{"v":"4","n":4}],"bars":true,"max":7}]},
+  {"line":6,"text":"`min_price` is the cheapest price seen so far — the best day to have **bought**. Nothing has been seen yet, so it starts at infinity.","views":[{"t":"array","id":"prices","title":"prices","cells":[{"v":"7","n":7},{"v":"1","n":1},{"v":"5","n":5},{"v":"3","n":3},{"v":"6","n":6},{"v":"4","n":4}],"bars":true,"max":7},{"t":"vars","id":"vars","items":[{"k":"min_price","v":"∞"}]}]},
+  {"line":7,"text":"`max_profit` is the best profit found so far. Not trading at all earns 0.","views":[{"t":"array","id":"prices","title":"prices","cells":[{"v":"7","n":7},{"v":"1","n":1},{"v":"5","n":5},{"v":"3","n":3},{"v":"6","n":6},{"v":"4","n":4}],"bars":true,"max":7},{"t":"vars","id":"vars","items":[{"k":"min_price","v":"∞"},{"k":"max_profit","v":"0"}]}]},
+  {"line":10,"text":"Day 0: the price is 7, the **cheapest so far**. It becomes the new best day to buy: `min_price` = 7.","views":[{"t":"array","id":"prices","title":"prices","cells":[{"v":"7","tone":"cur","n":7},{"v":"1","n":1},{"v":"5","n":5},{"v":"3","n":3},{"v":"6","n":6},{"v":"4","n":4}],"ptrs":[{"name":"price","at":0}],"bars":true,"max":7},{"t":"vars","id":"vars","items":[{"k":"min_price","v":"7","changed":true},{"k":"max_profit","v":"0"}]}]},
+  {"line":11,"text":"Selling today after buying at 7 would earn 0, which does not beat 0.","views":[{"t":"array","id":"prices","title":"prices","cells":[{"v":"7","tone":"cur","n":7},{"v":"1","n":1},{"v":"5","n":5},{"v":"3","n":3},{"v":"6","n":6},{"v":"4","n":4}],"ptrs":[{"name":"price","at":0}],"bars":true,"max":7},{"t":"vars","id":"vars","items":[{"k":"min_price","v":"7"},{"k":"max_profit","v":"0"}]}]},
+  {"line":10,"text":"Day 1: the price is 1, the **cheapest so far**. It becomes the new best day to buy: `min_price` = 1.","views":[{"t":"array","id":"prices","title":"prices","cells":[{"v":"7","n":7},{"v":"1","tone":"cur","n":1},{"v":"5","n":5},{"v":"3","n":3},{"v":"6","n":6},{"v":"4","n":4}],"ptrs":[{"name":"price","at":1}],"bars":true,"max":7},{"t":"vars","id":"vars","items":[{"k":"min_price","v":"1","changed":true},{"k":"max_profit","v":"0"}]}]},
+  {"line":11,"text":"Selling today after buying at 1 would earn 0, which does not beat 0.","views":[{"t":"array","id":"prices","title":"prices","cells":[{"v":"7","n":7},{"v":"1","tone":"cur","n":1},{"v":"5","n":5},{"v":"3","n":3},{"v":"6","n":6},{"v":"4","n":4}],"ptrs":[{"name":"price","at":1}],"bars":true,"max":7},{"t":"vars","id":"vars","items":[{"k":"min_price","v":"1"},{"k":"max_profit","v":"0"}]}]},
+  {"line":10,"text":"Day 2: the price is 5. The cheapest earlier price is still 1.","views":[{"t":"array","id":"prices","title":"prices","cells":[{"v":"7","n":7},{"v":"1","tone":"alt","n":1},{"v":"5","tone":"cur","n":5},{"v":"3","n":3},{"v":"6","n":6},{"v":"4","n":4}],"ptrs":[{"name":"price","at":2}],"bars":true,"max":7},{"t":"vars","id":"vars","items":[{"k":"min_price","v":"1"},{"k":"max_profit","v":"0"}]}]},
+  {"line":11,"text":"Selling today after buying at 1 earns 5 − 1 = **4** — a new best. `max_profit` = 4.","views":[{"t":"array","id":"prices","title":"prices","cells":[{"v":"7","n":7},{"v":"1","tone":"alt","n":1},{"v":"5","tone":"cur","n":5},{"v":"3","n":3},{"v":"6","n":6},{"v":"4","n":4}],"ptrs":[{"name":"price","at":2}],"bars":true,"max":7},{"t":"vars","id":"vars","items":[{"k":"min_price","v":"1"},{"k":"max_profit","v":"4","changed":true}]}]},
+  {"line":10,"text":"Day 3: the price is 3. The cheapest earlier price is still 1.","views":[{"t":"array","id":"prices","title":"prices","cells":[{"v":"7","n":7},{"v":"1","tone":"alt","n":1},{"v":"5","n":5},{"v":"3","tone":"cur","n":3},{"v":"6","n":6},{"v":"4","n":4}],"ptrs":[{"name":"price","at":3}],"bars":true,"max":7},{"t":"vars","id":"vars","items":[{"k":"min_price","v":"1"},{"k":"max_profit","v":"4"}]}]},
+  {"line":11,"text":"Selling today after buying at 1 would earn 2, which does not beat 4.","views":[{"t":"array","id":"prices","title":"prices","cells":[{"v":"7","n":7},{"v":"1","tone":"alt","n":1},{"v":"5","n":5},{"v":"3","tone":"cur","n":3},{"v":"6","n":6},{"v":"4","n":4}],"ptrs":[{"name":"price","at":3}],"bars":true,"max":7},{"t":"vars","id":"vars","items":[{"k":"min_price","v":"1"},{"k":"max_profit","v":"4"}]}]},
+  {"line":10,"text":"Day 4: the price is 6. The cheapest earlier price is still 1.","views":[{"t":"array","id":"prices","title":"prices","cells":[{"v":"7","n":7},{"v":"1","tone":"alt","n":1},{"v":"5","n":5},{"v":"3","n":3},{"v":"6","tone":"cur","n":6},{"v":"4","n":4}],"ptrs":[{"name":"price","at":4}],"bars":true,"max":7},{"t":"vars","id":"vars","items":[{"k":"min_price","v":"1"},{"k":"max_profit","v":"4"}]}]},
+  {"line":11,"text":"Selling today after buying at 1 earns 6 − 1 = **5** — a new best. `max_profit` = 5.","views":[{"t":"array","id":"prices","title":"prices","cells":[{"v":"7","n":7},{"v":"1","tone":"alt","n":1},{"v":"5","n":5},{"v":"3","n":3},{"v":"6","tone":"cur","n":6},{"v":"4","n":4}],"ptrs":[{"name":"price","at":4}],"bars":true,"max":7},{"t":"vars","id":"vars","items":[{"k":"min_price","v":"1"},{"k":"max_profit","v":"5","changed":true}]}]},
+  {"line":10,"text":"Day 5: the price is 4. The cheapest earlier price is still 1.","views":[{"t":"array","id":"prices","title":"prices","cells":[{"v":"7","n":7},{"v":"1","tone":"alt","n":1},{"v":"5","n":5},{"v":"3","n":3},{"v":"6","n":6},{"v":"4","tone":"cur","n":4}],"ptrs":[{"name":"price","at":5}],"bars":true,"max":7},{"t":"vars","id":"vars","items":[{"k":"min_price","v":"1"},{"k":"max_profit","v":"5"}]}]},
+  {"line":11,"text":"Selling today after buying at 1 would earn 3, which does not beat 5.","views":[{"t":"array","id":"prices","title":"prices","cells":[{"v":"7","n":7},{"v":"1","tone":"alt","n":1},{"v":"5","n":5},{"v":"3","n":3},{"v":"6","n":6},{"v":"4","tone":"cur","n":4}],"ptrs":[{"name":"price","at":5}],"bars":true,"max":7},{"t":"vars","id":"vars","items":[{"k":"min_price","v":"1"},{"k":"max_profit","v":"5"}]}]},
+  {"line":13,"text":"The best profit over all selling days is **5**.","views":[{"t":"array","id":"prices","title":"prices","cells":[{"v":"7","n":7},{"v":"1","tone":"alt","n":1},{"v":"5","n":5},{"v":"3","n":3},{"v":"6","n":6},{"v":"4","n":4}],"bars":true,"max":7},{"t":"vars","id":"vars","items":[{"k":"min_price","v":"1"},{"k":"max_profit","v":"5"}]}]},
+  {"line":13,"text":"Done — the answer is **`5`**. Buy on day 1 at price 1 and sell on day 4 at price 6: 6 − 1 = 5.","views":[{"t":"array","id":"prices","title":"prices","cells":[{"v":"7","n":7},{"v":"1","tone":"alt","n":1},{"v":"5","n":5},{"v":"3","n":3},{"v":"6","n":6},{"v":"4","n":4}],"bars":true,"max":7},{"t":"vars","id":"vars","items":[{"k":"min_price","v":"1"},{"k":"max_profit","v":"5"}]}],"final":true}
+ ]
+}

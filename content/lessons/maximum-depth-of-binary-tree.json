@@ -1,0 +1,56 @@
+{
+ "id": 47,
+ "number": 104,
+ "title": "Maximum Depth of Binary Tree",
+ "slug": "maximum-depth-of-binary-tree",
+ "category": "trees",
+ "difficulty": "Easy",
+ "url": "https://leetcode.com/problems/maximum-depth-of-binary-tree/",
+ "pattern": "Tree recursion: combine the answers of both children",
+ "statement": "Given the `root` of a binary tree, return its **maximum depth**: the number of nodes on the longest path from the root down to a leaf.",
+ "example": {
+  "input": "root = [3,9,20,None,None,15,7]",
+  "output": "3",
+  "why": "The longest path is 3 → 20 → 15 (or 3 → 20 → 7): three nodes."
+ },
+ "more": [
+  {
+   "input": "root = [1,None,2]",
+   "output": "2"
+  },
+  {
+   "input": "root = None",
+   "output": "0"
+  },
+  {
+   "input": "root = [1]",
+   "output": "1"
+  }
+ ],
+ "idea": [
+  "The depth of a tree is 1 (for the root itself) plus the depth of its **deeper** subtree.",
+  "The depth of each subtree is the same question on a smaller tree — so ask it recursively.",
+  "The recursion stops at an empty spot, whose depth is 0. Each node then answers `max(left, right) + 1`."
+ ],
+ "code": "class Solution:\n    def maxDepth(self, root: TreeNode) -> int:\n        if not root:\n            return 0\n\n        left_depth = self.maxDepth(root.left)\n        right_depth = self.maxDepth(root.right)\n\n        return max(left_depth, right_depth) + 1",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "Every node is visited once.",
+  "space": "O(h)",
+  "spaceWhy": "The recursion stack is as deep as the tree's height h."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`root = [3,9,20,None,None,15,7]`**. Each step runs one highlighted line of the code.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"cur"},{"id":2,"v":"9"},{"id":3,"v":"20","l":4,"r":5},{"id":4,"v":"15"},{"id":5,"v":"7"}],"roots":[1]}]},
+  {"line":6,"text":"Node 3 asks its **left** child (9): how deep is your subtree?","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"cur"},{"id":2,"v":"9"},{"id":3,"v":"20","l":4,"r":5},{"id":4,"v":"15"},{"id":5,"v":"7"}],"roots":[1]}]},
+  {"line":3,"text":"An empty spot (None) has depth 0. That is the base case which stops the recursion.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"win"},{"id":2,"v":"9","tone":"win"},{"id":3,"v":"20","l":4,"r":5},{"id":4,"v":"15"},{"id":5,"v":"7"}],"roots":[1]}]},
+  {"line":9,"text":"Node 9 is a leaf: both sides are empty (depth 0), so its depth is 0 + 1 = **1**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"win"},{"id":2,"v":"9","tone":"cur"},{"id":3,"v":"20","l":4,"r":5},{"id":4,"v":"15"},{"id":5,"v":"7"}],"roots":[1]}]},
+  {"line":7,"text":"The left side of node 3 answered 1. Now it asks its **right** child (20).","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"cur"},{"id":2,"v":"9","badge":"1"},{"id":3,"v":"20","l":4,"r":5},{"id":4,"v":"15"},{"id":5,"v":"7"}],"roots":[1]}]},
+  {"line":6,"text":"Node 20 asks its **left** child (15): how deep is your subtree?","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"win"},{"id":2,"v":"9","badge":"1"},{"id":3,"v":"20","l":4,"r":5,"tone":"cur"},{"id":4,"v":"15"},{"id":5,"v":"7"}],"roots":[1]}]},
+  {"line":9,"text":"Node 15 is a leaf: both sides are empty (depth 0), so its depth is 0 + 1 = **1**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"win"},{"id":2,"v":"9","badge":"1"},{"id":3,"v":"20","l":4,"r":5,"tone":"win"},{"id":4,"v":"15","tone":"cur"},{"id":5,"v":"7"}],"roots":[1]}]},
+  {"line":7,"text":"The left side of node 20 answered 1. Now it asks its **right** child (7).","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"win"},{"id":2,"v":"9","badge":"1"},{"id":3,"v":"20","l":4,"r":5,"tone":"cur"},{"id":4,"v":"15","badge":"1"},{"id":5,"v":"7"}],"roots":[1]}]},
+  {"line":9,"text":"Node 7 is a leaf: both sides are empty (depth 0), so its depth is 0 + 1 = **1**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"win"},{"id":2,"v":"9","badge":"1"},{"id":3,"v":"20","l":4,"r":5,"tone":"win"},{"id":4,"v":"15","badge":"1"},{"id":5,"v":"7","tone":"cur"}],"roots":[1]}]},
+  {"line":9,"text":"Node 20: left depth 1, right depth 1. Take the deeper side and add this node: max(1, 1) + 1 = **2**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"win"},{"id":2,"v":"9","badge":"1"},{"id":3,"v":"20","l":4,"r":5,"tone":"cur"},{"id":4,"v":"15","badge":"1"},{"id":5,"v":"7","badge":"1"}],"roots":[1]}]},
+  {"line":9,"text":"Node 3: left depth 1, right depth 2. Take the deeper side and add this node: max(1, 2) + 1 = **3**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"cur"},{"id":2,"v":"9","badge":"1"},{"id":3,"v":"20","l":4,"r":5,"badge":"2"},{"id":4,"v":"15","badge":"1"},{"id":5,"v":"7","badge":"1"}],"roots":[1]}]},
+  {"line":9,"text":"Done — the answer is **`3`**. The longest path is 3 → 20 → 15 (or 3 → 20 → 7): three nodes.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"cur","badge":"3"},{"id":2,"v":"9","badge":"1"},{"id":3,"v":"20","l":4,"r":5,"badge":"2"},{"id":4,"v":"15","badge":"1"},{"id":5,"v":"7","badge":"1"}],"roots":[1]}],"final":true}
+ ]
+}

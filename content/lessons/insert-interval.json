@@ -1,0 +1,62 @@
+{
+ "id": 130,
+ "number": 57,
+ "title": "Insert Interval",
+ "slug": "insert-interval",
+ "category": "intervals",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/insert-interval/",
+ "pattern": "One pass: left of it, right of it, or overlapping",
+ "statement": "`intervals` is a list of non-overlapping intervals **sorted by start**. Insert `newInterval` so that the list stays sorted and non-overlapping, merging wherever necessary.",
+ "example": {
+  "input": "intervals = [[1,2],[3,5],[6,7],[8,10],[12,16]], newInterval = [4,8]",
+  "output": "[[1,2],[3,10],[12,16]]",
+  "why": "[4, 8] overlaps [3, 5], [6, 7] and [8, 10]; together they become [3, 10]."
+ },
+ "more": [
+  {
+   "input": "intervals = [[1,3],[6,9]], newInterval = [2,5]",
+   "output": "[[1,5],[6,9]]"
+  },
+  {
+   "input": "intervals = [], newInterval = [5,7]",
+   "output": "[[5,7]]"
+  },
+  {
+   "input": "intervals = [[1,5]], newInterval = [6,8]",
+   "output": "[[1,5],[6,8]]"
+  },
+  {
+   "input": "intervals = [[3,5]], newInterval = [0,1]",
+   "output": "[[0,1],[3,5]]"
+  },
+  {
+   "input": "intervals = [[1,5]], newInterval = [2,3]",
+   "output": "[[1,5]]"
+  }
+ ],
+ "idea": [
+  "Carry one **pending** interval (at first the new one) through the sorted list and compare it with each interval.",
+  "An interval that ends **before** the pending one starts lies completely to its left: copy it to the result. An interval that **overlaps** the pending one is absorbed: stretch the pending interval to cover both.",
+  "The first interval that starts **after** the pending one ends lies completely to its right: the pending interval is finished and goes into the result — and that interval becomes the new pending one. Append whatever is pending at the end."
+ ],
+ "code": "class Solution:\n    def insert(\n        self, intervals: List[List[int]], newInterval: List[int]\n    ) -> List[List[int]]:\n        result = []\n        new_start, new_end = newInterval\n\n        for interval in intervals:\n            if interval[1] < new_start:\n                result.append(interval)\n            elif interval[0] > new_end:\n                result.append([new_start, new_end])\n                new_start, new_end = interval\n            else:\n                new_start = min(new_start, interval[0])\n                new_end = max(new_end, interval[1])\n\n        result.append([new_start, new_end])\n        return result",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "One pass over the intervals.",
+  "space": "O(n)",
+  "spaceWhy": "The result list."
+ },
+ "steps": [
+  {"line":2,"text":"Our example input is drawn on the stage. Each step runs one highlighted line of the code.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":1,"b":2},{"a":3,"b":5},{"a":6,"b":7},{"a":8,"b":10},{"a":12,"b":16}]}],"min":1,"max":16}]},
+  {"line":6,"text":"The interval to insert, [4, 8], is the **pending** interval (purple). Walk through the sorted list and compare each interval with it.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":1,"b":2},{"a":3,"b":5},{"a":6,"b":7},{"a":8,"b":10},{"a":12,"b":16,"tone":"cur"}]},{"label":"pending","items":[{"a":4,"b":8,"tone":"alt"}]},{"label":"result","items":[]}],"min":1,"max":16}]},
+  {"line":10,"text":"[1, 2] ends at 2, **before** the pending interval starts (4). It lies entirely to the left — copy it to the result unchanged.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":1,"b":2,"tone":"cur"},{"a":3,"b":5},{"a":6,"b":7},{"a":8,"b":10},{"a":12,"b":16}]},{"label":"pending","items":[{"a":4,"b":8,"tone":"alt"}]},{"label":"result","items":[{"a":1,"b":2,"tone":"good"}]}],"min":1,"max":16}]},
+  {"line":16,"text":"[3, 5] **overlaps** the pending interval [4, 8]. Absorb it: start = min(4, 3) = 3, end = max(8, 5) = 8. Pending is now **[3, 8]**.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":1,"b":2},{"a":3,"b":5,"tone":"cur"},{"a":6,"b":7},{"a":8,"b":10},{"a":12,"b":16}]},{"label":"pending","items":[{"a":3,"b":8,"tone":"alt"}]},{"label":"result","items":[{"a":1,"b":2}]}],"min":1,"max":16}]},
+  {"line":16,"text":"[6, 7] **overlaps** the pending interval [3, 8]. Absorb it: start = min(3, 6) = 3, end = max(8, 7) = 8. Pending is now **[3, 8]**.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":1,"b":2},{"a":3,"b":5},{"a":6,"b":7,"tone":"cur"},{"a":8,"b":10},{"a":12,"b":16}]},{"label":"pending","items":[{"a":3,"b":8,"tone":"alt"}]},{"label":"result","items":[{"a":1,"b":2}]}],"min":1,"max":16}]},
+  {"line":16,"text":"[8, 10] **overlaps** the pending interval [3, 8]. Absorb it: start = min(3, 8) = 3, end = max(8, 10) = 10. Pending is now **[3, 10]**.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":1,"b":2},{"a":3,"b":5},{"a":6,"b":7},{"a":8,"b":10,"tone":"cur"},{"a":12,"b":16}]},{"label":"pending","items":[{"a":3,"b":10,"tone":"alt"}]},{"label":"result","items":[{"a":1,"b":2}]}],"min":1,"max":16}]},
+  {"line":13,"text":"[12, 16] starts at 12, **after** the pending interval [3, 10] ends. Nothing later can overlap it either, so [3, 10] goes into the result — and [12, 16] becomes the new pending interval.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":1,"b":2},{"a":3,"b":5},{"a":6,"b":7},{"a":8,"b":10},{"a":12,"b":16,"tone":"cur"}]},{"label":"pending","items":[{"a":12,"b":16,"tone":"alt"}]},{"label":"result","items":[{"a":1,"b":2},{"a":3,"b":10,"tone":"good"}]}],"min":1,"max":16}]},
+  {"line":18,"text":"The list is finished. Whatever is still pending, [12, 16], is appended last.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":1,"b":2},{"a":3,"b":5},{"a":6,"b":7},{"a":8,"b":10},{"a":12,"b":16}]},{"label":"pending","items":[{"a":12,"b":16,"tone":"alt"}]},{"label":"result","items":[{"a":1,"b":2},{"a":3,"b":10},{"a":12,"b":16,"tone":"good"}]}],"min":1,"max":16}]},
+  {"line":19,"text":"The new interval has been inserted and merged: **[[1, 2], [3, 10], [12, 16]]**.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":1,"b":2},{"a":3,"b":5},{"a":6,"b":7},{"a":8,"b":10},{"a":12,"b":16}]},{"label":"pending","items":[{"a":12,"b":16,"tone":"alt"}]},{"label":"result","items":[{"a":1,"b":2},{"a":3,"b":10},{"a":12,"b":16}]}],"min":1,"max":16}]},
+  {"line":19,"text":"Done — the answer is **`[[1,2],[3,10],[12,16]]`**. [4, 8] overlaps [3, 5], [6, 7] and [8, 10]; together they become [3, 10].","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":1,"b":2},{"a":3,"b":5},{"a":6,"b":7},{"a":8,"b":10},{"a":12,"b":16}]},{"label":"pending","items":[{"a":12,"b":16,"tone":"alt"}]},{"label":"result","items":[{"a":1,"b":2},{"a":3,"b":10},{"a":12,"b":16}]}],"min":1,"max":16}],"final":true}
+ ]
+}

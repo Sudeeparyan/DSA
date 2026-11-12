@@ -1,0 +1,60 @@
+{
+ "id": 4,
+ "number": 49,
+ "title": "Group Anagrams",
+ "slug": "group-anagrams",
+ "category": "arrays-hashing",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/group-anagrams/",
+ "pattern": "Hash map keyed by a canonical form",
+ "statement": "Given a list of strings, group the **anagrams** together (words made of exactly the same letters). The groups and the words inside them may be returned in any order.",
+ "example": {
+  "input": "strs = [\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"]",
+  "output": "[[\"eat\",\"tea\",\"ate\"],[\"tan\",\"nat\"],[\"bat\"]]",
+  "why": "eat / tea / ate share the letters a, e, t; tan / nat share a, n, t; bat is alone."
+ },
+ "more": [
+  {
+   "input": "strs = [\"\"]",
+   "output": "[[\"\"]]"
+  },
+  {
+   "input": "strs = [\"a\"]",
+   "output": "[[\"a\"]]"
+  },
+  {
+   "input": "strs = [\"ab\",\"ba\",\"abc\"]",
+   "output": "[[\"ab\",\"ba\"],[\"abc\"]]"
+  }
+ ],
+ "idea": [
+  "Anagrams contain exactly the same letters. We need a *label* that is identical for all anagrams and different for everything else.",
+  "**Sort the letters** of a word: `eat`, `tea` and `ate` all become `aet`. That sorted string is the label.",
+  "Use the label as a hash-map key and append each word to its key's list. Each list in the map is one group."
+ ],
+ "code": "class Solution:\n    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:\n        anagrams_map = {}\n\n        for word in strs:\n            sorted_word = \"\".join(sorted(word))\n            if sorted_word in anagrams_map:\n                anagrams_map[sorted_word].append(word)\n            else:\n                anagrams_map[sorted_word] = [word]\n\n        return list(anagrams_map.values())",
+ "complexity": {
+  "time": "O(n · k log k)",
+  "timeWhy": "n words, and sorting a word of length k costs k log k.",
+  "space": "O(n · k)",
+  "spaceWhy": "The map stores every word once."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`strs = [\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"]`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"strs","title":"strs","cells":[{"v":"eat"},{"v":"tea"},{"v":"tan"},{"v":"ate"},{"v":"nat"},{"v":"bat"}]}]},
+  {"line":3,"text":"The map will go from a *sorted-letters key* to the list of words that share it.","views":[{"t":"array","id":"strs","title":"strs","cells":[{"v":"eat"},{"v":"tea"},{"v":"tan"},{"v":"ate"},{"v":"nat"},{"v":"bat"}]},{"t":"map","id":"anagrams_map","title":"anagrams_map  (sorted letters → words)","kind":"map","entries":[]}]},
+  {"line":6,"text":"Sort the letters of `eat` → `aet`. Every anagram of `eat` produces this very same key.","views":[{"t":"array","id":"strs","title":"strs","cells":[{"v":"eat","tone":"cur"},{"v":"tea"},{"v":"tan"},{"v":"ate"},{"v":"nat"},{"v":"bat"}],"ptrs":[{"name":"word","at":0}]},{"t":"map","id":"anagrams_map","title":"anagrams_map  (sorted letters → words)","kind":"map","entries":[]},{"t":"vars","id":"vars","items":[{"k":"sorted_word","v":"\"aet\""}]}]},
+  {"line":10,"text":"No group has the key `aet` yet. Start a new group containing `eat`.","views":[{"t":"array","id":"strs","title":"strs","cells":[{"v":"eat","tone":"cur"},{"v":"tea"},{"v":"tan"},{"v":"ate"},{"v":"nat"},{"v":"bat"}],"ptrs":[{"name":"word","at":0}]},{"t":"map","id":"anagrams_map","title":"anagrams_map  (sorted letters → words)","kind":"map","entries":[{"k":"aet","v":"[eat]","tone":"cur"}]},{"t":"vars","id":"vars","items":[{"k":"sorted_word","v":"\"aet\""}]}]},
+  {"line":6,"text":"Sort the letters of `tea` → `aet`. Every anagram of `tea` produces this very same key.","views":[{"t":"array","id":"strs","title":"strs","cells":[{"v":"eat","tone":"dim"},{"v":"tea","tone":"cur"},{"v":"tan"},{"v":"ate"},{"v":"nat"},{"v":"bat"}],"ptrs":[{"name":"word","at":1}]},{"t":"map","id":"anagrams_map","title":"anagrams_map  (sorted letters → words)","kind":"map","entries":[{"k":"aet","v":"[eat]"}]},{"t":"vars","id":"vars","items":[{"k":"sorted_word","v":"\"aet\""}]}]},
+  {"line":8,"text":"The key `aet` already exists, so `tea` joins that group: ['eat', 'tea'].","views":[{"t":"array","id":"strs","title":"strs","cells":[{"v":"eat","tone":"dim"},{"v":"tea","tone":"cur"},{"v":"tan"},{"v":"ate"},{"v":"nat"},{"v":"bat"}],"ptrs":[{"name":"word","at":1}]},{"t":"map","id":"anagrams_map","title":"anagrams_map  (sorted letters → words)","kind":"map","entries":[{"k":"aet","v":"[eat,tea]","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"sorted_word","v":"\"aet\""}]}]},
+  {"line":6,"text":"Sort the letters of `tan` → `ant`. Every anagram of `tan` produces this very same key.","views":[{"t":"array","id":"strs","title":"strs","cells":[{"v":"eat","tone":"dim"},{"v":"tea","tone":"dim"},{"v":"tan","tone":"cur"},{"v":"ate"},{"v":"nat"},{"v":"bat"}],"ptrs":[{"name":"word","at":2}]},{"t":"map","id":"anagrams_map","title":"anagrams_map  (sorted letters → words)","kind":"map","entries":[{"k":"aet","v":"[eat,tea]"}]},{"t":"vars","id":"vars","items":[{"k":"sorted_word","v":"\"ant\"","changed":true}]}]},
+  {"line":10,"text":"No group has the key `ant` yet. Start a new group containing `tan`.","views":[{"t":"array","id":"strs","title":"strs","cells":[{"v":"eat","tone":"dim"},{"v":"tea","tone":"dim"},{"v":"tan","tone":"cur"},{"v":"ate"},{"v":"nat"},{"v":"bat"}],"ptrs":[{"name":"word","at":2}]},{"t":"map","id":"anagrams_map","title":"anagrams_map  (sorted letters → words)","kind":"map","entries":[{"k":"aet","v":"[eat,tea]"},{"k":"ant","v":"[tan]","tone":"cur"}]},{"t":"vars","id":"vars","items":[{"k":"sorted_word","v":"\"ant\""}]}]},
+  {"line":6,"text":"Sort the letters of `ate` → `aet`. Every anagram of `ate` produces this very same key.","views":[{"t":"array","id":"strs","title":"strs","cells":[{"v":"eat","tone":"dim"},{"v":"tea","tone":"dim"},{"v":"tan","tone":"dim"},{"v":"ate","tone":"cur"},{"v":"nat"},{"v":"bat"}],"ptrs":[{"name":"word","at":3}]},{"t":"map","id":"anagrams_map","title":"anagrams_map  (sorted letters → words)","kind":"map","entries":[{"k":"aet","v":"[eat,tea]"},{"k":"ant","v":"[tan]"}]},{"t":"vars","id":"vars","items":[{"k":"sorted_word","v":"\"aet\"","changed":true}]}]},
+  {"line":8,"text":"The key `aet` already exists, so `ate` joins that group: ['eat', 'tea', 'ate'].","views":[{"t":"array","id":"strs","title":"strs","cells":[{"v":"eat","tone":"dim"},{"v":"tea","tone":"dim"},{"v":"tan","tone":"dim"},{"v":"ate","tone":"cur"},{"v":"nat"},{"v":"bat"}],"ptrs":[{"name":"word","at":3}]},{"t":"map","id":"anagrams_map","title":"anagrams_map  (sorted letters → words)","kind":"map","entries":[{"k":"aet","v":"[eat,tea,ate]","tone":"good"},{"k":"ant","v":"[tan]"}]},{"t":"vars","id":"vars","items":[{"k":"sorted_word","v":"\"aet\""}]}]},
+  {"line":6,"text":"Sort the letters of `nat` → `ant`. Every anagram of `nat` produces this very same key.","views":[{"t":"array","id":"strs","title":"strs","cells":[{"v":"eat","tone":"dim"},{"v":"tea","tone":"dim"},{"v":"tan","tone":"dim"},{"v":"ate","tone":"dim"},{"v":"nat","tone":"cur"},{"v":"bat"}],"ptrs":[{"name":"word","at":4}]},{"t":"map","id":"anagrams_map","title":"anagrams_map  (sorted letters → words)","kind":"map","entries":[{"k":"aet","v":"[eat,tea,ate]"},{"k":"ant","v":"[tan]"}]},{"t":"vars","id":"vars","items":[{"k":"sorted_word","v":"\"ant\"","changed":true}]}]},
+  {"line":8,"text":"The key `ant` already exists, so `nat` joins that group: ['tan', 'nat'].","views":[{"t":"array","id":"strs","title":"strs","cells":[{"v":"eat","tone":"dim"},{"v":"tea","tone":"dim"},{"v":"tan","tone":"dim"},{"v":"ate","tone":"dim"},{"v":"nat","tone":"cur"},{"v":"bat"}],"ptrs":[{"name":"word","at":4}]},{"t":"map","id":"anagrams_map","title":"anagrams_map  (sorted letters → words)","kind":"map","entries":[{"k":"aet","v":"[eat,tea,ate]"},{"k":"ant","v":"[tan,nat]","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"sorted_word","v":"\"ant\""}]}]},
+  {"line":6,"text":"Sort the letters of `bat` → `abt`. Every anagram of `bat` produces this very same key.","views":[{"t":"array","id":"strs","title":"strs","cells":[{"v":"eat","tone":"dim"},{"v":"tea","tone":"dim"},{"v":"tan","tone":"dim"},{"v":"ate","tone":"dim"},{"v":"nat","tone":"dim"},{"v":"bat","tone":"cur"}],"ptrs":[{"name":"word","at":5}]},{"t":"map","id":"anagrams_map","title":"anagrams_map  (sorted letters → words)","kind":"map","entries":[{"k":"aet","v":"[eat,tea,ate]"},{"k":"ant","v":"[tan,nat]"}]},{"t":"vars","id":"vars","items":[{"k":"sorted_word","v":"\"abt\"","changed":true}]}]},
+  {"line":10,"text":"No group has the key `abt` yet. Start a new group containing `bat`.","views":[{"t":"array","id":"strs","title":"strs","cells":[{"v":"eat","tone":"dim"},{"v":"tea","tone":"dim"},{"v":"tan","tone":"dim"},{"v":"ate","tone":"dim"},{"v":"nat","tone":"dim"},{"v":"bat","tone":"cur"}],"ptrs":[{"name":"word","at":5}]},{"t":"map","id":"anagrams_map","title":"anagrams_map  (sorted letters → words)","kind":"map","entries":[{"k":"aet","v":"[eat,tea,ate]"},{"k":"ant","v":"[tan,nat]"},{"k":"abt","v":"[bat]","tone":"cur"}]},{"t":"vars","id":"vars","items":[{"k":"sorted_word","v":"\"abt\""}]}]},
+  {"line":12,"text":"Each value in the map is one complete group of anagrams. Return them all.","views":[{"t":"array","id":"strs","title":"strs","cells":[{"v":"eat","tone":"dim"},{"v":"tea","tone":"dim"},{"v":"tan","tone":"dim"},{"v":"ate","tone":"dim"},{"v":"nat","tone":"dim"},{"v":"bat","tone":"dim"}]},{"t":"map","id":"anagrams_map","title":"anagrams_map  (sorted letters → words)","kind":"map","entries":[{"k":"aet","v":"[eat,tea,ate]"},{"k":"ant","v":"[tan,nat]"},{"k":"abt","v":"[bat]"}]},{"t":"vars","id":"vars","items":[{"k":"sorted_word","v":"\"abt\""}]}]},
+  {"line":12,"text":"Done — the answer is **`[[\"eat\",\"tea\",\"ate\"],[\"tan\",\"nat\"],[\"bat\"]]`**. eat / tea / ate share the letters a, e, t; tan / nat share a, n, t; bat is alone.","views":[{"t":"array","id":"strs","title":"strs","cells":[{"v":"eat","tone":"dim"},{"v":"tea","tone":"dim"},{"v":"tan","tone":"dim"},{"v":"ate","tone":"dim"},{"v":"nat","tone":"dim"},{"v":"bat","tone":"dim"}]},{"t":"map","id":"anagrams_map","title":"anagrams_map  (sorted letters → words)","kind":"map","entries":[{"k":"aet","v":"[eat,tea,ate]"},{"k":"ant","v":"[tan,nat]"},{"k":"abt","v":"[bat]"}]},{"t":"vars","id":"vars","items":[{"k":"sorted_word","v":"\"abt\""}]}],"final":true}
+ ]
+}

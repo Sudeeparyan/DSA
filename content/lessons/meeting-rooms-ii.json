@@ -1,0 +1,61 @@
+{
+ "id": 134,
+ "number": 253,
+ "title": "Meeting Rooms II",
+ "slug": "meeting-rooms-ii",
+ "category": "intervals",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/meeting-rooms-ii/",
+ "pattern": "Sort by start + min-heap of end times",
+ "statement": "Given the `[start, end]` times of meetings, return the **minimum number of rooms** needed so that no two meetings in the same room overlap.",
+ "example": {
+  "input": "intervals = [[0,30],[15,20],[5,10]]",
+  "output": "2",
+  "why": "[0, 30] occupies one room the whole time; [5, 10] and [15, 20] can share a second room."
+ },
+ "more": [
+  {
+   "input": "intervals = [[7,10],[2,4]]",
+   "output": "1"
+  },
+  {
+   "input": "intervals = []",
+   "output": "0"
+  },
+  {
+   "input": "intervals = [[1,5],[2,6],[3,7]]",
+   "output": "3"
+  },
+  {
+   "input": "intervals = [[1,5],[5,8],[8,9]]",
+   "output": "1"
+  },
+  {
+   "input": "intervals = [[0,30],[5,10],[15,20]]",
+   "output": "2"
+  }
+ ],
+ "idea": [
+  "Handle the meetings in order of **start time**. When a meeting starts, the only question is: has some room become free by now?",
+  "Keep a **min-heap of end times**, one entry per room in use. Its top is the room that frees up first — if even that one is still busy, every room is.",
+  "If the earliest-ending room is free (its end ≤ this start), reuse it: pop its end time. Either way push this meeting's end time. The heap's size at the end is the number of rooms."
+ ],
+ "code": "import heapq\n\nclass Solution:\n    def minMeetingRooms(self, intervals: List[List[int]]) -> int:\n        if not intervals:\n            return 0\n\n        intervals.sort(key=lambda x: x[0])\n        min_heap = []\n        heapq.heappush(min_heap, intervals[0][1])\n\n        for i in range(1, len(intervals)):\n            if intervals[i][0] >= min_heap[0]:\n                heapq.heappop(min_heap)\n            heapq.heappush(min_heap, intervals[i][1])\n\n        return len(min_heap)",
+ "complexity": {
+  "time": "O(n log n)",
+  "timeWhy": "Sorting, plus one heap push/pop per meeting.",
+  "space": "O(n)",
+  "spaceWhy": "The heap can hold one end time per meeting."
+ },
+ "steps": [
+  {"line":4,"text":"Our example: **`intervals = [[0,30],[15,20],[5,10]]`**. Each step runs one highlighted line of the code.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":0,"b":30},{"a":15,"b":20},{"a":5,"b":10}]}],"min":0,"max":30}]},
+  {"line":8,"text":"Sort the meetings by start time, so they are handled in the order they begin.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":0,"b":30},{"a":5,"b":10},{"a":15,"b":20}]}],"min":0,"max":30}]},
+  {"line":10,"text":"The first meeting [0, 30] takes a room. The heap stores, for each room in use, **when its meeting ends** — the top is the room that frees up first.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":0,"b":30,"tone":"cur"},{"a":5,"b":10},{"a":15,"b":20}]}],"marks":[{"x":30,"label":"earliest end"}],"min":0,"max":30},{"t":"tree","id":"min_heap","title":"min_heap  (end time of the meeting in each room)","nodes":[{"id":1,"v":"30"}],"roots":[1],"shape":"circle"}]},
+  {"line":13,"text":"Meeting [5, 10] starts at 5, but even the room that frees up first is busy until 30. A **new room** is needed.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":0,"b":30},{"a":5,"b":10,"tone":"cur"},{"a":15,"b":20}]}],"marks":[{"x":30,"label":"earliest end"}],"min":0,"max":30},{"t":"tree","id":"min_heap","title":"min_heap  (end time of the meeting in each room)","nodes":[{"id":1,"v":"30"}],"roots":[1],"shape":"circle"}]},
+  {"line":15,"text":"This meeting's room is now busy until 10. Rooms in use: **2**.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":0,"b":30},{"a":5,"b":10,"tone":"cur"},{"a":15,"b":20}]}],"marks":[{"x":10,"label":"earliest end"}],"min":0,"max":30},{"t":"tree","id":"min_heap","title":"min_heap  (end time of the meeting in each room)","nodes":[{"id":1,"v":"10","l":2},{"id":2,"v":"30"}],"roots":[1],"shape":"circle"}]},
+  {"line":13,"text":"Meeting [15, 20] starts at 15. The earliest room is free from 10 — in time. **Reuse that room.**","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":0,"b":30},{"a":5,"b":10},{"a":15,"b":20,"tone":"cur"}]}],"marks":[{"x":10,"label":"earliest end"}],"min":0,"max":30},{"t":"tree","id":"min_heap","title":"min_heap  (end time of the meeting in each room)","nodes":[{"id":1,"v":"10","l":2},{"id":2,"v":"30"}],"roots":[1],"shape":"circle"}]},
+  {"line":15,"text":"This meeting's room is now busy until 20. Rooms in use: **2**.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":0,"b":30},{"a":5,"b":10},{"a":15,"b":20,"tone":"cur"}]}],"marks":[{"x":20,"label":"earliest end"}],"min":0,"max":30},{"t":"tree","id":"min_heap","title":"min_heap  (end time of the meeting in each room)","nodes":[{"id":1,"v":"20","l":2},{"id":2,"v":"30"}],"roots":[1],"shape":"circle"}]},
+  {"line":17,"text":"Every meeting has a room. Rooms needed: **2**.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":0,"b":30},{"a":5,"b":10},{"a":15,"b":20,"tone":"cur"}]}],"marks":[{"x":20,"label":"earliest end"}],"min":0,"max":30},{"t":"tree","id":"min_heap","title":"min_heap  (end time of the meeting in each room)","nodes":[{"id":1,"v":"20","l":2},{"id":2,"v":"30"}],"roots":[1],"shape":"circle"}]},
+  {"line":17,"text":"Done — the answer is **`2`**. [0, 30] occupies one room the whole time; [5, 10] and [15, 20] can share a second room.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":0,"b":30},{"a":5,"b":10},{"a":15,"b":20,"tone":"cur"}]}],"marks":[{"x":20,"label":"earliest end"}],"min":0,"max":30},{"t":"tree","id":"min_heap","title":"min_heap  (end time of the meeting in each room)","nodes":[{"id":1,"v":"20","l":2},{"id":2,"v":"30"}],"roots":[1],"shape":"circle"}],"final":true}
+ ]
+}

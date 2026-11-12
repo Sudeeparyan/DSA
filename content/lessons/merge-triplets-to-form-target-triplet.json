@@ -1,0 +1,57 @@
+{
+ "id": 127,
+ "number": 1899,
+ "title": "Merge Triplets to Form Target Triplet",
+ "slug": "merge-triplets-to-form-target-triplet",
+ "category": "greedy",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/merge-triplets-to-form-target-triplet/",
+ "pattern": "Greedy: use every triplet that cannot overshoot",
+ "statement": "Merging two triplets takes the **maximum** in each of the three positions. Given `triplets` and a `target` triplet, return `True` if `target` can be obtained by merging some of the triplets (any number of them, in any order).",
+ "example": {
+  "input": "triplets = [[2,5,3],[1,8,4],[1,7,5]], target = [2,7,5]",
+  "output": "True",
+  "why": "Merging [2, 5, 3] and [1, 7, 5] gives [2, 7, 5]. The triplet [1, 8, 4] must be avoided because of its 8."
+ },
+ "more": [
+  {
+   "input": "triplets = [[3,4,5],[4,5,6]], target = [3,2,5]",
+   "output": "False"
+  },
+  {
+   "input": "triplets = [[2,5,3],[2,3,4],[1,2,5],[5,2,3]], target = [5,5,5]",
+   "output": "True"
+  },
+  {
+   "input": "triplets = [[1,1,1]], target = [1,1,1]",
+   "output": "True"
+  },
+  {
+   "input": "triplets = [[1,1,1]], target = [1,1,2]",
+   "output": "False"
+  }
+ ],
+ "idea": [
+  "Merging only ever makes values **larger**. A triplet with any value above the target at that position would push it past the target for good — such a triplet can never be used.",
+  "Every other triplet is harmless: all its values are ≤ the target, so merging it in can never overshoot. So simply **merge all harmless triplets**.",
+  "If that merged result equals the target, the answer is `True`. Otherwise some target value is not supplied by any usable triplet → `False`."
+ ],
+ "code": "class Solution:\n    def mergeTriplets(self, triplets: List[List[int]], target: List[int]) -> bool:\n        max_values = [0, 0, 0]\n\n        for triplet in triplets:\n            if (\n                triplet[0] <= target[0]\n                and triplet[1] <= target[1]\n                and triplet[2] <= target[2]\n            ):\n                max_values = [max(max_values[i], triplet[i]) for i in range(3)]\n\n        return max_values == target",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "One pass over the triplets.",
+  "space": "O(1)",
+  "spaceWhy": "Three numbers."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`triplets = [[2,5,3],[1,8,4],[1,7,5]], target = [2,7,5]`**. Each step runs one highlighted line of the code.","views":[{"t":"grid","id":"triplets","title":"triplets  (one per row)","cells":[[{"v":"2"},{"v":"5"},{"v":"3"}],[{"v":"1"},{"v":"8"},{"v":"4"}],[{"v":"1"},{"v":"7"},{"v":"5"}]]},{"t":"array","id":"target","title":"target","cells":[{"v":"2"},{"v":"7"},{"v":"5"}],"idx":false}]},
+  {"line":3,"text":"`max_values` will be the merge (position-wise maximum) of every triplet we decide to use. Nothing is used yet.","views":[{"t":"grid","id":"triplets","title":"triplets  (one per row)","cells":[[{"v":"2"},{"v":"5"},{"v":"3"}],[{"v":"1"},{"v":"8"},{"v":"4"}],[{"v":"1"},{"v":"7"},{"v":"5"}]]},{"t":"array","id":"target","title":"target","cells":[{"v":"2"},{"v":"7"},{"v":"5"}],"idx":false},{"t":"array","id":"max_values","title":"max_values  (merge of the triplets used so far)","cells":[{"v":"0"},{"v":"0"},{"v":"0"}],"idx":false}]},
+  {"line":6,"text":"[2, 5, 3]: every value is ≤ the target [2, 7, 5] in its position, so using it can never overshoot. Merge it in.","views":[{"t":"grid","id":"triplets","title":"triplets  (one per row)","cells":[[{"v":"2","tone":"cur"},{"v":"5","tone":"cur"},{"v":"3","tone":"cur"}],[{"v":"1"},{"v":"8"},{"v":"4"}],[{"v":"1"},{"v":"7"},{"v":"5"}]]},{"t":"array","id":"target","title":"target","cells":[{"v":"2"},{"v":"7"},{"v":"5"}],"idx":false},{"t":"array","id":"max_values","title":"max_values  (merge of the triplets used so far)","cells":[{"v":"0"},{"v":"0"},{"v":"0"}],"idx":false}]},
+  {"line":11,"text":"Merged: `max_values` = **[2, 5, 3]**.","views":[{"t":"grid","id":"triplets","title":"triplets  (one per row)","cells":[[{"v":"2","tone":"cur"},{"v":"5","tone":"cur"},{"v":"3","tone":"cur"}],[{"v":"1"},{"v":"8"},{"v":"4"}],[{"v":"1"},{"v":"7"},{"v":"5"}]]},{"t":"array","id":"target","title":"target","cells":[{"v":"2"},{"v":"7"},{"v":"5"}],"idx":false},{"t":"array","id":"max_values","title":"max_values  (merge of the triplets used so far)","cells":[{"v":"2","tone":"good"},{"v":"5"},{"v":"3"}],"idx":false}]},
+  {"line":6,"text":"[1, 8, 4]: position 1 holds 8, which is **larger** than the target's 7. Merging it would overshoot for good — never use it.","views":[{"t":"grid","id":"triplets","title":"triplets  (one per row)","cells":[[{"v":"2","tone":"good"},{"v":"5","tone":"good"},{"v":"3","tone":"good"}],[{"v":"1","tone":"cur"},{"v":"8","tone":"cur"},{"v":"4","tone":"cur"}],[{"v":"1"},{"v":"7"},{"v":"5"}]]},{"t":"array","id":"target","title":"target","cells":[{"v":"2"},{"v":"7"},{"v":"5"}],"idx":false},{"t":"array","id":"max_values","title":"max_values  (merge of the triplets used so far)","cells":[{"v":"2","tone":"good"},{"v":"5"},{"v":"3"}],"idx":false}]},
+  {"line":6,"text":"[1, 7, 5]: every value is ≤ the target [2, 7, 5] in its position, so using it can never overshoot. Merge it in.","views":[{"t":"grid","id":"triplets","title":"triplets  (one per row)","cells":[[{"v":"2","tone":"good"},{"v":"5","tone":"good"},{"v":"3","tone":"good"}],[{"v":"1","tone":"bad"},{"v":"8","tone":"bad"},{"v":"4","tone":"bad"}],[{"v":"1","tone":"cur"},{"v":"7","tone":"cur"},{"v":"5","tone":"cur"}]]},{"t":"array","id":"target","title":"target","cells":[{"v":"2"},{"v":"7"},{"v":"5"}],"idx":false},{"t":"array","id":"max_values","title":"max_values  (merge of the triplets used so far)","cells":[{"v":"2","tone":"good"},{"v":"5"},{"v":"3"}],"idx":false}]},
+  {"line":11,"text":"Merged: `max_values` = **[2, 7, 5]**.","views":[{"t":"grid","id":"triplets","title":"triplets  (one per row)","cells":[[{"v":"2","tone":"good"},{"v":"5","tone":"good"},{"v":"3","tone":"good"}],[{"v":"1","tone":"bad"},{"v":"8","tone":"bad"},{"v":"4","tone":"bad"}],[{"v":"1","tone":"cur"},{"v":"7","tone":"cur"},{"v":"5","tone":"cur"}]]},{"t":"array","id":"target","title":"target","cells":[{"v":"2"},{"v":"7"},{"v":"5"}],"idx":false},{"t":"array","id":"max_values","title":"max_values  (merge of the triplets used so far)","cells":[{"v":"2","tone":"good"},{"v":"7","tone":"good"},{"v":"5","tone":"good"}],"idx":false}]},
+  {"line":13,"text":"`max_values` equals the target [2, 7, 5]: every target value is supplied by a usable triplet → **True**.","views":[{"t":"grid","id":"triplets","title":"triplets  (one per row)","cells":[[{"v":"2","tone":"good"},{"v":"5","tone":"good"},{"v":"3","tone":"good"}],[{"v":"1","tone":"bad"},{"v":"8","tone":"bad"},{"v":"4","tone":"bad"}],[{"v":"1","tone":"good"},{"v":"7","tone":"good"},{"v":"5","tone":"good"}]]},{"t":"array","id":"target","title":"target","cells":[{"v":"2"},{"v":"7"},{"v":"5"}],"idx":false},{"t":"array","id":"max_values","title":"max_values  (merge of the triplets used so far)","cells":[{"v":"2","tone":"good"},{"v":"7","tone":"good"},{"v":"5","tone":"good"}],"idx":false}]},
+  {"line":13,"text":"Done — the answer is **`True`**. Merging [2, 5, 3] and [1, 7, 5] gives [2, 7, 5]. The triplet [1, 8, 4] must be avoided because of its 8.","views":[{"t":"grid","id":"triplets","title":"triplets  (one per row)","cells":[[{"v":"2","tone":"good"},{"v":"5","tone":"good"},{"v":"3","tone":"good"}],[{"v":"1","tone":"bad"},{"v":"8","tone":"bad"},{"v":"4","tone":"bad"}],[{"v":"1","tone":"good"},{"v":"7","tone":"good"},{"v":"5","tone":"good"}]]},{"t":"array","id":"target","title":"target","cells":[{"v":"2"},{"v":"7"},{"v":"5"}],"idx":false},{"t":"array","id":"max_values","title":"max_values  (merge of the triplets used so far)","cells":[{"v":"2","tone":"good"},{"v":"7","tone":"good"},{"v":"5","tone":"good"}],"idx":false}],"final":true}
+ ]
+}

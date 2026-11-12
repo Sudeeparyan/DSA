@@ -1,0 +1,61 @@
+{
+ "id": 37,
+ "number": 143,
+ "title": "Reorder List",
+ "slug": "reorder-list",
+ "category": "linked-list",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/reorder-list/",
+ "pattern": "Find middle → reverse second half → weave",
+ "statement": "Reorder a linked list `L0 → L1 → … → Ln` in place into `L0 → Ln → L1 → Ln−1 → L2 → …`: first node, last node, second node, second-to-last, and so on. Node values may not be changed — only the links.",
+ "example": {
+  "input": "head = [1,2,3,4,5]",
+  "output": "[1,5,2,4,3]",
+  "why": "Take alternately from the front and from the back: 1, 5, 2, 4, 3."
+ },
+ "more": [
+  {
+   "input": "head = [1,2,3,4]",
+   "output": "[1,4,2,3]"
+  },
+  {
+   "input": "head = [1]",
+   "output": "[1]"
+  },
+  {
+   "input": "head = [1,2]",
+   "output": "[1,2]"
+  }
+ ],
+ "idea": [
+  "We need nodes from the back, but a singly linked list cannot be walked backwards.",
+  "So split it in the middle and **reverse the second half**. Now the back nodes are available in exactly the order we need them.",
+  "Three steps, each a classic: find the middle with slow/fast pointers, reverse the second half, then weave the two halves together one node at a time."
+ ],
+ "code": "class Solution:\n    def reorderList(self, head: ListNode) -> None:\n        if not head or not head.next or not head.next.next:\n            return\n\n        # Find the middle of the list\n        slow, fast = head, head\n        while fast.next and fast.next.next:\n            slow = slow.next\n            fast = fast.next.next\n\n        # Reverse the second half of the list\n        prev, current = None, slow.next\n        slow.next = None\n        while current:\n            next_node = current.next\n            current.next = prev\n            prev = current\n            current = next_node\n\n        # Merge the two halves alternately\n        p1, p2 = head, prev\n        while p2:\n            next_p1, next_p2 = p1.next, p2.next\n            p1.next = p2\n            p2.next = next_p1\n            p1, p2 = next_p1, next_p2",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "Each of the three steps is one pass over (part of) the list.",
+  "space": "O(1)",
+  "spaceWhy": "Only a handful of pointers; the nodes are re-linked in place."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`head = [1,2,3,4,5]`**. Each step runs one highlighted line of the code.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"next":2},{"id":2,"v":"2","x":1,"y":0,"next":3},{"id":3,"v":"3","x":2,"y":0,"next":4},{"id":4,"v":"4","x":3,"y":0,"next":5},{"id":5,"v":"5","x":4,"y":0}]}]},
+  {"line":7,"text":"**Step 1 — find the middle.** `slow` moves one node at a time and `fast` moves two. When `fast` reaches the end, `slow` is in the middle.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"next":2},{"id":2,"v":"2","x":1,"y":0,"next":3},{"id":3,"v":"3","x":2,"y":0,"next":4},{"id":4,"v":"4","x":3,"y":0,"next":5},{"id":5,"v":"5","x":4,"y":0}],"ptrs":[{"name":"slow","at":1},{"name":"fast","at":1}]}]},
+  {"line":10,"text":"`slow` steps to node 2; `fast` jumps to node 3.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"next":2},{"id":2,"v":"2","x":1,"y":0,"next":3},{"id":3,"v":"3","x":2,"y":0,"next":4},{"id":4,"v":"4","x":3,"y":0,"next":5},{"id":5,"v":"5","x":4,"y":0}],"ptrs":[{"name":"slow","at":2},{"name":"fast","at":3}]}]},
+  {"line":10,"text":"`slow` steps to node 3; `fast` jumps to node 5.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"next":2},{"id":2,"v":"2","x":1,"y":0,"next":3},{"id":3,"v":"3","x":2,"y":0,"next":4},{"id":4,"v":"4","x":3,"y":0,"next":5},{"id":5,"v":"5","x":4,"y":0}],"ptrs":[{"name":"slow","at":3},{"name":"fast","at":5}]}]},
+  {"line":13,"text":"`fast` cannot jump any further, so `slow` (node 3) is the middle. **Step 2 — reverse the second half**, which starts at node 4.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"next":2},{"id":2,"v":"2","x":1,"y":0,"next":3},{"id":3,"v":"3","x":2,"y":0,"next":4},{"id":4,"v":"4","x":3,"y":0,"next":5},{"id":5,"v":"5","x":4,"y":0}],"ptrs":[{"name":"slow","at":3},{"name":"prev","at":null},{"name":"current","at":4}]}]},
+  {"line":14,"text":"Cut the list after the middle: the first half now ends at node 3.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"next":2},{"id":2,"v":"2","x":1,"y":0,"next":3},{"id":3,"v":"3","x":2,"y":0},{"id":4,"v":"4","x":3,"y":0,"next":5},{"id":5,"v":"5","x":4,"y":0}],"ptrs":[{"name":"slow","at":3},{"name":"prev","at":null},{"name":"current","at":4}]}]},
+  {"line":17,"text":"Flip the arrow of node 4 so it points back at None.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"next":2},{"id":2,"v":"2","x":1,"y":0,"next":3},{"id":3,"v":"3","x":2,"y":0},{"id":4,"v":"4","x":3,"y":0},{"id":5,"v":"5","x":4,"y":0}],"ptrs":[{"name":"slow","at":3},{"name":"prev","at":null},{"name":"current","at":4}]}]},
+  {"line":17,"text":"Flip the arrow of node 5 so it points back at node 4.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"next":2},{"id":2,"v":"2","x":1,"y":0,"next":3},{"id":3,"v":"3","x":2,"y":0},{"id":4,"v":"4","x":3,"y":0},{"id":5,"v":"5","x":4,"y":0,"next":4}],"ptrs":[{"name":"slow","at":3},{"name":"prev","at":4},{"name":"current","at":5}]}]},
+  {"line":22,"text":"The second half is reversed and now starts at node 5. **Step 3 — weave** the two halves, taking one node from each in turn.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"next":2},{"id":2,"v":"2","x":1,"y":0,"next":3},{"id":3,"v":"3","x":2,"y":0},{"id":4,"v":"4","x":3,"y":0},{"id":5,"v":"5","x":4,"y":0,"next":4}],"ptrs":[{"name":"p1","at":1},{"name":"p2","at":5}]}]},
+  {"line":25,"text":"Link node 1 → node 5 (from the reversed half).","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"next":5},{"id":2,"v":"2","x":1,"y":0,"next":3},{"id":3,"v":"3","x":2,"y":0},{"id":4,"v":"4","x":3,"y":0},{"id":5,"v":"5","x":4,"y":0,"next":4}],"ptrs":[{"name":"p1","at":1},{"name":"p2","at":5}]}]},
+  {"line":26,"text":"Then link node 5 → node 2 (back into the first half).","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"next":5},{"id":2,"v":"2","x":1,"y":0,"next":3},{"id":3,"v":"3","x":2,"y":0},{"id":4,"v":"4","x":3,"y":0},{"id":5,"v":"5","x":4,"y":0,"next":2}],"ptrs":[{"name":"p1","at":1},{"name":"p2","at":5}]}]},
+  {"line":27,"text":"Move both pointers on: `p1` = node 2, `p2` = node 4.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"next":5},{"id":2,"v":"2","x":1,"y":0,"next":3},{"id":3,"v":"3","x":2,"y":0},{"id":4,"v":"4","x":3,"y":0},{"id":5,"v":"5","x":4,"y":0,"next":2}],"ptrs":[{"name":"p1","at":2},{"name":"p2","at":4}]}]},
+  {"line":25,"text":"Link node 2 → node 4 (from the reversed half).","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"next":5},{"id":2,"v":"2","x":1,"y":0,"next":4},{"id":3,"v":"3","x":2,"y":0},{"id":4,"v":"4","x":3,"y":0},{"id":5,"v":"5","x":4,"y":0,"next":2}],"ptrs":[{"name":"p1","at":2},{"name":"p2","at":4}]}]},
+  {"line":26,"text":"Then link node 4 → node 3 (back into the first half).","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"next":5},{"id":2,"v":"2","x":1,"y":0,"next":4},{"id":3,"v":"3","x":2,"y":0},{"id":4,"v":"4","x":3,"y":0,"next":3},{"id":5,"v":"5","x":4,"y":0,"next":2}],"ptrs":[{"name":"p1","at":2},{"name":"p2","at":4}]}]},
+  {"line":27,"text":"Move both pointers on: `p1` = node 3, `p2` = None.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"next":5},{"id":2,"v":"2","x":1,"y":0,"next":4},{"id":3,"v":"3","x":2,"y":0},{"id":4,"v":"4","x":3,"y":0,"next":3},{"id":5,"v":"5","x":4,"y":0,"next":2}],"ptrs":[{"name":"p1","at":3},{"name":"p2","at":null}]}]},
+  {"line":23,"text":"`p2` is None: the reversed half is used up, so the list is fully reordered.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"next":5},{"id":2,"v":"2","x":1,"y":0,"next":4},{"id":3,"v":"3","x":2,"y":0},{"id":4,"v":"4","x":3,"y":0,"next":3},{"id":5,"v":"5","x":4,"y":0,"next":2}],"ptrs":[{"name":"p1","at":3},{"name":"p2","at":null}]}]},
+  {"line":23,"text":"Done — the answer is **`[1,5,2,4,3]`**. Take alternately from the front and from the back: 1, 5, 2, 4, 3.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"next":5,"tone":"good"},{"id":2,"v":"2","x":1,"y":0,"next":4,"tone":"good"},{"id":3,"v":"3","x":2,"y":0,"tone":"good"},{"id":4,"v":"4","x":3,"y":0,"next":3,"tone":"good"},{"id":5,"v":"5","x":4,"y":0,"next":2,"tone":"good"}],"ptrs":[{"name":"p1","at":3},{"name":"p2","at":null}]}],"final":true}
+ ]
+}

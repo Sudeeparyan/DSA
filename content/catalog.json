@@ -37,7 +37,7 @@
       "slug": "sliding-window",
       "name": "Sliding Window",
       "dir": "03_Sliding_Window",
-      "whyItMatters": "A moving window over a string or array finds best segments in linear time \u2014 classic Google warm-up.",
+      "whyItMatters": "A moving window over a string or array finds best segments in linear time — classic Google warm-up.",
       "problemSlugs": [
         "best-time-to-buy-and-sell-stock",
         "longest-substring-without-repeating-characters",
@@ -128,7 +128,7 @@
       "slug": "tries",
       "name": "Tries",
       "dir": "08_Tries",
-      "whyItMatters": "Prefix trees shine for autocomplete and word search \u2014 a favorite systems-flavoured DSA topic.",
+      "whyItMatters": "Prefix trees shine for autocomplete and word search — a favorite systems-flavoured DSA topic.",
       "problemSlugs": [
         "implement-trie-prefix-tree",
         "design-add-and-search-words-data-structure",
@@ -211,7 +211,7 @@
       "slug": "1d-dp",
       "name": "1-D Dynamic Programming",
       "dir": "13_1-D_Dynamic_Programming",
-      "whyItMatters": "Remembering sub-answers so you never recompute \u2014 the core DP idea.",
+      "whyItMatters": "Remembering sub-answers so you never recompute — the core DP idea.",
       "problemSlugs": [
         "climbing-stairs",
         "min-cost-climbing-stairs",
@@ -252,7 +252,7 @@
       "slug": "greedy",
       "name": "Greedy",
       "dir": "15_Greedy",
-      "whyItMatters": "Pick the locally best choice carefully \u2014 prove why it works globally.",
+      "whyItMatters": "Pick the locally best choice carefully — prove why it works globally.",
       "problemSlugs": [
         "maximum-subarray",
         "jump-game",
@@ -324,11 +324,7 @@
       "problemDir": "01_Contains_Duplicate",
       "difficulty": "Easy",
       "leetcodeUrl": "https://leetcode.com/problems/contains-duplicate/",
-      "pythonPath": "solutions/01_Arrays_&_Hashing/01_Contains_Duplicate/0217-contains-duplicate.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/01_Arrays_&_Hashing/01_Contains_Duplicate/0217-contains-duplicate.py"
     },
     {
       "id": 2,
@@ -340,11 +336,7 @@
       "problemDir": "02_Valid_Anagram",
       "difficulty": "Easy",
       "leetcodeUrl": "https://leetcode.com/problems/valid-anagram/",
-      "pythonPath": "solutions/01_Arrays_&_Hashing/02_Valid_Anagram/0242-valid-anagram.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/01_Arrays_&_Hashing/02_Valid_Anagram/0242-valid-anagram.py"
     },
     {
       "id": 3,
@@ -356,11 +348,7 @@
       "problemDir": "03_Two_Sum",
       "difficulty": "Easy",
       "leetcodeUrl": "https://leetcode.com/problems/two-sum/",
-      "pythonPath": "solutions/01_Arrays_&_Hashing/03_Two_Sum/0001-two-sum.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/01_Arrays_&_Hashing/03_Two_Sum/0001-two-sum.py"
     },
     {
       "id": 4,
@@ -372,11 +360,7 @@
       "problemDir": "04_Group_Anagrams",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/group-anagrams/",
-      "pythonPath": "solutions/01_Arrays_&_Hashing/04_Group_Anagrams/0049-group-anagrams.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/01_Arrays_&_Hashing/04_Group_Anagrams/0049-group-anagrams.py"
     },
     {
       "id": 5,
@@ -388,11 +372,7 @@
       "problemDir": "05_Top_K_Frequent_Elements",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/top-k-frequent-elements/",
-      "pythonPath": "solutions/01_Arrays_&_Hashing/05_Top_K_Frequent_Elements/0347-top-k-frequent-elements.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/01_Arrays_&_Hashing/05_Top_K_Frequent_Elements/0347-top-k-frequent-elements.py"
     },
     {
       "id": 6,
@@ -404,11 +384,7 @@
       "problemDir": "06_Product_of_Array_Except_Self",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/product-of-array-except-self/",
-      "pythonPath": "solutions/01_Arrays_&_Hashing/06_Product_of_Array_Except_Self/0238-product-of-array-except-self.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/01_Arrays_&_Hashing/06_Product_of_Array_Except_Self/0238-product-of-array-except-self.py"
     },
     {
       "id": 7,
@@ -420,11 +396,7 @@
       "problemDir": "07_Valid_Sudoku",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/valid-sudoku/",
-      "pythonPath": "solutions/01_Arrays_&_Hashing/07_Valid_Sudoku/0036-valid-sudoku.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/01_Arrays_&_Hashing/07_Valid_Sudoku/0036-valid-sudoku.py"
     },
     {
       "id": 8,
@@ -436,11 +408,7 @@
       "problemDir": "08_Encode_and_Decode_Strings",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/encode-and-decode-strings/",
-      "pythonPath": "solutions/01_Arrays_&_Hashing/08_Encode_and_Decode_Strings/0271-encode-and-decode-strings.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/01_Arrays_&_Hashing/08_Encode_and_Decode_Strings/0271-encode-and-decode-strings.py"
     },
     {
       "id": 9,
@@ -452,11 +420,7 @@
       "problemDir": "09_Longest_Consecutive_Sequence",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/longest-consecutive-sequence/",
-      "pythonPath": "solutions/01_Arrays_&_Hashing/09_Longest_Consecutive_Sequence/0128-longest-consecutive-sequence.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/01_Arrays_&_Hashing/09_Longest_Consecutive_Sequence/0128-longest-consecutive-sequence.py"
     },
     {
       "id": 10,
@@ -468,11 +432,7 @@
       "problemDir": "01_Valid_Palindrome",
       "difficulty": "Easy",
       "leetcodeUrl": "https://leetcode.com/problems/valid-palindrome/",
-      "pythonPath": "solutions/02_Two_Pointers/01_Valid_Palindrome/0125-valid-palindrome.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/02_Two_Pointers/01_Valid_Palindrome/0125-valid-palindrome.py"
     },
     {
       "id": 11,
@@ -484,11 +444,7 @@
       "problemDir": "02_Two_Sum_II_-_Input_Array_Is_Sorted",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/",
-      "pythonPath": "solutions/02_Two_Pointers/02_Two_Sum_II_-_Input_Array_Is_Sorted/0167-two-sum-ii-input-array-is-sorted.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/02_Two_Pointers/02_Two_Sum_II_-_Input_Array_Is_Sorted/0167-two-sum-ii-input-array-is-sorted.py"
     },
     {
       "id": 12,
@@ -500,11 +456,7 @@
       "problemDir": "03_3Sum",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/3sum/",
-      "pythonPath": "solutions/02_Two_Pointers/03_3Sum/0015-3sum.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/02_Two_Pointers/03_3Sum/0015-3sum.py"
     },
     {
       "id": 13,
@@ -516,11 +468,7 @@
       "problemDir": "04_Container_With_Most_Water",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/container-with-most-water/",
-      "pythonPath": "solutions/02_Two_Pointers/04_Container_With_Most_Water/0011-container-with-most-water.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/02_Two_Pointers/04_Container_With_Most_Water/0011-container-with-most-water.py"
     },
     {
       "id": 14,
@@ -532,11 +480,7 @@
       "problemDir": "05_Trapping_Rain_Water",
       "difficulty": "Hard",
       "leetcodeUrl": "https://leetcode.com/problems/trapping-rain-water/",
-      "pythonPath": "solutions/02_Two_Pointers/05_Trapping_Rain_Water/0042-trapping-rain-water.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/02_Two_Pointers/05_Trapping_Rain_Water/0042-trapping-rain-water.py"
     },
     {
       "id": 15,
@@ -548,11 +492,7 @@
       "problemDir": "01_Best_Time_to_Buy_and_Sell_Stock",
       "difficulty": "Easy",
       "leetcodeUrl": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/",
-      "pythonPath": "solutions/03_Sliding_Window/01_Best_Time_to_Buy_and_Sell_Stock/0121-best-time-to-buy-and-sell-stock.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/03_Sliding_Window/01_Best_Time_to_Buy_and_Sell_Stock/0121-best-time-to-buy-and-sell-stock.py"
     },
     {
       "id": 16,
@@ -564,11 +504,7 @@
       "problemDir": "02_Longest_Substring_Without_Repeating_Characters",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/longest-substring-without-repeating-characters/",
-      "pythonPath": "solutions/03_Sliding_Window/02_Longest_Substring_Without_Repeating_Characters/0003-longest-substring-without-repeating-characters.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/03_Sliding_Window/02_Longest_Substring_Without_Repeating_Characters/0003-longest-substring-without-repeating-characters.py"
     },
     {
       "id": 17,
@@ -580,11 +516,7 @@
       "problemDir": "03_Longest_Repeating_Character_Replacement",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/longest-repeating-character-replacement/",
-      "pythonPath": "solutions/03_Sliding_Window/03_Longest_Repeating_Character_Replacement/0424-longest-repeating-character-replacement.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/03_Sliding_Window/03_Longest_Repeating_Character_Replacement/0424-longest-repeating-character-replacement.py"
     },
     {
       "id": 18,
@@ -596,11 +528,7 @@
       "problemDir": "04_Permutation_in_String",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/permutation-in-string/",
-      "pythonPath": "solutions/03_Sliding_Window/04_Permutation_in_String/0567-permutation-in-string.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/03_Sliding_Window/04_Permutation_in_String/0567-permutation-in-string.py"
     },
     {
       "id": 19,
@@ -612,11 +540,7 @@
       "problemDir": "05_Minimum_Window_Substring",
       "difficulty": "Hard",
       "leetcodeUrl": "https://leetcode.com/problems/minimum-window-substring/",
-      "pythonPath": "solutions/03_Sliding_Window/05_Minimum_Window_Substring/0076-minimum-window-substring.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/03_Sliding_Window/05_Minimum_Window_Substring/0076-minimum-window-substring.py"
     },
     {
       "id": 20,
@@ -628,11 +552,7 @@
       "problemDir": "06_Sliding_Window_Maximum",
       "difficulty": "Hard",
       "leetcodeUrl": "https://leetcode.com/problems/sliding-window-maximum/",
-      "pythonPath": "solutions/03_Sliding_Window/06_Sliding_Window_Maximum/0239-sliding-window-maximum.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/03_Sliding_Window/06_Sliding_Window_Maximum/0239-sliding-window-maximum.py"
     },
     {
       "id": 21,
@@ -644,11 +564,7 @@
       "problemDir": "01_Valid_Parentheses",
       "difficulty": "Easy",
       "leetcodeUrl": "https://leetcode.com/problems/valid-parentheses/",
-      "pythonPath": "solutions/04_Stack/01_Valid_Parentheses/0020-valid-parentheses.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/04_Stack/01_Valid_Parentheses/0020-valid-parentheses.py"
     },
     {
       "id": 22,
@@ -660,11 +576,7 @@
       "problemDir": "02_Min_Stack",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/min-stack/",
-      "pythonPath": "solutions/04_Stack/02_Min_Stack/0155-min-stack.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/04_Stack/02_Min_Stack/0155-min-stack.py"
     },
     {
       "id": 23,
@@ -676,11 +588,7 @@
       "problemDir": "03_Evaluate_Reverse_Polish_Notation",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/evaluate-reverse-polish-notation/",
-      "pythonPath": "solutions/04_Stack/03_Evaluate_Reverse_Polish_Notation/0150-evaluate-reverse-polish-notation.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/04_Stack/03_Evaluate_Reverse_Polish_Notation/0150-evaluate-reverse-polish-notation.py"
     },
     {
       "id": 24,
@@ -692,11 +600,7 @@
       "problemDir": "04_Generate_Parentheses",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/generate-parentheses/",
-      "pythonPath": "solutions/04_Stack/04_Generate_Parentheses/0022-generate-parentheses.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/04_Stack/04_Generate_Parentheses/0022-generate-parentheses.py"
     },
     {
       "id": 25,
@@ -708,11 +612,7 @@
       "problemDir": "05_Daily_Temperatures",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/daily-temperatures/",
-      "pythonPath": "solutions/04_Stack/05_Daily_Temperatures/0739-daily-temperatures.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/04_Stack/05_Daily_Temperatures/0739-daily-temperatures.py"
     },
     {
       "id": 26,
@@ -724,11 +624,7 @@
       "problemDir": "06_Car_Fleet",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/car-fleet/",
-      "pythonPath": "solutions/04_Stack/06_Car_Fleet/0853-car-fleet.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/04_Stack/06_Car_Fleet/0853-car-fleet.py"
     },
     {
       "id": 27,
@@ -740,11 +636,7 @@
       "problemDir": "07_Largest_Rectangle_In_Histogram",
       "difficulty": "Hard",
       "leetcodeUrl": "https://leetcode.com/problems/largest-rectangle-in-histogram/",
-      "pythonPath": "solutions/04_Stack/07_Largest_Rectangle_In_Histogram/0084-largest-rectangle-in-histogram.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/04_Stack/07_Largest_Rectangle_In_Histogram/0084-largest-rectangle-in-histogram.py"
     },
     {
       "id": 28,
@@ -756,11 +648,7 @@
       "problemDir": "01_Binary_Search",
       "difficulty": "Easy",
       "leetcodeUrl": "https://leetcode.com/problems/binary-search/",
-      "pythonPath": "solutions/05_Binary_Search/01_Binary_Search/0704-binary-search.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/05_Binary_Search/01_Binary_Search/0704-binary-search.py"
     },
     {
       "id": 29,
@@ -772,11 +660,7 @@
       "problemDir": "02_Search_a_2D_Matrix",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/search-a-2d-matrix/",
-      "pythonPath": "solutions/05_Binary_Search/02_Search_a_2D_Matrix/0074-search-a-2d-matrix.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/05_Binary_Search/02_Search_a_2D_Matrix/0074-search-a-2d-matrix.py"
     },
     {
       "id": 30,
@@ -788,11 +672,7 @@
       "problemDir": "03_Koko_Eating_Bananas",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/koko-eating-bananas/",
-      "pythonPath": "solutions/05_Binary_Search/03_Koko_Eating_Bananas/0875-koko-eating-bananas.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/05_Binary_Search/03_Koko_Eating_Bananas/0875-koko-eating-bananas.py"
     },
     {
       "id": 31,
@@ -804,11 +684,7 @@
       "problemDir": "04_Find_Minimum_In_Rotated_Sorted_Array",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/",
-      "pythonPath": "solutions/05_Binary_Search/04_Find_Minimum_In_Rotated_Sorted_Array/0153-find-minimum-in-rotated-sorted-array.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/05_Binary_Search/04_Find_Minimum_In_Rotated_Sorted_Array/0153-find-minimum-in-rotated-sorted-array.py"
     },
     {
       "id": 32,
@@ -820,11 +696,7 @@
       "problemDir": "05_Search_In_Rotated_Sorted_Array",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/search-in-rotated-sorted-array/",
-      "pythonPath": "solutions/05_Binary_Search/05_Search_In_Rotated_Sorted_Array/0033-search-in-rotated-sorted-array.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/05_Binary_Search/05_Search_In_Rotated_Sorted_Array/0033-search-in-rotated-sorted-array.py"
     },
     {
       "id": 33,
@@ -836,11 +708,7 @@
       "problemDir": "06_Time_Based_Key_Value_Store",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/time-based-key-value-store/",
-      "pythonPath": "solutions/05_Binary_Search/06_Time_Based_Key_Value_Store/0981-time-based-key-value-store.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/05_Binary_Search/06_Time_Based_Key_Value_Store/0981-time-based-key-value-store.py"
     },
     {
       "id": 34,
@@ -852,11 +720,7 @@
       "problemDir": "07_Median_of_Two_Sorted_Arrays",
       "difficulty": "Hard",
       "leetcodeUrl": "https://leetcode.com/problems/median-of-two-sorted-arrays/",
-      "pythonPath": "solutions/05_Binary_Search/07_Median_of_Two_Sorted_Arrays/0004-median-of-two-sorted-arrays.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/05_Binary_Search/07_Median_of_Two_Sorted_Arrays/0004-median-of-two-sorted-arrays.py"
     },
     {
       "id": 35,
@@ -868,11 +732,7 @@
       "problemDir": "01_Reverse_Linked_List",
       "difficulty": "Easy",
       "leetcodeUrl": "https://leetcode.com/problems/reverse-linked-list/",
-      "pythonPath": "solutions/06_Linked_List/01_Reverse_Linked_List/0206-reverse-linked-list.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/06_Linked_List/01_Reverse_Linked_List/0206-reverse-linked-list.py"
     },
     {
       "id": 36,
@@ -884,11 +744,7 @@
       "problemDir": "02_Merge_Two_Sorted_Lists",
       "difficulty": "Easy",
       "leetcodeUrl": "https://leetcode.com/problems/merge-two-sorted-lists/",
-      "pythonPath": "solutions/06_Linked_List/02_Merge_Two_Sorted_Lists/0021-merge-two-sorted-lists.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/06_Linked_List/02_Merge_Two_Sorted_Lists/0021-merge-two-sorted-lists.py"
     },
     {
       "id": 37,
@@ -900,11 +756,7 @@
       "problemDir": "03_Reorder_List",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/reorder-list/",
-      "pythonPath": "solutions/06_Linked_List/03_Reorder_List/0143-reorder-list.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/06_Linked_List/03_Reorder_List/0143-reorder-list.py"
     },
     {
       "id": 38,
@@ -916,11 +768,7 @@
       "problemDir": "04_Remove_Nth_Node_From_End_of_List",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/remove-nth-node-from-end-of-list/",
-      "pythonPath": "solutions/06_Linked_List/04_Remove_Nth_Node_From_End_of_List/0019-remove-nth-node-from-end-of-list.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/06_Linked_List/04_Remove_Nth_Node_From_End_of_List/0019-remove-nth-node-from-end-of-list.py"
     },
     {
       "id": 39,
@@ -932,11 +780,7 @@
       "problemDir": "05_Copy_List_With_Random_Pointer",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/copy-list-with-random-pointer/",
-      "pythonPath": "solutions/06_Linked_List/05_Copy_List_With_Random_Pointer/0138-copy-list-with-random-pointer.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/06_Linked_List/05_Copy_List_With_Random_Pointer/0138-copy-list-with-random-pointer.py"
     },
     {
       "id": 40,
@@ -948,11 +792,7 @@
       "problemDir": "06_Add_Two_Numbers",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/add-two-numbers/",
-      "pythonPath": "solutions/06_Linked_List/06_Add_Two_Numbers/0002-add-two-numbers.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/06_Linked_List/06_Add_Two_Numbers/0002-add-two-numbers.py"
     },
     {
       "id": 41,
@@ -964,11 +804,7 @@
       "problemDir": "07_Linked_List_Cycle",
       "difficulty": "Easy",
       "leetcodeUrl": "https://leetcode.com/problems/linked-list-cycle/",
-      "pythonPath": "solutions/06_Linked_List/07_Linked_List_Cycle/0141-linked-list-cycle.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/06_Linked_List/07_Linked_List_Cycle/0141-linked-list-cycle.py"
     },
     {
       "id": 42,
@@ -980,11 +816,7 @@
       "problemDir": "08_Find_The_Duplicate_Number",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/find-the-duplicate-number/",
-      "pythonPath": "solutions/06_Linked_List/08_Find_The_Duplicate_Number/0287-find-the-duplicate-number.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/06_Linked_List/08_Find_The_Duplicate_Number/0287-find-the-duplicate-number.py"
     },
     {
       "id": 43,
@@ -996,11 +828,7 @@
       "problemDir": "09_LRU_Cache",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/lru-cache/",
-      "pythonPath": "solutions/06_Linked_List/09_LRU_Cache/0146-lru-cache.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/06_Linked_List/09_LRU_Cache/0146-lru-cache.py"
     },
     {
       "id": 44,
@@ -1012,11 +840,7 @@
       "problemDir": "10_Merge_K_Sorted_Lists",
       "difficulty": "Hard",
       "leetcodeUrl": "https://leetcode.com/problems/merge-k-sorted-lists/",
-      "pythonPath": "solutions/06_Linked_List/10_Merge_K_Sorted_Lists/0023-merge-k-sorted-lists.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/06_Linked_List/10_Merge_K_Sorted_Lists/0023-merge-k-sorted-lists.py"
     },
     {
       "id": 45,
@@ -1028,11 +852,7 @@
       "problemDir": "11_Reverse_Nodes_In_K_Group",
       "difficulty": "Hard",
       "leetcodeUrl": "https://leetcode.com/problems/reverse-nodes-in-k-group/",
-      "pythonPath": "solutions/06_Linked_List/11_Reverse_Nodes_In_K_Group/0025-reverse-nodes-in-k-group.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/06_Linked_List/11_Reverse_Nodes_In_K_Group/0025-reverse-nodes-in-k-group.py"
     },
     {
       "id": 46,
@@ -1044,11 +864,7 @@
       "problemDir": "01_Invert_Binary_Tree",
       "difficulty": "Easy",
       "leetcodeUrl": "https://leetcode.com/problems/invert-binary-tree/",
-      "pythonPath": "solutions/07_Trees/01_Invert_Binary_Tree/0226-invert-binary-tree.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/07_Trees/01_Invert_Binary_Tree/0226-invert-binary-tree.py"
     },
     {
       "id": 47,
@@ -1060,11 +876,7 @@
       "problemDir": "02_Maximum_Depth_of_Binary_Tree",
       "difficulty": "Easy",
       "leetcodeUrl": "https://leetcode.com/problems/maximum-depth-of-binary-tree/",
-      "pythonPath": "solutions/07_Trees/02_Maximum_Depth_of_Binary_Tree/0104-maximum-depth-of-binary-tree.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/07_Trees/02_Maximum_Depth_of_Binary_Tree/0104-maximum-depth-of-binary-tree.py"
     },
     {
       "id": 48,
@@ -1076,11 +888,7 @@
       "problemDir": "03_Diameter_of_Binary_Tree",
       "difficulty": "Easy",
       "leetcodeUrl": "https://leetcode.com/problems/diameter-of-binary-tree/",
-      "pythonPath": "solutions/07_Trees/03_Diameter_of_Binary_Tree/0543-diameter-of-binary-tree.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/07_Trees/03_Diameter_of_Binary_Tree/0543-diameter-of-binary-tree.py"
     },
     {
       "id": 49,
@@ -1092,11 +900,7 @@
       "problemDir": "04_Balanced_Binary_Tree",
       "difficulty": "Easy",
       "leetcodeUrl": "https://leetcode.com/problems/balanced-binary-tree/",
-      "pythonPath": "solutions/07_Trees/04_Balanced_Binary_Tree/0110-balanced-binary-tree.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/07_Trees/04_Balanced_Binary_Tree/0110-balanced-binary-tree.py"
     },
     {
       "id": 50,
@@ -1108,11 +912,7 @@
       "problemDir": "05_Same_Tree",
       "difficulty": "Easy",
       "leetcodeUrl": "https://leetcode.com/problems/same-tree/",
-      "pythonPath": "solutions/07_Trees/05_Same_Tree/0100-same-tree.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/07_Trees/05_Same_Tree/0100-same-tree.py"
     },
     {
       "id": 51,
@@ -1124,11 +924,7 @@
       "problemDir": "06_Subtree_of_Another_Tree",
       "difficulty": "Easy",
       "leetcodeUrl": "https://leetcode.com/problems/subtree-of-another-tree/",
-      "pythonPath": "solutions/07_Trees/06_Subtree_of_Another_Tree/0572-subtree-of-another-tree.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/07_Trees/06_Subtree_of_Another_Tree/0572-subtree-of-another-tree.py"
     },
     {
       "id": 52,
@@ -1140,11 +936,7 @@
       "problemDir": "07_Lowest_Common_Ancestor_of_a_Binary_Search_Tree",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/",
-      "pythonPath": "solutions/07_Trees/07_Lowest_Common_Ancestor_of_a_Binary_Search_Tree/0235-lowest-common-ancestor-of-a-binary-search-tree.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/07_Trees/07_Lowest_Common_Ancestor_of_a_Binary_Search_Tree/0235-lowest-common-ancestor-of-a-binary-search-tree.py"
     },
     {
       "id": 53,
@@ -1156,11 +948,7 @@
       "problemDir": "08_Binary_Tree_Level_Order_Traversal",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/binary-tree-level-order-traversal/",
-      "pythonPath": "solutions/07_Trees/08_Binary_Tree_Level_Order_Traversal/0102-binary-tree-level-order-traversal.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/07_Trees/08_Binary_Tree_Level_Order_Traversal/0102-binary-tree-level-order-traversal.py"
     },
     {
       "id": 54,
@@ -1172,11 +960,7 @@
       "problemDir": "09_Binary_Tree_Right_Side_View",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/binary-tree-right-side-view/",
-      "pythonPath": "solutions/07_Trees/09_Binary_Tree_Right_Side_View/0199-binary-tree-right-side-view.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/07_Trees/09_Binary_Tree_Right_Side_View/0199-binary-tree-right-side-view.py"
     },
     {
       "id": 55,
@@ -1188,11 +972,7 @@
       "problemDir": "10_Count_Good_Nodes_In_Binary_Tree",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/count-good-nodes-in-binary-tree/",
-      "pythonPath": "solutions/07_Trees/10_Count_Good_Nodes_In_Binary_Tree/1448-count-good-nodes-in-binary-tree.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/07_Trees/10_Count_Good_Nodes_In_Binary_Tree/1448-count-good-nodes-in-binary-tree.py"
     },
     {
       "id": 56,
@@ -1204,11 +984,7 @@
       "problemDir": "11_Validate_Binary_Search_Tree",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/validate-binary-search-tree/",
-      "pythonPath": "solutions/07_Trees/11_Validate_Binary_Search_Tree/0098-validate-binary-search-tree.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/07_Trees/11_Validate_Binary_Search_Tree/0098-validate-binary-search-tree.py"
     },
     {
       "id": 57,
@@ -1220,11 +996,7 @@
       "problemDir": "12_Kth_Smallest_Element_In_a_BST",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/kth-smallest-element-in-a-bst/",
-      "pythonPath": "solutions/07_Trees/12_Kth_Smallest_Element_In_a_BST/0230-kth-smallest-element-in-a-bst.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/07_Trees/12_Kth_Smallest_Element_In_a_BST/0230-kth-smallest-element-in-a-bst.py"
     },
     {
       "id": 58,
@@ -1236,11 +1008,7 @@
       "problemDir": "13_Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/",
-      "pythonPath": "solutions/07_Trees/13_Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal/0105-construct-binary-tree-from-preorder-and-inorder-traversal.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/07_Trees/13_Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal/0105-construct-binary-tree-from-preorder-and-inorder-traversal.py"
     },
     {
       "id": 59,
@@ -1252,11 +1020,7 @@
       "problemDir": "14_Binary_Tree_Maximum_Path_Sum",
       "difficulty": "Hard",
       "leetcodeUrl": "https://leetcode.com/problems/binary-tree-maximum-path-sum/",
-      "pythonPath": "solutions/07_Trees/14_Binary_Tree_Maximum_Path_Sum/0124-binary-tree-maximum-path-sum.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/07_Trees/14_Binary_Tree_Maximum_Path_Sum/0124-binary-tree-maximum-path-sum.py"
     },
     {
       "id": 60,
@@ -1268,11 +1032,7 @@
       "problemDir": "15_Serialize_and_Deserialize_Binary_Tree",
       "difficulty": "Hard",
       "leetcodeUrl": "https://leetcode.com/problems/serialize-and-deserialize-binary-tree/",
-      "pythonPath": "solutions/07_Trees/15_Serialize_and_Deserialize_Binary_Tree/0297-serialize-and-deserialize-binary-tree.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/07_Trees/15_Serialize_and_Deserialize_Binary_Tree/0297-serialize-and-deserialize-binary-tree.py"
     },
     {
       "id": 61,
@@ -1284,11 +1044,7 @@
       "problemDir": "01_Implement_Trie_Prefix_Tree",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/implement-trie-prefix-tree/",
-      "pythonPath": "solutions/08_Tries/01_Implement_Trie_Prefix_Tree/0208-implement-trie-prefix-tree.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/08_Tries/01_Implement_Trie_Prefix_Tree/0208-implement-trie-prefix-tree.py"
     },
     {
       "id": 62,
@@ -1300,11 +1056,7 @@
       "problemDir": "02_Design_Add_and_Search_Words_Data_Structure",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/design-add-and-search-words-data-structure/",
-      "pythonPath": "solutions/08_Tries/02_Design_Add_and_Search_Words_Data_Structure/0211-design-add-and-search-words-data-structure.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/08_Tries/02_Design_Add_and_Search_Words_Data_Structure/0211-design-add-and-search-words-data-structure.py"
     },
     {
       "id": 63,
@@ -1316,11 +1068,7 @@
       "problemDir": "03_Word_Search_II",
       "difficulty": "Hard",
       "leetcodeUrl": "https://leetcode.com/problems/word-search-ii/",
-      "pythonPath": "solutions/08_Tries/03_Word_Search_II/0212-word-search-ii.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/08_Tries/03_Word_Search_II/0212-word-search-ii.py"
     },
     {
       "id": 64,
@@ -1332,11 +1080,7 @@
       "problemDir": "01_Kth_Largest_Element_in_a_Stream",
       "difficulty": "Easy",
       "leetcodeUrl": "https://leetcode.com/problems/kth-largest-element-in-a-stream/",
-      "pythonPath": "solutions/09_Heap_Priority_Queues/01_Kth_Largest_Element_in_a_Stream/0703-kth-largest-element-in-a-stream.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/09_Heap_Priority_Queues/01_Kth_Largest_Element_in_a_Stream/0703-kth-largest-element-in-a-stream.py"
     },
     {
       "id": 65,
@@ -1348,11 +1092,7 @@
       "problemDir": "02_Last_Stone_Weight",
       "difficulty": "Easy",
       "leetcodeUrl": "https://leetcode.com/problems/last-stone-weight/",
-      "pythonPath": "solutions/09_Heap_Priority_Queues/02_Last_Stone_Weight/1046-last-stone-weight.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/09_Heap_Priority_Queues/02_Last_Stone_Weight/1046-last-stone-weight.py"
     },
     {
       "id": 66,
@@ -1364,11 +1104,7 @@
       "problemDir": "03_K_Closest_Points_to_Origin",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/k-closest-points-to-origin/",
-      "pythonPath": "solutions/09_Heap_Priority_Queues/03_K_Closest_Points_to_Origin/0973-k-closest-points-to-origin.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/09_Heap_Priority_Queues/03_K_Closest_Points_to_Origin/0973-k-closest-points-to-origin.py"
     },
     {
       "id": 67,
@@ -1380,11 +1116,7 @@
       "problemDir": "04_Kth_Largest_Element_in_an_Array",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/kth-largest-element-in-an-array/",
-      "pythonPath": "solutions/09_Heap_Priority_Queues/04_Kth_Largest_Element_in_an_Array/0215-kth-largest-element-in-an-array.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/09_Heap_Priority_Queues/04_Kth_Largest_Element_in_an_Array/0215-kth-largest-element-in-an-array.py"
     },
     {
       "id": 68,
@@ -1396,11 +1128,7 @@
       "problemDir": "05_Task_Scheduler",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/task-scheduler/",
-      "pythonPath": "solutions/09_Heap_Priority_Queues/05_Task_Scheduler/0621-task-scheduler.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/09_Heap_Priority_Queues/05_Task_Scheduler/0621-task-scheduler.py"
     },
     {
       "id": 69,
@@ -1412,11 +1140,7 @@
       "problemDir": "06_Design_Twitter",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/design-twitter/",
-      "pythonPath": "solutions/09_Heap_Priority_Queues/06_Design_Twitter/0355-design-twitter.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/09_Heap_Priority_Queues/06_Design_Twitter/0355-design-twitter.py"
     },
     {
       "id": 70,
@@ -1428,11 +1152,7 @@
       "problemDir": "07_Find_Median_from_Data_Stream",
       "difficulty": "Hard",
       "leetcodeUrl": "https://leetcode.com/problems/find-median-from-data-stream/",
-      "pythonPath": "solutions/09_Heap_Priority_Queues/07_Find_Median_from_Data_Stream/0295-find-median-from-data-stream.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/09_Heap_Priority_Queues/07_Find_Median_from_Data_Stream/0295-find-median-from-data-stream.py"
     },
     {
       "id": 71,
@@ -1444,11 +1164,7 @@
       "problemDir": "01_Subsets",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/subsets/",
-      "pythonPath": "solutions/10_Backtracking/01_Subsets/0078-subsets.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/10_Backtracking/01_Subsets/0078-subsets.py"
     },
     {
       "id": 72,
@@ -1460,11 +1176,7 @@
       "problemDir": "02_Combination_Sum",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/combination-sum/",
-      "pythonPath": "solutions/10_Backtracking/02_Combination_Sum/0039-combination-sum.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/10_Backtracking/02_Combination_Sum/0039-combination-sum.py"
     },
     {
       "id": 73,
@@ -1476,11 +1188,7 @@
       "problemDir": "03_Permutations",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/permutations/",
-      "pythonPath": "solutions/10_Backtracking/03_Permutations/0046-permutations.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/10_Backtracking/03_Permutations/0046-permutations.py"
     },
     {
       "id": 74,
@@ -1492,11 +1200,7 @@
       "problemDir": "04_Subsets_II",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/subsets-ii/",
-      "pythonPath": "solutions/10_Backtracking/04_Subsets_II/0090-subsets-ii.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/10_Backtracking/04_Subsets_II/0090-subsets-ii.py"
     },
     {
       "id": 75,
@@ -1508,11 +1212,7 @@
       "problemDir": "05_Combination_Sum_II",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/combination-sum-ii/",
-      "pythonPath": "solutions/10_Backtracking/05_Combination_Sum_II/0040-combination-sum-ii.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/10_Backtracking/05_Combination_Sum_II/0040-combination-sum-ii.py"
     },
     {
       "id": 76,
@@ -1524,11 +1224,7 @@
       "problemDir": "06_Word_Search",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/word-search/",
-      "pythonPath": "solutions/10_Backtracking/06_Word_Search/0079-word-search.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/10_Backtracking/06_Word_Search/0079-word-search.py"
     },
     {
       "id": 77,
@@ -1540,11 +1236,7 @@
       "problemDir": "07_Palindrome_Partitioning",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/palindrome-partitioning/",
-      "pythonPath": "solutions/10_Backtracking/07_Palindrome_Partitioning/0131-palindrome-partitioning.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/10_Backtracking/07_Palindrome_Partitioning/0131-palindrome-partitioning.py"
     },
     {
       "id": 78,
@@ -1556,11 +1248,7 @@
       "problemDir": "08_Letter_Combinations_of_a_Phone_Number",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/letter-combinations-of-a-phone-number/",
-      "pythonPath": "solutions/10_Backtracking/08_Letter_Combinations_of_a_Phone_Number/0017-letter-combinations-of-a-phone-number.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/10_Backtracking/08_Letter_Combinations_of_a_Phone_Number/0017-letter-combinations-of-a-phone-number.py"
     },
     {
       "id": 79,
@@ -1572,11 +1260,7 @@
       "problemDir": "09_N_Queens",
       "difficulty": "Hard",
       "leetcodeUrl": "https://leetcode.com/problems/n-queens/",
-      "pythonPath": "solutions/10_Backtracking/09_N_Queens/0051-n-queens.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/10_Backtracking/09_N_Queens/0051-n-queens.py"
     },
     {
       "id": 80,
@@ -1588,11 +1272,7 @@
       "problemDir": "01_Number_of_Islands",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/number-of-islands/",
-      "pythonPath": "solutions/11_Graphs/01_Number_of_Islands/0200-number-of-islands.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/11_Graphs/01_Number_of_Islands/0200-number-of-islands.py"
     },
     {
       "id": 81,
@@ -1604,11 +1284,7 @@
       "problemDir": "02_Clone_Graph",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/clone-graph/",
-      "pythonPath": "solutions/11_Graphs/02_Clone_Graph/0133-clone-graph.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/11_Graphs/02_Clone_Graph/0133-clone-graph.py"
     },
     {
       "id": 82,
@@ -1620,11 +1296,7 @@
       "problemDir": "03_Max_Area_of_Island",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/max-area-of-island/",
-      "pythonPath": "solutions/11_Graphs/03_Max_Area_of_Island/0695-max-area-of-island.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/11_Graphs/03_Max_Area_of_Island/0695-max-area-of-island.py"
     },
     {
       "id": 83,
@@ -1636,11 +1308,7 @@
       "problemDir": "04_Pacific_Atlantic_Water_Flow",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/pacific-atlantic-water-flow/",
-      "pythonPath": "solutions/11_Graphs/04_Pacific_Atlantic_Water_Flow/0417-pacific-atlantic-water-flow.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/11_Graphs/04_Pacific_Atlantic_Water_Flow/0417-pacific-atlantic-water-flow.py"
     },
     {
       "id": 84,
@@ -1652,11 +1320,7 @@
       "problemDir": "05_Surrounded_Regions",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/surrounded-regions/",
-      "pythonPath": "solutions/11_Graphs/05_Surrounded_Regions/0130-surrounded-regions.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/11_Graphs/05_Surrounded_Regions/0130-surrounded-regions.py"
     },
     {
       "id": 85,
@@ -1668,11 +1332,7 @@
       "problemDir": "06_Rotting_Oranges",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/rotting-oranges/",
-      "pythonPath": "solutions/11_Graphs/06_Rotting_Oranges/0994-rotting-oranges.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/11_Graphs/06_Rotting_Oranges/0994-rotting-oranges.py"
     },
     {
       "id": 86,
@@ -1684,11 +1344,7 @@
       "problemDir": "07_Walls_and_Gates",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/walls-and-gates/",
-      "pythonPath": "solutions/11_Graphs/07_Walls_and_Gates/0286-walls-and-gates.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/11_Graphs/07_Walls_and_Gates/0286-walls-and-gates.py"
     },
     {
       "id": 87,
@@ -1700,11 +1356,7 @@
       "problemDir": "08_Course_Schedule",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/course-schedule/",
-      "pythonPath": "solutions/11_Graphs/08_Course_Schedule/0207-course-schedule.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/11_Graphs/08_Course_Schedule/0207-course-schedule.py"
     },
     {
       "id": 88,
@@ -1716,11 +1368,7 @@
       "problemDir": "09_Course_Schedule_II",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/course-schedule-ii/",
-      "pythonPath": "solutions/11_Graphs/09_Course_Schedule_II/0210-course-schedule-ii.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/11_Graphs/09_Course_Schedule_II/0210-course-schedule-ii.py"
     },
     {
       "id": 89,
@@ -1732,11 +1380,7 @@
       "problemDir": "10_Redundant_Connection",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/redundant-connection/",
-      "pythonPath": "solutions/11_Graphs/10_Redundant_Connection/0684-redundant-connection.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/11_Graphs/10_Redundant_Connection/0684-redundant-connection.py"
     },
     {
       "id": 90,
@@ -1748,11 +1392,7 @@
       "problemDir": "11_Number_of_Connected_Components_in_an_Undirected_Graph",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/",
-      "pythonPath": "solutions/11_Graphs/11_Number_of_Connected_Components_in_an_Undirected_Graph/0323-number-of-connected-components-in-an-undirected-graph.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/11_Graphs/11_Number_of_Connected_Components_in_an_Undirected_Graph/0323-number-of-connected-components-in-an-undirected-graph.py"
     },
     {
       "id": 91,
@@ -1764,11 +1404,7 @@
       "problemDir": "12_Graph_Valid_Tree",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/graph-valid-tree/",
-      "pythonPath": "solutions/11_Graphs/12_Graph_Valid_Tree/0261-graph-valid-tree.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/11_Graphs/12_Graph_Valid_Tree/0261-graph-valid-tree.py"
     },
     {
       "id": 92,
@@ -1780,11 +1416,7 @@
       "problemDir": "13_Word_Ladder",
       "difficulty": "Hard",
       "leetcodeUrl": "https://leetcode.com/problems/word-ladder/",
-      "pythonPath": "solutions/11_Graphs/13_Word_Ladder/0127-word-ladder.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/11_Graphs/13_Word_Ladder/0127-word-ladder.py"
     },
     {
       "id": 93,
@@ -1796,11 +1428,7 @@
       "problemDir": "01_Reconstruct_Itinerary",
       "difficulty": "Hard",
       "leetcodeUrl": "https://leetcode.com/problems/reconstruct-itinerary/",
-      "pythonPath": "solutions/12_Advanced_Graphs/01_Reconstruct_Itinerary/0332-reconstruct-itinerary.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/12_Advanced_Graphs/01_Reconstruct_Itinerary/0332-reconstruct-itinerary.py"
     },
     {
       "id": 94,
@@ -1812,11 +1440,7 @@
       "problemDir": "02_Min_Cost_to_Connect_All_Points",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/min-cost-to-connect-all-points/",
-      "pythonPath": "solutions/12_Advanced_Graphs/02_Min_Cost_to_Connect_All_Points/1584-min-cost-to-connect-all-points.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/12_Advanced_Graphs/02_Min_Cost_to_Connect_All_Points/1584-min-cost-to-connect-all-points.py"
     },
     {
       "id": 95,
@@ -1828,11 +1452,7 @@
       "problemDir": "03_Network_Delay_Time",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/network-delay-time/",
-      "pythonPath": "solutions/12_Advanced_Graphs/03_Network_Delay_Time/0743-network-delay-time.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/12_Advanced_Graphs/03_Network_Delay_Time/0743-network-delay-time.py"
     },
     {
       "id": 96,
@@ -1844,11 +1464,7 @@
       "problemDir": "04_Swim_in_Rising_Water",
       "difficulty": "Hard",
       "leetcodeUrl": "https://leetcode.com/problems/swim-in-rising-water/",
-      "pythonPath": "solutions/12_Advanced_Graphs/04_Swim_in_Rising_Water/0778-swim-in-rising-water.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/12_Advanced_Graphs/04_Swim_in_Rising_Water/0778-swim-in-rising-water.py"
     },
     {
       "id": 97,
@@ -1860,11 +1476,7 @@
       "problemDir": "05_Alien_Dictionary",
       "difficulty": "Hard",
       "leetcodeUrl": "https://leetcode.com/problems/alien-dictionary/",
-      "pythonPath": "solutions/12_Advanced_Graphs/05_Alien_Dictionary/0269-alien-dictionary.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/12_Advanced_Graphs/05_Alien_Dictionary/0269-alien-dictionary.py"
     },
     {
       "id": 98,
@@ -1876,11 +1488,7 @@
       "problemDir": "06_Cheapest_Flights_Within_K_Stops",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/cheapest-flights-within-k-stops/",
-      "pythonPath": "solutions/12_Advanced_Graphs/06_Cheapest_Flights_Within_K_Stops/0787-cheapest-flights-within-k-stops.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/12_Advanced_Graphs/06_Cheapest_Flights_Within_K_Stops/0787-cheapest-flights-within-k-stops.py"
     },
     {
       "id": 99,
@@ -1892,11 +1500,7 @@
       "problemDir": "01_Climbing_Stairs",
       "difficulty": "Easy",
       "leetcodeUrl": "https://leetcode.com/problems/climbing-stairs/",
-      "pythonPath": "solutions/13_1-D_Dynamic_Programming/01_Climbing_Stairs/0070-climbing-stairs.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/13_1-D_Dynamic_Programming/01_Climbing_Stairs/0070-climbing-stairs.py"
     },
     {
       "id": 100,
@@ -1908,11 +1512,7 @@
       "problemDir": "02_Min_Cost_Climbing_Stairs",
       "difficulty": "Easy",
       "leetcodeUrl": "https://leetcode.com/problems/min-cost-climbing-stairs/",
-      "pythonPath": "solutions/13_1-D_Dynamic_Programming/02_Min_Cost_Climbing_Stairs/0746-min-cost-climbing-stairs.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/13_1-D_Dynamic_Programming/02_Min_Cost_Climbing_Stairs/0746-min-cost-climbing-stairs.py"
     },
     {
       "id": 101,
@@ -1924,11 +1524,7 @@
       "problemDir": "03_House_Robber",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/house-robber/",
-      "pythonPath": "solutions/13_1-D_Dynamic_Programming/03_House_Robber/0198-house-robber.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/13_1-D_Dynamic_Programming/03_House_Robber/0198-house-robber.py"
     },
     {
       "id": 102,
@@ -1940,11 +1536,7 @@
       "problemDir": "04_House_Robber_II",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/house-robber-ii/",
-      "pythonPath": "solutions/13_1-D_Dynamic_Programming/04_House_Robber_II/0213-house-robber-ii.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/13_1-D_Dynamic_Programming/04_House_Robber_II/0213-house-robber-ii.py"
     },
     {
       "id": 103,
@@ -1956,11 +1548,7 @@
       "problemDir": "05_Longest_Palindromic_Substring",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/longest-palindromic-substring/",
-      "pythonPath": "solutions/13_1-D_Dynamic_Programming/05_Longest_Palindromic_Substring/0005-longest-palindromic-substring.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/13_1-D_Dynamic_Programming/05_Longest_Palindromic_Substring/0005-longest-palindromic-substring.py"
     },
     {
       "id": 104,
@@ -1972,11 +1560,7 @@
       "problemDir": "06_Palindromic_Substrings",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/palindromic-substrings/",
-      "pythonPath": "solutions/13_1-D_Dynamic_Programming/06_Palindromic_Substrings/0647-palindromic-substrings.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/13_1-D_Dynamic_Programming/06_Palindromic_Substrings/0647-palindromic-substrings.py"
     },
     {
       "id": 105,
@@ -1988,11 +1572,7 @@
       "problemDir": "07_Decode_Ways",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/decode-ways/",
-      "pythonPath": "solutions/13_1-D_Dynamic_Programming/07_Decode_Ways/0091-decode-ways.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/13_1-D_Dynamic_Programming/07_Decode_Ways/0091-decode-ways.py"
     },
     {
       "id": 106,
@@ -2004,11 +1584,7 @@
       "problemDir": "08_Coin_Change",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/coin-change/",
-      "pythonPath": "solutions/13_1-D_Dynamic_Programming/08_Coin_Change/0322-coin-change.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/13_1-D_Dynamic_Programming/08_Coin_Change/0322-coin-change.py"
     },
     {
       "id": 107,
@@ -2020,11 +1596,7 @@
       "problemDir": "09_Maximum_Product_Subarray",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/maximum-product-subarray/",
-      "pythonPath": "solutions/13_1-D_Dynamic_Programming/09_Maximum_Product_Subarray/0152-maximum-product-subarray.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/13_1-D_Dynamic_Programming/09_Maximum_Product_Subarray/0152-maximum-product-subarray.py"
     },
     {
       "id": 108,
@@ -2036,11 +1608,7 @@
       "problemDir": "10_Word_Break",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/word-break/",
-      "pythonPath": "solutions/13_1-D_Dynamic_Programming/10_Word_Break/0139-word-break.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/13_1-D_Dynamic_Programming/10_Word_Break/0139-word-break.py"
     },
     {
       "id": 109,
@@ -2052,11 +1620,7 @@
       "problemDir": "11_Longest_Increasing_Subsequence",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/longest-increasing-subsequence/",
-      "pythonPath": "solutions/13_1-D_Dynamic_Programming/11_Longest_Increasing_Subsequence/0300-longest-increasing-subsequence.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/13_1-D_Dynamic_Programming/11_Longest_Increasing_Subsequence/0300-longest-increasing-subsequence.py"
     },
     {
       "id": 110,
@@ -2068,11 +1632,7 @@
       "problemDir": "12_Partition_Equal_Subset_Sum",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/partition-equal-subset-sum/",
-      "pythonPath": "solutions/13_1-D_Dynamic_Programming/12_Partition_Equal_Subset_Sum/0416-partition-equal-subset-sum.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/13_1-D_Dynamic_Programming/12_Partition_Equal_Subset_Sum/0416-partition-equal-subset-sum.py"
     },
     {
       "id": 111,
@@ -2084,11 +1644,7 @@
       "problemDir": "01_Unique_Paths",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/unique-paths/",
-      "pythonPath": "solutions/14_2-D_Dynamic_Programming/01_Unique_Paths/0062-unique-paths.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/14_2-D_Dynamic_Programming/01_Unique_Paths/0062-unique-paths.py"
     },
     {
       "id": 112,
@@ -2100,11 +1656,7 @@
       "problemDir": "02_Longest_Common_Subsequence",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/longest-common-subsequence/",
-      "pythonPath": "solutions/14_2-D_Dynamic_Programming/02_Longest_Common_Subsequence/1143-longest-common-subsequence.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/14_2-D_Dynamic_Programming/02_Longest_Common_Subsequence/1143-longest-common-subsequence.py"
     },
     {
       "id": 113,
@@ -2116,11 +1668,7 @@
       "problemDir": "03_Best_Time_to_Buy_And_Sell_Stock_With_Cooldown",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/",
-      "pythonPath": "solutions/14_2-D_Dynamic_Programming/03_Best_Time_to_Buy_And_Sell_Stock_With_Cooldown/0309-best-time-to-buy-and-sell-stock-with-cooldown.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/14_2-D_Dynamic_Programming/03_Best_Time_to_Buy_And_Sell_Stock_With_Cooldown/0309-best-time-to-buy-and-sell-stock-with-cooldown.py"
     },
     {
       "id": 114,
@@ -2132,11 +1680,7 @@
       "problemDir": "04_Coin_Change_II",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/coin-change-ii/",
-      "pythonPath": "solutions/14_2-D_Dynamic_Programming/04_Coin_Change_II/0518-coin-change-ii.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/14_2-D_Dynamic_Programming/04_Coin_Change_II/0518-coin-change-ii.py"
     },
     {
       "id": 115,
@@ -2148,11 +1692,7 @@
       "problemDir": "05_Target_Sum",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/target-sum/",
-      "pythonPath": "solutions/14_2-D_Dynamic_Programming/05_Target_Sum/0494-target-sum.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/14_2-D_Dynamic_Programming/05_Target_Sum/0494-target-sum.py"
     },
     {
       "id": 116,
@@ -2164,11 +1704,7 @@
       "problemDir": "06_Interleaving_String",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/interleaving-string/",
-      "pythonPath": "solutions/14_2-D_Dynamic_Programming/06_Interleaving_String/0097-interleaving-string.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/14_2-D_Dynamic_Programming/06_Interleaving_String/0097-interleaving-string.py"
     },
     {
       "id": 117,
@@ -2180,11 +1716,7 @@
       "problemDir": "07_Longest_Increasing_Path_In_a_Matrix",
       "difficulty": "Hard",
       "leetcodeUrl": "https://leetcode.com/problems/longest-increasing-path-in-a-matrix/",
-      "pythonPath": "solutions/14_2-D_Dynamic_Programming/07_Longest_Increasing_Path_In_a_Matrix/0329-longest-increasing-path-in-a-matrix.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/14_2-D_Dynamic_Programming/07_Longest_Increasing_Path_In_a_Matrix/0329-longest-increasing-path-in-a-matrix.py"
     },
     {
       "id": 118,
@@ -2196,11 +1728,7 @@
       "problemDir": "08_Distinct_Subsequences",
       "difficulty": "Hard",
       "leetcodeUrl": "https://leetcode.com/problems/distinct-subsequences/",
-      "pythonPath": "solutions/14_2-D_Dynamic_Programming/08_Distinct_Subsequences/0115-distinct-subsequences.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/14_2-D_Dynamic_Programming/08_Distinct_Subsequences/0115-distinct-subsequences.py"
     },
     {
       "id": 119,
@@ -2212,11 +1740,7 @@
       "problemDir": "09_Edit_Distance",
       "difficulty": "Hard",
       "leetcodeUrl": "https://leetcode.com/problems/edit-distance/",
-      "pythonPath": "solutions/14_2-D_Dynamic_Programming/09_Edit_Distance/0072-edit-distance.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/14_2-D_Dynamic_Programming/09_Edit_Distance/0072-edit-distance.py"
     },
     {
       "id": 120,
@@ -2228,11 +1752,7 @@
       "problemDir": "10_Burst_Balloons",
       "difficulty": "Hard",
       "leetcodeUrl": "https://leetcode.com/problems/burst-balloons/",
-      "pythonPath": "solutions/14_2-D_Dynamic_Programming/10_Burst_Balloons/0312-burst-balloons.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/14_2-D_Dynamic_Programming/10_Burst_Balloons/0312-burst-balloons.py"
     },
     {
       "id": 121,
@@ -2244,11 +1764,7 @@
       "problemDir": "11_Regular_Expression_Matching",
       "difficulty": "Hard",
       "leetcodeUrl": "https://leetcode.com/problems/regular-expression-matching/",
-      "pythonPath": "solutions/14_2-D_Dynamic_Programming/11_Regular_Expression_Matching/0010-regular-expression-matching.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/14_2-D_Dynamic_Programming/11_Regular_Expression_Matching/0010-regular-expression-matching.py"
     },
     {
       "id": 122,
@@ -2260,11 +1776,7 @@
       "problemDir": "01_Maximum_Subarray",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/maximum-subarray/",
-      "pythonPath": "solutions/15_Greedy/01_Maximum_Subarray/0053-maximum-subarray.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/15_Greedy/01_Maximum_Subarray/0053-maximum-subarray.py"
     },
     {
       "id": 123,
@@ -2276,11 +1788,7 @@
       "problemDir": "02_Jump_Game",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/jump-game/",
-      "pythonPath": "solutions/15_Greedy/02_Jump_Game/0055-jump-game.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/15_Greedy/02_Jump_Game/0055-jump-game.py"
     },
     {
       "id": 124,
@@ -2292,11 +1800,7 @@
       "problemDir": "03_Jump_Game_II",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/jump-game-ii/",
-      "pythonPath": "solutions/15_Greedy/03_Jump_Game_II/0045-jump-game-ii.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/15_Greedy/03_Jump_Game_II/0045-jump-game-ii.py"
     },
     {
       "id": 125,
@@ -2308,11 +1812,7 @@
       "problemDir": "04_Gas_Station",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/gas-station/",
-      "pythonPath": "solutions/15_Greedy/04_Gas_Station/0134-gas-station.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/15_Greedy/04_Gas_Station/0134-gas-station.py"
     },
     {
       "id": 126,
@@ -2324,11 +1824,7 @@
       "problemDir": "05_Hand_of_Straights",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/hand-of-straights/",
-      "pythonPath": "solutions/15_Greedy/05_Hand_of_Straights/0846-hand-of-straights.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/15_Greedy/05_Hand_of_Straights/0846-hand-of-straights.py"
     },
     {
       "id": 127,
@@ -2340,11 +1836,7 @@
       "problemDir": "06_Merge_Triplets_to_Form_Target_Triplet",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/merge-triplets-to-form-target-triplet/",
-      "pythonPath": "solutions/15_Greedy/06_Merge_Triplets_to_Form_Target_Triplet/1899-merge-triplets-to-form-target-triplet.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/15_Greedy/06_Merge_Triplets_to_Form_Target_Triplet/1899-merge-triplets-to-form-target-triplet.py"
     },
     {
       "id": 128,
@@ -2356,11 +1848,7 @@
       "problemDir": "07_Partition_Labels",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/partition-labels/",
-      "pythonPath": "solutions/15_Greedy/07_Partition_Labels/0763-partition-labels.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/15_Greedy/07_Partition_Labels/0763-partition-labels.py"
     },
     {
       "id": 129,
@@ -2372,11 +1860,7 @@
       "problemDir": "08_Valid_Parenthesis_String",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/valid-parenthesis-string/",
-      "pythonPath": "solutions/15_Greedy/08_Valid_Parenthesis_String/0678-valid-parenthesis-string.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/15_Greedy/08_Valid_Parenthesis_String/0678-valid-parenthesis-string.py"
     },
     {
       "id": 130,
@@ -2388,11 +1872,7 @@
       "problemDir": "01_Insert_Interval",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/insert-interval/",
-      "pythonPath": "solutions/16_Intervals/01_Insert_Interval/0057-insert-interval.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/16_Intervals/01_Insert_Interval/0057-insert-interval.py"
     },
     {
       "id": 131,
@@ -2404,11 +1884,7 @@
       "problemDir": "02_Merge_Intervals",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/merge-intervals/",
-      "pythonPath": "solutions/16_Intervals/02_Merge_Intervals/0056-merge-intervals.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/16_Intervals/02_Merge_Intervals/0056-merge-intervals.py"
     },
     {
       "id": 132,
@@ -2420,11 +1896,7 @@
       "problemDir": "03_Non_Overlapping_Intervals",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/non-overlapping-intervals/",
-      "pythonPath": "solutions/16_Intervals/03_Non_Overlapping_Intervals/0435-non-overlapping-intervals.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/16_Intervals/03_Non_Overlapping_Intervals/0435-non-overlapping-intervals.py"
     },
     {
       "id": 133,
@@ -2436,11 +1908,7 @@
       "problemDir": "04_Meeting_Rooms",
       "difficulty": "Easy",
       "leetcodeUrl": "https://leetcode.com/problems/meeting-rooms/",
-      "pythonPath": "solutions/16_Intervals/04_Meeting_Rooms/0252-meeting-rooms.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/16_Intervals/04_Meeting_Rooms/0252-meeting-rooms.py"
     },
     {
       "id": 134,
@@ -2452,11 +1920,7 @@
       "problemDir": "05_Meeting_Rooms_II",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/meeting-rooms-ii/",
-      "pythonPath": "solutions/16_Intervals/05_Meeting_Rooms_II/0253-meeting-rooms-ii.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/16_Intervals/05_Meeting_Rooms_II/0253-meeting-rooms-ii.py"
     },
     {
       "id": 135,
@@ -2468,11 +1932,7 @@
       "problemDir": "06_Minimum_Interval_to_Include_Each_Query",
       "difficulty": "Hard",
       "leetcodeUrl": "https://leetcode.com/problems/minimum-interval-to-include-each-query/",
-      "pythonPath": "solutions/16_Intervals/06_Minimum_Interval_to_Include_Each_Query/1851-minimum-interval-to-include-each-query.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/16_Intervals/06_Minimum_Interval_to_Include_Each_Query/1851-minimum-interval-to-include-each-query.py"
     },
     {
       "id": 136,
@@ -2484,11 +1944,7 @@
       "problemDir": "01_Rotate_Image",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/rotate-image/",
-      "pythonPath": "solutions/17_Math_&_Geometry/01_Rotate_Image/0048-rotate-image.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/17_Math_&_Geometry/01_Rotate_Image/0048-rotate-image.py"
     },
     {
       "id": 137,
@@ -2500,11 +1956,7 @@
       "problemDir": "02_Spiral_Matrix",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/spiral-matrix/",
-      "pythonPath": "solutions/17_Math_&_Geometry/02_Spiral_Matrix/0054-spiral-matrix.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/17_Math_&_Geometry/02_Spiral_Matrix/0054-spiral-matrix.py"
     },
     {
       "id": 138,
@@ -2516,11 +1968,7 @@
       "problemDir": "03_Set_Matrix_Zeroes",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/set-matrix-zeroes/",
-      "pythonPath": "solutions/17_Math_&_Geometry/03_Set_Matrix_Zeroes/0073-set-matrix-zeroes.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/17_Math_&_Geometry/03_Set_Matrix_Zeroes/0073-set-matrix-zeroes.py"
     },
     {
       "id": 139,
@@ -2532,11 +1980,7 @@
       "problemDir": "04_Happy_Number",
       "difficulty": "Easy",
       "leetcodeUrl": "https://leetcode.com/problems/happy-number/",
-      "pythonPath": "solutions/17_Math_&_Geometry/04_Happy_Number/0202-happy-number.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/17_Math_&_Geometry/04_Happy_Number/0202-happy-number.py"
     },
     {
       "id": 140,
@@ -2548,11 +1992,7 @@
       "problemDir": "05_Plus_One",
       "difficulty": "Easy",
       "leetcodeUrl": "https://leetcode.com/problems/plus-one/",
-      "pythonPath": "solutions/17_Math_&_Geometry/05_Plus_One/0066-plus-one.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/17_Math_&_Geometry/05_Plus_One/0066-plus-one.py"
     },
     {
       "id": 141,
@@ -2564,11 +2004,7 @@
       "problemDir": "06_Pow(x,n)",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/powx-n/",
-      "pythonPath": "solutions/17_Math_&_Geometry/06_Pow(x,n)/0050-powx-n.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/17_Math_&_Geometry/06_Pow(x,n)/0050-powx-n.py"
     },
     {
       "id": 142,
@@ -2580,11 +2016,7 @@
       "problemDir": "07_Multiply_Strings",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/multiply-strings/",
-      "pythonPath": "solutions/17_Math_&_Geometry/07_Multiply_Strings/0043-multiply-strings.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/17_Math_&_Geometry/07_Multiply_Strings/0043-multiply-strings.py"
     },
     {
       "id": 143,
@@ -2596,11 +2028,7 @@
       "problemDir": "08_Detect_Squares",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/detect-squares/",
-      "pythonPath": "solutions/17_Math_&_Geometry/08_Detect_Squares/2013-detect-squares.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/17_Math_&_Geometry/08_Detect_Squares/2013-detect-squares.py"
     },
     {
       "id": 144,
@@ -2612,11 +2040,7 @@
       "problemDir": "01_Single_Number",
       "difficulty": "Easy",
       "leetcodeUrl": "https://leetcode.com/problems/single-number/",
-      "pythonPath": "solutions/18_Bit_Manipulation/01_Single_Number/0136-single-number.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/18_Bit_Manipulation/01_Single_Number/0136-single-number.py"
     },
     {
       "id": 145,
@@ -2628,11 +2052,7 @@
       "problemDir": "02_Number_of_1_Bits",
       "difficulty": "Easy",
       "leetcodeUrl": "https://leetcode.com/problems/number-of-1-bits/",
-      "pythonPath": "solutions/18_Bit_Manipulation/02_Number_of_1_Bits/0191-number-of-1-bits.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/18_Bit_Manipulation/02_Number_of_1_Bits/0191-number-of-1-bits.py"
     },
     {
       "id": 146,
@@ -2644,11 +2064,7 @@
       "problemDir": "03_Counting_Bits",
       "difficulty": "Easy",
       "leetcodeUrl": "https://leetcode.com/problems/counting-bits/",
-      "pythonPath": "solutions/18_Bit_Manipulation/03_Counting_Bits/0338-counting-bits.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/18_Bit_Manipulation/03_Counting_Bits/0338-counting-bits.py"
     },
     {
       "id": 147,
@@ -2660,11 +2076,7 @@
       "problemDir": "04_Reverse_Bits",
       "difficulty": "Easy",
       "leetcodeUrl": "https://leetcode.com/problems/reverse-bits/",
-      "pythonPath": "solutions/18_Bit_Manipulation/04_Reverse_Bits/0190-reverse-bits.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/18_Bit_Manipulation/04_Reverse_Bits/0190-reverse-bits.py"
     },
     {
       "id": 148,
@@ -2676,11 +2088,7 @@
       "problemDir": "05_Missing_Number",
       "difficulty": "Easy",
       "leetcodeUrl": "https://leetcode.com/problems/missing-number/",
-      "pythonPath": "solutions/18_Bit_Manipulation/05_Missing_Number/0268-missing-number.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/18_Bit_Manipulation/05_Missing_Number/0268-missing-number.py"
     },
     {
       "id": 149,
@@ -2692,11 +2100,7 @@
       "problemDir": "06_Sum_of_Two_Integers",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/sum-of-two-integers/",
-      "pythonPath": "solutions/18_Bit_Manipulation/06_Sum_of_Two_Integers/0371-sum-of-two-integers.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/18_Bit_Manipulation/06_Sum_of_Two_Integers/0371-sum-of-two-integers.py"
     },
     {
       "id": 150,
@@ -2708,11 +2112,7 @@
       "problemDir": "07_Reverse_Integer",
       "difficulty": "Medium",
       "leetcodeUrl": "https://leetcode.com/problems/reverse-integer/",
-      "pythonPath": "solutions/18_Bit_Manipulation/07_Reverse_Integer/0007-reverse-integer.py",
-      "cppPath": null,
-      "rustPath": null,
-      "hasCpp": false,
-      "hasRust": false
+      "pythonPath": "solutions/18_Bit_Manipulation/07_Reverse_Integer/0007-reverse-integer.py"
     }
   ]
 }

@@ -1,0 +1,79 @@
+{
+ "id": 126,
+ "number": 846,
+ "title": "Hand of Straights",
+ "slug": "hand-of-straights",
+ "category": "greedy",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/hand-of-straights/",
+ "pattern": "Greedy: the smallest card must start a group",
+ "statement": "Given a hand of cards (integers) and a group size `W`, return `True` if the cards can be rearranged into groups of exactly `W` **consecutive** values.",
+ "example": {
+  "input": "hand = [1,2,3,6,2,3,4,7,8], W = 3",
+  "output": "True",
+  "why": "[1, 2, 3], [2, 3, 4] and [6, 7, 8]."
+ },
+ "more": [
+  {
+   "input": "hand = [1,2,3,4,5], W = 4",
+   "output": "False"
+  },
+  {
+   "input": "hand = [1,2,3,4,5,6], W = 2",
+   "output": "True"
+  },
+  {
+   "input": "hand = [1,1,2,2,3,3], W = 3",
+   "output": "True"
+  },
+  {
+   "input": "hand = [1,2,4], W = 3",
+   "output": "False"
+  },
+  {
+   "input": "hand = [8,10,12], W = 3",
+   "output": "False"
+  },
+  {
+   "input": "hand = [5], W = 1",
+   "output": "True"
+  }
+ ],
+ "idea": [
+  "Look at the **smallest** card that is still unused. Nothing smaller exists, so it cannot sit in the middle or at the end of a group — it must be the **start** of one.",
+  "So the group is forced: starting at that card `c`, it needs `c, c + 1, …, c + W − 1`. Take one of each from the counts; if any is missing, the hand cannot be arranged.",
+  "Repeat with the next smallest unused card until every card is used."
+ ],
+ "code": "from collections import Counter\n\nclass Solution:\n    def isNStraightHand(self, hand: List[int], W: int) -> bool:\n        if len(hand) % W != 0:\n            return False\n\n        counter = Counter(hand)\n        hand.sort()\n\n        for card in hand:\n            if counter[card] > 0:\n                for i in range(W):\n                    if counter[card + i] <= 0:\n                        return False\n                    counter[card + i] -= 1\n\n        return True",
+ "complexity": {
+  "time": "O(n log n)",
+  "timeWhy": "Sorting dominates; afterwards every card is taken from the counter exactly once.",
+  "space": "O(n)",
+  "spaceWhy": "The counter holds one entry per distinct card value."
+ },
+ "steps": [
+  {"line":4,"text":"Our example: **`hand = [1,2,3,6,2,3,4,7,8], W = 3`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"hand","title":"hand","cells":[{"v":"1"},{"v":"2"},{"v":"3"},{"v":"6"},{"v":"2"},{"v":"3"},{"v":"4"},{"v":"7"},{"v":"8"}]},{"t":"items","id":"groups","title":"groups formed","items":[]}]},
+  {"line":5,"text":"9 cards make exactly 3 groups of 3, so the count fits.","views":[{"t":"array","id":"hand","title":"hand","cells":[{"v":"1"},{"v":"2"},{"v":"3"},{"v":"6"},{"v":"2"},{"v":"3"},{"v":"4"},{"v":"7"},{"v":"8"}]},{"t":"items","id":"groups","title":"groups formed","items":[]}]},
+  {"line":9,"text":"Count how often each value occurs, and sort the hand so that the smallest cards come first.","views":[{"t":"array","id":"hand","title":"hand","cells":[{"v":"1"},{"v":"2"},{"v":"2"},{"v":"3"},{"v":"3"},{"v":"4"},{"v":"6"},{"v":"7"},{"v":"8"}],"ptrs":[{"name":"card","at":-1}]},{"t":"map","id":"counter","title":"counter  (how many of each card are still unused)","kind":"map","entries":[{"k":"1","v":"1"},{"k":"2","v":"2"},{"k":"3","v":"2"},{"k":"6","v":"1"},{"k":"4","v":"1"},{"k":"7","v":"1"},{"k":"8","v":"1"}]},{"t":"items","id":"groups","title":"groups formed","items":[]}]},
+  {"line":12,"text":"Card 1 is the **smallest unused** card, so it has to start a group: 1, 2, 3.","views":[{"t":"array","id":"hand","title":"hand","cells":[{"v":"1"},{"v":"2"},{"v":"2"},{"v":"3"},{"v":"3"},{"v":"4"},{"v":"6"},{"v":"7"},{"v":"8"}],"ptrs":[{"name":"card","at":0}]},{"t":"map","id":"counter","title":"counter  (how many of each card are still unused)","kind":"map","entries":[{"k":"1","v":"1"},{"k":"2","v":"2"},{"k":"3","v":"2"},{"k":"6","v":"1"},{"k":"4","v":"1"},{"k":"7","v":"1"},{"k":"8","v":"1"}]},{"t":"items","id":"groups","title":"groups formed","items":[]}]},
+  {"line":16,"text":"Take one **1** for this group (0 left).","views":[{"t":"array","id":"hand","title":"hand","cells":[{"v":"1"},{"v":"2"},{"v":"2"},{"v":"3"},{"v":"3"},{"v":"4"},{"v":"6"},{"v":"7"},{"v":"8"}],"ptrs":[{"name":"card","at":0}]},{"t":"map","id":"counter","title":"counter  (how many of each card are still unused)","kind":"map","entries":[{"k":"1","v":"0","tone":"cur"},{"k":"2","v":"2"},{"k":"3","v":"2"},{"k":"6","v":"1"},{"k":"4","v":"1"},{"k":"7","v":"1"},{"k":"8","v":"1"}]},{"t":"items","id":"groups","title":"groups formed","items":[{"v":"[1]","tone":"good"}]}]},
+  {"line":16,"text":"Take one **2** for this group (1 left).","views":[{"t":"array","id":"hand","title":"hand","cells":[{"v":"1"},{"v":"2"},{"v":"2"},{"v":"3"},{"v":"3"},{"v":"4"},{"v":"6"},{"v":"7"},{"v":"8"}],"ptrs":[{"name":"card","at":0}]},{"t":"map","id":"counter","title":"counter  (how many of each card are still unused)","kind":"map","entries":[{"k":"1","v":"0"},{"k":"2","v":"1","tone":"cur"},{"k":"3","v":"2"},{"k":"6","v":"1"},{"k":"4","v":"1"},{"k":"7","v":"1"},{"k":"8","v":"1"}]},{"t":"items","id":"groups","title":"groups formed","items":[{"v":"[1, 2]","tone":"good"}]}]},
+  {"line":16,"text":"Take one **3** for this group (1 left).","views":[{"t":"array","id":"hand","title":"hand","cells":[{"v":"1"},{"v":"2"},{"v":"2"},{"v":"3"},{"v":"3"},{"v":"4"},{"v":"6"},{"v":"7"},{"v":"8"}],"ptrs":[{"name":"card","at":0}]},{"t":"map","id":"counter","title":"counter  (how many of each card are still unused)","kind":"map","entries":[{"k":"1","v":"0"},{"k":"2","v":"1"},{"k":"3","v":"1","tone":"cur"},{"k":"6","v":"1"},{"k":"4","v":"1"},{"k":"7","v":"1"},{"k":"8","v":"1"}]},{"t":"items","id":"groups","title":"groups formed","items":[{"v":"[1, 2, 3]","tone":"good"}]}]},
+  {"line":12,"text":"Card 2 is the **smallest unused** card, so it has to start a group: 2, 3, 4.","views":[{"t":"array","id":"hand","title":"hand","cells":[{"v":"1"},{"v":"2"},{"v":"2"},{"v":"3"},{"v":"3"},{"v":"4"},{"v":"6"},{"v":"7"},{"v":"8"}],"ptrs":[{"name":"card","at":1}]},{"t":"map","id":"counter","title":"counter  (how many of each card are still unused)","kind":"map","entries":[{"k":"1","v":"0"},{"k":"2","v":"1"},{"k":"3","v":"1"},{"k":"6","v":"1"},{"k":"4","v":"1"},{"k":"7","v":"1"},{"k":"8","v":"1"}]},{"t":"items","id":"groups","title":"groups formed","items":[{"v":"[1, 2, 3]"}]}]},
+  {"line":16,"text":"Take one **2** for this group (0 left).","views":[{"t":"array","id":"hand","title":"hand","cells":[{"v":"1"},{"v":"2"},{"v":"2"},{"v":"3"},{"v":"3"},{"v":"4"},{"v":"6"},{"v":"7"},{"v":"8"}],"ptrs":[{"name":"card","at":1}]},{"t":"map","id":"counter","title":"counter  (how many of each card are still unused)","kind":"map","entries":[{"k":"1","v":"0"},{"k":"2","v":"0","tone":"cur"},{"k":"3","v":"1"},{"k":"6","v":"1"},{"k":"4","v":"1"},{"k":"7","v":"1"},{"k":"8","v":"1"}]},{"t":"items","id":"groups","title":"groups formed","items":[{"v":"[1, 2, 3]"},{"v":"[2]","tone":"good"}]}]},
+  {"line":16,"text":"Take one **3** for this group (0 left).","views":[{"t":"array","id":"hand","title":"hand","cells":[{"v":"1"},{"v":"2"},{"v":"2"},{"v":"3"},{"v":"3"},{"v":"4"},{"v":"6"},{"v":"7"},{"v":"8"}],"ptrs":[{"name":"card","at":1}]},{"t":"map","id":"counter","title":"counter  (how many of each card are still unused)","kind":"map","entries":[{"k":"1","v":"0"},{"k":"2","v":"0"},{"k":"3","v":"0","tone":"cur"},{"k":"6","v":"1"},{"k":"4","v":"1"},{"k":"7","v":"1"},{"k":"8","v":"1"}]},{"t":"items","id":"groups","title":"groups formed","items":[{"v":"[1, 2, 3]"},{"v":"[2, 3]","tone":"good"}]}]},
+  {"line":16,"text":"Take one **4** for this group (0 left).","views":[{"t":"array","id":"hand","title":"hand","cells":[{"v":"1"},{"v":"2"},{"v":"2"},{"v":"3"},{"v":"3"},{"v":"4"},{"v":"6"},{"v":"7"},{"v":"8"}],"ptrs":[{"name":"card","at":1}]},{"t":"map","id":"counter","title":"counter  (how many of each card are still unused)","kind":"map","entries":[{"k":"1","v":"0"},{"k":"2","v":"0"},{"k":"3","v":"0"},{"k":"6","v":"1"},{"k":"4","v":"0","tone":"cur"},{"k":"7","v":"1"},{"k":"8","v":"1"}]},{"t":"items","id":"groups","title":"groups formed","items":[{"v":"[1, 2, 3]"},{"v":"[2, 3, 4]","tone":"good"}]}]},
+  {"line":12,"text":"Card 2: every copy has already been used in an earlier group. Skip.","views":[{"t":"array","id":"hand","title":"hand","cells":[{"v":"1"},{"v":"2"},{"v":"2"},{"v":"3"},{"v":"3"},{"v":"4"},{"v":"6"},{"v":"7"},{"v":"8"}],"ptrs":[{"name":"card","at":2}]},{"t":"map","id":"counter","title":"counter  (how many of each card are still unused)","kind":"map","entries":[{"k":"1","v":"0"},{"k":"2","v":"0"},{"k":"3","v":"0"},{"k":"6","v":"1"},{"k":"4","v":"0"},{"k":"7","v":"1"},{"k":"8","v":"1"}]},{"t":"items","id":"groups","title":"groups formed","items":[{"v":"[1, 2, 3]"},{"v":"[2, 3, 4]"}]}]},
+  {"line":12,"text":"Card 3: every copy has already been used in an earlier group. Skip.","views":[{"t":"array","id":"hand","title":"hand","cells":[{"v":"1"},{"v":"2"},{"v":"2"},{"v":"3"},{"v":"3"},{"v":"4"},{"v":"6"},{"v":"7"},{"v":"8"}],"ptrs":[{"name":"card","at":3}]},{"t":"map","id":"counter","title":"counter  (how many of each card are still unused)","kind":"map","entries":[{"k":"1","v":"0"},{"k":"2","v":"0"},{"k":"3","v":"0"},{"k":"6","v":"1"},{"k":"4","v":"0"},{"k":"7","v":"1"},{"k":"8","v":"1"}]},{"t":"items","id":"groups","title":"groups formed","items":[{"v":"[1, 2, 3]"},{"v":"[2, 3, 4]"}]}]},
+  {"line":12,"text":"Card 3: every copy has already been used in an earlier group. Skip.","views":[{"t":"array","id":"hand","title":"hand","cells":[{"v":"1"},{"v":"2"},{"v":"2"},{"v":"3"},{"v":"3"},{"v":"4"},{"v":"6"},{"v":"7"},{"v":"8"}],"ptrs":[{"name":"card","at":4}]},{"t":"map","id":"counter","title":"counter  (how many of each card are still unused)","kind":"map","entries":[{"k":"1","v":"0"},{"k":"2","v":"0"},{"k":"3","v":"0"},{"k":"6","v":"1"},{"k":"4","v":"0"},{"k":"7","v":"1"},{"k":"8","v":"1"}]},{"t":"items","id":"groups","title":"groups formed","items":[{"v":"[1, 2, 3]"},{"v":"[2, 3, 4]"}]}]},
+  {"line":12,"text":"Card 4: every copy has already been used in an earlier group. Skip.","views":[{"t":"array","id":"hand","title":"hand","cells":[{"v":"1"},{"v":"2"},{"v":"2"},{"v":"3"},{"v":"3"},{"v":"4"},{"v":"6"},{"v":"7"},{"v":"8"}],"ptrs":[{"name":"card","at":5}]},{"t":"map","id":"counter","title":"counter  (how many of each card are still unused)","kind":"map","entries":[{"k":"1","v":"0"},{"k":"2","v":"0"},{"k":"3","v":"0"},{"k":"6","v":"1"},{"k":"4","v":"0"},{"k":"7","v":"1"},{"k":"8","v":"1"}]},{"t":"items","id":"groups","title":"groups formed","items":[{"v":"[1, 2, 3]"},{"v":"[2, 3, 4]"}]}]},
+  {"line":12,"text":"Card 6 is the **smallest unused** card, so it has to start a group: 6, 7, 8.","views":[{"t":"array","id":"hand","title":"hand","cells":[{"v":"1"},{"v":"2"},{"v":"2"},{"v":"3"},{"v":"3"},{"v":"4"},{"v":"6"},{"v":"7"},{"v":"8"}],"ptrs":[{"name":"card","at":6}]},{"t":"map","id":"counter","title":"counter  (how many of each card are still unused)","kind":"map","entries":[{"k":"1","v":"0"},{"k":"2","v":"0"},{"k":"3","v":"0"},{"k":"6","v":"1"},{"k":"4","v":"0"},{"k":"7","v":"1"},{"k":"8","v":"1"}]},{"t":"items","id":"groups","title":"groups formed","items":[{"v":"[1, 2, 3]"},{"v":"[2, 3, 4]"}]}]},
+  {"line":16,"text":"Take one **6** for this group (0 left).","views":[{"t":"array","id":"hand","title":"hand","cells":[{"v":"1"},{"v":"2"},{"v":"2"},{"v":"3"},{"v":"3"},{"v":"4"},{"v":"6"},{"v":"7"},{"v":"8"}],"ptrs":[{"name":"card","at":6}]},{"t":"map","id":"counter","title":"counter  (how many of each card are still unused)","kind":"map","entries":[{"k":"1","v":"0"},{"k":"2","v":"0"},{"k":"3","v":"0"},{"k":"6","v":"0","tone":"cur"},{"k":"4","v":"0"},{"k":"7","v":"1"},{"k":"8","v":"1"}]},{"t":"items","id":"groups","title":"groups formed","items":[{"v":"[1, 2, 3]"},{"v":"[2, 3, 4]"},{"v":"[6]","tone":"good"}]}]},
+  {"line":16,"text":"Take one **7** for this group (0 left).","views":[{"t":"array","id":"hand","title":"hand","cells":[{"v":"1"},{"v":"2"},{"v":"2"},{"v":"3"},{"v":"3"},{"v":"4"},{"v":"6"},{"v":"7"},{"v":"8"}],"ptrs":[{"name":"card","at":6}]},{"t":"map","id":"counter","title":"counter  (how many of each card are still unused)","kind":"map","entries":[{"k":"1","v":"0"},{"k":"2","v":"0"},{"k":"3","v":"0"},{"k":"6","v":"0"},{"k":"4","v":"0"},{"k":"7","v":"0","tone":"cur"},{"k":"8","v":"1"}]},{"t":"items","id":"groups","title":"groups formed","items":[{"v":"[1, 2, 3]"},{"v":"[2, 3, 4]"},{"v":"[6, 7]","tone":"good"}]}]},
+  {"line":16,"text":"Take one **8** for this group (0 left).","views":[{"t":"array","id":"hand","title":"hand","cells":[{"v":"1"},{"v":"2"},{"v":"2"},{"v":"3"},{"v":"3"},{"v":"4"},{"v":"6"},{"v":"7"},{"v":"8"}],"ptrs":[{"name":"card","at":6}]},{"t":"map","id":"counter","title":"counter  (how many of each card are still unused)","kind":"map","entries":[{"k":"1","v":"0"},{"k":"2","v":"0"},{"k":"3","v":"0"},{"k":"6","v":"0"},{"k":"4","v":"0"},{"k":"7","v":"0"},{"k":"8","v":"0","tone":"cur"}]},{"t":"items","id":"groups","title":"groups formed","items":[{"v":"[1, 2, 3]"},{"v":"[2, 3, 4]"},{"v":"[6, 7, 8]","tone":"good"}]}]},
+  {"line":12,"text":"Card 7: every copy has already been used in an earlier group. Skip.","views":[{"t":"array","id":"hand","title":"hand","cells":[{"v":"1"},{"v":"2"},{"v":"2"},{"v":"3"},{"v":"3"},{"v":"4"},{"v":"6"},{"v":"7"},{"v":"8"}],"ptrs":[{"name":"card","at":7}]},{"t":"map","id":"counter","title":"counter  (how many of each card are still unused)","kind":"map","entries":[{"k":"1","v":"0"},{"k":"2","v":"0"},{"k":"3","v":"0"},{"k":"6","v":"0"},{"k":"4","v":"0"},{"k":"7","v":"0"},{"k":"8","v":"0"}]},{"t":"items","id":"groups","title":"groups formed","items":[{"v":"[1, 2, 3]"},{"v":"[2, 3, 4]"},{"v":"[6, 7, 8]"}]}]},
+  {"line":12,"text":"Card 8: every copy has already been used in an earlier group. Skip.","views":[{"t":"array","id":"hand","title":"hand","cells":[{"v":"1"},{"v":"2"},{"v":"2"},{"v":"3"},{"v":"3"},{"v":"4"},{"v":"6"},{"v":"7"},{"v":"8"}],"ptrs":[{"name":"card","at":8}]},{"t":"map","id":"counter","title":"counter  (how many of each card are still unused)","kind":"map","entries":[{"k":"1","v":"0"},{"k":"2","v":"0"},{"k":"3","v":"0"},{"k":"6","v":"0"},{"k":"4","v":"0"},{"k":"7","v":"0"},{"k":"8","v":"0"}]},{"t":"items","id":"groups","title":"groups formed","items":[{"v":"[1, 2, 3]"},{"v":"[2, 3, 4]"},{"v":"[6, 7, 8]"}]}]},
+  {"line":18,"text":"Every card has found its place in a group of 3 consecutive values → **True**.","views":[{"t":"array","id":"hand","title":"hand","cells":[{"v":"1"},{"v":"2"},{"v":"2"},{"v":"3"},{"v":"3"},{"v":"4"},{"v":"6"},{"v":"7"},{"v":"8"}],"ptrs":[{"name":"card","at":9}]},{"t":"map","id":"counter","title":"counter  (how many of each card are still unused)","kind":"map","entries":[{"k":"1","v":"0"},{"k":"2","v":"0"},{"k":"3","v":"0"},{"k":"6","v":"0"},{"k":"4","v":"0"},{"k":"7","v":"0"},{"k":"8","v":"0"}]},{"t":"items","id":"groups","title":"groups formed","items":[{"v":"[1, 2, 3]"},{"v":"[2, 3, 4]"},{"v":"[6, 7, 8]"}]}]},
+  {"line":18,"text":"Done — the answer is **`True`**. [1, 2, 3], [2, 3, 4] and [6, 7, 8].","views":[{"t":"array","id":"hand","title":"hand","cells":[{"v":"1"},{"v":"2"},{"v":"2"},{"v":"3"},{"v":"3"},{"v":"4"},{"v":"6"},{"v":"7"},{"v":"8"}],"ptrs":[{"name":"card","at":9}]},{"t":"map","id":"counter","title":"counter  (how many of each card are still unused)","kind":"map","entries":[{"k":"1","v":"0"},{"k":"2","v":"0"},{"k":"3","v":"0"},{"k":"6","v":"0"},{"k":"4","v":"0"},{"k":"7","v":"0"},{"k":"8","v":"0"}]},{"t":"items","id":"groups","title":"groups formed","items":[{"v":"[1, 2, 3]"},{"v":"[2, 3, 4]"},{"v":"[6, 7, 8]"}]}],"final":true}
+ ]
+}

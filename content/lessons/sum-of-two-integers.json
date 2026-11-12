@@ -1,0 +1,69 @@
+{
+ "id": 149,
+ "number": 371,
+ "title": "Sum of Two Integers",
+ "slug": "sum-of-two-integers",
+ "category": "bit-manipulation",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/sum-of-two-integers/",
+ "pattern": "Add with XOR, carry with AND",
+ "statement": "Return the sum of two integers `a` and `b` **without using `+` or `−`**.",
+ "example": {
+  "input": "a = 5, b = 3",
+  "output": "8",
+  "why": "5 + 3 = 8, obtained with XOR, AND and shifts only."
+ },
+ "more": [
+  {
+   "input": "a = 1, b = 2",
+   "output": "3"
+  },
+  {
+   "input": "a = 2, b = 3",
+   "output": "5"
+  },
+  {
+   "input": "a = -2, b = 3",
+   "output": "1"
+  },
+  {
+   "input": "a = -1, b = -1",
+   "output": "-2"
+  },
+  {
+   "input": "a = 0, b = 0",
+   "output": "0"
+  },
+  {
+   "input": "a = -5, b = 5",
+   "output": "0"
+  },
+  {
+   "input": "a = 1000, b = -1000",
+   "output": "0"
+  }
+ ],
+ "idea": [
+  "Look at one binary column: `0 + 0 = 0`, `0 + 1 = 1`, `1 + 1 = 0 carry 1`. Ignoring the carry, that is exactly **XOR**. So `a ^ b` adds every column without carries.",
+  "A carry arises precisely where **both** bits are 1 — that is `a & b`. A carry belongs one column to the left, so shift it: `(a & b) << 1`.",
+  "The true sum is *(sum without carries) + (carries)* — another addition. Repeat with those two numbers until there are no carries left. (The mask keeps the numbers within 32 bits, because Python integers never overflow.)"
+ ],
+ "code": "class Solution:\n    def getSum(self, a: int, b: int) -> int:\n        MASK = 0xFFFFFFFF\n        MAX_INT = 0x7FFFFFFF\n\n        while b != 0:\n            a, b = (a ^ b) & MASK, ((a & b) << 1) & MASK\n\n        return a if a <= MAX_INT else ~(a ^ MASK)",
+ "complexity": {
+  "time": "O(1)",
+  "timeWhy": "At most 32 rounds, because every round moves the carries one bit to the left.",
+  "space": "O(1)",
+  "spaceWhy": "Only the two numbers a and b are stored."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`a = 5, b = 3`**. Each step runs one highlighted line of the code.","views":[{"t":"bits","id":"bits","title":"a ^ b = sum without carries      (a & b) << 1 = the carries","rows":[{"label":"a","bits":"00000101","v":"5"},{"label":"b","bits":"00000011","v":"3","tone":"alt"},{"label":"a ^ b","bits":"00000110","v":"6","tone":"good"},{"label":"(a & b) << 1","bits":"00000010","v":"2","tone":"mark"}]}]},
+  {"line":4,"text":"`a ^ b` adds each column while ignoring carries; `(a & b) << 1` collects the carries, moved one column left. The two masks only serve to imitate 32-bit integers.","views":[{"t":"bits","id":"bits","title":"a ^ b = sum without carries      (a & b) << 1 = the carries","rows":[{"label":"a","bits":"00000101","v":"5"},{"label":"b","bits":"00000011","v":"3","tone":"alt"},{"label":"a ^ b","bits":"00000110","v":"6","tone":"good"},{"label":"(a & b) << 1","bits":"00000010","v":"2","tone":"mark"}]}]},
+  {"line":7,"text":"Sum without carries: 5 ^ 3 = **6**. Carries: (5 & 3) << 1 = **2**. The true total is 6 + 2, which is again an addition — so repeat with these two numbers.","views":[{"t":"bits","id":"bits","title":"a ^ b = sum without carries      (a & b) << 1 = the carries","rows":[{"label":"a","bits":"00000110","v":"6"},{"label":"b","bits":"00000010","v":"2","tone":"alt"},{"label":"a ^ b","bits":"00000100","v":"4","tone":"good"},{"label":"(a & b) << 1","bits":"00000100","v":"4","tone":"mark"}]}]},
+  {"line":7,"text":"Sum without carries: 6 ^ 2 = **4**. Carries: (6 & 2) << 1 = **4**. The true total is 4 + 4, which is again an addition — so repeat with these two numbers.","views":[{"t":"bits","id":"bits","title":"a ^ b = sum without carries      (a & b) << 1 = the carries","rows":[{"label":"a","bits":"00000100","v":"4"},{"label":"b","bits":"00000100","v":"4","tone":"alt"},{"label":"a ^ b","bits":"00000000","v":"0","tone":"good"},{"label":"(a & b) << 1","bits":"00001000","v":"8","tone":"mark"}]}]},
+  {"line":7,"text":"Sum without carries: 4 ^ 4 = **0**. Carries: (4 & 4) << 1 = **8**. The true total is 0 + 8, which is again an addition — so repeat with these two numbers.","views":[{"t":"bits","id":"bits","title":"a ^ b = sum without carries      (a & b) << 1 = the carries","rows":[{"label":"a","bits":"00000000","v":"0"},{"label":"b","bits":"00001000","v":"8","tone":"alt"},{"label":"a ^ b","bits":"00001000","v":"8","tone":"good"},{"label":"(a & b) << 1","bits":"00000000","v":"0","tone":"mark"}]}]},
+  {"line":7,"text":"Sum without carries: 0 ^ 8 = **8**. Carries: (0 & 8) << 1 = **0** — no column produced a carry this time.","views":[{"t":"bits","id":"bits","title":"a ^ b = sum without carries      (a & b) << 1 = the carries","rows":[{"label":"a","bits":"00001000","v":"8"},{"label":"b","bits":"00000000","v":"0","tone":"alt"},{"label":"a ^ b","bits":"00001000","v":"8","tone":"good"},{"label":"(a & b) << 1","bits":"00000000","v":"0","tone":"mark"}]}]},
+  {"line":6,"text":"There are **no carries left** (b = 0), so `a` now holds the complete sum.","views":[{"t":"bits","id":"bits","title":"a ^ b = sum without carries      (a & b) << 1 = the carries","rows":[{"label":"a","bits":"00001000","v":"8"},{"label":"b","bits":"00000000","v":"0","tone":"alt"},{"label":"a ^ b","bits":"00001000","v":"8","tone":"good"},{"label":"(a & b) << 1","bits":"00000000","v":"0","tone":"mark"}]}]},
+  {"line":9,"text":"`a` = 8 fits into a signed 32-bit integer as it is → **8**.","views":[{"t":"bits","id":"bits","title":"a ^ b = sum without carries      (a & b) << 1 = the carries","rows":[{"label":"a","bits":"00001000","v":"8"},{"label":"b","bits":"00000000","v":"0","tone":"alt"},{"label":"a ^ b","bits":"00001000","v":"8","tone":"good"},{"label":"(a & b) << 1","bits":"00000000","v":"0","tone":"mark"}]}]},
+  {"line":9,"text":"Done — the answer is **`8`**. 5 + 3 = 8, obtained with XOR, AND and shifts only.","views":[{"t":"bits","id":"bits","title":"a ^ b = sum without carries      (a & b) << 1 = the carries","rows":[{"label":"a","bits":"00001000","v":"8"},{"label":"b","bits":"00000000","v":"0","tone":"alt"},{"label":"a ^ b","bits":"00001000","v":"8","tone":"good"},{"label":"(a & b) << 1","bits":"00000000","v":"0","tone":"mark"}]}],"final":true}
+ ]
+}

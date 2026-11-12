@@ -1,0 +1,78 @@
+{
+ "id": 104,
+ "number": 647,
+ "title": "Palindromic Substrings",
+ "slug": "palindromic-substrings",
+ "category": "1d-dp",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/palindromic-substrings/",
+ "pattern": "Expand around every centre and count",
+ "statement": "Given a string `s`, return the **number** of substrings that are palindromes. Substrings at different positions count separately, even if they consist of the same letters.",
+ "example": {
+  "input": "s = \"abba\"",
+  "output": "6",
+  "why": "The four single letters, plus 'bb' and 'abba'."
+ },
+ "more": [
+  {
+   "input": "s = \"abc\"",
+   "output": "3"
+  },
+  {
+   "input": "s = \"aaa\"",
+   "output": "6"
+  },
+  {
+   "input": "s = \"a\"",
+   "output": "1"
+  },
+  {
+   "input": "s = \"\"",
+   "output": "0"
+  },
+  {
+   "input": "s = \"racecar\"",
+   "output": "10"
+  }
+ ],
+ "idea": [
+  "Every palindrome has a centre: a letter (odd length) or a gap between two letters (even length).",
+  "Grow outward from a centre while the two ends match. **Each successful step is one more palindrome** — a bigger one around the same centre.",
+  "Do this for all 2n − 1 centres and add up the counts."
+ ],
+ "code": "class Solution:\n    def countSubstrings(self, s: str) -> int:\n        def expandAroundCenter(left: int, right: int) -> int:\n            count = 0\n            # Expand around the center while the characters at both ends are equal.\n            while left >= 0 and right < len(s) and s[left] == s[right]:\n                left -= 1\n                right += 1\n                count += 1\n            return count\n\n        if not s:\n            return 0\n\n        total_palindromes = 0\n\n        for i in range(len(s)):\n            # Check for odd-length palindromes.\n            total_palindromes += expandAroundCenter(i, i)\n\n            # Check for even-length palindromes.\n            total_palindromes += expandAroundCenter(i, i + 1)\n\n        return total_palindromes",
+ "complexity": {
+  "time": "O(n²)",
+  "timeWhy": "2n − 1 centres, each expanded up to n/2 times.",
+  "space": "O(1)",
+  "spaceWhy": "A few counters and indices."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`s = \"abba\"`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"b"},{"v":"a"}]}]},
+  {"line":15,"text":"`total_palindromes` adds up the palindromes found around every centre.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"b"},{"v":"a"}]},{"t":"vars","id":"vars","items":[{"k":"total_palindromes","v":"0"}]}]},
+  {"line":9,"text":"The single letter `a` (index 0) is a palindrome by itself. Count it, then try to grow outward.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"b"},{"v":"a"}],"ptrs":[{"name":"left","at":-1},{"name":"right","at":1}],"ranges":[{"from":0,"to":0,"label":"palindrome","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"total_palindromes","v":"0"},{"k":"count","v":"1"}]}]},
+  {"line":6,"text":"The expansion would leave the string → stop.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"b"},{"v":"a"}],"ptrs":[{"name":"left","at":-1},{"name":"right","at":1}],"ranges":[{"from":0,"to":0,"label":"palindrome","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"total_palindromes","v":"0"},{"k":"count","v":"1"}]}]},
+  {"line":19,"text":"Centre on the letter at index 0: 1 palindrome. Total so far: **1**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"b"},{"v":"a"}],"ptrs":[{"name":"i","at":0}]},{"t":"vars","id":"vars","items":[{"k":"total_palindromes","v":"1","changed":true}]}]},
+  {"line":6,"text":"`s[0]` = `a` and `s[1]` = `b` differ → stop.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"b"},{"v":"a"}],"ptrs":[{"name":"left","at":0},{"name":"right","at":1}]},{"t":"vars","id":"vars","items":[{"k":"total_palindromes","v":"1"},{"k":"count","v":"0"}]}]},
+  {"line":22,"text":"Centre on the gap between index 0 and 1: 0 palindromes. Total so far: **1**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"b"},{"v":"a"}],"ptrs":[{"name":"i","at":0}]},{"t":"vars","id":"vars","items":[{"k":"total_palindromes","v":"1"}]}]},
+  {"line":9,"text":"The single letter `b` (index 1) is a palindrome by itself. Count it, then try to grow outward.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"b"},{"v":"a"}],"ptrs":[{"name":"left","at":0},{"name":"right","at":2}],"ranges":[{"from":1,"to":1,"label":"palindrome","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"total_palindromes","v":"1"},{"k":"count","v":"1"}]}]},
+  {"line":6,"text":"`s[0]` = `a` and `s[2]` = `b` differ → stop.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"b"},{"v":"a"}],"ptrs":[{"name":"left","at":0},{"name":"right","at":2}],"ranges":[{"from":1,"to":1,"label":"palindrome","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"total_palindromes","v":"1"},{"k":"count","v":"1"}]}]},
+  {"line":19,"text":"Centre on the letter at index 1: 1 palindrome. Total so far: **2**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"b"},{"v":"a"}],"ptrs":[{"name":"i","at":1}]},{"t":"vars","id":"vars","items":[{"k":"total_palindromes","v":"2","changed":true}]}]},
+  {"line":9,"text":"The two ends match, so `bb` is a palindrome. Count it (1 around this centre) and try to grow further.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"b"},{"v":"a"}],"ptrs":[{"name":"left","at":0},{"name":"right","at":3}],"ranges":[{"from":1,"to":2,"label":"palindrome","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"total_palindromes","v":"2"},{"k":"count","v":"1"}]}]},
+  {"line":9,"text":"The two ends match, so `abba` is a palindrome. Count it (2 around this centre) and try to grow further.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"b"},{"v":"a"}],"ptrs":[{"name":"left","at":-1},{"name":"right","at":4}],"ranges":[{"from":0,"to":3,"label":"palindrome","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"total_palindromes","v":"2"},{"k":"count","v":"2","changed":true}]}]},
+  {"line":6,"text":"The expansion would leave the string → stop.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"b"},{"v":"a"}],"ptrs":[{"name":"left","at":-1},{"name":"right","at":4}],"ranges":[{"from":0,"to":3,"label":"palindrome","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"total_palindromes","v":"2"},{"k":"count","v":"2"}]}]},
+  {"line":22,"text":"Centre on the gap between index 1 and 2: 2 palindromes. Total so far: **4**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"b"},{"v":"a"}],"ptrs":[{"name":"i","at":1}]},{"t":"vars","id":"vars","items":[{"k":"total_palindromes","v":"4","changed":true}]}]},
+  {"line":9,"text":"The single letter `b` (index 2) is a palindrome by itself. Count it, then try to grow outward.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"b"},{"v":"a"}],"ptrs":[{"name":"left","at":1},{"name":"right","at":3}],"ranges":[{"from":2,"to":2,"label":"palindrome","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"total_palindromes","v":"4"},{"k":"count","v":"1"}]}]},
+  {"line":6,"text":"`s[1]` = `b` and `s[3]` = `a` differ → stop.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"b"},{"v":"a"}],"ptrs":[{"name":"left","at":1},{"name":"right","at":3}],"ranges":[{"from":2,"to":2,"label":"palindrome","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"total_palindromes","v":"4"},{"k":"count","v":"1"}]}]},
+  {"line":19,"text":"Centre on the letter at index 2: 1 palindrome. Total so far: **5**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"b"},{"v":"a"}],"ptrs":[{"name":"i","at":2}]},{"t":"vars","id":"vars","items":[{"k":"total_palindromes","v":"5","changed":true}]}]},
+  {"line":6,"text":"`s[2]` = `b` and `s[3]` = `a` differ → stop.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"b"},{"v":"a"}],"ptrs":[{"name":"left","at":2},{"name":"right","at":3}]},{"t":"vars","id":"vars","items":[{"k":"total_palindromes","v":"5"},{"k":"count","v":"0"}]}]},
+  {"line":22,"text":"Centre on the gap between index 2 and 3: 0 palindromes. Total so far: **5**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"b"},{"v":"a"}],"ptrs":[{"name":"i","at":2}]},{"t":"vars","id":"vars","items":[{"k":"total_palindromes","v":"5"}]}]},
+  {"line":9,"text":"The single letter `a` (index 3) is a palindrome by itself. Count it, then try to grow outward.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"b"},{"v":"a"}],"ptrs":[{"name":"left","at":2},{"name":"right","at":4}],"ranges":[{"from":3,"to":3,"label":"palindrome","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"total_palindromes","v":"5"},{"k":"count","v":"1"}]}]},
+  {"line":6,"text":"The expansion would leave the string → stop.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"b"},{"v":"a"}],"ptrs":[{"name":"left","at":2},{"name":"right","at":4}],"ranges":[{"from":3,"to":3,"label":"palindrome","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"total_palindromes","v":"5"},{"k":"count","v":"1"}]}]},
+  {"line":19,"text":"Centre on the letter at index 3: 1 palindrome. Total so far: **6**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"b"},{"v":"a"}],"ptrs":[{"name":"i","at":3}]},{"t":"vars","id":"vars","items":[{"k":"total_palindromes","v":"6","changed":true}]}]},
+  {"line":6,"text":"The expansion would leave the string → stop.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"b"},{"v":"a"}],"ptrs":[{"name":"left","at":3},{"name":"right","at":4}]},{"t":"vars","id":"vars","items":[{"k":"total_palindromes","v":"6"},{"k":"count","v":"0"}]}]},
+  {"line":22,"text":"Centre on the gap between index 3 and 4: 0 palindromes. Total so far: **6**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"b"},{"v":"a"}],"ptrs":[{"name":"i","at":3}]},{"t":"vars","id":"vars","items":[{"k":"total_palindromes","v":"6"}]}]},
+  {"line":24,"text":"All centres are done: **6** palindromic substrings.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"b"},{"v":"a"}],"ptrs":[{"name":"i","at":3}]},{"t":"vars","id":"vars","items":[{"k":"total_palindromes","v":"6"}]}]},
+  {"line":24,"text":"Done — the answer is **`6`**. The four single letters, plus 'bb' and 'abba'.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"b"},{"v":"a"}],"ptrs":[{"name":"i","at":3}]},{"t":"vars","id":"vars","items":[{"k":"total_palindromes","v":"6"}]}],"final":true}
+ ]
+}

@@ -1,0 +1,63 @@
+{
+ "id": 125,
+ "number": 134,
+ "title": "Gas Station",
+ "slug": "gas-station",
+ "category": "greedy",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/gas-station/",
+ "pattern": "Greedy: restart after the tank runs dry",
+ "statement": "Gas stations stand on a circular route. Station `i` gives you `gas[i]`, and driving from station `i` to the next one costs `cost[i]`. Starting with an empty tank, return the index of the station from which you can drive once around the circle, or `-1` if that is impossible. (If an answer exists it is unique.)",
+ "example": {
+  "input": "gas = [5,1,2,3,4], cost = [4,4,1,5,1]",
+  "output": "4",
+  "why": "From station 4 the tank goes 3, 4, 1, 2, 0 — it never drops below zero."
+ },
+ "more": [
+  {
+   "input": "gas = [1,2,3,4,5], cost = [3,4,5,1,2]",
+   "output": "3"
+  },
+  {
+   "input": "gas = [2,3,4], cost = [3,4,3]",
+   "output": "-1"
+  },
+  {
+   "input": "gas = [5], cost = [4]",
+   "output": "0"
+  },
+  {
+   "input": "gas = [3,1,1], cost = [1,2,2]",
+   "output": "0"
+  },
+  {
+   "input": "gas = [1,2], cost = [2,1]",
+   "output": "1"
+  }
+ ],
+ "idea": [
+  "If the total gas is less than the total cost, no start can work. If it is at least the total cost, some start **always** works.",
+  "Try a start and keep the tank level. If the tank goes negative at station `i`, this start fails — and so does **every station between the start and i**: each of them would arrive at `i` with even less gas (we reached them with a non-negative tank).",
+  "So skip them all: the next candidate is station `i + 1`, with an empty tank. The last candidate left after one pass is the answer (if the totals allow one)."
+ ],
+ "code": "class Solution:\n    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:\n        total_gas = 0\n        current_gas = 0\n        start_station = 0\n\n        for i in range(len(gas)):\n            total_gas += gas[i] - cost[i]\n            current_gas += gas[i] - cost[i]\n\n            if current_gas < 0:\n                start_station = i + 1\n                current_gas = 0\n\n        return start_station if total_gas >= 0 else -1",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "One pass over the stations.",
+  "space": "O(1)",
+  "spaceWhy": "Three numbers."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`gas = [5,1,2,3,4], cost = [4,4,1,5,1]`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"gas","title":"gas","cells":[{"v":"5"},{"v":"1"},{"v":"2"},{"v":"3"},{"v":"4"}]},{"t":"array","id":"cost","title":"cost","cells":[{"v":"4"},{"v":"4"},{"v":"1"},{"v":"5"},{"v":"1"}]},{"t":"array","id":"net","title":"gas − cost  (what each station adds to the tank)","cells":[{"v":"1"},{"v":"-3"},{"v":"1"},{"v":"-2"},{"v":"3"}]}]},
+  {"line":5,"text":"`current_gas` is the tank on a trip starting at `start_station` (first candidate: station 0). `total_gas` adds up gas − cost over the whole circle to see whether a trip is possible at all.","views":[{"t":"array","id":"gas","title":"gas","cells":[{"v":"5"},{"v":"1"},{"v":"2"},{"v":"3"},{"v":"4"}]},{"t":"array","id":"cost","title":"cost","cells":[{"v":"4"},{"v":"4"},{"v":"1"},{"v":"5"},{"v":"1"}]},{"t":"array","id":"net","title":"gas − cost  (what each station adds to the tank)","cells":[{"v":"1"},{"v":"-3"},{"v":"1"},{"v":"-2"},{"v":"3"}]},{"t":"vars","id":"vars","items":[{"k":"start_station","v":"0"},{"k":"current_gas","v":"0"},{"k":"total_gas","v":"0"}]}]},
+  {"line":9,"text":"Station 0: fill up 5, then burn 4 driving on. Net +1 → tank = **1** (overall balance 1).","views":[{"t":"array","id":"gas","title":"gas","cells":[{"v":"5"},{"v":"1"},{"v":"2"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"i","at":0}]},{"t":"array","id":"cost","title":"cost","cells":[{"v":"4"},{"v":"4"},{"v":"1"},{"v":"5"},{"v":"1"}]},{"t":"array","id":"net","title":"gas − cost  (what each station adds to the tank)","cells":[{"v":"1","tone":"cur"},{"v":"-3"},{"v":"1"},{"v":"-2"},{"v":"3"}],"ranges":[{"from":0,"to":0,"label":"trip from start_station","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"start_station","v":"0"},{"k":"current_gas","v":"1","changed":true},{"k":"total_gas","v":"1","changed":true}]}]},
+  {"line":9,"text":"Station 1: fill up 1, then burn 4 driving on. Net -3 → tank = **-2** (overall balance -2).","views":[{"t":"array","id":"gas","title":"gas","cells":[{"v":"5"},{"v":"1"},{"v":"2"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"i","at":1}]},{"t":"array","id":"cost","title":"cost","cells":[{"v":"4"},{"v":"4"},{"v":"1"},{"v":"5"},{"v":"1"}]},{"t":"array","id":"net","title":"gas − cost  (what each station adds to the tank)","cells":[{"v":"1"},{"v":"-3","tone":"cur"},{"v":"1"},{"v":"-2"},{"v":"3"}],"ranges":[{"from":0,"to":1,"label":"trip from start_station","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"start_station","v":"0"},{"k":"current_gas","v":"-2","changed":true},{"k":"total_gas","v":"-2","changed":true}]}]},
+  {"line":13,"text":"The tank went **negative** after station 1, so the trip from station 0 fails. Starting later, at station 1, cannot help either: that trip would reach this point with even less gas. Skip ahead — next candidate: station **2**, with an empty tank.","views":[{"t":"array","id":"gas","title":"gas","cells":[{"v":"5"},{"v":"1"},{"v":"2"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"i","at":1}]},{"t":"array","id":"cost","title":"cost","cells":[{"v":"4"},{"v":"4"},{"v":"1"},{"v":"5"},{"v":"1"}]},{"t":"array","id":"net","title":"gas − cost  (what each station adds to the tank)","cells":[{"v":"1"},{"v":"-3","tone":"bad"},{"v":"1"},{"v":"-2"},{"v":"3"}]},{"t":"vars","id":"vars","items":[{"k":"start_station","v":"2","changed":true},{"k":"current_gas","v":"0","changed":true},{"k":"total_gas","v":"-2"}]}]},
+  {"line":9,"text":"Station 2: fill up 2, then burn 1 driving on. Net +1 → tank = **1** (overall balance -1).","views":[{"t":"array","id":"gas","title":"gas","cells":[{"v":"5"},{"v":"1"},{"v":"2"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"i","at":2}]},{"t":"array","id":"cost","title":"cost","cells":[{"v":"4"},{"v":"4"},{"v":"1"},{"v":"5"},{"v":"1"}]},{"t":"array","id":"net","title":"gas − cost  (what each station adds to the tank)","cells":[{"v":"1"},{"v":"-3"},{"v":"1","tone":"cur"},{"v":"-2"},{"v":"3"}],"ranges":[{"from":2,"to":2,"label":"trip from start_station","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"start_station","v":"2"},{"k":"current_gas","v":"1","changed":true},{"k":"total_gas","v":"-1","changed":true}]}]},
+  {"line":9,"text":"Station 3: fill up 3, then burn 5 driving on. Net -2 → tank = **-1** (overall balance -3).","views":[{"t":"array","id":"gas","title":"gas","cells":[{"v":"5"},{"v":"1"},{"v":"2"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"i","at":3}]},{"t":"array","id":"cost","title":"cost","cells":[{"v":"4"},{"v":"4"},{"v":"1"},{"v":"5"},{"v":"1"}]},{"t":"array","id":"net","title":"gas − cost  (what each station adds to the tank)","cells":[{"v":"1"},{"v":"-3"},{"v":"1"},{"v":"-2","tone":"cur"},{"v":"3"}],"ranges":[{"from":2,"to":3,"label":"trip from start_station","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"start_station","v":"2"},{"k":"current_gas","v":"-1","changed":true},{"k":"total_gas","v":"-3","changed":true}]}]},
+  {"line":13,"text":"The tank went **negative** after station 3, so the trip from station 2 fails. Starting later, at station 3, cannot help either: that trip would reach this point with even less gas. Skip ahead — next candidate: station **4**, with an empty tank.","views":[{"t":"array","id":"gas","title":"gas","cells":[{"v":"5"},{"v":"1"},{"v":"2"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"i","at":3}]},{"t":"array","id":"cost","title":"cost","cells":[{"v":"4"},{"v":"4"},{"v":"1"},{"v":"5"},{"v":"1"}]},{"t":"array","id":"net","title":"gas − cost  (what each station adds to the tank)","cells":[{"v":"1"},{"v":"-3"},{"v":"1"},{"v":"-2","tone":"bad"},{"v":"3"}]},{"t":"vars","id":"vars","items":[{"k":"start_station","v":"4","changed":true},{"k":"current_gas","v":"0","changed":true},{"k":"total_gas","v":"-3"}]}]},
+  {"line":9,"text":"Station 4: fill up 4, then burn 1 driving on. Net +3 → tank = **3** (overall balance 0).","views":[{"t":"array","id":"gas","title":"gas","cells":[{"v":"5"},{"v":"1"},{"v":"2"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"i","at":4}]},{"t":"array","id":"cost","title":"cost","cells":[{"v":"4"},{"v":"4"},{"v":"1"},{"v":"5"},{"v":"1"}]},{"t":"array","id":"net","title":"gas − cost  (what each station adds to the tank)","cells":[{"v":"1"},{"v":"-3"},{"v":"1"},{"v":"-2"},{"v":"3","tone":"cur"}],"ranges":[{"from":4,"to":4,"label":"trip from start_station","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"start_station","v":"4"},{"k":"current_gas","v":"3","changed":true},{"k":"total_gas","v":"0","changed":true}]}]},
+  {"line":15,"text":"The overall balance is 0 ≥ 0, so a full circle is possible — and station **4** is the only candidate that survived.","views":[{"t":"array","id":"gas","title":"gas","cells":[{"v":"5"},{"v":"1"},{"v":"2"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"i","at":4}]},{"t":"array","id":"cost","title":"cost","cells":[{"v":"4"},{"v":"4"},{"v":"1"},{"v":"5"},{"v":"1"}]},{"t":"array","id":"net","title":"gas − cost  (what each station adds to the tank)","cells":[{"v":"1"},{"v":"-3"},{"v":"1"},{"v":"-2"},{"v":"3","tone":"good"}],"ranges":[{"from":4,"to":4,"label":"trip from start_station","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"start_station","v":"4"},{"k":"current_gas","v":"3"},{"k":"total_gas","v":"0"}]}]},
+  {"line":15,"text":"Done — the answer is **`4`**. From station 4 the tank goes 3, 4, 1, 2, 0 — it never drops below zero.","views":[{"t":"array","id":"gas","title":"gas","cells":[{"v":"5"},{"v":"1"},{"v":"2"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"i","at":4}]},{"t":"array","id":"cost","title":"cost","cells":[{"v":"4"},{"v":"4"},{"v":"1"},{"v":"5"},{"v":"1"}]},{"t":"array","id":"net","title":"gas − cost  (what each station adds to the tank)","cells":[{"v":"1"},{"v":"-3"},{"v":"1"},{"v":"-2"},{"v":"3","tone":"good"}],"ranges":[{"from":4,"to":4,"label":"trip from start_station","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"start_station","v":"4"},{"k":"current_gas","v":"3"},{"k":"total_gas","v":"0"}]}],"final":true}
+ ]
+}

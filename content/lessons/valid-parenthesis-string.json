@@ -1,0 +1,68 @@
+{
+ "id": 129,
+ "number": 678,
+ "title": "Valid Parenthesis String",
+ "slug": "valid-parenthesis-string",
+ "category": "greedy",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/valid-parenthesis-string/",
+ "pattern": "Greedy: track the range of possible open brackets",
+ "statement": "A string contains `(`, `)` and `*`. Each `*` may be treated as `(`, as `)` or as an empty string. Return `True` if the string can be made into a valid parenthesis string.",
+ "example": {
+  "input": "s = \"(*))\"",
+  "output": "True",
+  "why": "Treat the * as an opening bracket: (()) is valid."
+ },
+ "more": [
+  {
+   "input": "s = \"()\"",
+   "output": "True"
+  },
+  {
+   "input": "s = \"(*)\"",
+   "output": "True"
+  },
+  {
+   "input": "s = \")(\"",
+   "output": "False"
+  },
+  {
+   "input": "s = \"((\"",
+   "output": "False"
+  },
+  {
+   "input": "s = \"**(\"",
+   "output": "False"
+  },
+  {
+   "input": "s = \"(((((*)))**\"",
+   "output": "True"
+  },
+  {
+   "input": "s = \"\"",
+   "output": "True"
+  }
+ ],
+ "idea": [
+  "Without stars, one counter of currently open brackets is enough. A star makes that count **uncertain** — so track the whole **range** of possible counts: `lower` (fewest open brackets possible) and `upper` (most possible).",
+  "`(` raises both ends, `)` lowers both. A `*` lowers `lower` (if used as `)`) and raises `upper` (if used as `(`). `lower` is kept at 0 or above, because scenarios with a negative count are simply invalid.",
+  "If `upper` drops below 0, even the most generous reading has too many `)` → `False`. At the end the string is valid exactly when 0 is in the range, i.e. `lower == 0`."
+ ],
+ "code": "class Solution:\n    def checkValidString(self, s: str) -> bool:\n        lower = upper = 0\n\n        for char in s:\n            if char == \"(\":\n                lower += 1\n                upper += 1\n            elif char == \")\":\n                lower = max(lower - 1, 0)\n                upper -= 1\n            else:  # char == '*'\n                lower = max(lower - 1, 0)\n                upper += 1\n\n            if upper < 0:\n                return False\n\n        return lower == 0",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "One pass over the string, with O(1) work per character.",
+  "space": "O(1)",
+  "spaceWhy": "Two counters."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`s = \"(*))\"`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"("},{"v":"*"},{"v":")"},{"v":")"}]}]},
+  {"line":3,"text":"`lower` … `upper` is the range of how many brackets could be open right now, over all ways of reading the stars. Before any character: exactly 0.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"("},{"v":"*"},{"v":")"},{"v":")"}],"ptrs":[{"name":"char","at":-1}]},{"t":"vars","id":"vars","items":[{"k":"lower","v":"0"},{"k":"upper","v":"0"}]}]},
+  {"line":8,"text":"`(` opens a bracket in every reading: the range becomes **1 … 1**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"("},{"v":"*"},{"v":")"},{"v":")"}],"ptrs":[{"name":"char","at":0}]},{"t":"vars","id":"vars","items":[{"k":"lower","v":"1","changed":true},{"k":"upper","v":"1","changed":true}]}]},
+  {"line":14,"text":"`*` could close a bracket (lower − 1), open one (upper + 1), or do nothing: the range widens to **0 … 2**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"("},{"v":"*"},{"v":")"},{"v":")"}],"ptrs":[{"name":"char","at":1}]},{"t":"vars","id":"vars","items":[{"k":"lower","v":"0","changed":true},{"k":"upper","v":"2","changed":true}]}]},
+  {"line":11,"text":"`)` closes a bracket in every reading: the range becomes **0 … 1**. (`lower` is never allowed below 0 — readings that close more than is open are simply discarded.)","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"("},{"v":"*"},{"v":")"},{"v":")"}],"ptrs":[{"name":"char","at":2}]},{"t":"vars","id":"vars","items":[{"k":"lower","v":"0"},{"k":"upper","v":"1","changed":true}]}]},
+  {"line":11,"text":"`)` closes a bracket in every reading: the range becomes **0 … 0**. (`lower` is never allowed below 0 — readings that close more than is open are simply discarded.)","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"("},{"v":"*"},{"v":")"},{"v":")"}],"ptrs":[{"name":"char","at":3}]},{"t":"vars","id":"vars","items":[{"k":"lower","v":"0"},{"k":"upper","v":"0","changed":true}]}]},
+  {"line":19,"text":"The string is used up and the range is 0 … 0. It includes 0, so some reading leaves **no bracket open** → **True**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"("},{"v":"*"},{"v":")"},{"v":")"}],"ptrs":[{"name":"char","at":4}]},{"t":"vars","id":"vars","items":[{"k":"lower","v":"0"},{"k":"upper","v":"0"}]}]},
+  {"line":19,"text":"Done — the answer is **`True`**. Treat the * as an opening bracket: (()) is valid.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"("},{"v":"*"},{"v":")"},{"v":")"}],"ptrs":[{"name":"char","at":4}]},{"t":"vars","id":"vars","items":[{"k":"lower","v":"0"},{"k":"upper","v":"0"}]}],"final":true}
+ ]
+}

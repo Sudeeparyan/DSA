@@ -1,0 +1,53 @@
+{
+ "id": 29,
+ "number": 74,
+ "title": "Search a 2D Matrix",
+ "slug": "search-a-2d-matrix",
+ "category": "binary-search",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/search-a-2d-matrix/",
+ "pattern": "Binary search over a flattened matrix",
+ "statement": "Each row of `matrix` is sorted from left to right, and the first number of each row is larger than the last number of the row above. Return `True` if `target` is in the matrix. The solution must run in O(log(m · n)) time.",
+ "example": {
+  "input": "matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 16",
+  "output": "True",
+  "why": "16 is in row 1, column 2."
+ },
+ "more": [
+  {
+   "input": "matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 13",
+   "output": "False"
+  },
+  {
+   "input": "matrix = [[1]], target = 1",
+   "output": "True"
+  },
+  {
+   "input": "matrix = [[1,3]], target = 3",
+   "output": "True"
+  }
+ ],
+ "idea": [
+  "Read row after row and the whole matrix is **one long sorted list**: each row continues where the previous one ended.",
+  "So do an ordinary binary search over positions 0 … rows·cols − 1 of that imaginary list.",
+  "Position `p` of the list lives at row `p // cols` and column `p % cols`. No copying into a real list is needed."
+ ],
+ "code": "class Solution:\n    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:\n        if not matrix or not matrix[0]:\n            return False\n\n        rows, cols = len(matrix), len(matrix[0])\n        left, right = 0, rows * cols - 1\n\n        while left <= right:\n            mid = left + (right - left) // 2\n            num = matrix[mid // cols][mid % cols]\n\n            if num == target:\n                return True\n            elif num < target:\n                left = mid + 1\n            else:\n                right = mid - 1\n\n        return False",
+ "complexity": {
+  "time": "O(log(m · n))",
+  "timeWhy": "A binary search over all m · n cells.",
+  "space": "O(1)",
+  "spaceWhy": "A few index variables."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 16`**. Each step runs one highlighted line of the code.","views":[{"t":"grid","id":"matrix","title":"matrix","cells":[[{"v":"1"},{"v":"3"},{"v":"5"},{"v":"7"}],[{"v":"10"},{"v":"11"},{"v":"16"},{"v":"20"}],[{"v":"23"},{"v":"30"},{"v":"34"},{"v":"60"}]]},{"t":"vars","id":"vars","items":[{"k":"target","v":"16"}]}]},
+  {"line":7,"text":"Read row by row, the matrix is one sorted list of 12 numbers. Binary-search positions 0 to 11 of that list.","views":[{"t":"grid","id":"matrix","title":"matrix","cells":[[{"v":"1"},{"v":"3"},{"v":"5"},{"v":"7"}],[{"v":"10"},{"v":"11"},{"v":"16"},{"v":"20"}],[{"v":"23"},{"v":"30"},{"v":"34"},{"v":"60"}]]},{"t":"vars","id":"vars","items":[{"k":"target","v":"16"},{"k":"left","v":"0"},{"k":"right","v":"11"}]}]},
+  {"line":11,"text":"Middle position 5 → row 5 // 4 = 1, column 5 % 4 = 1. The number there is **11**.","views":[{"t":"grid","id":"matrix","title":"matrix","cells":[[{"v":"1"},{"v":"3"},{"v":"5"},{"v":"7"}],[{"v":"10"},{"v":"11","tone":"cur"},{"v":"16"},{"v":"20"}],[{"v":"23"},{"v":"30"},{"v":"34"},{"v":"60"}]],"ptrs":[{"name":"mid","r":1,"c":1}]},{"t":"vars","id":"vars","items":[{"k":"target","v":"16"},{"k":"left","v":"0"},{"k":"right","v":"11"},{"k":"mid","v":"5"},{"k":"num","v":"11"}]}]},
+  {"line":16,"text":"11 is smaller than 16, so the target can only be **later** in the list. `left` = 6.","views":[{"t":"grid","id":"matrix","title":"matrix","cells":[[{"v":"1","tone":"dim"},{"v":"3","tone":"dim"},{"v":"5","tone":"dim"},{"v":"7","tone":"dim"}],[{"v":"10","tone":"dim"},{"v":"11","tone":"cur"},{"v":"16"},{"v":"20"}],[{"v":"23"},{"v":"30"},{"v":"34"},{"v":"60"}]],"ptrs":[{"name":"mid","r":1,"c":1}]},{"t":"vars","id":"vars","items":[{"k":"target","v":"16"},{"k":"left","v":"6","changed":true},{"k":"right","v":"11"},{"k":"mid","v":"5"},{"k":"num","v":"11"}]}]},
+  {"line":11,"text":"Middle position 8 → row 8 // 4 = 2, column 8 % 4 = 0. The number there is **23**.","views":[{"t":"grid","id":"matrix","title":"matrix","cells":[[{"v":"1","tone":"dim"},{"v":"3","tone":"dim"},{"v":"5","tone":"dim"},{"v":"7","tone":"dim"}],[{"v":"10","tone":"dim"},{"v":"11","tone":"dim"},{"v":"16"},{"v":"20"}],[{"v":"23","tone":"cur"},{"v":"30"},{"v":"34"},{"v":"60"}]],"ptrs":[{"name":"mid","r":2,"c":0}]},{"t":"vars","id":"vars","items":[{"k":"target","v":"16"},{"k":"left","v":"6"},{"k":"right","v":"11"},{"k":"mid","v":"8","changed":true},{"k":"num","v":"23","changed":true}]}]},
+  {"line":18,"text":"23 is bigger than 16, so the target can only be **earlier** in the list. `right` = 7.","views":[{"t":"grid","id":"matrix","title":"matrix","cells":[[{"v":"1","tone":"dim"},{"v":"3","tone":"dim"},{"v":"5","tone":"dim"},{"v":"7","tone":"dim"}],[{"v":"10","tone":"dim"},{"v":"11","tone":"dim"},{"v":"16"},{"v":"20"}],[{"v":"23","tone":"cur"},{"v":"30","tone":"dim"},{"v":"34","tone":"dim"},{"v":"60","tone":"dim"}]],"ptrs":[{"name":"mid","r":2,"c":0}]},{"t":"vars","id":"vars","items":[{"k":"target","v":"16"},{"k":"left","v":"6"},{"k":"right","v":"7","changed":true},{"k":"mid","v":"8"},{"k":"num","v":"23"}]}]},
+  {"line":11,"text":"Middle position 6 → row 6 // 4 = 1, column 6 % 4 = 2. The number there is **16**.","views":[{"t":"grid","id":"matrix","title":"matrix","cells":[[{"v":"1","tone":"dim"},{"v":"3","tone":"dim"},{"v":"5","tone":"dim"},{"v":"7","tone":"dim"}],[{"v":"10","tone":"dim"},{"v":"11","tone":"dim"},{"v":"16","tone":"cur"},{"v":"20"}],[{"v":"23","tone":"dim"},{"v":"30","tone":"dim"},{"v":"34","tone":"dim"},{"v":"60","tone":"dim"}]],"ptrs":[{"name":"mid","r":1,"c":2}]},{"t":"vars","id":"vars","items":[{"k":"target","v":"16"},{"k":"left","v":"6"},{"k":"right","v":"7"},{"k":"mid","v":"6","changed":true},{"k":"num","v":"16","changed":true}]}]},
+  {"line":14,"text":"16 is the target → **True**.","views":[{"t":"grid","id":"matrix","title":"matrix","cells":[[{"v":"1","tone":"dim"},{"v":"3","tone":"dim"},{"v":"5","tone":"dim"},{"v":"7","tone":"dim"}],[{"v":"10","tone":"dim"},{"v":"11","tone":"dim"},{"v":"16","tone":"good"},{"v":"20"}],[{"v":"23","tone":"dim"},{"v":"30","tone":"dim"},{"v":"34","tone":"dim"},{"v":"60","tone":"dim"}]],"ptrs":[{"name":"mid","r":1,"c":2}]},{"t":"vars","id":"vars","items":[{"k":"target","v":"16"},{"k":"left","v":"6"},{"k":"right","v":"7"},{"k":"mid","v":"6"},{"k":"num","v":"16"}]}]},
+  {"line":14,"text":"Done — the answer is **`True`**. 16 is in row 1, column 2.","views":[{"t":"grid","id":"matrix","title":"matrix","cells":[[{"v":"1","tone":"dim"},{"v":"3","tone":"dim"},{"v":"5","tone":"dim"},{"v":"7","tone":"dim"}],[{"v":"10","tone":"dim"},{"v":"11","tone":"dim"},{"v":"16","tone":"good"},{"v":"20"}],[{"v":"23","tone":"dim"},{"v":"30","tone":"dim"},{"v":"34","tone":"dim"},{"v":"60","tone":"dim"}]],"ptrs":[{"name":"mid","r":1,"c":2}]},{"t":"vars","id":"vars","items":[{"k":"target","v":"16"},{"k":"left","v":"6"},{"k":"right","v":"7"},{"k":"mid","v":"6"},{"k":"num","v":"16"}]}],"final":true}
+ ]
+}

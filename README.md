@@ -1,56 +1,71 @@
-# NeetCode 150 Play
+# NeetCode 150, step by step
 
-Teacher-led, offline-friendly study site for the **NeetCode 150**.  
-Each problem is a lesson: feel the question → **watch the answer in 3D cinema** → unseal the blueprint.
+A study site for **understanding** the NeetCode 150. It has no practice editor and no quizzes. Each
+problem gets one page with four parts:
 
-## Quick start
-
-See **[HOW_TO_RUN.md](./HOW_TO_RUN.md)**.
+1. **The question** in plain words, with a worked example.
+2. **The idea** that solves it, in two to four short points.
+3. **Watch it solve the example**: a 3D walkthrough of the real solution running one line at a
+   time. The running line is lit up in the code, and a caption explains each step.
+4. **How fast is it?** Time and extra space, each with the reason.
 
 ```bash
 npm install
-npm run dev
+npm run dev        # then open http://localhost:3000
 ```
 
-Open http://localhost:3000 → **Play lesson 1** → chapter **Answer in 3D**.
+Step-by-step setup for beginners: **[HOW_TO_RUN.md](./HOW_TO_RUN.md)**.
 
-## Architecture (read this before changing code)
+## How it works
 
-- **[docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md)** — layers, contracts, quality gate
-- **[docs/EXTENDING.md](./docs/EXTENDING.md)** — how to add tracers, cameras, chapters, payloads
-- **[skills/dsa-answer-cinema/SKILL.md](./skills/dsa-answer-cinema/SKILL.md)** — blender-skills → web cameras
+The walkthrough is recorded from the code, so the animation can never disagree with it:
 
-### Extension surfaces
+```
+lessons/specs/*.py  ──►  lessons/build.py  ──►  content/lessons/<slug>.json  ──►  the web page
+ what to teach:           runs the REAL           every step: caption, code        plays the steps
+ question, idea,          solution under a        line, and a snapshot of          on a 3D stage
+ example, captions        line-by-line tracer     each data structure              (Next.js + three.js)
+```
 
-| Want to… | Touch |
-|----------|--------|
-| Upgrade one algorithm simulation | `src/lib/tracers/` + `registerTracer` |
-| Change 3D / 2D shared payloads | `src/lib/animation/state.ts` |
-| Change camera storytelling | `src/lib/cinemaCameras.ts` |
-| Change lesson chapters | `src/lib/lessonScript.ts` + `components/theater` |
-| Regenerate cinema steps | `npm run content:animate` |
-| Gate quality for all 150 | `npm run content:verify-animations` |
+- **Python** (`lessons/`) decides *what* is shown. It runs each solution, checks the answer, and
+  writes one JSON file per problem.
+- **The website** (`src/`) decides *how* it looks. It only reads those JSON files and draws them.
+- The JSON files are committed, so running the site needs Node.js only; Python is needed only to
+  change a lesson.
 
-## Content pipeline
+Details: **[docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md)**. Changing a lesson:
+**[docs/LESSONS.md](./docs/LESSONS.md)**. Rules for anyone (or any AI assistant) changing the
+code: **[AGENTS.md](./AGENTS.md)**.
+
+## Checks
+
+Every solution is tested three ways before the site is built:
 
 ```bash
-npm run content:animate              # fill / refresh authored steps from examples
-npm run content:verify-animations    # must be 150/150
-npm run content:validate             # Zod + specialty tracer checks
-npm test                             # unit + full animation gate
-npm run build                        # static export → out/
+npm run lessons          # rebuild all 150 lessons; fails if any answer or test is wrong
+npm run lessons:verify   # run each solution on thousands of random inputs vs a brute-force answer
+npm test                 # every lesson file is valid and drawable; unit tests for the app code
+npm run check            # all of the above, plus type check, lint and the production build
 ```
 
-## What’s inside
+`npm run check` must pass before any change is merged. The same check runs on GitHub for every
+push and pull request (`.github/workflows/check.yml`).
 
-- `content/problems/` — 150 validated lesson JSON files
-- `solutions/` — Python from [`Sudeeparyan/Neetcode150`](https://github.com/Sudeeparyan/Neetcode150)
-- `src/lib/animation/` — reusable resolve + state contract
-- `src/components/answer3d/` — Three.js answer cinema
-- `src/components/theater/` — teacher playthrough UI
-- Progress / notes / Leitner cards in `localStorage`
-- Static export (`output: 'export'`) for GitHub Pages / Vercel
+## Where things are
 
-## Notes
+| Path | What it is |
+| --- | --- |
+| `content/catalog.json` | The 150 problems: titles, topics, difficulty, order, solution file |
+| `solutions/` | One Python solution per problem (the code each lesson runs by default) |
+| `lessons/specs/` | One `lesson(...)` per problem: the teaching text and captions, by topic |
+| `lessons/engine/` | The tracer and the data-structure "views" the specs use |
+| `lessons/checks/` | Brute-force references used by `lessons/verify.py` |
+| `content/lessons/` | Built lesson files (**generated**, never edit by hand) |
+| `src/app/` | Pages: home (`page.tsx`) and one lesson page per problem (`problem/[slug]/`) |
+| `src/components/lesson/` | The lesson page, walkthrough controls and code panel |
+| `src/components/stage3d/` | The 3D stage: layout planner, camera, one component per structure |
+| `src/lib/lesson.ts` | The lesson-file format (a Zod schema shared by the app and the tests) |
+| `src/lib/progress.ts` | The "I understand this one" ticks, kept in the browser |
+| `public/sw.js` | Offline support |
 
-Audit history: [BUILD_REPORT.md](./BUILD_REPORT.md). Teaching checklist: [PROGRESS.md](./PROGRESS.md).
+Progress is saved in the browser (`localStorage`) on each device; there is no server or account.

@@ -1,0 +1,64 @@
+{
+ "id": 36,
+ "number": 21,
+ "title": "Merge Two Sorted Lists",
+ "slug": "merge-two-sorted-lists",
+ "category": "linked-list",
+ "difficulty": "Easy",
+ "url": "https://leetcode.com/problems/merge-two-sorted-lists/",
+ "pattern": "Dummy head + two pointers",
+ "statement": "Given the heads of two **sorted** linked lists, merge them into one sorted list built from the same nodes, and return its head.",
+ "example": {
+  "input": "l1 = [1,4,5], l2 = [2,3,6]",
+  "output": "[1,2,3,4,5,6]",
+  "why": "Repeatedly taking the smaller front node gives 1, 2, 3, 4, 5, 6."
+ },
+ "more": [
+  {
+   "input": "l1 = [1,2,4], l2 = [1,3,4]",
+   "output": "[1,1,2,3,4,4]"
+  },
+  {
+   "input": "l1 = None, l2 = None",
+   "output": "[]"
+  },
+  {
+   "input": "l1 = None, l2 = [0]",
+   "output": "[0]"
+  },
+  {
+   "input": "l1 = [5], l2 = [1,2]",
+   "output": "[1,2,5]"
+  }
+ ],
+ "idea": [
+  "Both lists are sorted, so the smallest node not yet used is always at the **front** of one of them.",
+  "Compare the two fronts, link the smaller one onto the end of the merged list, and move that list's pointer forward.",
+  "A **dummy** node at the start means the first real node needs no special case. When one list runs out, the rest of the other is already sorted — attach it in one go."
+ ],
+ "code": "class Solution:\n    def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:\n        dummy = ListNode()\n        current = dummy\n\n        while l1 and l2:\n            if l1.val < l2.val:\n                current.next = l1\n                l1 = l1.next\n            else:\n                current.next = l2\n                l2 = l2.next\n            current = current.next\n\n        if l1:\n            current.next = l1\n        elif l2:\n            current.next = l2\n\n        return dummy.next",
+ "complexity": {
+  "time": "O(n + m)",
+  "timeWhy": "Each step links one node, and there are n + m nodes.",
+  "space": "O(1)",
+  "spaceWhy": "The existing nodes are re-linked; only a dummy node is created."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`l1 = [1,4,5], l2 = [2,3,6]`**. Each step runs one highlighted line of the code.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":1,"y":0,"next":2},{"id":2,"v":"4","x":2,"y":0,"next":3},{"id":3,"v":"5","x":3,"y":0},{"id":4,"v":"2","x":1,"y":1,"next":5},{"id":5,"v":"3","x":2,"y":1,"next":6},{"id":6,"v":"6","x":3,"y":1}],"ptrs":[{"name":"l1","at":1},{"name":"l2","at":4}],"rows":["l1","l2"]}]},
+  {"line":3,"text":"Create a **dummy** node. The merged list is built after it, so even the first real node is just *attached to something*.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":1,"y":0,"next":2},{"id":2,"v":"4","x":2,"y":0,"next":3},{"id":3,"v":"5","x":3,"y":0},{"id":4,"v":"2","x":1,"y":1,"next":5},{"id":5,"v":"3","x":2,"y":1,"next":6},{"id":6,"v":"6","x":3,"y":1},{"id":7,"v":"dummy","x":0,"y":0.5}],"ptrs":[{"name":"l1","at":1},{"name":"l2","at":4}],"rows":["l1","l2"]}]},
+  {"line":4,"text":"`current` always marks the **last node of the merged list** so far.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":1,"y":0,"next":2},{"id":2,"v":"4","x":2,"y":0,"next":3},{"id":3,"v":"5","x":3,"y":0},{"id":4,"v":"2","x":1,"y":1,"next":5},{"id":5,"v":"3","x":2,"y":1,"next":6},{"id":6,"v":"6","x":3,"y":1},{"id":7,"v":"dummy","x":0,"y":0.5,"tone":"cur"}],"ptrs":[{"name":"l1","at":1},{"name":"l2","at":4},{"name":"current","at":7}],"rows":["l1","l2"]}]},
+  {"line":8,"text":"1 < 2, so `l1`'s front node is the smaller one. Link it after `current`.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":1,"y":0,"next":2},{"id":2,"v":"4","x":2,"y":0,"next":3},{"id":3,"v":"5","x":3,"y":0},{"id":4,"v":"2","x":1,"y":1,"next":5},{"id":5,"v":"3","x":2,"y":1,"next":6},{"id":6,"v":"6","x":3,"y":1},{"id":7,"v":"dummy","x":0,"y":0.5,"next":1,"tone":"cur"}],"ptrs":[{"name":"l1","at":1},{"name":"l2","at":4},{"name":"current","at":7}],"rows":["l1","l2"]}]},
+  {"line":13,"text":"The list we took from has moved to its next node, and `current` steps onto node 1, the new end of the merged list.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":1,"y":0,"next":2,"tone":"cur"},{"id":2,"v":"4","x":2,"y":0,"next":3},{"id":3,"v":"5","x":3,"y":0},{"id":4,"v":"2","x":1,"y":1,"next":5},{"id":5,"v":"3","x":2,"y":1,"next":6},{"id":6,"v":"6","x":3,"y":1},{"id":7,"v":"dummy","x":0,"y":0.5,"next":1}],"ptrs":[{"name":"l1","at":2},{"name":"l2","at":4},{"name":"current","at":1}],"rows":["l1","l2"]}]},
+  {"line":11,"text":"2 ≤ 4, so take `l2`'s front node. Link it after `current`.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":1,"y":0,"next":4,"tone":"cur"},{"id":2,"v":"4","x":2,"y":0,"next":3},{"id":3,"v":"5","x":3,"y":0},{"id":4,"v":"2","x":1,"y":1,"next":5},{"id":5,"v":"3","x":2,"y":1,"next":6},{"id":6,"v":"6","x":3,"y":1},{"id":7,"v":"dummy","x":0,"y":0.5,"next":1}],"ptrs":[{"name":"l1","at":2},{"name":"l2","at":4},{"name":"current","at":1}],"rows":["l1","l2"]}]},
+  {"line":13,"text":"The list we took from has moved to its next node, and `current` steps onto node 2, the new end of the merged list.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":1,"y":0,"next":4,"tone":"good"},{"id":2,"v":"4","x":2,"y":0,"next":3},{"id":3,"v":"5","x":3,"y":0},{"id":4,"v":"2","x":1,"y":1,"next":5,"tone":"cur"},{"id":5,"v":"3","x":2,"y":1,"next":6},{"id":6,"v":"6","x":3,"y":1},{"id":7,"v":"dummy","x":0,"y":0.5,"next":1}],"ptrs":[{"name":"l1","at":2},{"name":"l2","at":5},{"name":"current","at":4}],"rows":["l1","l2"]}]},
+  {"line":11,"text":"3 ≤ 4, so take `l2`'s front node. Link it after `current`.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":1,"y":0,"next":4,"tone":"good"},{"id":2,"v":"4","x":2,"y":0,"next":3},{"id":3,"v":"5","x":3,"y":0},{"id":4,"v":"2","x":1,"y":1,"next":5,"tone":"cur"},{"id":5,"v":"3","x":2,"y":1,"next":6},{"id":6,"v":"6","x":3,"y":1},{"id":7,"v":"dummy","x":0,"y":0.5,"next":1}],"ptrs":[{"name":"l1","at":2},{"name":"l2","at":5},{"name":"current","at":4}],"rows":["l1","l2"]}]},
+  {"line":13,"text":"The list we took from has moved to its next node, and `current` steps onto node 3, the new end of the merged list.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":1,"y":0,"next":4,"tone":"good"},{"id":2,"v":"4","x":2,"y":0,"next":3},{"id":3,"v":"5","x":3,"y":0},{"id":4,"v":"2","x":1,"y":1,"next":5,"tone":"good"},{"id":5,"v":"3","x":2,"y":1,"next":6,"tone":"cur"},{"id":6,"v":"6","x":3,"y":1},{"id":7,"v":"dummy","x":0,"y":0.5,"next":1}],"ptrs":[{"name":"l1","at":2},{"name":"l2","at":6},{"name":"current","at":5}],"rows":["l1","l2"]}]},
+  {"line":8,"text":"4 < 6, so `l1`'s front node is the smaller one. Link it after `current`.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":1,"y":0,"next":4,"tone":"good"},{"id":2,"v":"4","x":2,"y":0,"next":3},{"id":3,"v":"5","x":3,"y":0},{"id":4,"v":"2","x":1,"y":1,"next":5,"tone":"good"},{"id":5,"v":"3","x":2,"y":1,"next":2,"tone":"cur"},{"id":6,"v":"6","x":3,"y":1},{"id":7,"v":"dummy","x":0,"y":0.5,"next":1}],"ptrs":[{"name":"l1","at":2},{"name":"l2","at":6},{"name":"current","at":5}],"rows":["l1","l2"]}]},
+  {"line":13,"text":"The list we took from has moved to its next node, and `current` steps onto node 4, the new end of the merged list.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":1,"y":0,"next":4,"tone":"good"},{"id":2,"v":"4","x":2,"y":0,"next":3,"tone":"cur"},{"id":3,"v":"5","x":3,"y":0},{"id":4,"v":"2","x":1,"y":1,"next":5,"tone":"good"},{"id":5,"v":"3","x":2,"y":1,"next":2,"tone":"good"},{"id":6,"v":"6","x":3,"y":1},{"id":7,"v":"dummy","x":0,"y":0.5,"next":1}],"ptrs":[{"name":"l1","at":3},{"name":"l2","at":6},{"name":"current","at":2}],"rows":["l1","l2"]}]},
+  {"line":8,"text":"5 < 6, so `l1`'s front node is the smaller one. Link it after `current`.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":1,"y":0,"next":4,"tone":"good"},{"id":2,"v":"4","x":2,"y":0,"next":3,"tone":"cur"},{"id":3,"v":"5","x":3,"y":0},{"id":4,"v":"2","x":1,"y":1,"next":5,"tone":"good"},{"id":5,"v":"3","x":2,"y":1,"next":2,"tone":"good"},{"id":6,"v":"6","x":3,"y":1},{"id":7,"v":"dummy","x":0,"y":0.5,"next":1}],"ptrs":[{"name":"l1","at":3},{"name":"l2","at":6},{"name":"current","at":2}],"rows":["l1","l2"]}]},
+  {"line":13,"text":"The list we took from has moved to its next node, and `current` steps onto node 5, the new end of the merged list.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":1,"y":0,"next":4,"tone":"good"},{"id":2,"v":"4","x":2,"y":0,"next":3,"tone":"good"},{"id":3,"v":"5","x":3,"y":0,"tone":"cur"},{"id":4,"v":"2","x":1,"y":1,"next":5,"tone":"good"},{"id":5,"v":"3","x":2,"y":1,"next":2,"tone":"good"},{"id":6,"v":"6","x":3,"y":1},{"id":7,"v":"dummy","x":0,"y":0.5,"next":1}],"ptrs":[{"name":"l1","at":null},{"name":"l2","at":6},{"name":"current","at":3}],"rows":["l1","l2"]}]},
+  {"line":18,"text":"`l1` has run out. The rest of `l2` is already sorted, so attach all of it at once.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":1,"y":0,"next":4,"tone":"good"},{"id":2,"v":"4","x":2,"y":0,"next":3,"tone":"good"},{"id":3,"v":"5","x":3,"y":0,"next":6,"tone":"cur"},{"id":4,"v":"2","x":1,"y":1,"next":5,"tone":"good"},{"id":5,"v":"3","x":2,"y":1,"next":2,"tone":"good"},{"id":6,"v":"6","x":3,"y":1},{"id":7,"v":"dummy","x":0,"y":0.5,"next":1}],"ptrs":[{"name":"l1","at":null},{"name":"l2","at":6},{"name":"current","at":3}],"rows":["l1","l2"]}]},
+  {"line":20,"text":"The merged list starts right after the dummy, at node 1. Return it.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":1,"y":0,"next":4,"tone":"good"},{"id":2,"v":"4","x":2,"y":0,"next":3,"tone":"good"},{"id":3,"v":"5","x":3,"y":0,"next":6,"tone":"cur"},{"id":4,"v":"2","x":1,"y":1,"next":5,"tone":"good"},{"id":5,"v":"3","x":2,"y":1,"next":2,"tone":"good"},{"id":6,"v":"6","x":3,"y":1},{"id":7,"v":"dummy","x":0,"y":0.5,"next":1}],"ptrs":[{"name":"l1","at":null},{"name":"l2","at":6},{"name":"current","at":3}],"rows":["l1","l2"]}]},
+  {"line":20,"text":"Done — the answer is **`[1,2,3,4,5,6]`**. Repeatedly taking the smaller front node gives 1, 2, 3, 4, 5, 6.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":1,"y":0,"next":4,"tone":"good"},{"id":2,"v":"4","x":2,"y":0,"next":3,"tone":"good"},{"id":3,"v":"5","x":3,"y":0,"next":6,"tone":"good"},{"id":4,"v":"2","x":1,"y":1,"next":5,"tone":"good"},{"id":5,"v":"3","x":2,"y":1,"next":2,"tone":"good"},{"id":6,"v":"6","x":3,"y":1,"tone":"good"},{"id":7,"v":"dummy","x":0,"y":0.5,"next":1}],"ptrs":[{"name":"l1","at":null},{"name":"l2","at":6},{"name":"current","at":3}],"rows":["l1","l2"]}],"final":true}
+ ]
+}

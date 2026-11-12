@@ -1,0 +1,66 @@
+{
+ "id": 108,
+ "number": 139,
+ "title": "Word Break",
+ "slug": "word-break",
+ "category": "1d-dp",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/word-break/",
+ "pattern": "DP over prefixes",
+ "statement": "Given a string `s` and a dictionary of words, return `True` if `s` can be cut into a sequence of dictionary words. A word may be used more than once.",
+ "example": {
+  "input": "s = \"catsand\", wordDict = [\"cats\",\"and\",\"cat\"]",
+  "output": "True",
+  "why": "\"cats\" + \"and\". (Starting with \"cat\" leaves \"sand\", which is not a word — the DP still finds the other cut.)"
+ },
+ "more": [
+  {
+   "input": "s = \"leetcode\", wordDict = [\"leet\",\"code\"]",
+   "output": "True"
+  },
+  {
+   "input": "s = \"applepenapple\", wordDict = [\"apple\",\"pen\"]",
+   "output": "True"
+  },
+  {
+   "input": "s = \"catsandog\", wordDict = [\"cats\",\"dog\",\"sand\",\"and\",\"cat\"]",
+   "output": "False"
+  },
+  {
+   "input": "s = \"a\", wordDict = [\"b\"]",
+   "output": "False"
+  }
+ ],
+ "idea": [
+  "Let `dp[i]` say whether the **first i letters** can be cut into dictionary words. `dp[0]` is True: the empty prefix needs no words.",
+  "The first `i` letters can be cut if there is some position `j` where the part before it works (`dp[j]` is True) **and** the remaining piece `s[j:i]` is a word.",
+  "Fill `dp` from left to right. `dp[len(s)]` answers the question for the whole string."
+ ],
+ "code": "class Solution:\n    def wordBreak(self, s: str, wordDict: List[str]) -> bool:\n        # Create a set for faster word lookup.\n        wordSet = set(wordDict)\n\n        # Initialize a boolean array dp where dp[i] is True if s[0:i] can be broken into words.\n        dp = [False] * (len(s) + 1)\n        dp[0] = True  # An empty string can always be broken.\n\n        # Iterate through the string.\n        for i in range(1, len(s) + 1):\n            for j in range(i):\n                # Check if the substring s[j:i] is in the wordDict and if s[0:j] can be broken.\n                if dp[j] and s[j:i] in wordSet:\n                    dp[i] = True\n                    break  # No need to continue checking.\n\n        return dp[len(s)]",
+ "complexity": {
+  "time": "O(n³)",
+  "timeWhy": "There are about n² pairs (j, i), and cutting out the piece `s[j:i]` and looking it up costs up to O(n) more.",
+  "space": "O(n)",
+  "spaceWhy": "The dp array (plus the word set)."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`s = \"catsand\", wordDict = [\"cats\",\"and\",\"cat\"]`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"c"},{"v":"a"},{"v":"t"},{"v":"s"},{"v":"a"},{"v":"n"},{"v":"d"}]}]},
+  {"line":8,"text":"`dp[i]` answers: can the first i letters be cut into words? For 0 letters: yes, trivially.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"c"},{"v":"a"},{"v":"t"},{"v":"s"},{"v":"a"},{"v":"n"},{"v":"d"}]},{"t":"array","id":"dp","title":"dp[i] = can the first i letters be cut into words?","cells":[{"v":"T","tone":"good"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"}]},{"t":"map","id":"wordSet","title":"wordSet","kind":"set","entries":[{"k":"and"},{"k":"cat"},{"k":"cats"}]}]},
+  {"line":11,"text":"Can the first letter, `c`, be cut into words? Look for a split point j: the part before j must be cuttable (`dp[j]` is True), and the piece after it, `s[j:1]`, must be a word.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"c"},{"v":"a"},{"v":"t"},{"v":"s"},{"v":"a"},{"v":"n"},{"v":"d"}],"ranges":[{"from":0,"to":0,"label":"first i letters","tone":"win"}]},{"t":"array","id":"dp","title":"dp[i] = can the first i letters be cut into words?","cells":[{"v":"T"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"}]},{"t":"map","id":"wordSet","title":"wordSet","kind":"set","entries":[{"k":"and"},{"k":"cat"},{"k":"cats"}]}]},
+  {"line":12,"text":"No split point works for `c` → `dp[1]` stays False.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"c"},{"v":"a"},{"v":"t"},{"v":"s"},{"v":"a"},{"v":"n"},{"v":"d"}],"ranges":[{"from":0,"to":0,"label":"first i letters","tone":"win"}]},{"t":"array","id":"dp","title":"dp[i] = can the first i letters be cut into words?","cells":[{"v":"T"},{"v":"F","tone":"bad"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"}]},{"t":"map","id":"wordSet","title":"wordSet","kind":"set","entries":[{"k":"and"},{"k":"cat"},{"k":"cats"}]}]},
+  {"line":11,"text":"Can the first 2 letters, `ca`, be cut into words? Try every split point j.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"c"},{"v":"a"},{"v":"t"},{"v":"s"},{"v":"a"},{"v":"n"},{"v":"d"}],"ranges":[{"from":0,"to":1,"label":"first i letters","tone":"win"}]},{"t":"array","id":"dp","title":"dp[i] = can the first i letters be cut into words?","cells":[{"v":"T"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"}]},{"t":"map","id":"wordSet","title":"wordSet","kind":"set","entries":[{"k":"and"},{"k":"cat"},{"k":"cats"}]}]},
+  {"line":12,"text":"No split point works for `ca` → `dp[2]` stays False.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"c"},{"v":"a"},{"v":"t"},{"v":"s"},{"v":"a"},{"v":"n"},{"v":"d"}],"ranges":[{"from":0,"to":1,"label":"first i letters","tone":"win"}]},{"t":"array","id":"dp","title":"dp[i] = can the first i letters be cut into words?","cells":[{"v":"T"},{"v":"F"},{"v":"F","tone":"bad"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"}]},{"t":"map","id":"wordSet","title":"wordSet","kind":"set","entries":[{"k":"and"},{"k":"cat"},{"k":"cats"}]}]},
+  {"line":11,"text":"Can the first 3 letters, `cat`, be cut into words? Try every split point j.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"c"},{"v":"a"},{"v":"t"},{"v":"s"},{"v":"a"},{"v":"n"},{"v":"d"}],"ranges":[{"from":0,"to":2,"label":"first i letters","tone":"win"}]},{"t":"array","id":"dp","title":"dp[i] = can the first i letters be cut into words?","cells":[{"v":"T"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"}]},{"t":"map","id":"wordSet","title":"wordSet","kind":"set","entries":[{"k":"and"},{"k":"cat"},{"k":"cats"}]}]},
+  {"line":15,"text":"Split at j = 0: `dp[0]` is True (`\"\"` can be cut) and the rest `cat` is in the dictionary → `dp[3]` = **True**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"c","tone":"good"},{"v":"a","tone":"good"},{"v":"t","tone":"good"},{"v":"s"},{"v":"a"},{"v":"n"},{"v":"d"}],"ranges":[{"from":0,"to":2,"label":"first i letters","tone":"win"}]},{"t":"array","id":"dp","title":"dp[i] = can the first i letters be cut into words?","cells":[{"v":"T","tone":"alt"},{"v":"F"},{"v":"F"},{"v":"T","tone":"good"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"}]},{"t":"map","id":"wordSet","title":"wordSet","kind":"set","entries":[{"k":"and"},{"k":"cat","tone":"good"},{"k":"cats"}]}]},
+  {"line":11,"text":"Can the first 4 letters, `cats`, be cut into words? Try every split point j.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"c"},{"v":"a"},{"v":"t"},{"v":"s"},{"v":"a"},{"v":"n"},{"v":"d"}],"ranges":[{"from":0,"to":3,"label":"first i letters","tone":"win"}]},{"t":"array","id":"dp","title":"dp[i] = can the first i letters be cut into words?","cells":[{"v":"T"},{"v":"F"},{"v":"F"},{"v":"T"},{"v":"F"},{"v":"F"},{"v":"F"},{"v":"F"}]},{"t":"map","id":"wordSet","title":"wordSet","kind":"set","entries":[{"k":"and"},{"k":"cat"},{"k":"cats"}]}]},
+  {"line":15,"text":"Split at j = 0: `dp[0]` is True (`\"\"` can be cut) and the rest `cats` is in the dictionary → `dp[4]` = **True**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"c","tone":"good"},{"v":"a","tone":"good"},{"v":"t","tone":"good"},{"v":"s","tone":"good"},{"v":"a"},{"v":"n"},{"v":"d"}],"ranges":[{"from":0,"to":3,"label":"first i letters","tone":"win"}]},{"t":"array","id":"dp","title":"dp[i] = can the first i letters be cut into words?","cells":[{"v":"T","tone":"alt"},{"v":"F"},{"v":"F"},{"v":"T"},{"v":"T","tone":"good"},{"v":"F"},{"v":"F"},{"v":"F"}]},{"t":"map","id":"wordSet","title":"wordSet","kind":"set","entries":[{"k":"and"},{"k":"cat"},{"k":"cats","tone":"good"}]}]},
+  {"line":11,"text":"Can the first 5 letters, `catsa`, be cut into words? Try every split point j.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"c"},{"v":"a"},{"v":"t"},{"v":"s"},{"v":"a"},{"v":"n"},{"v":"d"}],"ranges":[{"from":0,"to":4,"label":"first i letters","tone":"win"}]},{"t":"array","id":"dp","title":"dp[i] = can the first i letters be cut into words?","cells":[{"v":"T"},{"v":"F"},{"v":"F"},{"v":"T"},{"v":"T"},{"v":"F"},{"v":"F"},{"v":"F"}]},{"t":"map","id":"wordSet","title":"wordSet","kind":"set","entries":[{"k":"and"},{"k":"cat"},{"k":"cats"}]}]},
+  {"line":12,"text":"No split point works for `catsa` → `dp[5]` stays False.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"c"},{"v":"a"},{"v":"t"},{"v":"s"},{"v":"a"},{"v":"n"},{"v":"d"}],"ranges":[{"from":0,"to":4,"label":"first i letters","tone":"win"}]},{"t":"array","id":"dp","title":"dp[i] = can the first i letters be cut into words?","cells":[{"v":"T"},{"v":"F"},{"v":"F"},{"v":"T"},{"v":"T"},{"v":"F","tone":"bad"},{"v":"F"},{"v":"F"}]},{"t":"map","id":"wordSet","title":"wordSet","kind":"set","entries":[{"k":"and"},{"k":"cat"},{"k":"cats"}]}]},
+  {"line":11,"text":"Can the first 6 letters, `catsan`, be cut into words? Try every split point j.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"c"},{"v":"a"},{"v":"t"},{"v":"s"},{"v":"a"},{"v":"n"},{"v":"d"}],"ranges":[{"from":0,"to":5,"label":"first i letters","tone":"win"}]},{"t":"array","id":"dp","title":"dp[i] = can the first i letters be cut into words?","cells":[{"v":"T"},{"v":"F"},{"v":"F"},{"v":"T"},{"v":"T"},{"v":"F"},{"v":"F"},{"v":"F"}]},{"t":"map","id":"wordSet","title":"wordSet","kind":"set","entries":[{"k":"and"},{"k":"cat"},{"k":"cats"}]}]},
+  {"line":12,"text":"No split point works for `catsan` → `dp[6]` stays False.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"c"},{"v":"a"},{"v":"t"},{"v":"s"},{"v":"a"},{"v":"n"},{"v":"d"}],"ranges":[{"from":0,"to":5,"label":"first i letters","tone":"win"}]},{"t":"array","id":"dp","title":"dp[i] = can the first i letters be cut into words?","cells":[{"v":"T"},{"v":"F"},{"v":"F"},{"v":"T"},{"v":"T"},{"v":"F"},{"v":"F","tone":"bad"},{"v":"F"}]},{"t":"map","id":"wordSet","title":"wordSet","kind":"set","entries":[{"k":"and"},{"k":"cat"},{"k":"cats"}]}]},
+  {"line":11,"text":"Can the first 7 letters, `catsand`, be cut into words? Try every split point j.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"c"},{"v":"a"},{"v":"t"},{"v":"s"},{"v":"a"},{"v":"n"},{"v":"d"}],"ranges":[{"from":0,"to":6,"label":"first i letters","tone":"win"}]},{"t":"array","id":"dp","title":"dp[i] = can the first i letters be cut into words?","cells":[{"v":"T"},{"v":"F"},{"v":"F"},{"v":"T"},{"v":"T"},{"v":"F"},{"v":"F"},{"v":"F"}]},{"t":"map","id":"wordSet","title":"wordSet","kind":"set","entries":[{"k":"and"},{"k":"cat"},{"k":"cats"}]}]},
+  {"line":15,"text":"Split at j = 4: `dp[4]` is True (`\"cats\"` can be cut) and the rest `and` is in the dictionary → `dp[7]` = **True**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"c","tone":"seen"},{"v":"a","tone":"seen"},{"v":"t","tone":"seen"},{"v":"s","tone":"seen"},{"v":"a","tone":"good"},{"v":"n","tone":"good"},{"v":"d","tone":"good"}],"ranges":[{"from":0,"to":6,"label":"first i letters","tone":"win"}]},{"t":"array","id":"dp","title":"dp[i] = can the first i letters be cut into words?","cells":[{"v":"T"},{"v":"F"},{"v":"F"},{"v":"T"},{"v":"T","tone":"alt"},{"v":"F"},{"v":"F"},{"v":"T","tone":"good"}]},{"t":"map","id":"wordSet","title":"wordSet","kind":"set","entries":[{"k":"and","tone":"good"},{"k":"cat"},{"k":"cats"}]}]},
+  {"line":18,"text":"`dp[7]` covers the whole string → **True**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"c"},{"v":"a"},{"v":"t"},{"v":"s"},{"v":"a"},{"v":"n"},{"v":"d"}],"ranges":[{"from":0,"to":6,"label":"first i letters","tone":"win"}]},{"t":"array","id":"dp","title":"dp[i] = can the first i letters be cut into words?","cells":[{"v":"T"},{"v":"F"},{"v":"F"},{"v":"T"},{"v":"T"},{"v":"F"},{"v":"F"},{"v":"T","tone":"good"}]},{"t":"map","id":"wordSet","title":"wordSet","kind":"set","entries":[{"k":"and"},{"k":"cat"},{"k":"cats"}]}]},
+  {"line":18,"text":"Done — the answer is **`True`**. \"cats\" + \"and\". (Starting with \"cat\" leaves \"sand\", which is not a word — the DP still finds the other cut.)","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"c"},{"v":"a"},{"v":"t"},{"v":"s"},{"v":"a"},{"v":"n"},{"v":"d"}],"ranges":[{"from":0,"to":6,"label":"first i letters","tone":"win"}]},{"t":"array","id":"dp","title":"dp[i] = can the first i letters be cut into words?","cells":[{"v":"T"},{"v":"F"},{"v":"F"},{"v":"T"},{"v":"T"},{"v":"F"},{"v":"F"},{"v":"T","tone":"good"}]},{"t":"map","id":"wordSet","title":"wordSet","kind":"set","entries":[{"k":"and"},{"k":"cat"},{"k":"cats"}]}],"final":true}
+ ]
+}

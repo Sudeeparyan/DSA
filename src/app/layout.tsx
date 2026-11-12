@@ -1,21 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Syne, Literata, DM_Sans, IBM_Plex_Mono } from "next/font/google";
-import { ThemeProvider } from "@/components/layout/ThemeProvider";
-import { SiteHeader } from "@/components/layout/SiteHeader";
+import Link from "next/link";
+import { DM_Sans, IBM_Plex_Mono } from "next/font/google";
 import { ServiceWorkerRegister } from "@/components/layout/ServiceWorkerRegister";
 import "./globals.css";
-
-const brand = Syne({
-  variable: "--font-brand",
-  subsets: ["latin"],
-  weight: ["600", "700", "800"],
-});
-
-const teach = Literata({
-  variable: "--font-teach",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
+import "./lesson.css";
 
 const body = DM_Sans({
   variable: "--font-body",
@@ -30,21 +18,18 @@ const mono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NeetCode 150 Play",
-  description:
-    "Teacher-led animated lessons for every NeetCode 150 problem — watch the puzzle, explode the idea like a rocket, play the algorithm.",
-  manifest: "/manifest.webmanifest",
-  appleWebApp: {
-    capable: true,
-    title: "NC150 Play",
+  title: {
+    default: "NeetCode 150, step by step",
+    template: "%s · NeetCode 150, step by step",
   },
+  description:
+    "Understand every NeetCode 150 problem: the question in plain words, the key idea, and a 3D walkthrough of the real solution running line by line.",
+  manifest: "/manifest.webmanifest",
+  appleWebApp: { capable: true, title: "NeetCode 150" },
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#070b09" },
-    { media: "(prefers-color-scheme: dark)", color: "#070b09" },
-  ],
+  themeColor: "#0b1018",
   width: "device-width",
   initialScale: 1,
 };
@@ -55,26 +40,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${brand.variable} ${teach.variable} ${body.variable} ${mono.variable} antialiased`}
-      >
-        <ThemeProvider>
-          <ServiceWorkerRegister />
-          <SiteHeader />
-          <main>{children}</main>
-          <footer className="border-t border-white/10 bg-[#070b09] px-4 py-10 text-sm text-white/45">
-            <div className="mx-auto max-w-6xl">
-              <div className="brand-font text-base text-white">
-                NeetCode<span className="text-accent">150</span> Play
-              </div>
-              <p className="mt-2 max-w-xl">
-                Offline-friendly animated classroom for Google interview prep.
-                Not affiliated with NeetCode or LeetCode.
-              </p>
-            </div>
-          </footer>
-        </ThemeProvider>
+    // the font variables live on <html> so that :root-level CSS variables can use them
+    <html lang="en" className={`${body.variable} ${mono.variable}`}>
+      <body>
+        <ServiceWorkerRegister />
+        <header className="site-head">
+          {/* one inner span: a flex item trims the spaces at its edges, which ate the one after "NeetCode" */}
+          <Link href="/" className="site-name">
+            <span>
+              NeetCode <span className="site-accent">150</span>, step by step
+            </span>
+          </Link>
+          <Link href="/" className="site-link">
+            All problems
+          </Link>
+        </header>
+        <main>{children}</main>
+        <footer className="site-foot">
+          A study aid for the NeetCode 150 list. Not affiliated with NeetCode or LeetCode.
+        </footer>
       </body>
     </html>
   );

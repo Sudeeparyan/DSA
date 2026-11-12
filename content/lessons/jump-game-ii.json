@@ -1,0 +1,62 @@
+{
+ "id": 124,
+ "number": 45,
+ "title": "Jump Game II",
+ "slug": "jump-game-ii",
+ "category": "greedy",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/jump-game-ii/",
+ "pattern": "Greedy BFS over index ranges",
+ "statement": "You start at index 0 of `nums`, and `nums[i]` is the maximum jump length from index `i`. The last index is always reachable. Return the **minimum number of jumps** to reach it.",
+ "example": {
+  "input": "nums = [2,3,1,1,4]",
+  "output": "2",
+  "why": "Jump 1 step to index 1, then 3 steps to the last index."
+ },
+ "more": [
+  {
+   "input": "nums = [2,3,0,1,4]",
+   "output": "2"
+  },
+  {
+   "input": "nums = [0]",
+   "output": "0"
+  },
+  {
+   "input": "nums = [1,1,1,1]",
+   "output": "3"
+  },
+  {
+   "input": "nums = [5,1,1,1,1]",
+   "output": "1"
+  },
+  {
+   "input": "nums = [1,2]",
+   "output": "1"
+  }
+ ],
+ "idea": [
+  "Group the indexes by **how many jumps** are needed to reach them: index 0 needs 0 jumps; the indexes it can jump to need 1; and so on. Each group is a contiguous window.",
+  "While walking through the current window, record the farthest index any of its members can reach (`farthest_reachable`). That is where the **next** window ends.",
+  "When the walk hits the end of the current window (`i == cur_end`), one more jump is unavoidable: count it and move the window end to `farthest_reachable`."
+ ],
+ "code": "class Solution:\n    def jump(self, nums: List[int]) -> int:\n        jumps = 0\n        cur_end = 0\n        farthest_reachable = 0\n\n        for i in range(len(nums) - 1):\n            farthest_reachable = max(farthest_reachable, i + nums[i])\n            if i == cur_end:\n                jumps += 1\n                cur_end = farthest_reachable\n\n        return jumps",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "One pass over the array; no index is ever revisited.",
+  "space": "O(1)",
+  "spaceWhy": "Three numbers."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`nums = [2,3,1,1,4]`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"nums","title":"nums  (purple = farthest index reachable with one more jump)","cells":[{"v":"2"},{"v":"3"},{"v":"1"},{"v":"1"},{"v":"4"}]}]},
+  {"line":5,"text":"With 0 jumps we can only be on index 0, so the current window ends at `cur_end` = 0. `farthest_reachable` tracks how far **one more jump** could take us.","views":[{"t":"array","id":"nums","title":"nums  (purple = farthest index reachable with one more jump)","cells":[{"v":"2","tone":"alt"},{"v":"3"},{"v":"1"},{"v":"1"},{"v":"4"}],"ranges":[{"from":0,"to":0,"label":"reachable with jumps jumps","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"jumps","v":"0"},{"k":"cur_end","v":"0"},{"k":"farthest_reachable","v":"0"}]}]},
+  {"line":8,"text":"From index 0 we can jump to index 0 + 2 = 2. That is the farthest so far: `farthest_reachable` = **2**.","views":[{"t":"array","id":"nums","title":"nums  (purple = farthest index reachable with one more jump)","cells":[{"v":"2"},{"v":"3"},{"v":"1","tone":"alt"},{"v":"1"},{"v":"4"}],"ptrs":[{"name":"i","at":0}],"ranges":[{"from":0,"to":0,"label":"reachable with jumps jumps","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"jumps","v":"0"},{"k":"cur_end","v":"0"},{"k":"farthest_reachable","v":"2","changed":true}]}]},
+  {"line":11,"text":"Index 0 was the **last index of the current window**. To go any further we must jump: `jumps` = **1**. The best jump from this window reaches index 2, so that is the end of the new window.","views":[{"t":"array","id":"nums","title":"nums  (purple = farthest index reachable with one more jump)","cells":[{"v":"2"},{"v":"3"},{"v":"1","tone":"alt"},{"v":"1"},{"v":"4"}],"ptrs":[{"name":"i","at":0}],"ranges":[{"from":0,"to":2,"label":"reachable with jumps jumps","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"jumps","v":"1","changed":true},{"k":"cur_end","v":"2","changed":true},{"k":"farthest_reachable","v":"2"}]}]},
+  {"line":8,"text":"From index 1 we can jump to index 1 + 3 = 4. That is the farthest so far: `farthest_reachable` = **4**.","views":[{"t":"array","id":"nums","title":"nums  (purple = farthest index reachable with one more jump)","cells":[{"v":"2"},{"v":"3"},{"v":"1"},{"v":"1"},{"v":"4","tone":"alt"}],"ptrs":[{"name":"i","at":1}],"ranges":[{"from":0,"to":2,"label":"reachable with jumps jumps","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"jumps","v":"1"},{"k":"cur_end","v":"2"},{"k":"farthest_reachable","v":"4","changed":true}]}]},
+  {"line":8,"text":"From index 2 we can jump to index 3 at most — not beyond the 4 already found.","views":[{"t":"array","id":"nums","title":"nums  (purple = farthest index reachable with one more jump)","cells":[{"v":"2"},{"v":"3"},{"v":"1"},{"v":"1"},{"v":"4","tone":"alt"}],"ptrs":[{"name":"i","at":2}],"ranges":[{"from":0,"to":2,"label":"reachable with jumps jumps","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"jumps","v":"1"},{"k":"cur_end","v":"2"},{"k":"farthest_reachable","v":"4"}]}]},
+  {"line":11,"text":"Index 2 was the **last index of the current window**. To go any further we must jump: `jumps` = **2**. The best jump from this window reaches index 4, so that is the end of the new window.","views":[{"t":"array","id":"nums","title":"nums  (purple = farthest index reachable with one more jump)","cells":[{"v":"2"},{"v":"3"},{"v":"1"},{"v":"1"},{"v":"4","tone":"alt"}],"ptrs":[{"name":"i","at":2}],"ranges":[{"from":0,"to":4,"label":"reachable with jumps jumps","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"jumps","v":"2","changed":true},{"k":"cur_end","v":"4","changed":true},{"k":"farthest_reachable","v":"4"}]}]},
+  {"line":8,"text":"From index 3 we can jump to index 4 at most — not beyond the 4 already found.","views":[{"t":"array","id":"nums","title":"nums  (purple = farthest index reachable with one more jump)","cells":[{"v":"2"},{"v":"3"},{"v":"1"},{"v":"1"},{"v":"4","tone":"alt"}],"ptrs":[{"name":"i","at":3}],"ranges":[{"from":0,"to":4,"label":"reachable with jumps jumps","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"jumps","v":"2"},{"k":"cur_end","v":"4"},{"k":"farthest_reachable","v":"4"}]}]},
+  {"line":13,"text":"The window now covers the last index. Minimum number of jumps: **2**.","views":[{"t":"array","id":"nums","title":"nums  (purple = farthest index reachable with one more jump)","cells":[{"v":"2"},{"v":"3"},{"v":"1"},{"v":"1"},{"v":"4","tone":"alt"}],"ptrs":[{"name":"i","at":3}],"ranges":[{"from":0,"to":4,"label":"reachable with jumps jumps","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"jumps","v":"2"},{"k":"cur_end","v":"4"},{"k":"farthest_reachable","v":"4"}]}]},
+  {"line":13,"text":"Done — the answer is **`2`**. Jump 1 step to index 1, then 3 steps to the last index.","views":[{"t":"array","id":"nums","title":"nums  (purple = farthest index reachable with one more jump)","cells":[{"v":"2"},{"v":"3"},{"v":"1"},{"v":"1"},{"v":"4","tone":"alt"}],"ptrs":[{"name":"i","at":3}],"ranges":[{"from":0,"to":4,"label":"reachable with jumps jumps","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"jumps","v":"2"},{"k":"cur_end","v":"4"},{"k":"farthest_reachable","v":"4"}]}],"final":true}
+ ]
+}

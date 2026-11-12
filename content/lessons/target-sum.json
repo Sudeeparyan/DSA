@@ -1,0 +1,70 @@
+{
+ "id": 115,
+ "number": 494,
+ "title": "Target Sum",
+ "slug": "target-sum",
+ "category": "2d-dp",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/target-sum/",
+ "pattern": "Turn signs into a subset-sum count",
+ "statement": "Put a `+` or a `−` in front of every number in `nums` and add everything up. Return the number of different sign assignments whose result is exactly `S`.",
+ "example": {
+  "input": "nums = [1,2,1], S = 2",
+  "output": "2",
+  "why": "+1 +2 −1 = 2 and −1 +2 +1 = 2."
+ },
+ "more": [
+  {
+   "input": "nums = [1,1,1,1,1], S = 3",
+   "output": "5"
+  },
+  {
+   "input": "nums = [1], S = 1",
+   "output": "1"
+  },
+  {
+   "input": "nums = [1], S = 2",
+   "output": "0"
+  },
+  {
+   "input": "nums = [0,0,1], S = 1",
+   "output": "4"
+  },
+  {
+   "input": "nums = [100], S = -200",
+   "output": "0"
+  },
+  {
+   "input": "nums = [1,2,3], S = -6",
+   "output": "1"
+  }
+ ],
+ "idea": [
+  "Trying all sign patterns costs 2ⁿ. Look at it differently: the numbers with `+` have some sum P, those with `−` some sum N.",
+  "We need `P − N = S`, and we know `P + N = total`. Adding the two equations: `P = (total + S) / 2`. So the task is: **count the subsets of `nums` that sum to P** (everything else gets a minus).",
+  "That is a classic subset-sum count: `dp[x]` = number of subsets summing to `x`; each number `num` adds `dp[x − num]` to `dp[x]`, scanning `x` downward so a number is used at most once."
+ ],
+ "code": "class Solution:\n    def findTargetSumWays(self, nums: List[int], S: int) -> int:\n        # Calculate the sum of all elements in the input array 'nums'.\n        total_sum = sum(nums)\n\n        # If the total sum is less than the target sum 'S', it's not possible to reach 'S'.\n        if (total_sum + S) % 2 != 0 or total_sum < abs(S):\n            return 0\n\n        # Calculate the target sum for positive signs. (total_sum + S) / 2\n        target = (total_sum + S) // 2\n\n        # Initialize a 1D array 'dp' to store the number of ways to reach each sum from 0 to 'target'.\n        dp = [0] * (target + 1)\n\n        # There is one way to reach a sum of 0 (by not selecting any element).\n        dp[0] = 1\n\n        # Iterate through each element in the input array 'nums'.\n        for num in nums:\n            # Update the 'dp' array for each sum from 'target' to 'num'.\n            for i in range(target, num - 1, -1):\n                dp[i] += dp[i - num]\n\n        # The 'dp[target]' contains the number of ways to reach the target sum 'S'.\n        return dp[target]",
+ "complexity": {
+  "time": "O(n × sum)",
+  "timeWhy": "For each number, every sum up to P is updated once.",
+  "space": "O(sum)",
+  "spaceWhy": "One counter per sum."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`nums = [1,2,1], S = 2`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2"},{"v":"1"}]}]},
+  {"line":7,"text":"Call the sum of the `+` numbers P and the sum of the `−` numbers N. Then P − N = 2 and P + N = 4. Add them: 2P = 6, so **P = 3**. New question: how many subsets of `nums` sum to 3?","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2"},{"v":"1"}]},{"t":"vars","id":"vars","items":[{"k":"total_sum","v":"4"}]}]},
+  {"line":17,"text":"`dp[x]` counts the subsets that sum to x. The empty subset sums to 0: **1** way.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2"},{"v":"1"}],"ptrs":[{"name":"num","at":-1}]},{"t":"array","id":"dp","title":"dp[x] = number of subsets (of the numbers seen so far) that sum to x","cells":[{"v":"1","tone":"good"},{"v":"0"},{"v":"0"},{"v":"0"}]},{"t":"vars","id":"vars","items":[{"k":"total_sum","v":"4"},{"k":"target","v":"3"}]}]},
+  {"line":20,"text":"Next number: **1**. Every subset that sums to x − 1 gives a new subset that sums to x by adding 1. The sums are scanned from high to low so that 1 is not used twice.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2"},{"v":"1"}],"ptrs":[{"name":"num","at":0}]},{"t":"array","id":"dp","title":"dp[x] = number of subsets (of the numbers seen so far) that sum to x","cells":[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}]},{"t":"vars","id":"vars","items":[{"k":"total_sum","v":"4"},{"k":"target","v":"3"}]}]},
+  {"line":23,"text":"Sum 1: every subset that sums to 0 (1 so far) can take 1 as well → 0 + 1 = **1**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2"},{"v":"1"}],"ptrs":[{"name":"num","at":0}]},{"t":"array","id":"dp","title":"dp[x] = number of subsets (of the numbers seen so far) that sum to x","cells":[{"v":"1","tone":"alt"},{"v":"1","tone":"good"},{"v":"0"},{"v":"0"}],"ptrs":[{"name":"i","at":1}]},{"t":"vars","id":"vars","items":[{"k":"total_sum","v":"4"},{"k":"target","v":"3"}]}]},
+  {"line":20,"text":"Next number: **2**. Every subset that sums to x − 2 gives a new subset that sums to x by adding 2. The sums are scanned from high to low so that 2 is not used twice.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2"},{"v":"1"}],"ptrs":[{"name":"num","at":1}]},{"t":"array","id":"dp","title":"dp[x] = number of subsets (of the numbers seen so far) that sum to x","cells":[{"v":"1"},{"v":"1"},{"v":"0"},{"v":"0"}],"ptrs":[{"name":"i","at":1}]},{"t":"vars","id":"vars","items":[{"k":"total_sum","v":"4"},{"k":"target","v":"3"}]}]},
+  {"line":23,"text":"Sum 3: every subset that sums to 1 (1 so far) can take 2 as well → 0 + 1 = **1**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2"},{"v":"1"}],"ptrs":[{"name":"num","at":1}]},{"t":"array","id":"dp","title":"dp[x] = number of subsets (of the numbers seen so far) that sum to x","cells":[{"v":"1"},{"v":"1","tone":"alt"},{"v":"0"},{"v":"1","tone":"good"}],"ptrs":[{"name":"i","at":3}]},{"t":"vars","id":"vars","items":[{"k":"total_sum","v":"4"},{"k":"target","v":"3"}]}]},
+  {"line":23,"text":"Sum 2: every subset that sums to 0 (1 so far) can take 2 as well → 0 + 1 = **1**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2"},{"v":"1"}],"ptrs":[{"name":"num","at":1}]},{"t":"array","id":"dp","title":"dp[x] = number of subsets (of the numbers seen so far) that sum to x","cells":[{"v":"1","tone":"alt"},{"v":"1"},{"v":"1","tone":"good"},{"v":"1"}],"ptrs":[{"name":"i","at":2}]},{"t":"vars","id":"vars","items":[{"k":"total_sum","v":"4"},{"k":"target","v":"3"}]}]},
+  {"line":20,"text":"Next number: **1**. Every subset that sums to x − 1 gives a new subset that sums to x by adding 1. The sums are scanned from high to low so that 1 is not used twice.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2"},{"v":"1"}],"ptrs":[{"name":"num","at":2}]},{"t":"array","id":"dp","title":"dp[x] = number of subsets (of the numbers seen so far) that sum to x","cells":[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"1"}],"ptrs":[{"name":"i","at":2}]},{"t":"vars","id":"vars","items":[{"k":"total_sum","v":"4"},{"k":"target","v":"3"}]}]},
+  {"line":23,"text":"Sum 3: every subset that sums to 2 (1 so far) can take 1 as well → 1 + 1 = **2**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2"},{"v":"1"}],"ptrs":[{"name":"num","at":2}]},{"t":"array","id":"dp","title":"dp[x] = number of subsets (of the numbers seen so far) that sum to x","cells":[{"v":"1"},{"v":"1"},{"v":"1","tone":"alt"},{"v":"2","tone":"good"}],"ptrs":[{"name":"i","at":3}]},{"t":"vars","id":"vars","items":[{"k":"total_sum","v":"4"},{"k":"target","v":"3"}]}]},
+  {"line":23,"text":"Sum 2: every subset that sums to 1 (1 so far) can take 1 as well → 1 + 1 = **2**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2"},{"v":"1"}],"ptrs":[{"name":"num","at":2}]},{"t":"array","id":"dp","title":"dp[x] = number of subsets (of the numbers seen so far) that sum to x","cells":[{"v":"1"},{"v":"1","tone":"alt"},{"v":"2","tone":"good"},{"v":"2"}],"ptrs":[{"name":"i","at":2}]},{"t":"vars","id":"vars","items":[{"k":"total_sum","v":"4"},{"k":"target","v":"3"}]}]},
+  {"line":23,"text":"Sum 1: every subset that sums to 0 (1 so far) can take 1 as well → 1 + 1 = **2**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2"},{"v":"1"}],"ptrs":[{"name":"num","at":2}]},{"t":"array","id":"dp","title":"dp[x] = number of subsets (of the numbers seen so far) that sum to x","cells":[{"v":"1","tone":"alt"},{"v":"2","tone":"good"},{"v":"2"},{"v":"2"}],"ptrs":[{"name":"i","at":1}]},{"t":"vars","id":"vars","items":[{"k":"total_sum","v":"4"},{"k":"target","v":"3"}]}]},
+  {"line":26,"text":"`dp[3]` = **2**: that many subsets can take the `+` sign so that the total comes out as 2.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2"},{"v":"1"}],"ptrs":[{"name":"num","at":3}]},{"t":"array","id":"dp","title":"dp[x] = number of subsets (of the numbers seen so far) that sum to x","cells":[{"v":"1"},{"v":"2"},{"v":"2"},{"v":"2","tone":"good"}],"ptrs":[{"name":"i","at":1}]},{"t":"vars","id":"vars","items":[{"k":"total_sum","v":"4"},{"k":"target","v":"3"}]}]},
+  {"line":26,"text":"Done — the answer is **`2`**. +1 +2 −1 = 2 and −1 +2 +1 = 2.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2"},{"v":"1"}],"ptrs":[{"name":"num","at":3}]},{"t":"array","id":"dp","title":"dp[x] = number of subsets (of the numbers seen so far) that sum to x","cells":[{"v":"1"},{"v":"2"},{"v":"2"},{"v":"2","tone":"good"}],"ptrs":[{"name":"i","at":1}]},{"t":"vars","id":"vars","items":[{"k":"total_sum","v":"4"},{"k":"target","v":"3"}]}],"final":true}
+ ]
+}

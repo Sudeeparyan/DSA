@@ -1,0 +1,62 @@
+{
+ "id": 46,
+ "number": 226,
+ "title": "Invert Binary Tree",
+ "slug": "invert-binary-tree",
+ "category": "trees",
+ "difficulty": "Easy",
+ "url": "https://leetcode.com/problems/invert-binary-tree/",
+ "pattern": "Tree recursion (DFS)",
+ "statement": "Given the `root` of a binary tree, invert it — swap the left and right child of **every** node — and return the root. The result is the mirror image of the original tree.",
+ "example": {
+  "input": "root = [4,2,7,1,3,6,9]",
+  "output": "[4,7,2,9,6,3,1]",
+  "why": "Every node's children are swapped, so each level reads right-to-left."
+ },
+ "more": [
+  {
+   "input": "root = [2,1,3]",
+   "output": "[2,3,1]"
+  },
+  {
+   "input": "root = None",
+   "output": "[]"
+  },
+  {
+   "input": "root = [1,2]",
+   "output": "[1,None,2]"
+  }
+ ],
+ "idea": [
+  "Mirroring a whole tree sounds big, but at one node it is tiny: just swap its left and right child.",
+  "Do that swap at **every** node and the entire tree is mirrored. Recursion visits every node for us.",
+  "Recipe for a node: swap its children → invert the left subtree → invert the right subtree. An empty node (None) needs nothing."
+ ],
+ "code": "class Solution:\n    def invertTree(self, root: TreeNode) -> TreeNode:\n        if not root:\n            return None\n\n        # Swap left and right subtrees\n        root.left, root.right = root.right, root.left\n\n        # Recursively invert left and right subtrees\n        self.invertTree(root.left)\n        self.invertTree(root.right)\n\n        return root",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "Every node is visited once and does a constant amount of work.",
+  "space": "O(h)",
+  "spaceWhy": "The recursion stack is as deep as the tree's height h (log n if balanced, n if it is a chain)."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`root = [4,2,7,1,3,6,9]`**. Each step runs one highlighted line of the code.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"4","l":2,"r":3,"tone":"cur"},{"id":2,"v":"2","l":4,"r":5},{"id":3,"v":"7","l":6,"r":7},{"id":4,"v":"1"},{"id":5,"v":"3"},{"id":6,"v":"6"},{"id":7,"v":"9"}],"roots":[1]}]},
+  {"line":7,"text":"At node **4**: swap its two children. Now node 7 is on the left and node 2 on the right — their whole subtrees move with them.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"4","l":3,"r":2,"tone":"cur"},{"id":2,"v":"2","l":4,"r":5},{"id":3,"v":"7","l":6,"r":7},{"id":4,"v":"1"},{"id":5,"v":"3"},{"id":6,"v":"6"},{"id":7,"v":"9"}],"roots":[1]}]},
+  {"line":10,"text":"Now mirror everything underneath node 4's left child (node 7).","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"4","l":3,"r":2,"tone":"cur"},{"id":2,"v":"2","l":4,"r":5},{"id":3,"v":"7","l":6,"r":7},{"id":4,"v":"1"},{"id":5,"v":"3"},{"id":6,"v":"6"},{"id":7,"v":"9"}],"roots":[1]}]},
+  {"line":7,"text":"At node **7**: swap its two children. Now node 9 is on the left and node 6 on the right — their whole subtrees move with them.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"4","l":3,"r":2,"tone":"win"},{"id":2,"v":"2","l":4,"r":5},{"id":3,"v":"7","l":7,"r":6,"tone":"cur"},{"id":4,"v":"1"},{"id":5,"v":"3"},{"id":6,"v":"6"},{"id":7,"v":"9"}],"roots":[1]}]},
+  {"line":10,"text":"Now mirror everything underneath node 7's left child (node 9).","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"4","l":3,"r":2,"tone":"win"},{"id":2,"v":"2","l":4,"r":5},{"id":3,"v":"7","l":7,"r":6,"tone":"cur"},{"id":4,"v":"1"},{"id":5,"v":"3"},{"id":6,"v":"6"},{"id":7,"v":"9"}],"roots":[1]}]},
+  {"line":7,"text":"Node **9** is a leaf: both children are empty, so swapping them changes nothing.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"4","l":3,"r":2,"tone":"win"},{"id":2,"v":"2","l":4,"r":5},{"id":3,"v":"7","l":7,"r":6,"tone":"win"},{"id":4,"v":"1"},{"id":5,"v":"3"},{"id":6,"v":"6"},{"id":7,"v":"9","tone":"cur"}],"roots":[1]}]},
+  {"line":3,"text":"This child is empty (None). There is nothing to invert, so return straight away. This is the base case that stops the recursion.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"4","l":3,"r":2,"tone":"win"},{"id":2,"v":"2","l":4,"r":5},{"id":3,"v":"7","l":7,"r":6,"tone":"win"},{"id":4,"v":"1"},{"id":5,"v":"3"},{"id":6,"v":"6"},{"id":7,"v":"9","tone":"win"}],"roots":[1]}]},
+  {"line":11,"text":"Left side of node 7 is done. Now mirror its right child (node 6).","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"4","l":3,"r":2,"tone":"win"},{"id":2,"v":"2","l":4,"r":5},{"id":3,"v":"7","l":7,"r":6,"tone":"cur"},{"id":4,"v":"1"},{"id":5,"v":"3"},{"id":6,"v":"6"},{"id":7,"v":"9","tone":"good"}],"roots":[1]}]},
+  {"line":7,"text":"Node **6** is a leaf: both children are empty, so swapping them changes nothing.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"4","l":3,"r":2,"tone":"win"},{"id":2,"v":"2","l":4,"r":5},{"id":3,"v":"7","l":7,"r":6,"tone":"win"},{"id":4,"v":"1"},{"id":5,"v":"3"},{"id":6,"v":"6","tone":"cur"},{"id":7,"v":"9","tone":"good"}],"roots":[1]}]},
+  {"line":13,"text":"Everything under node 7 is mirrored. Return to its parent.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"4","l":3,"r":2,"tone":"win"},{"id":2,"v":"2","l":4,"r":5},{"id":3,"v":"7","l":7,"r":6,"tone":"cur"},{"id":4,"v":"1"},{"id":5,"v":"3"},{"id":6,"v":"6","tone":"good"},{"id":7,"v":"9","tone":"good"}],"roots":[1]}]},
+  {"line":11,"text":"Left side of node 4 is done. Now mirror its right child (node 2).","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"4","l":3,"r":2,"tone":"cur"},{"id":2,"v":"2","l":4,"r":5},{"id":3,"v":"7","l":7,"r":6,"tone":"good"},{"id":4,"v":"1"},{"id":5,"v":"3"},{"id":6,"v":"6","tone":"good"},{"id":7,"v":"9","tone":"good"}],"roots":[1]}]},
+  {"line":7,"text":"At node **2**: swap its two children. Now node 3 is on the left and node 1 on the right — their whole subtrees move with them.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"4","l":3,"r":2,"tone":"win"},{"id":2,"v":"2","l":5,"r":4,"tone":"cur"},{"id":3,"v":"7","l":7,"r":6,"tone":"good"},{"id":4,"v":"1"},{"id":5,"v":"3"},{"id":6,"v":"6","tone":"good"},{"id":7,"v":"9","tone":"good"}],"roots":[1]}]},
+  {"line":10,"text":"Now mirror everything underneath node 2's left child (node 3).","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"4","l":3,"r":2,"tone":"win"},{"id":2,"v":"2","l":5,"r":4,"tone":"cur"},{"id":3,"v":"7","l":7,"r":6,"tone":"good"},{"id":4,"v":"1"},{"id":5,"v":"3"},{"id":6,"v":"6","tone":"good"},{"id":7,"v":"9","tone":"good"}],"roots":[1]}]},
+  {"line":7,"text":"Node **3** is a leaf: both children are empty, so swapping them changes nothing.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"4","l":3,"r":2,"tone":"win"},{"id":2,"v":"2","l":5,"r":4,"tone":"win"},{"id":3,"v":"7","l":7,"r":6,"tone":"good"},{"id":4,"v":"1"},{"id":5,"v":"3","tone":"cur"},{"id":6,"v":"6","tone":"good"},{"id":7,"v":"9","tone":"good"}],"roots":[1]}]},
+  {"line":11,"text":"Left side of node 2 is done. Now mirror its right child (node 1).","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"4","l":3,"r":2,"tone":"win"},{"id":2,"v":"2","l":5,"r":4,"tone":"cur"},{"id":3,"v":"7","l":7,"r":6,"tone":"good"},{"id":4,"v":"1"},{"id":5,"v":"3","tone":"good"},{"id":6,"v":"6","tone":"good"},{"id":7,"v":"9","tone":"good"}],"roots":[1]}]},
+  {"line":7,"text":"Node **1** is a leaf: both children are empty, so swapping them changes nothing.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"4","l":3,"r":2,"tone":"win"},{"id":2,"v":"2","l":5,"r":4,"tone":"win"},{"id":3,"v":"7","l":7,"r":6,"tone":"good"},{"id":4,"v":"1","tone":"cur"},{"id":5,"v":"3","tone":"good"},{"id":6,"v":"6","tone":"good"},{"id":7,"v":"9","tone":"good"}],"roots":[1]}]},
+  {"line":13,"text":"Everything under node 2 is mirrored. Return to its parent.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"4","l":3,"r":2,"tone":"win"},{"id":2,"v":"2","l":5,"r":4,"tone":"cur"},{"id":3,"v":"7","l":7,"r":6,"tone":"good"},{"id":4,"v":"1","tone":"good"},{"id":5,"v":"3","tone":"good"},{"id":6,"v":"6","tone":"good"},{"id":7,"v":"9","tone":"good"}],"roots":[1]}]},
+  {"line":13,"text":"Done — the answer is **`[4,7,2,9,6,3,1]`**. Every node's children are swapped, so each level reads right-to-left.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"4","l":3,"r":2,"tone":"good"},{"id":2,"v":"2","l":5,"r":4,"tone":"good"},{"id":3,"v":"7","l":7,"r":6,"tone":"good"},{"id":4,"v":"1","tone":"good"},{"id":5,"v":"3","tone":"good"},{"id":6,"v":"6","tone":"good"},{"id":7,"v":"9","tone":"good"}],"roots":[1]}],"final":true}
+ ]
+}

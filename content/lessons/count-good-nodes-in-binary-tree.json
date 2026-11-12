@@ -1,0 +1,56 @@
+{
+ "id": 55,
+ "number": 1448,
+ "title": "Count Good Nodes in Binary Tree",
+ "slug": "count-good-nodes-in-binary-tree",
+ "category": "trees",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/count-good-nodes-in-binary-tree/",
+ "pattern": "DFS carrying the maximum seen on the path",
+ "statement": "A node of a binary tree is **good** if no node on the path from the root down to it has a larger value. Return the number of good nodes.",
+ "example": {
+  "input": "root = [3,1,4,3,None,1,5]",
+  "output": "4",
+  "why": "Good nodes: the root 3, the node 4, the node 5, and the lower 3 (path 3 → 1 → 3 has nothing above 3)."
+ },
+ "more": [
+  {
+   "input": "root = [3,3,None,4,2]",
+   "output": "3"
+  },
+  {
+   "input": "root = [1]",
+   "output": "1"
+  },
+  {
+   "input": "root = [2,None,1]",
+   "output": "1"
+  }
+ ],
+ "idea": [
+  "Whether a node is good depends only on the **largest value above it** on its own path from the root.",
+  "So walk down with DFS and pass that maximum along as an argument.",
+  "A node is good if its value is at least that maximum; in that case it also becomes the new maximum for everything below it."
+ ],
+ "code": "class Solution:\n    def goodNodes(self, root: TreeNode) -> int:\n        def dfs(node, max_val):\n            if not node:\n                return 0\n\n            if node.val >= max_val:\n                max_val = node.val\n                count = 1\n            else:\n                count = 0\n\n            count += dfs(node.left, max_val)\n            count += dfs(node.right, max_val)\n\n            return count\n\n        return dfs(root, float(\"-inf\"))",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "Every node is visited once.",
+  "space": "O(h)",
+  "spaceWhy": "The recursion stack is as deep as the tree's height h."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`root = [3,1,4,3,None,1,5]`**. Each step runs one highlighted line of the code.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3},{"id":2,"v":"1","l":4},{"id":3,"v":"4","l":5,"r":6},{"id":4,"v":"3"},{"id":5,"v":"1"},{"id":6,"v":"5"}],"roots":[1]}]},
+  {"line":7,"text":"The root has nothing above it, so it is always **good**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"good"},{"id":2,"v":"1","l":4},{"id":3,"v":"4","l":5,"r":6},{"id":4,"v":"3"},{"id":5,"v":"1"},{"id":6,"v":"5"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"max_val","v":"-∞"}]}]},
+  {"line":7,"text":"Node 1: a bigger value, 3, sits above it on this path. **Not good**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"good"},{"id":2,"v":"1","l":4,"tone":"bad"},{"id":3,"v":"4","l":5,"r":6},{"id":4,"v":"3"},{"id":5,"v":"1"},{"id":6,"v":"5"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"max_val","v":"3","changed":true}]}]},
+  {"line":7,"text":"Node 3: the largest value above it on this path is 3. Nothing above is bigger than 3, so it is **good**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"good"},{"id":2,"v":"1","l":4,"tone":"win"},{"id":3,"v":"4","l":5,"r":6},{"id":4,"v":"3","tone":"good"},{"id":5,"v":"1"},{"id":6,"v":"5"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"max_val","v":"3"}]}]},
+  {"line":4,"text":"An empty spot contains no good nodes: return 0.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"good"},{"id":2,"v":"1","l":4,"tone":"win"},{"id":3,"v":"4","l":5,"r":6},{"id":4,"v":"3","tone":"good"},{"id":5,"v":"1"},{"id":6,"v":"5"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"max_val","v":"3"}]}]},
+  {"line":16,"text":"The subtree of node 1 contains **1 good node**. (The small labels are these counts.)","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"good"},{"id":2,"v":"1","l":4,"tone":"cur"},{"id":3,"v":"4","l":5,"r":6},{"id":4,"v":"3","tone":"good","badge":"1"},{"id":5,"v":"1"},{"id":6,"v":"5"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"max_val","v":"3"}]}]},
+  {"line":7,"text":"Node 4: the largest value above it on this path is 3. Nothing above is bigger than 4, so it is **good**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"good"},{"id":2,"v":"1","l":4,"badge":"1"},{"id":3,"v":"4","l":5,"r":6,"tone":"good"},{"id":4,"v":"3","tone":"good","badge":"1"},{"id":5,"v":"1"},{"id":6,"v":"5"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"max_val","v":"3"}]}]},
+  {"line":7,"text":"Node 1: a bigger value, 4, sits above it on this path. **Not good**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"good"},{"id":2,"v":"1","l":4,"badge":"1"},{"id":3,"v":"4","l":5,"r":6,"tone":"good"},{"id":4,"v":"3","tone":"good","badge":"1"},{"id":5,"v":"1","tone":"bad"},{"id":6,"v":"5"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"max_val","v":"4","changed":true}]}]},
+  {"line":7,"text":"Node 5: the largest value above it on this path is 4. Nothing above is bigger than 5, so it is **good**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"good"},{"id":2,"v":"1","l":4,"badge":"1"},{"id":3,"v":"4","l":5,"r":6,"tone":"good"},{"id":4,"v":"3","tone":"good","badge":"1"},{"id":5,"v":"1","badge":"0"},{"id":6,"v":"5","tone":"good"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"max_val","v":"4"}]}]},
+  {"line":16,"text":"The subtree of node 4 contains **2 good nodes**. (The small labels are these counts.)","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"good"},{"id":2,"v":"1","l":4,"badge":"1"},{"id":3,"v":"4","l":5,"r":6,"tone":"good"},{"id":4,"v":"3","tone":"good","badge":"1"},{"id":5,"v":"1","badge":"0"},{"id":6,"v":"5","tone":"good","badge":"1"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"max_val","v":"4"}]}]},
+  {"line":16,"text":"The subtree of node 3 contains **4 good nodes**. (The small labels are these counts.)","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"good"},{"id":2,"v":"1","l":4,"badge":"1"},{"id":3,"v":"4","l":5,"r":6,"tone":"good","badge":"2"},{"id":4,"v":"3","tone":"good","badge":"1"},{"id":5,"v":"1","badge":"0"},{"id":6,"v":"5","tone":"good","badge":"1"}],"roots":[1]},{"t":"vars","id":"vars","items":[{"k":"max_val","v":"3","changed":true}]}]},
+  {"line":18,"text":"Done — the answer is **`4`**. Good nodes: the root 3, the node 4, the node 5, and the lower 3 (path 3 → 1 → 3 has nothing above 3).","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"good","badge":"4"},{"id":2,"v":"1","l":4,"badge":"1"},{"id":3,"v":"4","l":5,"r":6,"tone":"good","badge":"2"},{"id":4,"v":"3","tone":"good","badge":"1"},{"id":5,"v":"1","badge":"0"},{"id":6,"v":"5","tone":"good","badge":"1"}],"roots":[1]}],"final":true}
+ ]
+}

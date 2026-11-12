@@ -1,0 +1,55 @@
+{
+ "id": 31,
+ "number": 153,
+ "title": "Find Minimum in Rotated Sorted Array",
+ "slug": "find-minimum-in-rotated-sorted-array",
+ "category": "binary-search",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/",
+ "pattern": "Binary search against the right end",
+ "statement": "A sorted array of distinct numbers has been **rotated**: some front part was moved to the back, as in `[4,5,6,7,0,1,2]`. Return its smallest element in O(log n) time.",
+ "example": {
+  "input": "nums = [4,5,6,7,0,1,2]",
+  "output": "0",
+  "why": "The array rises 4, 5, 6, 7, then drops to 0 — the smallest value sits right after the drop."
+ },
+ "more": [
+  {
+   "input": "nums = [3,4,5,1,2]",
+   "output": "1"
+  },
+  {
+   "input": "nums = [11,13,15,17]",
+   "output": "11"
+  },
+  {
+   "input": "nums = [2,1]",
+   "output": "1"
+  }
+ ],
+ "idea": [
+  "A rotated sorted array is two rising runs. Every value in the first run is bigger than every value in the second, and the minimum is the first element of the second run.",
+  "Compare the middle with the **right end**. If the middle is bigger, the drop — and the minimum — lies to its right.",
+  "Otherwise the middle already belongs to the second run, so the minimum is the middle itself or something to its left. Keep halving until one element is left."
+ ],
+ "code": "class Solution:\n    def findMin(self, nums: List[int]) -> int:\n        left, right = 0, len(nums) - 1\n\n        while left < right:\n            mid = left + (right - left) // 2\n\n            if nums[mid] > nums[right]:\n                left = mid + 1\n            else:\n                right = mid\n\n        return nums[left]",
+ "complexity": {
+  "time": "O(log n)",
+  "timeWhy": "Half of the remaining range is discarded at every step.",
+  "space": "O(1)",
+  "spaceWhy": "Three index variables."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`nums = [4,5,6,7,0,1,2]`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"4","n":4},{"v":"5","n":5},{"v":"6","n":6},{"v":"7","n":7},{"v":"0","n":0},{"v":"1","n":1},{"v":"2","n":2}],"bars":true,"max":7}]},
+  {"line":3,"text":"The array is two rising runs with one drop between them. The minimum sits right after the drop.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"4","n":4},{"v":"5","n":5},{"v":"6","n":6},{"v":"7","n":7},{"v":"0","n":0},{"v":"1","n":1},{"v":"2","n":2}],"ptrs":[{"name":"left","at":0},{"name":"right","at":6}],"bars":true,"max":7}]},
+  {"line":6,"text":"The middle (index 3) holds 7; the right end holds 2.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"4","n":4},{"v":"5","n":5},{"v":"6","n":6},{"v":"7","tone":"cur","n":7},{"v":"0","n":0},{"v":"1","n":1},{"v":"2","n":2}],"ptrs":[{"name":"left","at":0},{"name":"mid","at":3},{"name":"right","at":6}],"bars":true,"max":7}]},
+  {"line":9,"text":"7 is bigger than 2, so the values **drop** somewhere to the right of `mid`. The minimum is in that part: `left` = 4.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"4","tone":"dim","n":4},{"v":"5","tone":"dim","n":5},{"v":"6","tone":"dim","n":6},{"v":"7","tone":"cur","n":7},{"v":"0","n":0},{"v":"1","n":1},{"v":"2","n":2}],"ptrs":[{"name":"left","at":4},{"name":"mid","at":3},{"name":"right","at":6}],"bars":true,"max":7}]},
+  {"line":6,"text":"The middle (index 5) holds 1; the right end holds 2.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"4","tone":"dim","n":4},{"v":"5","tone":"dim","n":5},{"v":"6","tone":"dim","n":6},{"v":"7","tone":"dim","n":7},{"v":"0","n":0},{"v":"1","tone":"cur","n":1},{"v":"2","n":2}],"ptrs":[{"name":"left","at":4},{"name":"mid","at":5},{"name":"right","at":6}],"bars":true,"max":7}]},
+  {"line":11,"text":"1 is not bigger than 2, so everything from `mid` to the old right end only rises. The minimum is `mid` itself or further left: `right` = 5.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"4","tone":"dim","n":4},{"v":"5","tone":"dim","n":5},{"v":"6","tone":"dim","n":6},{"v":"7","tone":"dim","n":7},{"v":"0","n":0},{"v":"1","tone":"cur","n":1},{"v":"2","tone":"dim","n":2}],"ptrs":[{"name":"left","at":4},{"name":"mid","at":5},{"name":"right","at":5}],"bars":true,"max":7}]},
+  {"line":6,"text":"The middle (index 4) holds 0; the right end holds 1.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"4","tone":"dim","n":4},{"v":"5","tone":"dim","n":5},{"v":"6","tone":"dim","n":6},{"v":"7","tone":"dim","n":7},{"v":"0","tone":"cur","n":0},{"v":"1","n":1},{"v":"2","tone":"dim","n":2}],"ptrs":[{"name":"left","at":4},{"name":"mid","at":4},{"name":"right","at":5}],"bars":true,"max":7}]},
+  {"line":11,"text":"0 is not bigger than 1, so everything from `mid` to the old right end only rises. The minimum is `mid` itself or further left: `right` = 4.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"4","tone":"dim","n":4},{"v":"5","tone":"dim","n":5},{"v":"6","tone":"dim","n":6},{"v":"7","tone":"dim","n":7},{"v":"0","tone":"cur","n":0},{"v":"1","tone":"dim","n":1},{"v":"2","tone":"dim","n":2}],"ptrs":[{"name":"left","at":4},{"name":"mid","at":4},{"name":"right","at":4}],"bars":true,"max":7}]},
+  {"line":5,"text":"`left` and `right` have met on index 4.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"4","tone":"dim","n":4},{"v":"5","tone":"dim","n":5},{"v":"6","tone":"dim","n":6},{"v":"7","tone":"dim","n":7},{"v":"0","tone":"good","n":0},{"v":"1","tone":"dim","n":1},{"v":"2","tone":"dim","n":2}],"ptrs":[{"name":"left","at":4},{"name":"mid","at":4},{"name":"right","at":4}],"bars":true,"max":7}]},
+  {"line":13,"text":"The smallest element is `nums[4]` = **0**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"4","tone":"dim","n":4},{"v":"5","tone":"dim","n":5},{"v":"6","tone":"dim","n":6},{"v":"7","tone":"dim","n":7},{"v":"0","tone":"good","n":0},{"v":"1","tone":"dim","n":1},{"v":"2","tone":"dim","n":2}],"ptrs":[{"name":"left","at":4},{"name":"mid","at":4},{"name":"right","at":4}],"bars":true,"max":7}]},
+  {"line":13,"text":"Done — the answer is **`0`**. The array rises 4, 5, 6, 7, then drops to 0 — the smallest value sits right after the drop.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"4","tone":"dim","n":4},{"v":"5","tone":"dim","n":5},{"v":"6","tone":"dim","n":6},{"v":"7","tone":"dim","n":7},{"v":"0","tone":"good","n":0},{"v":"1","tone":"dim","n":1},{"v":"2","tone":"dim","n":2}],"ptrs":[{"name":"left","at":4},{"name":"mid","at":4},{"name":"right","at":4}],"bars":true,"max":7}],"final":true}
+ ]
+}

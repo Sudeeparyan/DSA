@@ -1,0 +1,56 @@
+{
+ "id": 38,
+ "number": 19,
+ "title": "Remove Nth Node From End of List",
+ "slug": "remove-nth-node-from-end-of-list",
+ "category": "linked-list",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/remove-nth-node-from-end-of-list/",
+ "pattern": "Two pointers a fixed distance apart",
+ "statement": "Given the head of a linked list, remove the `n`-th node **counted from the end** and return the head of the list.",
+ "example": {
+  "input": "head = [1,2,3,4,5], n = 2",
+  "output": "[1,2,3,5]",
+  "why": "The 2nd node from the end is 4, so it is removed."
+ },
+ "more": [
+  {
+   "input": "head = [1], n = 1",
+   "output": "[]"
+  },
+  {
+   "input": "head = [1,2], n = 1",
+   "output": "[1]"
+  },
+  {
+   "input": "head = [1,2], n = 2",
+   "output": "[2]"
+  }
+ ],
+ "idea": [
+  "We cannot walk backwards from the end, and we do not know the length without a first pass.",
+  "Trick: use two pointers that stay **n nodes apart**. Move both forward together; when the front one reaches the last node, the back one is exactly before the node to delete.",
+  "A dummy node in front of the head makes deleting the head itself work the same way as deleting any other node."
+ ],
+ "code": "class Solution:\n    def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:\n        dummy = ListNode(0)\n        dummy.next = head\n        fast = slow = dummy\n\n        # Move 'fast' n nodes ahead\n        for _ in range(n):\n            fast = fast.next\n\n        # Move both pointers until 'fast' reaches the end\n        while fast.next:\n            fast = fast.next\n            slow = slow.next\n\n        # Remove the nth node from the end\n        slow.next = slow.next.next\n\n        return dummy.next",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "One pass: `fast` walks the list once.",
+  "space": "O(1)",
+  "spaceWhy": "Two pointers and one dummy node."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`head = [1,2,3,4,5], n = 2`**. Each step runs one highlighted line of the code.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":1,"y":0,"next":2},{"id":2,"v":"2","x":2,"y":0,"next":3},{"id":3,"v":"3","x":3,"y":0,"next":4},{"id":4,"v":"4","x":4,"y":0,"next":5},{"id":5,"v":"5","x":5,"y":0}]}]},
+  {"line":4,"text":"Put a **dummy** node in front of the head. Even if the head is the one to delete, there is now a node before it to re-link.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":1,"y":0,"next":2},{"id":2,"v":"2","x":2,"y":0,"next":3},{"id":3,"v":"3","x":3,"y":0,"next":4},{"id":4,"v":"4","x":4,"y":0,"next":5},{"id":5,"v":"5","x":5,"y":0},{"id":6,"v":"dummy","x":0,"y":0,"next":1}]}]},
+  {"line":5,"text":"Both pointers start on the dummy.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":1,"y":0,"next":2},{"id":2,"v":"2","x":2,"y":0,"next":3},{"id":3,"v":"3","x":3,"y":0,"next":4},{"id":4,"v":"4","x":4,"y":0,"next":5},{"id":5,"v":"5","x":5,"y":0},{"id":6,"v":"dummy","x":0,"y":0,"next":1}],"ptrs":[{"name":"slow","at":6},{"name":"fast","at":6}]}]},
+  {"line":9,"text":"Give `fast` a head start: it moves to node 1.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":1,"y":0,"next":2},{"id":2,"v":"2","x":2,"y":0,"next":3},{"id":3,"v":"3","x":3,"y":0,"next":4},{"id":4,"v":"4","x":4,"y":0,"next":5},{"id":5,"v":"5","x":5,"y":0},{"id":6,"v":"dummy","x":0,"y":0,"next":1}],"ptrs":[{"name":"slow","at":6},{"name":"fast","at":1}]}]},
+  {"line":9,"text":"Give `fast` a head start: it moves to node 2.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":1,"y":0,"next":2},{"id":2,"v":"2","x":2,"y":0,"next":3},{"id":3,"v":"3","x":3,"y":0,"next":4},{"id":4,"v":"4","x":4,"y":0,"next":5},{"id":5,"v":"5","x":5,"y":0},{"id":6,"v":"dummy","x":0,"y":0,"next":1}],"ptrs":[{"name":"slow","at":6},{"name":"fast","at":2}]}]},
+  {"line":14,"text":"Move both one step: `fast` → node 3, `slow` → node 1. They stay 2 nodes apart.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":1,"y":0,"next":2},{"id":2,"v":"2","x":2,"y":0,"next":3},{"id":3,"v":"3","x":3,"y":0,"next":4},{"id":4,"v":"4","x":4,"y":0,"next":5},{"id":5,"v":"5","x":5,"y":0},{"id":6,"v":"dummy","x":0,"y":0,"next":1}],"ptrs":[{"name":"slow","at":1},{"name":"fast","at":3}]}]},
+  {"line":14,"text":"Move both one step: `fast` → node 4, `slow` → node 2. They stay 2 nodes apart.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":1,"y":0,"next":2},{"id":2,"v":"2","x":2,"y":0,"next":3},{"id":3,"v":"3","x":3,"y":0,"next":4},{"id":4,"v":"4","x":4,"y":0,"next":5},{"id":5,"v":"5","x":5,"y":0},{"id":6,"v":"dummy","x":0,"y":0,"next":1}],"ptrs":[{"name":"slow","at":2},{"name":"fast","at":4}]}]},
+  {"line":14,"text":"Move both one step: `fast` → node 5, `slow` → node 3. They stay 2 nodes apart.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":1,"y":0,"next":2},{"id":2,"v":"2","x":2,"y":0,"next":3},{"id":3,"v":"3","x":3,"y":0,"next":4},{"id":4,"v":"4","x":4,"y":0,"next":5},{"id":5,"v":"5","x":5,"y":0},{"id":6,"v":"dummy","x":0,"y":0,"next":1}],"ptrs":[{"name":"slow","at":3},{"name":"fast","at":5}]}]},
+  {"line":12,"text":"`fast` is on the last node. `slow` is 2 nodes behind it — standing **just before** the node to remove (node 4).","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":1,"y":0,"next":2},{"id":2,"v":"2","x":2,"y":0,"next":3},{"id":3,"v":"3","x":3,"y":0,"next":4},{"id":4,"v":"4","x":4,"y":0,"next":5},{"id":5,"v":"5","x":5,"y":0},{"id":6,"v":"dummy","x":0,"y":0,"next":1}],"ptrs":[{"name":"slow","at":3},{"name":"fast","at":5}]}]},
+  {"line":17,"text":"Skip over it: node 3 now points straight to node 5. The skipped node is out of the list.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":1,"y":0,"next":2},{"id":2,"v":"2","x":2,"y":0,"next":3},{"id":3,"v":"3","x":3,"y":0,"next":5},{"id":4,"v":"4","x":4,"y":0,"next":5,"tone":"bad"},{"id":5,"v":"5","x":5,"y":0},{"id":6,"v":"dummy","x":0,"y":0,"next":1}],"ptrs":[{"name":"slow","at":3},{"name":"fast","at":5}]}]},
+  {"line":19,"text":"Return the node after the dummy: the head of the updated list.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":1,"y":0,"next":2},{"id":2,"v":"2","x":2,"y":0,"next":3},{"id":3,"v":"3","x":3,"y":0,"next":5},{"id":4,"v":"4","x":4,"y":0,"next":5,"tone":"bad"},{"id":5,"v":"5","x":5,"y":0},{"id":6,"v":"dummy","x":0,"y":0,"next":1}],"ptrs":[{"name":"slow","at":3},{"name":"fast","at":5}]}]},
+  {"line":19,"text":"Done — the answer is **`[1,2,3,5]`**. The 2nd node from the end is 4, so it is removed.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":1,"y":0,"next":2},{"id":2,"v":"2","x":2,"y":0,"next":3},{"id":3,"v":"3","x":3,"y":0,"next":5},{"id":4,"v":"4","x":4,"y":0,"next":5,"tone":"bad"},{"id":5,"v":"5","x":5,"y":0},{"id":6,"v":"dummy","x":0,"y":0,"next":1}],"ptrs":[{"name":"slow","at":3},{"name":"fast","at":5}]}],"final":true}
+ ]
+}

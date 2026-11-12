@@ -1,0 +1,71 @@
+{
+ "id": 109,
+ "number": 300,
+ "title": "Longest Increasing Subsequence",
+ "slug": "longest-increasing-subsequence",
+ "category": "1d-dp",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/longest-increasing-subsequence/",
+ "pattern": "DP: best subsequence ending at each index",
+ "statement": "Given an integer array `nums`, return the length of the longest **strictly increasing subsequence**. A subsequence keeps the original order but may skip elements.",
+ "example": {
+  "input": "nums = [3,1,4,2,5]",
+  "output": "3",
+  "why": "For example 1, 4, 5 (or 3, 4, 5, or 1, 2, 5). No increasing subsequence has four elements."
+ },
+ "more": [
+  {
+   "input": "nums = [10,9,2,5,3,7,101,18]",
+   "output": "4"
+  },
+  {
+   "input": "nums = [0,1,0,3,2,3]",
+   "output": "4"
+  },
+  {
+   "input": "nums = [7,7,7,7]",
+   "output": "1"
+  },
+  {
+   "input": "nums = [5]",
+   "output": "1"
+  },
+  {
+   "input": "nums = []",
+   "output": "0"
+  }
+ ],
+ "idea": [
+  "Let `dp[i]` be the length of the longest increasing subsequence that **ends exactly at index i**. Alone, every element is a subsequence of length 1.",
+  "The element before `nums[i]` in such a subsequence must be an earlier, **smaller** number `nums[j]`. Then `nums[i]` extends the best subsequence ending at `j`: length `dp[j] + 1`.",
+  "Try every earlier `j` and keep the best. The answer is the largest value in `dp` — the subsequence may end anywhere."
+ ],
+ "code": "class Solution:\n    def lengthOfLIS(self, nums: List[int]) -> int:\n        if not nums:\n            return 0\n\n        # Initialize a dynamic programming array dp with all values set to 1.\n        dp = [1] * len(nums)\n\n        # Iterate through the array to find the longest increasing subsequence.\n        for i in range(len(nums)):\n            for j in range(i):\n                if nums[i] > nums[j]:\n                    dp[i] = max(dp[i], dp[j] + 1)\n\n        # Return the maximum value in dp, which represents the length of the longest increasing subsequence.\n        return max(dp)",
+ "complexity": {
+  "time": "O(n²)",
+  "timeWhy": "Every pair (j, i) is compared once. (A patience-sorting variant with binary search reaches O(n log n).)",
+  "space": "O(n)",
+  "spaceWhy": "The dp array."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`nums = [3,1,4,2,5]`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"1"},{"v":"4"},{"v":"2"},{"v":"5"}]}]},
+  {"line":7,"text":"Every number on its own is an increasing subsequence of length 1, so every `dp[i]` starts at 1.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"1"},{"v":"4"},{"v":"2"},{"v":"5"}]},{"t":"array","id":"dp","title":"dp[i] = longest increasing subsequence ending at index i","cells":[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"1"},{"v":"1"}]}]},
+  {"line":10,"text":"Index 0 (value 3) has nothing before it: `dp[0]` stays 1.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"cur"},{"v":"1"},{"v":"4"},{"v":"2"},{"v":"5"}],"ptrs":[{"name":"i","at":0}]},{"t":"array","id":"dp","title":"dp[i] = longest increasing subsequence ending at index i","cells":[{"v":"1","tone":"cur"},{"v":"1"},{"v":"1"},{"v":"1"},{"v":"1"}]}]},
+  {"line":10,"text":"Index 1 (value 1): which earlier, **smaller** numbers could come right before it?","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"1","tone":"cur"},{"v":"4"},{"v":"2"},{"v":"5"}],"ptrs":[{"name":"i","at":1}]},{"t":"array","id":"dp","title":"dp[i] = longest increasing subsequence ending at index i","cells":[{"v":"1"},{"v":"1","tone":"cur"},{"v":"1"},{"v":"1"},{"v":"1"}]}]},
+  {"line":12,"text":"`nums[0]` = 3 is not smaller than 1, so 1 cannot follow it. Skip.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"alt"},{"v":"1","tone":"cur"},{"v":"4"},{"v":"2"},{"v":"5"}],"ptrs":[{"name":"i","at":1},{"name":"j","at":0}]},{"t":"array","id":"dp","title":"dp[i] = longest increasing subsequence ending at index i","cells":[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"1"},{"v":"1"}]}]},
+  {"line":10,"text":"Index 2 (value 4): which earlier, **smaller** numbers could come right before it?","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"1"},{"v":"4","tone":"cur"},{"v":"2"},{"v":"5"}],"ptrs":[{"name":"i","at":2},{"name":"j","at":0}]},{"t":"array","id":"dp","title":"dp[i] = longest increasing subsequence ending at index i","cells":[{"v":"1"},{"v":"1"},{"v":"1","tone":"cur"},{"v":"1"},{"v":"1"}]}]},
+  {"line":13,"text":"`nums[0]` = 3 < 4: put 4 after the best subsequence ending at index 0 (length 1) → length 2. Better than 1 → `dp[2]` = **2**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"alt"},{"v":"1"},{"v":"4","tone":"cur"},{"v":"2"},{"v":"5"}],"ptrs":[{"name":"i","at":2},{"name":"j","at":0}]},{"t":"array","id":"dp","title":"dp[i] = longest increasing subsequence ending at index i","cells":[{"v":"1","tone":"alt"},{"v":"1"},{"v":"2","tone":"good"},{"v":"1"},{"v":"1"}]}]},
+  {"line":13,"text":"`nums[1]` = 1 < 4: extending the subsequence ending at index 1 gives length 2 — not better than the 2 we already have.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"1","tone":"alt"},{"v":"4","tone":"cur"},{"v":"2"},{"v":"5"}],"ptrs":[{"name":"i","at":2},{"name":"j","at":1}]},{"t":"array","id":"dp","title":"dp[i] = longest increasing subsequence ending at index i","cells":[{"v":"1"},{"v":"1","tone":"alt"},{"v":"2","tone":"good"},{"v":"1"},{"v":"1"}]}]},
+  {"line":10,"text":"Index 3 (value 2): which earlier, **smaller** numbers could come right before it?","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"1"},{"v":"4"},{"v":"2","tone":"cur"},{"v":"5"}],"ptrs":[{"name":"i","at":3},{"name":"j","at":1}]},{"t":"array","id":"dp","title":"dp[i] = longest increasing subsequence ending at index i","cells":[{"v":"1"},{"v":"1"},{"v":"2"},{"v":"1","tone":"cur"},{"v":"1"}]}]},
+  {"line":12,"text":"`nums[0]` = 3 is not smaller than 2, so 2 cannot follow it. Skip.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"alt"},{"v":"1"},{"v":"4"},{"v":"2","tone":"cur"},{"v":"5"}],"ptrs":[{"name":"i","at":3},{"name":"j","at":0}]},{"t":"array","id":"dp","title":"dp[i] = longest increasing subsequence ending at index i","cells":[{"v":"1"},{"v":"1"},{"v":"2"},{"v":"1"},{"v":"1"}]}]},
+  {"line":13,"text":"`nums[1]` = 1 < 2: put 2 after the best subsequence ending at index 1 (length 1) → length 2. Better than 1 → `dp[3]` = **2**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"1","tone":"alt"},{"v":"4"},{"v":"2","tone":"cur"},{"v":"5"}],"ptrs":[{"name":"i","at":3},{"name":"j","at":1}]},{"t":"array","id":"dp","title":"dp[i] = longest increasing subsequence ending at index i","cells":[{"v":"1"},{"v":"1","tone":"alt"},{"v":"2"},{"v":"2","tone":"good"},{"v":"1"}]}]},
+  {"line":12,"text":"`nums[2]` = 4 is not smaller than 2, so 2 cannot follow it. Skip.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"1"},{"v":"4","tone":"alt"},{"v":"2","tone":"cur"},{"v":"5"}],"ptrs":[{"name":"i","at":3},{"name":"j","at":2}]},{"t":"array","id":"dp","title":"dp[i] = longest increasing subsequence ending at index i","cells":[{"v":"1"},{"v":"1"},{"v":"2"},{"v":"2"},{"v":"1"}]}]},
+  {"line":10,"text":"Index 4 (value 5): which earlier, **smaller** numbers could come right before it?","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"1"},{"v":"4"},{"v":"2"},{"v":"5","tone":"cur"}],"ptrs":[{"name":"i","at":4},{"name":"j","at":2}]},{"t":"array","id":"dp","title":"dp[i] = longest increasing subsequence ending at index i","cells":[{"v":"1"},{"v":"1"},{"v":"2"},{"v":"2"},{"v":"1","tone":"cur"}]}]},
+  {"line":13,"text":"`nums[0]` = 3 < 5: put 5 after the best subsequence ending at index 0 (length 1) → length 2. Better than 1 → `dp[4]` = **2**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"alt"},{"v":"1"},{"v":"4"},{"v":"2"},{"v":"5","tone":"cur"}],"ptrs":[{"name":"i","at":4},{"name":"j","at":0}]},{"t":"array","id":"dp","title":"dp[i] = longest increasing subsequence ending at index i","cells":[{"v":"1","tone":"alt"},{"v":"1"},{"v":"2"},{"v":"2"},{"v":"2","tone":"good"}]}]},
+  {"line":13,"text":"`nums[1]` = 1 < 5: extending the subsequence ending at index 1 gives length 2 — not better than the 2 we already have.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"1","tone":"alt"},{"v":"4"},{"v":"2"},{"v":"5","tone":"cur"}],"ptrs":[{"name":"i","at":4},{"name":"j","at":1}]},{"t":"array","id":"dp","title":"dp[i] = longest increasing subsequence ending at index i","cells":[{"v":"1"},{"v":"1","tone":"alt"},{"v":"2"},{"v":"2"},{"v":"2","tone":"good"}]}]},
+  {"line":13,"text":"`nums[2]` = 4 < 5: put 5 after the best subsequence ending at index 2 (length 2) → length 3. Better than 2 → `dp[4]` = **3**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"1"},{"v":"4","tone":"alt"},{"v":"2"},{"v":"5","tone":"cur"}],"ptrs":[{"name":"i","at":4},{"name":"j","at":2}]},{"t":"array","id":"dp","title":"dp[i] = longest increasing subsequence ending at index i","cells":[{"v":"1"},{"v":"1"},{"v":"2","tone":"alt"},{"v":"2"},{"v":"3","tone":"good"}]}]},
+  {"line":13,"text":"`nums[3]` = 2 < 5: extending the subsequence ending at index 3 gives length 3 — not better than the 3 we already have.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"1"},{"v":"4"},{"v":"2","tone":"alt"},{"v":"5","tone":"cur"}],"ptrs":[{"name":"i","at":4},{"name":"j","at":3}]},{"t":"array","id":"dp","title":"dp[i] = longest increasing subsequence ending at index i","cells":[{"v":"1"},{"v":"1"},{"v":"2"},{"v":"2","tone":"alt"},{"v":"3","tone":"good"}]}]},
+  {"line":16,"text":"The longest increasing subsequence may end at any index: the largest `dp` value is **3**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"1"},{"v":"4"},{"v":"2"},{"v":"5"}],"ptrs":[{"name":"i","at":4},{"name":"j","at":3}]},{"t":"array","id":"dp","title":"dp[i] = longest increasing subsequence ending at index i","cells":[{"v":"1"},{"v":"1"},{"v":"2"},{"v":"2"},{"v":"3","tone":"good"}]}]},
+  {"line":16,"text":"Done — the answer is **`3`**. For example 1, 4, 5 (or 3, 4, 5, or 1, 2, 5). No increasing subsequence has four elements.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"1"},{"v":"4"},{"v":"2"},{"v":"5"}],"ptrs":[{"name":"i","at":4},{"name":"j","at":3}]},{"t":"array","id":"dp","title":"dp[i] = longest increasing subsequence ending at index i","cells":[{"v":"1"},{"v":"1"},{"v":"2"},{"v":"2"},{"v":"3","tone":"good"}]}],"final":true}
+ ]
+}

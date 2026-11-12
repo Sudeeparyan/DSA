@@ -1,0 +1,68 @@
+{
+ "id": 16,
+ "number": 3,
+ "title": "Longest Substring Without Repeating Characters",
+ "slug": "longest-substring-without-repeating-characters",
+ "category": "sliding-window",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/longest-substring-without-repeating-characters/",
+ "pattern": "Sliding window + set of characters inside it",
+ "statement": "Given a string `s`, return the length of the longest **substring** (a run of neighbouring characters) in which no character appears twice.",
+ "example": {
+  "input": "s = \"abcabcbb\"",
+  "output": "3",
+  "why": "The longest stretch without a repeat is \"abc\", of length 3."
+ },
+ "more": [
+  {
+   "input": "s = \"bbbbb\"",
+   "output": "1"
+  },
+  {
+   "input": "s = \"pwwkew\"",
+   "output": "3"
+  },
+  {
+   "input": "s = \"\"",
+   "output": "0"
+  },
+  {
+   "input": "s = \"dvdf\"",
+   "output": "3"
+  }
+ ],
+ "idea": [
+  "Checking every substring is O(n²) or worse. Instead, keep one **window** `[left … right]` that never contains a repeated character.",
+  "Grow the window on the right while the next character is new. A set of the characters inside the window makes that check O(1).",
+  "When the next character is already inside, shrink from the left — removing characters one by one — until it is gone. The largest window ever seen is the answer."
+ ],
+ "code": "class Solution:\n    def lengthOfLongestSubstring(self, s: str) -> int:\n        left, right = 0, 0\n        max_length = 0\n        unique_chars = set()\n\n        while right < len(s):\n            if s[right] not in unique_chars:\n                unique_chars.add(s[right])\n                max_length = max(max_length, right - left + 1)\n                right += 1\n            else:\n                unique_chars.remove(s[left])\n                left += 1\n\n        return max_length",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "`left` and `right` each move forward at most n times.",
+  "space": "O(k)",
+  "spaceWhy": "The set holds the characters of the current window: at most the alphabet size k."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`s = \"abcabcbb\"`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"c"},{"v":"a"},{"v":"b"},{"v":"c"},{"v":"b"},{"v":"b"}]}]},
+  {"line":5,"text":"The window is empty to begin with. The set mirrors which letters are inside it.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a","tone":"cur"},{"v":"b"},{"v":"c"},{"v":"a"},{"v":"b"},{"v":"c"},{"v":"b"},{"v":"b"}],"ptrs":[{"name":"left","at":0},{"name":"right","at":0}]},{"t":"map","id":"unique_chars","title":"unique_chars  (letters inside the window)","kind":"set","entries":[]},{"t":"vars","id":"vars","items":[{"k":"max_length","v":"0"}]}]},
+  {"line":10,"text":"`a` is not in the window yet, so the window grows to take it in: `a`, length 1. Longest so far: **1**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a","tone":"cur"},{"v":"b"},{"v":"c"},{"v":"a"},{"v":"b"},{"v":"c"},{"v":"b"},{"v":"b"}],"ptrs":[{"name":"left","at":0},{"name":"right","at":0}],"ranges":[{"from":0,"to":0,"label":"window"}]},{"t":"map","id":"unique_chars","title":"unique_chars  (letters inside the window)","kind":"set","entries":[{"k":"a","tone":"cur"}]},{"t":"vars","id":"vars","items":[{"k":"max_length","v":"1","changed":true}]}]},
+  {"line":10,"text":"`b` is not in the window yet, so the window grows to take it in: `ab`, length 2. Longest so far: **2**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b","tone":"cur"},{"v":"c"},{"v":"a"},{"v":"b"},{"v":"c"},{"v":"b"},{"v":"b"}],"ptrs":[{"name":"left","at":0},{"name":"right","at":1}],"ranges":[{"from":0,"to":1,"label":"window"}]},{"t":"map","id":"unique_chars","title":"unique_chars  (letters inside the window)","kind":"set","entries":[{"k":"a"},{"k":"b","tone":"cur"}]},{"t":"vars","id":"vars","items":[{"k":"max_length","v":"2","changed":true}]}]},
+  {"line":10,"text":"`c` is not in the window yet, so the window grows to take it in: `abc`, length 3. Longest so far: **3**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"c","tone":"cur"},{"v":"a"},{"v":"b"},{"v":"c"},{"v":"b"},{"v":"b"}],"ptrs":[{"name":"left","at":0},{"name":"right","at":2}],"ranges":[{"from":0,"to":2,"label":"window"}]},{"t":"map","id":"unique_chars","title":"unique_chars  (letters inside the window)","kind":"set","entries":[{"k":"a"},{"k":"b"},{"k":"c","tone":"cur"}]},{"t":"vars","id":"vars","items":[{"k":"max_length","v":"3","changed":true}]}]},
+  {"line":14,"text":"`a` is **already inside** the window, so the window has to shrink first: `a` leaves on the left.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a","tone":"bad"},{"v":"b"},{"v":"c"},{"v":"a","tone":"cur"},{"v":"b"},{"v":"c"},{"v":"b"},{"v":"b"}],"ptrs":[{"name":"left","at":1},{"name":"right","at":3}],"ranges":[{"from":1,"to":2,"label":"window"}]},{"t":"map","id":"unique_chars","title":"unique_chars  (letters inside the window)","kind":"set","entries":[{"k":"b"},{"k":"c"}]},{"t":"vars","id":"vars","items":[{"k":"max_length","v":"3"}]}]},
+  {"line":10,"text":"`a` is not in the window yet, so the window grows to take it in: `bca`, length 3. Longest so far: **3**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"c"},{"v":"a","tone":"cur"},{"v":"b"},{"v":"c"},{"v":"b"},{"v":"b"}],"ptrs":[{"name":"left","at":1},{"name":"right","at":3}],"ranges":[{"from":1,"to":3,"label":"window"}]},{"t":"map","id":"unique_chars","title":"unique_chars  (letters inside the window)","kind":"set","entries":[{"k":"b"},{"k":"c"},{"k":"a","tone":"cur"}]},{"t":"vars","id":"vars","items":[{"k":"max_length","v":"3"}]}]},
+  {"line":14,"text":"`b` is **already inside** the window, so the window has to shrink first: `b` leaves on the left.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b","tone":"bad"},{"v":"c"},{"v":"a"},{"v":"b","tone":"cur"},{"v":"c"},{"v":"b"},{"v":"b"}],"ptrs":[{"name":"left","at":2},{"name":"right","at":4}],"ranges":[{"from":2,"to":3,"label":"window"}]},{"t":"map","id":"unique_chars","title":"unique_chars  (letters inside the window)","kind":"set","entries":[{"k":"c"},{"k":"a"}]},{"t":"vars","id":"vars","items":[{"k":"max_length","v":"3"}]}]},
+  {"line":10,"text":"`b` is not in the window yet, so the window grows to take it in: `cab`, length 3. Longest so far: **3**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"c"},{"v":"a"},{"v":"b","tone":"cur"},{"v":"c"},{"v":"b"},{"v":"b"}],"ptrs":[{"name":"left","at":2},{"name":"right","at":4}],"ranges":[{"from":2,"to":4,"label":"window"}]},{"t":"map","id":"unique_chars","title":"unique_chars  (letters inside the window)","kind":"set","entries":[{"k":"c"},{"k":"a"},{"k":"b","tone":"cur"}]},{"t":"vars","id":"vars","items":[{"k":"max_length","v":"3"}]}]},
+  {"line":14,"text":"`c` is **already inside** the window, so the window has to shrink first: `c` leaves on the left.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"c","tone":"bad"},{"v":"a"},{"v":"b"},{"v":"c","tone":"cur"},{"v":"b"},{"v":"b"}],"ptrs":[{"name":"left","at":3},{"name":"right","at":5}],"ranges":[{"from":3,"to":4,"label":"window"}]},{"t":"map","id":"unique_chars","title":"unique_chars  (letters inside the window)","kind":"set","entries":[{"k":"a"},{"k":"b"}]},{"t":"vars","id":"vars","items":[{"k":"max_length","v":"3"}]}]},
+  {"line":10,"text":"`c` is not in the window yet, so the window grows to take it in: `abc`, length 3. Longest so far: **3**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"c"},{"v":"a"},{"v":"b"},{"v":"c","tone":"cur"},{"v":"b"},{"v":"b"}],"ptrs":[{"name":"left","at":3},{"name":"right","at":5}],"ranges":[{"from":3,"to":5,"label":"window"}]},{"t":"map","id":"unique_chars","title":"unique_chars  (letters inside the window)","kind":"set","entries":[{"k":"a"},{"k":"b"},{"k":"c","tone":"cur"}]},{"t":"vars","id":"vars","items":[{"k":"max_length","v":"3"}]}]},
+  {"line":14,"text":"`b` is **already inside** the window, so the window has to shrink first: `a` leaves on the left.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"c"},{"v":"a","tone":"bad"},{"v":"b"},{"v":"c"},{"v":"b","tone":"cur"},{"v":"b"}],"ptrs":[{"name":"left","at":4},{"name":"right","at":6}],"ranges":[{"from":4,"to":5,"label":"window"}]},{"t":"map","id":"unique_chars","title":"unique_chars  (letters inside the window)","kind":"set","entries":[{"k":"b"},{"k":"c"}]},{"t":"vars","id":"vars","items":[{"k":"max_length","v":"3"}]}]},
+  {"line":14,"text":"`b` is **already inside** the window, so the window has to shrink first: `b` leaves on the left.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"c"},{"v":"a"},{"v":"b","tone":"bad"},{"v":"c"},{"v":"b","tone":"cur"},{"v":"b"}],"ptrs":[{"name":"left","at":5},{"name":"right","at":6}],"ranges":[{"from":5,"to":5,"label":"window"}]},{"t":"map","id":"unique_chars","title":"unique_chars  (letters inside the window)","kind":"set","entries":[{"k":"c"}]},{"t":"vars","id":"vars","items":[{"k":"max_length","v":"3"}]}]},
+  {"line":10,"text":"`b` is not in the window yet, so the window grows to take it in: `cb`, length 2. Longest so far: **3**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"c"},{"v":"a"},{"v":"b"},{"v":"c"},{"v":"b","tone":"cur"},{"v":"b"}],"ptrs":[{"name":"left","at":5},{"name":"right","at":6}],"ranges":[{"from":5,"to":6,"label":"window"}]},{"t":"map","id":"unique_chars","title":"unique_chars  (letters inside the window)","kind":"set","entries":[{"k":"c"},{"k":"b","tone":"cur"}]},{"t":"vars","id":"vars","items":[{"k":"max_length","v":"3"}]}]},
+  {"line":14,"text":"`b` is **already inside** the window, so the window has to shrink first: `c` leaves on the left.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"c"},{"v":"a"},{"v":"b"},{"v":"c","tone":"bad"},{"v":"b"},{"v":"b","tone":"cur"}],"ptrs":[{"name":"left","at":6},{"name":"right","at":7}],"ranges":[{"from":6,"to":6,"label":"window"}]},{"t":"map","id":"unique_chars","title":"unique_chars  (letters inside the window)","kind":"set","entries":[{"k":"b"}]},{"t":"vars","id":"vars","items":[{"k":"max_length","v":"3"}]}]},
+  {"line":14,"text":"`b` is **already inside** the window, so the window has to shrink first: `b` leaves on the left.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"c"},{"v":"a"},{"v":"b"},{"v":"c"},{"v":"b","tone":"bad"},{"v":"b","tone":"cur"}],"ptrs":[{"name":"left","at":7},{"name":"right","at":7}]},{"t":"map","id":"unique_chars","title":"unique_chars  (letters inside the window)","kind":"set","entries":[]},{"t":"vars","id":"vars","items":[{"k":"max_length","v":"3"}]}]},
+  {"line":10,"text":"`b` is not in the window yet, so the window grows to take it in: `b`, length 1. Longest so far: **3**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"c"},{"v":"a"},{"v":"b"},{"v":"c"},{"v":"b"},{"v":"b","tone":"cur"}],"ptrs":[{"name":"left","at":7},{"name":"right","at":7}],"ranges":[{"from":7,"to":7,"label":"window"}]},{"t":"map","id":"unique_chars","title":"unique_chars  (letters inside the window)","kind":"set","entries":[{"k":"b","tone":"cur"}]},{"t":"vars","id":"vars","items":[{"k":"max_length","v":"3"}]}]},
+  {"line":7,"text":"`right` has passed the end of the string, so the scan is over.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"c"},{"v":"a"},{"v":"b"},{"v":"c"},{"v":"b"},{"v":"b"}],"ptrs":[{"name":"left","at":7},{"name":"right","at":8}],"ranges":[{"from":7,"to":7,"label":"window"}]},{"t":"map","id":"unique_chars","title":"unique_chars  (letters inside the window)","kind":"set","entries":[{"k":"b"}]},{"t":"vars","id":"vars","items":[{"k":"max_length","v":"3"}]}]},
+  {"line":16,"text":"The longest window without a repeated letter had length **3**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"c"},{"v":"a"},{"v":"b"},{"v":"c"},{"v":"b"},{"v":"b"}],"ptrs":[{"name":"left","at":7},{"name":"right","at":8}],"ranges":[{"from":7,"to":7,"label":"window"}]},{"t":"map","id":"unique_chars","title":"unique_chars  (letters inside the window)","kind":"set","entries":[{"k":"b"}]},{"t":"vars","id":"vars","items":[{"k":"max_length","v":"3"}]}]},
+  {"line":16,"text":"Done — the answer is **`3`**. The longest stretch without a repeat is \"abc\", of length 3.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"c"},{"v":"a"},{"v":"b"},{"v":"c"},{"v":"b"},{"v":"b"}],"ptrs":[{"name":"left","at":7},{"name":"right","at":8}],"ranges":[{"from":7,"to":7,"label":"window"}]},{"t":"map","id":"unique_chars","title":"unique_chars  (letters inside the window)","kind":"set","entries":[{"k":"b"}]},{"t":"vars","id":"vars","items":[{"k":"max_length","v":"3"}]}],"final":true}
+ ]
+}

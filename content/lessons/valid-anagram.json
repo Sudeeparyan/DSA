@@ -1,0 +1,60 @@
+{
+ "id": 2,
+ "number": 242,
+ "title": "Valid Anagram",
+ "slug": "valid-anagram",
+ "category": "arrays-hashing",
+ "difficulty": "Easy",
+ "url": "https://leetcode.com/problems/valid-anagram/",
+ "pattern": "Count letters with a hash map",
+ "statement": "Given two strings `s` and `t`, return `True` if `t` is an **anagram** of `s` — it uses exactly the same letters the same number of times, just in a different order.",
+ "example": {
+  "input": "s = \"apple\", t = \"papel\"",
+  "output": "True",
+  "why": "Both words contain a×1, p×2, l×1, e×1."
+ },
+ "more": [
+  {
+   "input": "s = \"rat\", t = \"car\"",
+   "output": "False"
+  },
+  {
+   "input": "s = \"ab\", t = \"abc\"",
+   "output": "False"
+  },
+  {
+   "input": "s = \"aacc\", t = \"ccac\"",
+   "output": "False"
+  }
+ ],
+ "idea": [
+  "Two words are anagrams when every letter appears the same number of times in both.",
+  "Count the letters of `s` in a hash map: letter → how many.",
+  "Then walk through `t` and *use up* one count per letter. If a letter is missing or already used up, it is not an anagram. Equal lengths guarantee nothing is left over at the end."
+ ],
+ "code": "class Solution:\n    def isAnagram(self, s: str, t: str) -> bool:\n        if len(s) != len(t):\n            return False\n\n        char_frequency = {}\n\n        # Build character frequency map for string s\n        for char in s:\n            char_frequency[char] = char_frequency.get(char, 0) + 1\n\n        # Compare with string t\n        for char in t:\n            if char not in char_frequency or char_frequency[char] == 0:\n                return False\n            char_frequency[char] -= 1\n\n        return True",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "One pass over `s` to count and one pass over `t` to match.",
+  "space": "O(1)",
+  "spaceWhy": "The map holds at most one entry per distinct letter (26 for lowercase English)."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`s = \"apple\", t = \"papel\"`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"p"},{"v":"p"},{"v":"l"},{"v":"e"}]},{"t":"array","id":"t","title":"t","cells":[{"v":"p"},{"v":"a"},{"v":"p"},{"v":"e"},{"v":"l"}]}]},
+  {"line":3,"text":"Both strings have 5 letters, so they *could* be anagrams. (Different lengths would mean **False** immediately.)","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"p"},{"v":"p"},{"v":"l"},{"v":"e"}]},{"t":"array","id":"t","title":"t","cells":[{"v":"p"},{"v":"a"},{"v":"p"},{"v":"e"},{"v":"l"}]}]},
+  {"line":6,"text":"Create a map that will count how many times each letter appears in `s`.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"p"},{"v":"p"},{"v":"l"},{"v":"e"}]},{"t":"array","id":"t","title":"t","cells":[{"v":"p"},{"v":"a"},{"v":"p"},{"v":"e"},{"v":"l"}]},{"t":"map","id":"char_frequency","title":"char_frequency  (letter → how many left)","kind":"map","entries":[]}]},
+  {"line":10,"text":"Count `a` from `s`: the map now has 1 of it.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a","tone":"cur"},{"v":"p"},{"v":"p"},{"v":"l"},{"v":"e"}],"ptrs":[{"name":"char","at":0}]},{"t":"array","id":"t","title":"t","cells":[{"v":"p"},{"v":"a"},{"v":"p"},{"v":"e"},{"v":"l"}]},{"t":"map","id":"char_frequency","title":"char_frequency  (letter → how many left)","kind":"map","entries":[{"k":"a","v":"1","tone":"cur"}]}]},
+  {"line":10,"text":"Count `p` from `s`: the map now has 1 of it.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a","tone":"dim"},{"v":"p","tone":"cur"},{"v":"p"},{"v":"l"},{"v":"e"}],"ptrs":[{"name":"char","at":1}]},{"t":"array","id":"t","title":"t","cells":[{"v":"p"},{"v":"a"},{"v":"p"},{"v":"e"},{"v":"l"}]},{"t":"map","id":"char_frequency","title":"char_frequency  (letter → how many left)","kind":"map","entries":[{"k":"a","v":"1"},{"k":"p","v":"1","tone":"cur"}]}]},
+  {"line":10,"text":"Count `p` from `s`: the map now has 2 of it.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a","tone":"dim"},{"v":"p","tone":"dim"},{"v":"p","tone":"cur"},{"v":"l"},{"v":"e"}],"ptrs":[{"name":"char","at":2}]},{"t":"array","id":"t","title":"t","cells":[{"v":"p"},{"v":"a"},{"v":"p"},{"v":"e"},{"v":"l"}]},{"t":"map","id":"char_frequency","title":"char_frequency  (letter → how many left)","kind":"map","entries":[{"k":"a","v":"1"},{"k":"p","v":"2","tone":"cur"}]}]},
+  {"line":10,"text":"Count `l` from `s`: the map now has 1 of it.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a","tone":"dim"},{"v":"p","tone":"dim"},{"v":"p","tone":"dim"},{"v":"l","tone":"cur"},{"v":"e"}],"ptrs":[{"name":"char","at":3}]},{"t":"array","id":"t","title":"t","cells":[{"v":"p"},{"v":"a"},{"v":"p"},{"v":"e"},{"v":"l"}]},{"t":"map","id":"char_frequency","title":"char_frequency  (letter → how many left)","kind":"map","entries":[{"k":"a","v":"1"},{"k":"p","v":"2"},{"k":"l","v":"1","tone":"cur"}]}]},
+  {"line":10,"text":"Count `e` from `s`: the map now has 1 of it.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a","tone":"dim"},{"v":"p","tone":"dim"},{"v":"p","tone":"dim"},{"v":"l","tone":"dim"},{"v":"e","tone":"cur"}],"ptrs":[{"name":"char","at":4}]},{"t":"array","id":"t","title":"t","cells":[{"v":"p"},{"v":"a"},{"v":"p"},{"v":"e"},{"v":"l"}]},{"t":"map","id":"char_frequency","title":"char_frequency  (letter → how many left)","kind":"map","entries":[{"k":"a","v":"1"},{"k":"p","v":"2"},{"k":"l","v":"1"},{"k":"e","v":"1","tone":"cur"}]}]},
+  {"line":13,"text":"The map now describes `s` exactly. Next, walk through `t` and **use up** one count for each letter.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a","tone":"dim"},{"v":"p","tone":"dim"},{"v":"p","tone":"dim"},{"v":"l","tone":"dim"},{"v":"e","tone":"dim"}]},{"t":"array","id":"t","title":"t","cells":[{"v":"p","tone":"cur"},{"v":"a"},{"v":"p"},{"v":"e"},{"v":"l"}],"ptrs":[{"name":"char","at":0}]},{"t":"map","id":"char_frequency","title":"char_frequency  (letter → how many left)","kind":"map","entries":[{"k":"a","v":"1"},{"k":"p","v":"2"},{"k":"l","v":"1"},{"k":"e","v":"1"}]}]},
+  {"line":16,"text":"`p` from `t`: the map still has 2 of it, so it can be matched. Use one up → 1 left.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a","tone":"dim"},{"v":"p","tone":"dim"},{"v":"p","tone":"dim"},{"v":"l","tone":"dim"},{"v":"e","tone":"dim"}]},{"t":"array","id":"t","title":"t","cells":[{"v":"p","tone":"cur"},{"v":"a"},{"v":"p"},{"v":"e"},{"v":"l"}],"ptrs":[{"name":"char","at":0}]},{"t":"map","id":"char_frequency","title":"char_frequency  (letter → how many left)","kind":"map","entries":[{"k":"a","v":"1"},{"k":"p","v":"1","tone":"good"},{"k":"l","v":"1"},{"k":"e","v":"1"}]}]},
+  {"line":16,"text":"`a` from `t`: the map still has 1 of it, so it can be matched. Use one up → 0 left.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a","tone":"dim"},{"v":"p","tone":"dim"},{"v":"p","tone":"dim"},{"v":"l","tone":"dim"},{"v":"e","tone":"dim"}]},{"t":"array","id":"t","title":"t","cells":[{"v":"p","tone":"dim"},{"v":"a","tone":"cur"},{"v":"p"},{"v":"e"},{"v":"l"}],"ptrs":[{"name":"char","at":1}]},{"t":"map","id":"char_frequency","title":"char_frequency  (letter → how many left)","kind":"map","entries":[{"k":"a","v":"0","tone":"good"},{"k":"p","v":"1"},{"k":"l","v":"1"},{"k":"e","v":"1"}]}]},
+  {"line":16,"text":"`p` from `t`: the map still has 1 of it, so it can be matched. Use one up → 0 left.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a","tone":"dim"},{"v":"p","tone":"dim"},{"v":"p","tone":"dim"},{"v":"l","tone":"dim"},{"v":"e","tone":"dim"}]},{"t":"array","id":"t","title":"t","cells":[{"v":"p","tone":"dim"},{"v":"a","tone":"dim"},{"v":"p","tone":"cur"},{"v":"e"},{"v":"l"}],"ptrs":[{"name":"char","at":2}]},{"t":"map","id":"char_frequency","title":"char_frequency  (letter → how many left)","kind":"map","entries":[{"k":"a","v":"0"},{"k":"p","v":"0","tone":"good"},{"k":"l","v":"1"},{"k":"e","v":"1"}]}]},
+  {"line":16,"text":"`e` from `t`: the map still has 1 of it, so it can be matched. Use one up → 0 left.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a","tone":"dim"},{"v":"p","tone":"dim"},{"v":"p","tone":"dim"},{"v":"l","tone":"dim"},{"v":"e","tone":"dim"}]},{"t":"array","id":"t","title":"t","cells":[{"v":"p","tone":"dim"},{"v":"a","tone":"dim"},{"v":"p","tone":"dim"},{"v":"e","tone":"cur"},{"v":"l"}],"ptrs":[{"name":"char","at":3}]},{"t":"map","id":"char_frequency","title":"char_frequency  (letter → how many left)","kind":"map","entries":[{"k":"a","v":"0"},{"k":"p","v":"0"},{"k":"l","v":"1"},{"k":"e","v":"0","tone":"good"}]}]},
+  {"line":16,"text":"`l` from `t`: the map still has 1 of it, so it can be matched. Use one up → 0 left.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a","tone":"dim"},{"v":"p","tone":"dim"},{"v":"p","tone":"dim"},{"v":"l","tone":"dim"},{"v":"e","tone":"dim"}]},{"t":"array","id":"t","title":"t","cells":[{"v":"p","tone":"dim"},{"v":"a","tone":"dim"},{"v":"p","tone":"dim"},{"v":"e","tone":"dim"},{"v":"l","tone":"cur"}],"ptrs":[{"name":"char","at":4}]},{"t":"map","id":"char_frequency","title":"char_frequency  (letter → how many left)","kind":"map","entries":[{"k":"a","v":"0"},{"k":"p","v":"0"},{"k":"l","v":"0","tone":"good"},{"k":"e","v":"0"}]}]},
+  {"line":18,"text":"Every letter of `t` found a partner, and the lengths are equal, so nothing is left over. They are anagrams → **True**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a","tone":"dim"},{"v":"p","tone":"dim"},{"v":"p","tone":"dim"},{"v":"l","tone":"dim"},{"v":"e","tone":"dim"}]},{"t":"array","id":"t","title":"t","cells":[{"v":"p","tone":"dim"},{"v":"a","tone":"dim"},{"v":"p","tone":"dim"},{"v":"e","tone":"dim"},{"v":"l","tone":"dim"}]},{"t":"map","id":"char_frequency","title":"char_frequency  (letter → how many left)","kind":"map","entries":[{"k":"a","v":"0"},{"k":"p","v":"0"},{"k":"l","v":"0"},{"k":"e","v":"0"}]}]},
+  {"line":18,"text":"Done — the answer is **`True`**. Both words contain a×1, p×2, l×1, e×1.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a","tone":"dim"},{"v":"p","tone":"dim"},{"v":"p","tone":"dim"},{"v":"l","tone":"dim"},{"v":"e","tone":"dim"}]},{"t":"array","id":"t","title":"t","cells":[{"v":"p","tone":"dim"},{"v":"a","tone":"dim"},{"v":"p","tone":"dim"},{"v":"e","tone":"dim"},{"v":"l","tone":"dim"}]},{"t":"map","id":"char_frequency","title":"char_frequency  (letter → how many left)","kind":"map","entries":[{"k":"a","v":"0"},{"k":"p","v":"0"},{"k":"l","v":"0"},{"k":"e","v":"0"}]}],"final":true}
+ ]
+}

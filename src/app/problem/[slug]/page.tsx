@@ -1,9 +1,26 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getAllProblems, getProblem } from "@/lib/problems";
-import { ProblemView } from "@/components/problem/ProblemView";
+import { LessonPage } from "@/components/lesson/LessonPage";
+import { getCategories, getLesson, getLessonList } from "@/lib/lessons";
+
+export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return getAllProblems().map((p) => ({ slug: p.slug }));
+  return getLessonList().map((lesson) => ({ slug: lesson.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const lesson = getLesson(slug);
+  if (!lesson) return {};
+  return {
+    title: lesson.title,
+    description: lesson.statement.replace(/[`*]/g, ""),
+  };
 }
 
 export default async function ProblemPage({
@@ -12,7 +29,21 @@ export default async function ProblemPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const problem = getProblem(slug);
-  if (!problem) notFound();
-  return <ProblemView problem={problem} />;
+  const lesson = getLesson(slug);
+  if (!lesson) notFound();
+
+  const list = getLessonList();
+  const at = list.findIndex((l) => l.slug === slug);
+  const category = getCategories().find((c) => c.slug === lesson.category);
+
+  return (
+    <LessonPage
+      lesson={lesson}
+      prev={at > 0 ? list[at - 1] : null}
+      next={at >= 0 && at < list.length - 1 ? list[at + 1] : null}
+      position={at + 1}
+      total={list.length}
+      categoryName={category?.name ?? lesson.category}
+    />
+  );
 }

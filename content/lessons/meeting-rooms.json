@@ -1,0 +1,58 @@
+{
+ "id": 133,
+ "number": 252,
+ "title": "Meeting Rooms",
+ "slug": "meeting-rooms",
+ "category": "intervals",
+ "difficulty": "Easy",
+ "url": "https://leetcode.com/problems/meeting-rooms/",
+ "pattern": "Sort by start, compare neighbours",
+ "statement": "Given the `[start, end]` times of meetings, return `True` if one person could attend **all** of them, that is, if no two meetings overlap. A meeting may start exactly when another one ends.",
+ "example": {
+  "input": "intervals = [[7,10],[0,5],[9,12]]",
+  "output": "False",
+  "why": "The meeting [7, 10] is still running when [9, 12] starts."
+ },
+ "more": [
+  {
+   "input": "intervals = [[7,10],[2,4]]",
+   "output": "True"
+  },
+  {
+   "input": "intervals = []",
+   "output": "True"
+  },
+  {
+   "input": "intervals = [[1,5],[5,8]]",
+   "output": "True"
+  },
+  {
+   "input": "intervals = [[1,5],[4,8]]",
+   "output": "False"
+  },
+  {
+   "input": "intervals = [[0,30],[5,10],[15,20]]",
+   "output": "False"
+  }
+ ],
+ "idea": [
+  "Comparing every pair of meetings would take O(n²). **Sort by start time** instead.",
+  "After sorting, a clash can only happen between **neighbours**: if a meeting overlaps any earlier one, it overlaps the one directly before it or that one already clashed.",
+  "So one pass is enough: a meeting that starts before the previous one has ended means `False`."
+ ],
+ "code": "class Solution:\n    def canAttendMeetings(self, intervals: List[List[int]]) -> bool:\n        if not intervals:\n            return True\n\n        intervals.sort(key=lambda x: x[0])\n\n        for i in range(1, len(intervals)):\n            if intervals[i][0] < intervals[i - 1][1]:\n                return False\n\n        return True",
+ "complexity": {
+  "time": "O(n log n)",
+  "timeWhy": "Sorting; the check itself is one pass.",
+  "space": "O(1)",
+  "spaceWhy": "Nothing besides the sort."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`intervals = [[7,10],[0,5],[9,12]]`**. Each step runs one highlighted line of the code.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":7,"b":10},{"a":0,"b":5},{"a":9,"b":12}]}],"min":0,"max":12}]},
+  {"line":6,"text":"Sort the meetings by start time. Now each meeting only needs to be compared with the one right before it.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":0,"b":5},{"a":7,"b":10},{"a":9,"b":12}]}],"min":0,"max":12}]},
+  {"line":9,"text":"[7, 10] starts at 7, when [0, 5] has already ended (5). No clash.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":0,"b":5,"tone":"alt"},{"a":7,"b":10,"tone":"cur"},{"a":9,"b":12}]}],"min":0,"max":12}]},
+  {"line":9,"text":"[9, 12] starts at 9, but the meeting before it, [7, 10], runs until 10. They **overlap**.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":0,"b":5},{"a":7,"b":10,"tone":"bad"},{"a":9,"b":12,"tone":"bad"}]}],"min":0,"max":12}]},
+  {"line":10,"text":"Two meetings overlap, so one person cannot attend them all → **False**.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":0,"b":5},{"a":7,"b":10,"tone":"alt"},{"a":9,"b":12,"tone":"cur"}]}],"min":0,"max":12}]},
+  {"line":10,"text":"Done — the answer is **`False`**. The meeting [7, 10] is still running when [9, 12] starts.","views":[{"t":"intervals","id":"intervals","rows":[{"label":"intervals","items":[{"a":0,"b":5},{"a":7,"b":10,"tone":"alt"},{"a":9,"b":12,"tone":"cur"}]}],"min":0,"max":12}],"final":true}
+ ]
+}

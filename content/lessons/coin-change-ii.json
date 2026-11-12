@@ -1,0 +1,65 @@
+{
+ "id": 114,
+ "number": 518,
+ "title": "Coin Change II",
+ "slug": "coin-change-ii",
+ "category": "2d-dp",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/coin-change-ii/",
+ "pattern": "Unbounded knapsack: count combinations",
+ "statement": "Given coin denominations `coins` (unlimited supply of each) and an `amount`, return the number of **combinations** of coins that add up to `amount`. Order does not matter: `1 + 2` and `2 + 1` are the same combination.",
+ "example": {
+  "input": "amount = 5, coins = [1,2,5]",
+  "output": "4",
+  "why": "5 = 5 = 2+2+1 = 2+1+1+1 = 1+1+1+1+1."
+ },
+ "more": [
+  {
+   "input": "amount = 3, coins = [2]",
+   "output": "0"
+  },
+  {
+   "input": "amount = 10, coins = [10]",
+   "output": "1"
+  },
+  {
+   "input": "amount = 0, coins = [7]",
+   "output": "1"
+  },
+  {
+   "input": "amount = 500, coins = [1,2,5]",
+   "output": "12701"
+  }
+ ],
+ "idea": [
+  "Let `dp[a]` be the number of ways to make amount `a` using the coin types allowed so far. With no coins, only amount 0 can be made — in exactly one way.",
+  "Introduce the coins **one type at a time**. With a new coin `c`, every way to make `a − c` gives one more way to make `a` (append one `c`): `dp[a] += dp[a − c]`.",
+  "Because a coin type is finished before the next one starts, each combination is built in one fixed order of coin types — so `1 + 2` and `2 + 1` are not counted twice."
+ ],
+ "code": "class Solution:\n    def change(self, amount: int, coins: List[int]) -> int:\n        # Initialize a 1D array dp to store the number of combinations for each amount from 0 to amount.\n        dp = [0] * (amount + 1)\n\n        # There is one way to make amount 0 (by not using any coins).\n        dp[0] = 1\n\n        # Iterate through each coin denomination.\n        for coin in coins:\n            # Update the dp array for each amount from coin to amount.\n            for i in range(coin, amount + 1):\n                dp[i] += dp[i - coin]\n\n        # The dp[amount] contains the number of combinations to make the target amount.\n        return dp[amount]",
+ "complexity": {
+  "time": "O(amount × coins)",
+  "timeWhy": "Every amount is updated once per coin type.",
+  "space": "O(amount)",
+  "spaceWhy": "One counter per amount."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`amount = 5, coins = [1,2,5]`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"2"},{"v":"5"}]}]},
+  {"line":7,"text":"There is exactly **1** way to make amount 0: take no coins. Every other amount has 0 ways so far.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"2"},{"v":"5"}],"ptrs":[{"name":"coin","at":-1}]},{"t":"array","id":"dp","title":"dp[a] = number of ways to make amount a with the coins allowed so far","cells":[{"v":"1","tone":"good"},{"v":"0"},{"v":"0"},{"v":"0"},{"v":"0"},{"v":"0"}]}]},
+  {"line":10,"text":"Now also allow coin **1**. For every amount from 1 upward, each way to make (amount − 1) gives one more way: append a 1-coin.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"2"},{"v":"5"}],"ptrs":[{"name":"coin","at":0}]},{"t":"array","id":"dp","title":"dp[a] = number of ways to make amount a with the coins allowed so far","cells":[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"},{"v":"0"},{"v":"0"}]}]},
+  {"line":13,"text":"Amount 1: the 1 way to make 0 can each be extended by a 1-coin. 0 + 1 = **1**.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"2"},{"v":"5"}],"ptrs":[{"name":"coin","at":0}]},{"t":"array","id":"dp","title":"dp[a] = number of ways to make amount a with the coins allowed so far","cells":[{"v":"1","tone":"alt"},{"v":"1","tone":"good"},{"v":"0"},{"v":"0"},{"v":"0"},{"v":"0"}],"ptrs":[{"name":"i","at":1}]}]},
+  {"line":13,"text":"Amount 2: the 1 way to make 1 can each be extended by a 1-coin. 0 + 1 = **1**.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"2"},{"v":"5"}],"ptrs":[{"name":"coin","at":0}]},{"t":"array","id":"dp","title":"dp[a] = number of ways to make amount a with the coins allowed so far","cells":[{"v":"1"},{"v":"1","tone":"alt"},{"v":"1","tone":"good"},{"v":"0"},{"v":"0"},{"v":"0"}],"ptrs":[{"name":"i","at":2}]}]},
+  {"line":13,"text":"Amount 3: the 1 way to make 2 can each be extended by a 1-coin. 0 + 1 = **1**.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"2"},{"v":"5"}],"ptrs":[{"name":"coin","at":0}]},{"t":"array","id":"dp","title":"dp[a] = number of ways to make amount a with the coins allowed so far","cells":[{"v":"1"},{"v":"1"},{"v":"1","tone":"alt"},{"v":"1","tone":"good"},{"v":"0"},{"v":"0"}],"ptrs":[{"name":"i","at":3}]}]},
+  {"line":13,"text":"Amount 4: the 1 way to make 3 can each be extended by a 1-coin. 0 + 1 = **1**.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"2"},{"v":"5"}],"ptrs":[{"name":"coin","at":0}]},{"t":"array","id":"dp","title":"dp[a] = number of ways to make amount a with the coins allowed so far","cells":[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"1","tone":"alt"},{"v":"1","tone":"good"},{"v":"0"}],"ptrs":[{"name":"i","at":4}]}]},
+  {"line":13,"text":"Amount 5: the 1 way to make 4 can each be extended by a 1-coin. 0 + 1 = **1**.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"2"},{"v":"5"}],"ptrs":[{"name":"coin","at":0}]},{"t":"array","id":"dp","title":"dp[a] = number of ways to make amount a with the coins allowed so far","cells":[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"1"},{"v":"1","tone":"alt"},{"v":"1","tone":"good"}],"ptrs":[{"name":"i","at":5}]}]},
+  {"line":10,"text":"Now also allow coin **2**. For every amount from 2 upward, each way to make (amount − 2) gives one more way: append a 2-coin.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"2"},{"v":"5"}],"ptrs":[{"name":"coin","at":1}]},{"t":"array","id":"dp","title":"dp[a] = number of ways to make amount a with the coins allowed so far","cells":[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"1"},{"v":"1"},{"v":"1"}],"ptrs":[{"name":"i","at":5}]}]},
+  {"line":13,"text":"Amount 2: the 1 way to make 0 can each be extended by a 2-coin. 1 + 1 = **2**.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"2"},{"v":"5"}],"ptrs":[{"name":"coin","at":1}]},{"t":"array","id":"dp","title":"dp[a] = number of ways to make amount a with the coins allowed so far","cells":[{"v":"1","tone":"alt"},{"v":"1"},{"v":"2","tone":"good"},{"v":"1"},{"v":"1"},{"v":"1"}],"ptrs":[{"name":"i","at":2}]}]},
+  {"line":13,"text":"Amount 3: the 1 way to make 1 can each be extended by a 2-coin. 1 + 1 = **2**.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"2"},{"v":"5"}],"ptrs":[{"name":"coin","at":1}]},{"t":"array","id":"dp","title":"dp[a] = number of ways to make amount a with the coins allowed so far","cells":[{"v":"1"},{"v":"1","tone":"alt"},{"v":"2"},{"v":"2","tone":"good"},{"v":"1"},{"v":"1"}],"ptrs":[{"name":"i","at":3}]}]},
+  {"line":13,"text":"Amount 4: the 2 ways to make 2 can each be extended by a 2-coin. 1 + 2 = **3**.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"2"},{"v":"5"}],"ptrs":[{"name":"coin","at":1}]},{"t":"array","id":"dp","title":"dp[a] = number of ways to make amount a with the coins allowed so far","cells":[{"v":"1"},{"v":"1"},{"v":"2","tone":"alt"},{"v":"2"},{"v":"3","tone":"good"},{"v":"1"}],"ptrs":[{"name":"i","at":4}]}]},
+  {"line":13,"text":"Amount 5: the 2 ways to make 3 can each be extended by a 2-coin. 1 + 2 = **3**.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"2"},{"v":"5"}],"ptrs":[{"name":"coin","at":1}]},{"t":"array","id":"dp","title":"dp[a] = number of ways to make amount a with the coins allowed so far","cells":[{"v":"1"},{"v":"1"},{"v":"2"},{"v":"2","tone":"alt"},{"v":"3"},{"v":"3","tone":"good"}],"ptrs":[{"name":"i","at":5}]}]},
+  {"line":10,"text":"Now also allow coin **5**. For every amount from 5 upward, each way to make (amount − 5) gives one more way: append a 5-coin.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"2"},{"v":"5"}],"ptrs":[{"name":"coin","at":2}]},{"t":"array","id":"dp","title":"dp[a] = number of ways to make amount a with the coins allowed so far","cells":[{"v":"1"},{"v":"1"},{"v":"2"},{"v":"2"},{"v":"3"},{"v":"3"}],"ptrs":[{"name":"i","at":5}]}]},
+  {"line":13,"text":"Amount 5: the 1 way to make 0 can each be extended by a 5-coin. 3 + 1 = **4**.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"2"},{"v":"5"}],"ptrs":[{"name":"coin","at":2}]},{"t":"array","id":"dp","title":"dp[a] = number of ways to make amount a with the coins allowed so far","cells":[{"v":"1","tone":"alt"},{"v":"1"},{"v":"2"},{"v":"2"},{"v":"3"},{"v":"4","tone":"good"}],"ptrs":[{"name":"i","at":5}]}]},
+  {"line":16,"text":"`dp[5]` = **4** combinations.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"2"},{"v":"5"}],"ptrs":[{"name":"coin","at":3}]},{"t":"array","id":"dp","title":"dp[a] = number of ways to make amount a with the coins allowed so far","cells":[{"v":"1"},{"v":"1"},{"v":"2"},{"v":"2"},{"v":"3"},{"v":"4","tone":"good"}],"ptrs":[{"name":"i","at":5}]}]},
+  {"line":16,"text":"Done — the answer is **`4`**. 5 = 5 = 2+2+1 = 2+1+1+1 = 1+1+1+1+1.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"2"},{"v":"5"}],"ptrs":[{"name":"coin","at":3}]},{"t":"array","id":"dp","title":"dp[a] = number of ways to make amount a with the coins allowed so far","cells":[{"v":"1"},{"v":"1"},{"v":"2"},{"v":"2"},{"v":"3"},{"v":"4","tone":"good"}],"ptrs":[{"name":"i","at":5}]}],"final":true}
+ ]
+}

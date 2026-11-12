@@ -1,0 +1,58 @@
+{
+ "id": 40,
+ "number": 2,
+ "title": "Add Two Numbers",
+ "slug": "add-two-numbers",
+ "category": "linked-list",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/add-two-numbers/",
+ "pattern": "Digit-by-digit addition with a carry",
+ "statement": "Two non-negative integers are stored as linked lists with their digits in **reverse order** (ones digit first). Add them and return the sum as a linked list in the same format.",
+ "example": {
+  "input": "l1 = [5,6], l2 = [7,8,9]",
+  "output": "[2,5,0,1]",
+  "why": "The lists mean 65 and 987. 65 + 987 = 1052, which is stored as 2 → 5 → 0 → 1."
+ },
+ "more": [
+  {
+   "input": "l1 = [2,4,3], l2 = [5,6,4]",
+   "output": "[7,0,8]"
+  },
+  {
+   "input": "l1 = [0], l2 = [0]",
+   "output": "[0]"
+  },
+  {
+   "input": "l1 = [9,9,9], l2 = [1]",
+   "output": "[0,0,0,1]"
+  }
+ ],
+ "idea": [
+  "The digits come lowest first — exactly the order in which we add by hand: ones, then tens, then hundreds.",
+  "Walk both lists together. At each position add the two digits and the **carry** from the previous position. Write down `total % 10` and carry `total // 10`.",
+  "If one list is shorter, treat its missing digits as 0. If a carry is left at the very end, it becomes one more digit."
+ ],
+ "code": "class Solution:\n    def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:\n        dummy = ListNode()\n        current = dummy\n        carry = 0\n\n        while l1 or l2:\n            val1 = l1.val if l1 else 0\n            val2 = l2.val if l2 else 0\n            total = val1 + val2 + carry\n\n            carry = total // 10\n            digit = total % 10\n\n            current.next = ListNode(digit)\n            current = current.next\n\n            if l1:\n                l1 = l1.next\n            if l2:\n                l2 = l2.next\n\n        if carry:\n            current.next = ListNode(carry)\n\n        return dummy.next",
+ "complexity": {
+  "time": "O(max(n, m))",
+  "timeWhy": "One step per digit of the longer number.",
+  "space": "O(max(n, m))",
+  "spaceWhy": "The result list has one node per digit (plus possibly one for the last carry)."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`l1 = [5,6], l2 = [7,8,9]`**. Each step runs one highlighted line of the code.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"5","x":0,"y":0,"next":2},{"id":2,"v":"6","x":1,"y":0},{"id":3,"v":"7","x":0,"y":1,"next":4},{"id":4,"v":"8","x":1,"y":1,"next":5},{"id":5,"v":"9","x":2,"y":1}],"ptrs":[{"name":"l1","at":1},{"name":"l2","at":3}],"rows":["l1","l2","sum"]}]},
+  {"line":5,"text":"The answer is built after a dummy node. `carry` holds what spills over into the next digit; it starts at 0.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"5","x":0,"y":0,"next":2},{"id":2,"v":"6","x":1,"y":0},{"id":3,"v":"7","x":0,"y":1,"next":4},{"id":4,"v":"8","x":1,"y":1,"next":5},{"id":5,"v":"9","x":2,"y":1},{"id":6,"v":"dummy","x":0,"y":2}],"ptrs":[{"name":"l1","at":1},{"name":"l2","at":3},{"name":"current","at":6}],"rows":["l1","l2","sum"]},{"t":"vars","id":"vars","items":[{"k":"carry","v":"0"}]}]},
+  {"line":10,"text":"This column: 5 + 7 + carry 0 = **12**.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"5","x":0,"y":0,"next":2},{"id":2,"v":"6","x":1,"y":0},{"id":3,"v":"7","x":0,"y":1,"next":4},{"id":4,"v":"8","x":1,"y":1,"next":5},{"id":5,"v":"9","x":2,"y":1},{"id":6,"v":"dummy","x":0,"y":2}],"ptrs":[{"name":"l1","at":1},{"name":"l2","at":3},{"name":"current","at":6}],"rows":["l1","l2","sum"]},{"t":"vars","id":"vars","items":[{"k":"val1","v":"5"},{"k":"val2","v":"7"},{"k":"carry","v":"0"},{"k":"total","v":"12"}]}]},
+  {"line":13,"text":"Write down 12 % 10 = **2**, and carry 12 // 10 = **1** into the next column.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"5","x":0,"y":0,"next":2},{"id":2,"v":"6","x":1,"y":0},{"id":3,"v":"7","x":0,"y":1,"next":4},{"id":4,"v":"8","x":1,"y":1,"next":5},{"id":5,"v":"9","x":2,"y":1},{"id":6,"v":"dummy","x":0,"y":2}],"ptrs":[{"name":"l1","at":1},{"name":"l2","at":3},{"name":"current","at":6}],"rows":["l1","l2","sum"]},{"t":"vars","id":"vars","items":[{"k":"val1","v":"5"},{"k":"val2","v":"7"},{"k":"carry","v":"1","changed":true},{"k":"total","v":"12"},{"k":"digit","v":"2"}]}]},
+  {"line":16,"text":"Append a new node holding 2 to the answer.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"5","x":0,"y":0,"next":2},{"id":2,"v":"6","x":1,"y":0},{"id":3,"v":"7","x":0,"y":1,"next":4},{"id":4,"v":"8","x":1,"y":1,"next":5},{"id":5,"v":"9","x":2,"y":1},{"id":6,"v":"dummy","x":0,"y":2,"next":7},{"id":7,"v":"2","x":1,"y":2,"tone":"good"}],"ptrs":[{"name":"l1","at":1},{"name":"l2","at":3},{"name":"current","at":7}],"rows":["l1","l2","sum"]},{"t":"vars","id":"vars","items":[{"k":"val1","v":"5"},{"k":"val2","v":"7"},{"k":"carry","v":"1"},{"k":"total","v":"12"},{"k":"digit","v":"2"}]}]},
+  {"line":10,"text":"This column: 6 + 8 + carry 1 = **15**.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"5","x":0,"y":0,"next":2},{"id":2,"v":"6","x":1,"y":0},{"id":3,"v":"7","x":0,"y":1,"next":4},{"id":4,"v":"8","x":1,"y":1,"next":5},{"id":5,"v":"9","x":2,"y":1},{"id":6,"v":"dummy","x":0,"y":2,"next":7},{"id":7,"v":"2","x":1,"y":2,"tone":"good"}],"ptrs":[{"name":"l1","at":2},{"name":"l2","at":4},{"name":"current","at":7}],"rows":["l1","l2","sum"]},{"t":"vars","id":"vars","items":[{"k":"val1","v":"6","changed":true},{"k":"val2","v":"8","changed":true},{"k":"carry","v":"1"},{"k":"total","v":"15","changed":true},{"k":"digit","v":"2"}]}]},
+  {"line":13,"text":"Write down 15 % 10 = **5**, and carry 15 // 10 = **1** into the next column.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"5","x":0,"y":0,"next":2},{"id":2,"v":"6","x":1,"y":0},{"id":3,"v":"7","x":0,"y":1,"next":4},{"id":4,"v":"8","x":1,"y":1,"next":5},{"id":5,"v":"9","x":2,"y":1},{"id":6,"v":"dummy","x":0,"y":2,"next":7},{"id":7,"v":"2","x":1,"y":2,"tone":"good"}],"ptrs":[{"name":"l1","at":2},{"name":"l2","at":4},{"name":"current","at":7}],"rows":["l1","l2","sum"]},{"t":"vars","id":"vars","items":[{"k":"val1","v":"6"},{"k":"val2","v":"8"},{"k":"carry","v":"1"},{"k":"total","v":"15"},{"k":"digit","v":"5","changed":true}]}]},
+  {"line":16,"text":"Append a new node holding 5 to the answer.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"5","x":0,"y":0,"next":2},{"id":2,"v":"6","x":1,"y":0},{"id":3,"v":"7","x":0,"y":1,"next":4},{"id":4,"v":"8","x":1,"y":1,"next":5},{"id":5,"v":"9","x":2,"y":1},{"id":6,"v":"dummy","x":0,"y":2,"next":7},{"id":7,"v":"2","x":1,"y":2,"next":8,"tone":"good"},{"id":8,"v":"5","x":2,"y":2,"tone":"good"}],"ptrs":[{"name":"l1","at":2},{"name":"l2","at":4},{"name":"current","at":8}],"rows":["l1","l2","sum"]},{"t":"vars","id":"vars","items":[{"k":"val1","v":"6"},{"k":"val2","v":"8"},{"k":"carry","v":"1"},{"k":"total","v":"15"},{"k":"digit","v":"5"}]}]},
+  {"line":10,"text":"This column: 0 + 9 + carry 1 = **10**. (A list that has run out counts as 0.)","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"5","x":0,"y":0,"next":2},{"id":2,"v":"6","x":1,"y":0},{"id":3,"v":"7","x":0,"y":1,"next":4},{"id":4,"v":"8","x":1,"y":1,"next":5},{"id":5,"v":"9","x":2,"y":1},{"id":6,"v":"dummy","x":0,"y":2,"next":7},{"id":7,"v":"2","x":1,"y":2,"next":8,"tone":"good"},{"id":8,"v":"5","x":2,"y":2,"tone":"good"}],"ptrs":[{"name":"l1","at":null},{"name":"l2","at":5},{"name":"current","at":8}],"rows":["l1","l2","sum"]},{"t":"vars","id":"vars","items":[{"k":"val1","v":"0","changed":true},{"k":"val2","v":"9","changed":true},{"k":"carry","v":"1"},{"k":"total","v":"10","changed":true},{"k":"digit","v":"5"}]}]},
+  {"line":13,"text":"Write down 10 % 10 = **0**, and carry 10 // 10 = **1** into the next column.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"5","x":0,"y":0,"next":2},{"id":2,"v":"6","x":1,"y":0},{"id":3,"v":"7","x":0,"y":1,"next":4},{"id":4,"v":"8","x":1,"y":1,"next":5},{"id":5,"v":"9","x":2,"y":1},{"id":6,"v":"dummy","x":0,"y":2,"next":7},{"id":7,"v":"2","x":1,"y":2,"next":8,"tone":"good"},{"id":8,"v":"5","x":2,"y":2,"tone":"good"}],"ptrs":[{"name":"l1","at":null},{"name":"l2","at":5},{"name":"current","at":8}],"rows":["l1","l2","sum"]},{"t":"vars","id":"vars","items":[{"k":"val1","v":"0"},{"k":"val2","v":"9"},{"k":"carry","v":"1"},{"k":"total","v":"10"},{"k":"digit","v":"0","changed":true}]}]},
+  {"line":16,"text":"Append a new node holding 0 to the answer.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"5","x":0,"y":0,"next":2},{"id":2,"v":"6","x":1,"y":0},{"id":3,"v":"7","x":0,"y":1,"next":4},{"id":4,"v":"8","x":1,"y":1,"next":5},{"id":5,"v":"9","x":2,"y":1},{"id":6,"v":"dummy","x":0,"y":2,"next":7},{"id":7,"v":"2","x":1,"y":2,"next":8,"tone":"good"},{"id":8,"v":"5","x":2,"y":2,"next":9,"tone":"good"},{"id":9,"v":"0","x":3,"y":2,"tone":"good"}],"ptrs":[{"name":"l1","at":null},{"name":"l2","at":5},{"name":"current","at":9}],"rows":["l1","l2","sum"]},{"t":"vars","id":"vars","items":[{"k":"val1","v":"0"},{"k":"val2","v":"9"},{"k":"carry","v":"1"},{"k":"total","v":"10"},{"k":"digit","v":"0"}]}]},
+  {"line":24,"text":"Both lists are finished, but a carry of 1 is still left. It becomes one more digit.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"5","x":0,"y":0,"next":2},{"id":2,"v":"6","x":1,"y":0},{"id":3,"v":"7","x":0,"y":1,"next":4},{"id":4,"v":"8","x":1,"y":1,"next":5},{"id":5,"v":"9","x":2,"y":1},{"id":6,"v":"dummy","x":0,"y":2,"next":7},{"id":7,"v":"2","x":1,"y":2,"next":8,"tone":"good"},{"id":8,"v":"5","x":2,"y":2,"next":9,"tone":"good"},{"id":9,"v":"0","x":3,"y":2,"next":10,"tone":"good"},{"id":10,"v":"1","x":4,"y":2,"tone":"good"}],"ptrs":[{"name":"l1","at":null},{"name":"l2","at":null},{"name":"current","at":9}],"rows":["l1","l2","sum"]},{"t":"vars","id":"vars","items":[{"k":"val1","v":"0"},{"k":"val2","v":"9"},{"k":"carry","v":"1"},{"k":"total","v":"10"},{"k":"digit","v":"0"}]}]},
+  {"line":26,"text":"The sum starts right after the dummy. Return it.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"5","x":0,"y":0,"next":2},{"id":2,"v":"6","x":1,"y":0},{"id":3,"v":"7","x":0,"y":1,"next":4},{"id":4,"v":"8","x":1,"y":1,"next":5},{"id":5,"v":"9","x":2,"y":1},{"id":6,"v":"dummy","x":0,"y":2,"next":7},{"id":7,"v":"2","x":1,"y":2,"next":8,"tone":"good"},{"id":8,"v":"5","x":2,"y":2,"next":9,"tone":"good"},{"id":9,"v":"0","x":3,"y":2,"next":10,"tone":"good"},{"id":10,"v":"1","x":4,"y":2,"tone":"good"}],"ptrs":[{"name":"l1","at":null},{"name":"l2","at":null},{"name":"current","at":9}],"rows":["l1","l2","sum"]},{"t":"vars","id":"vars","items":[{"k":"val1","v":"0"},{"k":"val2","v":"9"},{"k":"carry","v":"1"},{"k":"total","v":"10"},{"k":"digit","v":"0"}]}]},
+  {"line":26,"text":"Done — the answer is **`[2,5,0,1]`**. The lists mean 65 and 987. 65 + 987 = 1052, which is stored as 2 → 5 → 0 → 1.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"5","x":0,"y":0,"next":2},{"id":2,"v":"6","x":1,"y":0},{"id":3,"v":"7","x":0,"y":1,"next":4},{"id":4,"v":"8","x":1,"y":1,"next":5},{"id":5,"v":"9","x":2,"y":1},{"id":6,"v":"dummy","x":0,"y":2,"next":7},{"id":7,"v":"2","x":1,"y":2,"next":8,"tone":"good"},{"id":8,"v":"5","x":2,"y":2,"next":9,"tone":"good"},{"id":9,"v":"0","x":3,"y":2,"next":10,"tone":"good"},{"id":10,"v":"1","x":4,"y":2,"tone":"good"}],"ptrs":[{"name":"l1","at":null},{"name":"l2","at":null},{"name":"current","at":9}],"rows":["l1","l2","sum"]},{"t":"vars","id":"vars","items":[{"k":"val1","v":"0"},{"k":"val2","v":"9"},{"k":"carry","v":"1"},{"k":"total","v":"10"},{"k":"digit","v":"0"}]}],"final":true}
+ ]
+}

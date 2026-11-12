@@ -1,0 +1,70 @@
+{
+ "id": 122,
+ "number": 53,
+ "title": "Maximum Subarray",
+ "slug": "maximum-subarray",
+ "category": "greedy",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/maximum-subarray/",
+ "pattern": "Kadane's algorithm: extend or restart",
+ "statement": "Given an integer array `nums`, find the contiguous subarray (at least one number) with the **largest sum** and return that sum.",
+ "example": {
+  "input": "nums = [-2,1,-3,4,-1,2,1,-5,4]",
+  "output": "6",
+  "why": "The subarray [4, -1, 2, 1] sums to 6."
+ },
+ "more": [
+  {
+   "input": "nums = [1]",
+   "output": "1"
+  },
+  {
+   "input": "nums = [5,4,-1,7,8]",
+   "output": "23"
+  },
+  {
+   "input": "nums = [-3,-1,-2]",
+   "output": "-1"
+  },
+  {
+   "input": "nums = [0,-1,0]",
+   "output": "0"
+  }
+ ],
+ "idea": [
+  "Walk through the array and keep `current_sum` = the best sum of a subarray that **ends at the current number**.",
+  "That best subarray either **extends** the previous one (`current_sum + num`) or **starts fresh** at this number (`num`). Starting fresh wins exactly when the sum carried so far is negative — a negative prefix only drags the total down.",
+  "The answer is the largest `current_sum` seen at any position."
+ ],
+ "code": "class Solution:\n    def maxSubArray(self, nums: List[int]) -> int:\n        max_sum = float(\"-inf\")\n        current_sum = 0\n\n        for num in nums:\n            current_sum = max(num, current_sum + num)\n            max_sum = max(max_sum, current_sum)\n\n        return max_sum",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "One pass with O(1) work per number.",
+  "space": "O(1)",
+  "spaceWhy": "Two running values."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`nums = [-2,1,-3,4,-1,2,1,-5,4]`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"nums","title":"nums  (green = best subarray found so far)","cells":[{"v":"-2"},{"v":"1"},{"v":"-3"},{"v":"4"},{"v":"-1"},{"v":"2"},{"v":"1"},{"v":"-5"},{"v":"4"}]}]},
+  {"line":4,"text":"`current_sum` is the best sum of a subarray ending at the current number; `max_sum` is the best sum seen anywhere (−∞ so that the first number always beats it).","views":[{"t":"array","id":"nums","title":"nums  (green = best subarray found so far)","cells":[{"v":"-2"},{"v":"1"},{"v":"-3"},{"v":"4"},{"v":"-1"},{"v":"2"},{"v":"1"},{"v":"-5"},{"v":"4"}],"ptrs":[{"name":"num","at":-1}]},{"t":"vars","id":"vars","items":[{"k":"current_sum","v":"0"},{"k":"max_sum","v":"-∞"}]}]},
+  {"line":7,"text":"First number: the subarray is just [-2], so `current_sum` = **-2**.","views":[{"t":"array","id":"nums","title":"nums  (green = best subarray found so far)","cells":[{"v":"-2"},{"v":"1"},{"v":"-3"},{"v":"4"},{"v":"-1"},{"v":"2"},{"v":"1"},{"v":"-5"},{"v":"4"}],"ptrs":[{"name":"num","at":0}],"ranges":[{"from":0,"to":0,"label":"current_sum","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"current_sum","v":"-2","changed":true},{"k":"max_sum","v":"-∞"}]}]},
+  {"line":8,"text":"-2 beats the best so far (-∞) → `max_sum` = **-2**.","views":[{"t":"array","id":"nums","title":"nums  (green = best subarray found so far)","cells":[{"v":"-2","tone":"good"},{"v":"1"},{"v":"-3"},{"v":"4"},{"v":"-1"},{"v":"2"},{"v":"1"},{"v":"-5"},{"v":"4"}],"ptrs":[{"name":"num","at":0}],"ranges":[{"from":0,"to":0,"label":"current_sum","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"current_sum","v":"-2"},{"k":"max_sum","v":"-2","changed":true}]}]},
+  {"line":7,"text":"The sum carried so far is -2 — **negative**, so it would only make 1 smaller. Drop it and **start a new subarray** at 1: `current_sum` = **1**.","views":[{"t":"array","id":"nums","title":"nums  (green = best subarray found so far)","cells":[{"v":"-2","tone":"good"},{"v":"1"},{"v":"-3"},{"v":"4"},{"v":"-1"},{"v":"2"},{"v":"1"},{"v":"-5"},{"v":"4"}],"ptrs":[{"name":"num","at":1}],"ranges":[{"from":1,"to":1,"label":"current_sum","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"current_sum","v":"1","changed":true},{"k":"max_sum","v":"-2"}]}]},
+  {"line":8,"text":"1 beats the best so far (-2) → `max_sum` = **1**.","views":[{"t":"array","id":"nums","title":"nums  (green = best subarray found so far)","cells":[{"v":"-2"},{"v":"1","tone":"good"},{"v":"-3"},{"v":"4"},{"v":"-1"},{"v":"2"},{"v":"1"},{"v":"-5"},{"v":"4"}],"ptrs":[{"name":"num","at":1}],"ranges":[{"from":1,"to":1,"label":"current_sum","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"current_sum","v":"1"},{"k":"max_sum","v":"1","changed":true}]}]},
+  {"line":7,"text":"The sum carried so far (1) is not negative, so **extend** the subarray with -3: 1 + (-3) = **-2**.","views":[{"t":"array","id":"nums","title":"nums  (green = best subarray found so far)","cells":[{"v":"-2"},{"v":"1","tone":"good"},{"v":"-3"},{"v":"4"},{"v":"-1"},{"v":"2"},{"v":"1"},{"v":"-5"},{"v":"4"}],"ptrs":[{"name":"num","at":2}],"ranges":[{"from":1,"to":2,"label":"current_sum","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"current_sum","v":"-2","changed":true},{"k":"max_sum","v":"1"}]}]},
+  {"line":8,"text":"-2 does not beat the best so far, so `max_sum` stays 1.","views":[{"t":"array","id":"nums","title":"nums  (green = best subarray found so far)","cells":[{"v":"-2"},{"v":"1","tone":"good"},{"v":"-3"},{"v":"4"},{"v":"-1"},{"v":"2"},{"v":"1"},{"v":"-5"},{"v":"4"}],"ptrs":[{"name":"num","at":2}],"ranges":[{"from":1,"to":2,"label":"current_sum","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"current_sum","v":"-2"},{"k":"max_sum","v":"1"}]}]},
+  {"line":7,"text":"The sum carried so far is -2 — **negative**, so it would only make 4 smaller. Drop it and **start a new subarray** at 4: `current_sum` = **4**.","views":[{"t":"array","id":"nums","title":"nums  (green = best subarray found so far)","cells":[{"v":"-2"},{"v":"1","tone":"good"},{"v":"-3"},{"v":"4"},{"v":"-1"},{"v":"2"},{"v":"1"},{"v":"-5"},{"v":"4"}],"ptrs":[{"name":"num","at":3}],"ranges":[{"from":3,"to":3,"label":"current_sum","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"current_sum","v":"4","changed":true},{"k":"max_sum","v":"1"}]}]},
+  {"line":8,"text":"4 beats the best so far (1) → `max_sum` = **4**.","views":[{"t":"array","id":"nums","title":"nums  (green = best subarray found so far)","cells":[{"v":"-2"},{"v":"1"},{"v":"-3"},{"v":"4","tone":"good"},{"v":"-1"},{"v":"2"},{"v":"1"},{"v":"-5"},{"v":"4"}],"ptrs":[{"name":"num","at":3}],"ranges":[{"from":3,"to":3,"label":"current_sum","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"current_sum","v":"4"},{"k":"max_sum","v":"4","changed":true}]}]},
+  {"line":7,"text":"The sum carried so far (4) is not negative, so **extend** the subarray with -1: 4 + (-1) = **3**.","views":[{"t":"array","id":"nums","title":"nums  (green = best subarray found so far)","cells":[{"v":"-2"},{"v":"1"},{"v":"-3"},{"v":"4","tone":"good"},{"v":"-1"},{"v":"2"},{"v":"1"},{"v":"-5"},{"v":"4"}],"ptrs":[{"name":"num","at":4}],"ranges":[{"from":3,"to":4,"label":"current_sum","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"current_sum","v":"3","changed":true},{"k":"max_sum","v":"4"}]}]},
+  {"line":8,"text":"3 does not beat the best so far, so `max_sum` stays 4.","views":[{"t":"array","id":"nums","title":"nums  (green = best subarray found so far)","cells":[{"v":"-2"},{"v":"1"},{"v":"-3"},{"v":"4","tone":"good"},{"v":"-1"},{"v":"2"},{"v":"1"},{"v":"-5"},{"v":"4"}],"ptrs":[{"name":"num","at":4}],"ranges":[{"from":3,"to":4,"label":"current_sum","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"current_sum","v":"3"},{"k":"max_sum","v":"4"}]}]},
+  {"line":7,"text":"The sum carried so far (3) is not negative, so **extend** the subarray with 2: 3 + 2 = **5**.","views":[{"t":"array","id":"nums","title":"nums  (green = best subarray found so far)","cells":[{"v":"-2"},{"v":"1"},{"v":"-3"},{"v":"4","tone":"good"},{"v":"-1"},{"v":"2"},{"v":"1"},{"v":"-5"},{"v":"4"}],"ptrs":[{"name":"num","at":5}],"ranges":[{"from":3,"to":5,"label":"current_sum","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"current_sum","v":"5","changed":true},{"k":"max_sum","v":"4"}]}]},
+  {"line":8,"text":"5 beats the best so far (4) → `max_sum` = **5**.","views":[{"t":"array","id":"nums","title":"nums  (green = best subarray found so far)","cells":[{"v":"-2"},{"v":"1"},{"v":"-3"},{"v":"4","tone":"good"},{"v":"-1","tone":"good"},{"v":"2","tone":"good"},{"v":"1"},{"v":"-5"},{"v":"4"}],"ptrs":[{"name":"num","at":5}],"ranges":[{"from":3,"to":5,"label":"current_sum","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"current_sum","v":"5"},{"k":"max_sum","v":"5","changed":true}]}]},
+  {"line":7,"text":"The sum carried so far (5) is not negative, so **extend** the subarray with 1: 5 + 1 = **6**.","views":[{"t":"array","id":"nums","title":"nums  (green = best subarray found so far)","cells":[{"v":"-2"},{"v":"1"},{"v":"-3"},{"v":"4","tone":"good"},{"v":"-1","tone":"good"},{"v":"2","tone":"good"},{"v":"1"},{"v":"-5"},{"v":"4"}],"ptrs":[{"name":"num","at":6}],"ranges":[{"from":3,"to":6,"label":"current_sum","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"current_sum","v":"6","changed":true},{"k":"max_sum","v":"5"}]}]},
+  {"line":8,"text":"6 beats the best so far (5) → `max_sum` = **6**.","views":[{"t":"array","id":"nums","title":"nums  (green = best subarray found so far)","cells":[{"v":"-2"},{"v":"1"},{"v":"-3"},{"v":"4","tone":"good"},{"v":"-1","tone":"good"},{"v":"2","tone":"good"},{"v":"1","tone":"good"},{"v":"-5"},{"v":"4"}],"ptrs":[{"name":"num","at":6}],"ranges":[{"from":3,"to":6,"label":"current_sum","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"current_sum","v":"6"},{"k":"max_sum","v":"6","changed":true}]}]},
+  {"line":7,"text":"The sum carried so far (6) is not negative, so **extend** the subarray with -5: 6 + (-5) = **1**.","views":[{"t":"array","id":"nums","title":"nums  (green = best subarray found so far)","cells":[{"v":"-2"},{"v":"1"},{"v":"-3"},{"v":"4","tone":"good"},{"v":"-1","tone":"good"},{"v":"2","tone":"good"},{"v":"1","tone":"good"},{"v":"-5"},{"v":"4"}],"ptrs":[{"name":"num","at":7}],"ranges":[{"from":3,"to":7,"label":"current_sum","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"current_sum","v":"1","changed":true},{"k":"max_sum","v":"6"}]}]},
+  {"line":8,"text":"1 does not beat the best so far, so `max_sum` stays 6.","views":[{"t":"array","id":"nums","title":"nums  (green = best subarray found so far)","cells":[{"v":"-2"},{"v":"1"},{"v":"-3"},{"v":"4","tone":"good"},{"v":"-1","tone":"good"},{"v":"2","tone":"good"},{"v":"1","tone":"good"},{"v":"-5"},{"v":"4"}],"ptrs":[{"name":"num","at":7}],"ranges":[{"from":3,"to":7,"label":"current_sum","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"current_sum","v":"1"},{"k":"max_sum","v":"6"}]}]},
+  {"line":7,"text":"The sum carried so far (1) is not negative, so **extend** the subarray with 4: 1 + 4 = **5**.","views":[{"t":"array","id":"nums","title":"nums  (green = best subarray found so far)","cells":[{"v":"-2"},{"v":"1"},{"v":"-3"},{"v":"4","tone":"good"},{"v":"-1","tone":"good"},{"v":"2","tone":"good"},{"v":"1","tone":"good"},{"v":"-5"},{"v":"4"}],"ptrs":[{"name":"num","at":8}],"ranges":[{"from":3,"to":8,"label":"current_sum","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"current_sum","v":"5","changed":true},{"k":"max_sum","v":"6"}]}]},
+  {"line":8,"text":"5 does not beat the best so far, so `max_sum` stays 6.","views":[{"t":"array","id":"nums","title":"nums  (green = best subarray found so far)","cells":[{"v":"-2"},{"v":"1"},{"v":"-3"},{"v":"4","tone":"good"},{"v":"-1","tone":"good"},{"v":"2","tone":"good"},{"v":"1","tone":"good"},{"v":"-5"},{"v":"4"}],"ptrs":[{"name":"num","at":8}],"ranges":[{"from":3,"to":8,"label":"current_sum","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"current_sum","v":"5"},{"k":"max_sum","v":"6"}]}]},
+  {"line":10,"text":"The whole array has been scanned. The largest subarray sum is **6**.","views":[{"t":"array","id":"nums","title":"nums  (green = best subarray found so far)","cells":[{"v":"-2"},{"v":"1"},{"v":"-3"},{"v":"4","tone":"good"},{"v":"-1","tone":"good"},{"v":"2","tone":"good"},{"v":"1","tone":"good"},{"v":"-5"},{"v":"4"}],"ptrs":[{"name":"num","at":9}],"ranges":[{"from":3,"to":8,"label":"current_sum","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"current_sum","v":"5"},{"k":"max_sum","v":"6"}]}]},
+  {"line":10,"text":"Done — the answer is **`6`**. The subarray [4, -1, 2, 1] sums to 6.","views":[{"t":"array","id":"nums","title":"nums  (green = best subarray found so far)","cells":[{"v":"-2"},{"v":"1"},{"v":"-3"},{"v":"4","tone":"good"},{"v":"-1","tone":"good"},{"v":"2","tone":"good"},{"v":"1","tone":"good"},{"v":"-5"},{"v":"4"}],"ptrs":[{"name":"num","at":9}],"ranges":[{"from":3,"to":8,"label":"current_sum","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"current_sum","v":"5"},{"k":"max_sum","v":"6"}]}],"final":true}
+ ]
+}

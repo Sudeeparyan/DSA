@@ -1,0 +1,60 @@
+{
+ "id": 67,
+ "number": 215,
+ "title": "Kth Largest Element in an Array",
+ "slug": "kth-largest-element-in-an-array",
+ "category": "heap-priority-queue",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/kth-largest-element-in-an-array/",
+ "pattern": "Min-heap of size k",
+ "statement": "Given an integer array `nums` and an integer `k`, return the **k-th largest** element (in sorted order, not the k-th distinct one).",
+ "example": {
+  "input": "nums = [3,2,1,5,6,4], k = 2",
+  "output": "5",
+  "why": "Sorted from the largest: 6, 5, 4, 3, 2, 1 — the second one is 5."
+ },
+ "more": [
+  {
+   "input": "nums = [3,2,3,1,2,4,5,5,6], k = 4",
+   "output": "4"
+  },
+  {
+   "input": "nums = [1], k = 1",
+   "output": "1"
+  },
+  {
+   "input": "nums = [7,7,7], k = 2",
+   "output": "7"
+  }
+ ],
+ "idea": [
+  "Sorting the whole array works in O(n log n), but we only care about the top k.",
+  "Keep a **min-heap that never holds more than k numbers**: the k largest seen so far.",
+  "Push every number; whenever the heap has k + 1 numbers, pop the smallest. At the end the top of the heap is the smallest of the k largest — the k-th largest."
+ ],
+ "code": "import heapq\n\nclass Solution:\n    def findKthLargest(self, nums: List[int], k: int) -> int:\n        min_heap = []\n\n        for num in nums:\n            heapq.heappush(min_heap, num)\n            if len(min_heap) > k:\n                heapq.heappop(min_heap)\n\n        return min_heap[0]",
+ "complexity": {
+  "time": "O(n log k)",
+  "timeWhy": "Each of the n numbers costs one push (and maybe one pop) on a heap of size k.",
+  "space": "O(k)",
+  "spaceWhy": "The heap never holds more than k + 1 numbers."
+ },
+ "steps": [
+  {"line":4,"text":"Our example: **`nums = [3,2,1,5,6,4], k = 2`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"2"},{"v":"1"},{"v":"5"},{"v":"6"},{"v":"4"}]},{"t":"vars","id":"vars","items":[{"k":"k","v":"2"}]}]},
+  {"line":5,"text":"The heap will hold only the **k = 2 largest** numbers seen so far. Being a min-heap, the smallest of them sits on top, ready to be thrown out.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"2"},{"v":"1"},{"v":"5"},{"v":"6"},{"v":"4"}]},{"t":"tree","id":"min_heap","title":"min_heap  (the k largest so far)","nodes":[],"roots":[],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"k","v":"2"}]}]},
+  {"line":8,"text":"Next number: **3**. Push it onto the heap — it might be one of the 2 largest.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"cur"},{"v":"2"},{"v":"1"},{"v":"5"},{"v":"6"},{"v":"4"}],"ptrs":[{"name":"num","at":0}]},{"t":"tree","id":"min_heap","title":"min_heap  (the k largest so far)","nodes":[{"id":1,"v":"3","tone":"cur"}],"roots":[1],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"k","v":"2"}]}]},
+  {"line":9,"text":"The heap holds 1 number — not more than k = 2 — so everything stays.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"cur"},{"v":"2"},{"v":"1"},{"v":"5"},{"v":"6"},{"v":"4"}],"ptrs":[{"name":"num","at":0}]},{"t":"tree","id":"min_heap","title":"min_heap  (the k largest so far)","nodes":[{"id":1,"v":"3","tone":"cur"}],"roots":[1],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"k","v":"2"}]}]},
+  {"line":8,"text":"Next number: **2**. Push it onto the heap — it might be one of the 2 largest.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"dim"},{"v":"2","tone":"cur"},{"v":"1"},{"v":"5"},{"v":"6"},{"v":"4"}],"ptrs":[{"name":"num","at":1}]},{"t":"tree","id":"min_heap","title":"min_heap  (the k largest so far)","nodes":[{"id":1,"v":"2","l":2,"tone":"cur"},{"id":2,"v":"3"}],"roots":[1],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"k","v":"2"}]}]},
+  {"line":9,"text":"The heap holds 2 numbers — not more than k = 2 — so everything stays.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"dim"},{"v":"2","tone":"cur"},{"v":"1"},{"v":"5"},{"v":"6"},{"v":"4"}],"ptrs":[{"name":"num","at":1}]},{"t":"tree","id":"min_heap","title":"min_heap  (the k largest so far)","nodes":[{"id":1,"v":"2","l":2,"tone":"cur"},{"id":2,"v":"3"}],"roots":[1],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"k","v":"2"}]}]},
+  {"line":8,"text":"Next number: **1**. Push it onto the heap — it might be one of the 2 largest.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"dim"},{"v":"2","tone":"dim"},{"v":"1","tone":"cur"},{"v":"5"},{"v":"6"},{"v":"4"}],"ptrs":[{"name":"num","at":2}]},{"t":"tree","id":"min_heap","title":"min_heap  (the k largest so far)","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"cur"},{"id":2,"v":"3"},{"id":3,"v":"2"}],"roots":[1],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"k","v":"2"}]}]},
+  {"line":10,"text":"The heap holds 3 numbers, one too many. The smallest, **1**, cannot be among the 2 largest. Pop it.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"dim"},{"v":"2","tone":"dim"},{"v":"1","tone":"cur"},{"v":"5"},{"v":"6"},{"v":"4"}],"ptrs":[{"name":"num","at":2}]},{"t":"tree","id":"min_heap","title":"min_heap  (the k largest so far)","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"cur"},{"id":2,"v":"3"},{"id":3,"v":"2"}],"roots":[1],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"k","v":"2"}]}]},
+  {"line":8,"text":"Next number: **5**. Push it onto the heap — it might be one of the 2 largest.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"dim"},{"v":"2","tone":"dim"},{"v":"1","tone":"dim"},{"v":"5","tone":"cur"},{"v":"6"},{"v":"4"}],"ptrs":[{"name":"num","at":3}]},{"t":"tree","id":"min_heap","title":"min_heap  (the k largest so far)","nodes":[{"id":1,"v":"2","l":2,"r":3,"tone":"cur"},{"id":2,"v":"3"},{"id":3,"v":"5"}],"roots":[1],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"k","v":"2"}]}]},
+  {"line":10,"text":"The heap holds 3 numbers, one too many. The smallest, **2**, cannot be among the 2 largest. Pop it.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"dim"},{"v":"2","tone":"dim"},{"v":"1","tone":"dim"},{"v":"5","tone":"cur"},{"v":"6"},{"v":"4"}],"ptrs":[{"name":"num","at":3}]},{"t":"tree","id":"min_heap","title":"min_heap  (the k largest so far)","nodes":[{"id":1,"v":"2","l":2,"r":3,"tone":"cur"},{"id":2,"v":"3"},{"id":3,"v":"5"}],"roots":[1],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"k","v":"2"}]}]},
+  {"line":8,"text":"Next number: **6**. Push it onto the heap — it might be one of the 2 largest.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"dim"},{"v":"2","tone":"dim"},{"v":"1","tone":"dim"},{"v":"5","tone":"dim"},{"v":"6","tone":"cur"},{"v":"4"}],"ptrs":[{"name":"num","at":4}]},{"t":"tree","id":"min_heap","title":"min_heap  (the k largest so far)","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"cur"},{"id":2,"v":"5"},{"id":3,"v":"6"}],"roots":[1],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"k","v":"2"}]}]},
+  {"line":10,"text":"The heap holds 3 numbers, one too many. The smallest, **3**, cannot be among the 2 largest. Pop it.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"dim"},{"v":"2","tone":"dim"},{"v":"1","tone":"dim"},{"v":"5","tone":"dim"},{"v":"6","tone":"cur"},{"v":"4"}],"ptrs":[{"name":"num","at":4}]},{"t":"tree","id":"min_heap","title":"min_heap  (the k largest so far)","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"cur"},{"id":2,"v":"5"},{"id":3,"v":"6"}],"roots":[1],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"k","v":"2"}]}]},
+  {"line":8,"text":"Next number: **4**. Push it onto the heap — it might be one of the 2 largest.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"dim"},{"v":"2","tone":"dim"},{"v":"1","tone":"dim"},{"v":"5","tone":"dim"},{"v":"6","tone":"dim"},{"v":"4","tone":"cur"}],"ptrs":[{"name":"num","at":5}]},{"t":"tree","id":"min_heap","title":"min_heap  (the k largest so far)","nodes":[{"id":1,"v":"4","l":2,"r":3,"tone":"cur"},{"id":2,"v":"6"},{"id":3,"v":"5"}],"roots":[1],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"k","v":"2"}]}]},
+  {"line":10,"text":"The heap holds 3 numbers, one too many. The smallest, **4**, cannot be among the 2 largest. Pop it.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"dim"},{"v":"2","tone":"dim"},{"v":"1","tone":"dim"},{"v":"5","tone":"dim"},{"v":"6","tone":"dim"},{"v":"4","tone":"cur"}],"ptrs":[{"name":"num","at":5}]},{"t":"tree","id":"min_heap","title":"min_heap  (the k largest so far)","nodes":[{"id":1,"v":"4","l":2,"r":3,"tone":"cur"},{"id":2,"v":"6"},{"id":3,"v":"5"}],"roots":[1],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"k","v":"2"}]}]},
+  {"line":12,"text":"The heap now holds the 2 largest numbers, and its top is the smallest of them: the 2nd largest is **5**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"dim"},{"v":"2","tone":"dim"},{"v":"1","tone":"dim"},{"v":"5","tone":"dim"},{"v":"6","tone":"dim"},{"v":"4","tone":"dim"}]},{"t":"tree","id":"min_heap","title":"min_heap  (the k largest so far)","nodes":[{"id":1,"v":"5","l":2,"tone":"cur"},{"id":2,"v":"6"}],"roots":[1],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"k","v":"2"}]}]},
+  {"line":12,"text":"Done — the answer is **`5`**. Sorted from the largest: 6, 5, 4, 3, 2, 1 — the second one is 5.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"dim"},{"v":"2","tone":"dim"},{"v":"1","tone":"dim"},{"v":"5","tone":"dim"},{"v":"6","tone":"dim"},{"v":"4","tone":"dim"}]},{"t":"tree","id":"min_heap","title":"min_heap  (the k largest so far)","nodes":[{"id":1,"v":"5","l":2,"tone":"cur"},{"id":2,"v":"6"}],"roots":[1],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"k","v":"2"}]}],"final":true}
+ ]
+}

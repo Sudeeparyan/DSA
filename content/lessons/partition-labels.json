@@ -1,0 +1,64 @@
+{
+ "id": 128,
+ "number": 763,
+ "title": "Partition Labels",
+ "slug": "partition-labels",
+ "category": "greedy",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/partition-labels/",
+ "pattern": "Greedy: stretch the part to each letter's last occurrence",
+ "statement": "Cut the string `s` into as **many parts as possible** so that each letter appears in at most one part. Return the sizes of the parts, in order.",
+ "example": {
+  "input": "s = \"abacdcee\"",
+  "output": "[3,3,2]",
+  "why": "\"aba\" | \"cdc\" | \"ee\" — no letter occurs in two different parts."
+ },
+ "more": [
+  {
+   "input": "s = \"ababcbacadefegdehijhklij\"",
+   "output": "[9,7,8]"
+  },
+  {
+   "input": "s = \"eccbbbbdec\"",
+   "output": "[10]"
+  },
+  {
+   "input": "s = \"abc\"",
+   "output": "[1,1,1]"
+  },
+  {
+   "input": "s = \"a\"",
+   "output": "[1]"
+  }
+ ],
+ "idea": [
+  "If a part contains a letter, it must contain **all** occurrences of that letter — in particular the last one.",
+  "So first record the **last index** of every letter. Then scan from the left with a current part `start … end`: each letter met pushes `end` out to that letter's last index (if it lies further).",
+  "When the scan position reaches `end`, every letter inside the part ends inside it. Cutting here is safe, and cutting as early as possible gives the most parts."
+ ],
+ "code": "class Solution:\n    def partitionLabels(self, s: str) -> List[int]:\n        last_index = {}\n\n        for i, char in enumerate(s):\n            last_index[char] = i\n\n        result = []\n        start, end = 0, 0\n\n        for i, char in enumerate(s):\n            end = max(end, last_index[char])\n\n            if i == end:\n                result.append(end - start + 1)\n                start = end + 1\n\n        return result",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "Two passes over the string.",
+  "space": "O(1)",
+  "spaceWhy": "At most 26 entries in the last-index map (not counting the output)."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`s = \"abacdcee\"`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"a"},{"v":"c"},{"v":"d"},{"v":"c"},{"v":"e"},{"v":"e"}]}]},
+  {"line":6,"text":"First pass done: for every letter we know the **last** index where it occurs.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"a"},{"v":"c"},{"v":"d"},{"v":"c"},{"v":"e"},{"v":"e"}],"ptrs":[{"name":"i","at":7}]},{"t":"map","id":"last_index","title":"last_index  (last position of each letter)","kind":"map","entries":[{"k":"a","v":"2"},{"k":"b","v":"1"},{"k":"c","v":"5"},{"k":"d","v":"4"},{"k":"e","v":"7"}]}]},
+  {"line":9,"text":"`start … end` is the part being built. `end` is the index the part must reach **at least**; it grows as letters are met.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"a"},{"v":"c"},{"v":"d"},{"v":"c"},{"v":"e"},{"v":"e"}],"ptrs":[{"name":"i","at":7}],"ranges":[{"from":0,"to":0,"label":"current part","tone":"win"}]},{"t":"map","id":"last_index","title":"last_index  (last position of each letter)","kind":"map","entries":[{"k":"a","v":"2"},{"k":"b","v":"1"},{"k":"c","v":"5"},{"k":"d","v":"4"},{"k":"e","v":"7"}]},{"t":"items","id":"result","title":"result  (part sizes)","items":[]}]},
+  {"line":12,"text":"`a` occurs for the last time at index 2. The part has to include that, so `end` moves out to **2**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"a"},{"v":"c"},{"v":"d"},{"v":"c"},{"v":"e"},{"v":"e"}],"ptrs":[{"name":"i","at":0}],"ranges":[{"from":0,"to":2,"label":"current part","tone":"win"}]},{"t":"map","id":"last_index","title":"last_index  (last position of each letter)","kind":"map","entries":[{"k":"a","v":"2","tone":"cur"},{"k":"b","v":"1"},{"k":"c","v":"5"},{"k":"d","v":"4"},{"k":"e","v":"7"}]},{"t":"items","id":"result","title":"result  (part sizes)","items":[]}]},
+  {"line":12,"text":"`b` (last occurrence at index 1) is already covered: `end` stays 2.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"a"},{"v":"c"},{"v":"d"},{"v":"c"},{"v":"e"},{"v":"e"}],"ptrs":[{"name":"i","at":1}],"ranges":[{"from":0,"to":2,"label":"current part","tone":"win"}]},{"t":"map","id":"last_index","title":"last_index  (last position of each letter)","kind":"map","entries":[{"k":"a","v":"2"},{"k":"b","v":"1","tone":"cur"},{"k":"c","v":"5"},{"k":"d","v":"4"},{"k":"e","v":"7"}]},{"t":"items","id":"result","title":"result  (part sizes)","items":[]}]},
+  {"line":12,"text":"`a` (last occurrence at index 2) is already covered: `end` stays 2.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a"},{"v":"b"},{"v":"a"},{"v":"c"},{"v":"d"},{"v":"c"},{"v":"e"},{"v":"e"}],"ptrs":[{"name":"i","at":2}],"ranges":[{"from":0,"to":2,"label":"current part","tone":"win"}]},{"t":"map","id":"last_index","title":"last_index  (last position of each letter)","kind":"map","entries":[{"k":"a","v":"2","tone":"cur"},{"k":"b","v":"1"},{"k":"c","v":"5"},{"k":"d","v":"4"},{"k":"e","v":"7"}]},{"t":"items","id":"result","title":"result  (part sizes)","items":[]}]},
+  {"line":15,"text":"i = end = 2: every letter met in this part has its last occurrence inside it. **Cut here.** The part `aba` has size 3.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a","tone":"good"},{"v":"b","tone":"good"},{"v":"a","tone":"good"},{"v":"c"},{"v":"d"},{"v":"c"},{"v":"e"},{"v":"e"}],"ptrs":[{"name":"i","at":2}],"ranges":[{"from":0,"to":2,"label":"current part","tone":"win"}]},{"t":"map","id":"last_index","title":"last_index  (last position of each letter)","kind":"map","entries":[{"k":"a","v":"2"},{"k":"b","v":"1"},{"k":"c","v":"5"},{"k":"d","v":"4"},{"k":"e","v":"7"}]},{"t":"items","id":"result","title":"result  (part sizes)","items":[{"v":"3","tone":"good"}]}]},
+  {"line":12,"text":"`c` occurs for the last time at index 5. The part has to include that, so `end` moves out to **5**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a","tone":"dim"},{"v":"b","tone":"dim"},{"v":"a","tone":"dim"},{"v":"c"},{"v":"d"},{"v":"c"},{"v":"e"},{"v":"e"}],"ptrs":[{"name":"i","at":3}],"ranges":[{"from":3,"to":5,"label":"current part","tone":"win"}]},{"t":"map","id":"last_index","title":"last_index  (last position of each letter)","kind":"map","entries":[{"k":"a","v":"2"},{"k":"b","v":"1"},{"k":"c","v":"5","tone":"cur"},{"k":"d","v":"4"},{"k":"e","v":"7"}]},{"t":"items","id":"result","title":"result  (part sizes)","items":[{"v":"3"}]}]},
+  {"line":12,"text":"`d` (last occurrence at index 4) is already covered: `end` stays 5.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a","tone":"dim"},{"v":"b","tone":"dim"},{"v":"a","tone":"dim"},{"v":"c"},{"v":"d"},{"v":"c"},{"v":"e"},{"v":"e"}],"ptrs":[{"name":"i","at":4}],"ranges":[{"from":3,"to":5,"label":"current part","tone":"win"}]},{"t":"map","id":"last_index","title":"last_index  (last position of each letter)","kind":"map","entries":[{"k":"a","v":"2"},{"k":"b","v":"1"},{"k":"c","v":"5"},{"k":"d","v":"4","tone":"cur"},{"k":"e","v":"7"}]},{"t":"items","id":"result","title":"result  (part sizes)","items":[{"v":"3"}]}]},
+  {"line":12,"text":"`c` (last occurrence at index 5) is already covered: `end` stays 5.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a","tone":"dim"},{"v":"b","tone":"dim"},{"v":"a","tone":"dim"},{"v":"c"},{"v":"d"},{"v":"c"},{"v":"e"},{"v":"e"}],"ptrs":[{"name":"i","at":5}],"ranges":[{"from":3,"to":5,"label":"current part","tone":"win"}]},{"t":"map","id":"last_index","title":"last_index  (last position of each letter)","kind":"map","entries":[{"k":"a","v":"2"},{"k":"b","v":"1"},{"k":"c","v":"5","tone":"cur"},{"k":"d","v":"4"},{"k":"e","v":"7"}]},{"t":"items","id":"result","title":"result  (part sizes)","items":[{"v":"3"}]}]},
+  {"line":15,"text":"i = end = 5: every letter met in this part has its last occurrence inside it. **Cut here.** The part `cdc` has size 3.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a","tone":"dim"},{"v":"b","tone":"dim"},{"v":"a","tone":"dim"},{"v":"c","tone":"good"},{"v":"d","tone":"good"},{"v":"c","tone":"good"},{"v":"e"},{"v":"e"}],"ptrs":[{"name":"i","at":5}],"ranges":[{"from":3,"to":5,"label":"current part","tone":"win"}]},{"t":"map","id":"last_index","title":"last_index  (last position of each letter)","kind":"map","entries":[{"k":"a","v":"2"},{"k":"b","v":"1"},{"k":"c","v":"5"},{"k":"d","v":"4"},{"k":"e","v":"7"}]},{"t":"items","id":"result","title":"result  (part sizes)","items":[{"v":"3"},{"v":"3","tone":"good"}]}]},
+  {"line":12,"text":"`e` occurs for the last time at index 7. The part has to include that, so `end` moves out to **7**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a","tone":"dim"},{"v":"b","tone":"dim"},{"v":"a","tone":"dim"},{"v":"c","tone":"dim"},{"v":"d","tone":"dim"},{"v":"c","tone":"dim"},{"v":"e"},{"v":"e"}],"ptrs":[{"name":"i","at":6}],"ranges":[{"from":6,"to":7,"label":"current part","tone":"win"}]},{"t":"map","id":"last_index","title":"last_index  (last position of each letter)","kind":"map","entries":[{"k":"a","v":"2"},{"k":"b","v":"1"},{"k":"c","v":"5"},{"k":"d","v":"4"},{"k":"e","v":"7","tone":"cur"}]},{"t":"items","id":"result","title":"result  (part sizes)","items":[{"v":"3"},{"v":"3"}]}]},
+  {"line":12,"text":"`e` (last occurrence at index 7) is already covered: `end` stays 7.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a","tone":"dim"},{"v":"b","tone":"dim"},{"v":"a","tone":"dim"},{"v":"c","tone":"dim"},{"v":"d","tone":"dim"},{"v":"c","tone":"dim"},{"v":"e"},{"v":"e"}],"ptrs":[{"name":"i","at":7}],"ranges":[{"from":6,"to":7,"label":"current part","tone":"win"}]},{"t":"map","id":"last_index","title":"last_index  (last position of each letter)","kind":"map","entries":[{"k":"a","v":"2"},{"k":"b","v":"1"},{"k":"c","v":"5"},{"k":"d","v":"4"},{"k":"e","v":"7","tone":"cur"}]},{"t":"items","id":"result","title":"result  (part sizes)","items":[{"v":"3"},{"v":"3"}]}]},
+  {"line":15,"text":"i = end = 7: every letter met in this part has its last occurrence inside it. **Cut here.** The part `ee` has size 2.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a","tone":"dim"},{"v":"b","tone":"dim"},{"v":"a","tone":"dim"},{"v":"c","tone":"dim"},{"v":"d","tone":"dim"},{"v":"c","tone":"dim"},{"v":"e","tone":"good"},{"v":"e","tone":"good"}],"ptrs":[{"name":"i","at":7}],"ranges":[{"from":6,"to":7,"label":"current part","tone":"win"}]},{"t":"map","id":"last_index","title":"last_index  (last position of each letter)","kind":"map","entries":[{"k":"a","v":"2"},{"k":"b","v":"1"},{"k":"c","v":"5"},{"k":"d","v":"4"},{"k":"e","v":"7"}]},{"t":"items","id":"result","title":"result  (part sizes)","items":[{"v":"3"},{"v":"3"},{"v":"2","tone":"good"}]}]},
+  {"line":18,"text":"The whole string is cut. Part sizes: **[3, 3, 2]**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a","tone":"dim"},{"v":"b","tone":"dim"},{"v":"a","tone":"dim"},{"v":"c","tone":"dim"},{"v":"d","tone":"dim"},{"v":"c","tone":"dim"},{"v":"e","tone":"dim"},{"v":"e","tone":"dim"}],"ptrs":[{"name":"i","at":7}]},{"t":"map","id":"last_index","title":"last_index  (last position of each letter)","kind":"map","entries":[{"k":"a","v":"2"},{"k":"b","v":"1"},{"k":"c","v":"5"},{"k":"d","v":"4"},{"k":"e","v":"7"}]},{"t":"items","id":"result","title":"result  (part sizes)","items":[{"v":"3"},{"v":"3"},{"v":"2"}]}]},
+  {"line":18,"text":"Done — the answer is **`[3,3,2]`**. \"aba\" | \"cdc\" | \"ee\" — no letter occurs in two different parts.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"a","tone":"dim"},{"v":"b","tone":"dim"},{"v":"a","tone":"dim"},{"v":"c","tone":"dim"},{"v":"d","tone":"dim"},{"v":"c","tone":"dim"},{"v":"e","tone":"dim"},{"v":"e","tone":"dim"}],"ptrs":[{"name":"i","at":7}]},{"t":"map","id":"last_index","title":"last_index  (last position of each letter)","kind":"map","entries":[{"k":"a","v":"2"},{"k":"b","v":"1"},{"k":"c","v":"5"},{"k":"d","v":"4"},{"k":"e","v":"7"}]},{"t":"items","id":"result","title":"result  (part sizes)","items":[{"v":"3"},{"v":"3"},{"v":"2"}]}],"final":true}
+ ]
+}

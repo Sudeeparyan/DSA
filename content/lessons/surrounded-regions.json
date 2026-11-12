@@ -1,0 +1,59 @@
+{
+ "id": 84,
+ "number": 130,
+ "title": "Surrounded Regions",
+ "slug": "surrounded-regions",
+ "category": "graphs",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/surrounded-regions/",
+ "pattern": "Flood-fill from the border, then flip the rest",
+ "statement": "Given a board of `X` and `O`, **capture** every region of `O`s that is completely surrounded by `X` (on all four sides) by flipping those `O`s to `X`. A region that touches the border of the board can not be captured. Modify the board in place.",
+ "example": {
+  "input": "board = [[\"X\",\"X\",\"X\",\"X\"],\n         [\"X\",\"O\",\"O\",\"X\"],\n         [\"X\",\"X\",\"O\",\"X\"],\n         [\"X\",\"O\",\"X\",\"X\"]]",
+  "output": "[[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"O\",\"X\",\"X\"]]",
+  "why": "The three O's in the middle are enclosed and get flipped. The O in the bottom row touches the border, so it survives."
+ },
+ "more": [
+  {
+   "input": "board = [[\"X\"]]",
+   "output": "[[\"X\"]]"
+  },
+  {
+   "input": "board = [[\"O\",\"O\"],[\"O\",\"O\"]]",
+   "output": "[[\"O\",\"O\"],[\"O\",\"O\"]]"
+  },
+  {
+   "input": "board = [[\"X\",\"X\",\"X\"],[\"X\",\"O\",\"X\"],[\"X\",\"X\",\"X\"]]",
+   "output": "[[\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\"]]"
+  },
+  {
+   "input": "board = [[\"X\",\"O\",\"X\",\"X\"],\n         [\"X\",\"O\",\"O\",\"X\"],\n         [\"X\",\"X\",\"X\",\"X\"],\n         [\"X\",\"O\",\"O\",\"X\"],\n         [\"X\",\"X\",\"X\",\"X\"]]",
+   "output": "[[\"X\",\"O\",\"X\",\"X\"],[\"X\",\"O\",\"O\",\"X\"],[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\"]]"
+  }
+ ],
+ "idea": [
+  "Deciding directly whether a region is surrounded is awkward. The opposite is easy: an `O` is **safe** exactly when it is connected to an `O` on the border.",
+  "So start a flood-fill from every border `O` and mark everything it reaches with a temporary letter `E` (*escaped*).",
+  "Afterwards every `O` that is still an `O` was never reached from the border — flip it to `X`. Turn the `E` marks back into `O`."
+ ],
+ "code": "class Solution:\n    def solve(self, board: List[List[str]]) -> None:\n        \"\"\"\n        Do not return anything, modify board in-place instead.\n        \"\"\"\n\n        def dfs(row, col):\n            if (\n                row < 0\n                or row >= len(board)\n                or col < 0\n                or col >= len(board[0])\n                or board[row][col] != \"O\"\n            ):\n                return\n\n            board[row][col] = \"E\"  # Mark as visited but not surrounded\n\n            # Check adjacent cells\n            dfs(row + 1, col)  # Check down\n            dfs(row - 1, col)  # Check up\n            dfs(row, col + 1)  # Check right\n            dfs(row, col - 1)  # Check left\n\n        # Traverse the boundary and mark connected 'O' cells as 'E'\n        for row in range(len(board)):\n            if board[row][0] == \"O\":\n                dfs(row, 0)\n            if board[row][len(board[0]) - 1] == \"O\":\n                dfs(row, len(board[0]) - 1)\n\n        for col in range(len(board[0])):\n            if board[0][col] == \"O\":\n                dfs(0, col)\n            if board[len(board) - 1][col] == \"O\":\n                dfs(len(board) - 1, col)\n\n        # Mark internal 'O' cells as 'X' and restore 'E' cells to 'O'\n        for row in range(len(board)):\n            for col in range(len(board[0])):\n                if board[row][col] == \"O\":\n                    board[row][col] = \"X\"\n                elif board[row][col] == \"E\":\n                    board[row][col] = \"O\"",
+ "complexity": {
+  "time": "O(rows × cols)",
+  "timeWhy": "Each cell is visited a constant number of times.",
+  "space": "O(rows × cols)",
+  "spaceWhy": "Recursion depth in the worst case (a board full of connected O's)."
+ },
+ "steps": [
+  {"line":2,"text":"Our example input is drawn on the stage. Each step runs one highlighted line of the code.","views":[{"t":"grid","id":"board","title":"board  (orange = O, green = safe, connected to the border)","cells":[[{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"O","tone":"mark"},{"v":"O","tone":"mark"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"O","tone":"mark"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"O","tone":"mark"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"}]]},{"t":"stack","id":"calls","title":"call stack","kind":"calls","items":[]}]},
+  {"line":35,"text":"Bottom border: (3, 1) is an `O`. It touches the edge, so it — and every `O` connected to it — can never be captured. Mark them safe.","views":[{"t":"grid","id":"board","title":"board  (orange = O, green = safe, connected to the border)","cells":[[{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"O","tone":"mark"},{"v":"O","tone":"mark"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"O","tone":"mark"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"O","tone":"cur"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"}]]},{"t":"stack","id":"calls","title":"call stack","kind":"calls","items":[]}]},
+  {"line":17,"text":"(3, 1) is connected to the border: mark it `E` (escaped). Then look at its four neighbours.","views":[{"t":"grid","id":"board","title":"board  (orange = O, green = safe, connected to the border)","cells":[[{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"O","tone":"mark"},{"v":"O","tone":"mark"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"O","tone":"mark"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"E","tone":"cur"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"}]]},{"t":"stack","id":"calls","title":"call stack","kind":"calls","items":[{"id":2,"v":"dfs(3, 1)","tone":"cur"}]}]},
+  {"line":8,"text":"(4, 1) is off the board — nothing to do.","views":[{"t":"grid","id":"board","title":"board  (orange = O, green = safe, connected to the border)","cells":[[{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"O","tone":"mark"},{"v":"O","tone":"mark"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"O","tone":"mark"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"E","tone":"good"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"}]]},{"t":"stack","id":"calls","title":"call stack","kind":"calls","items":[{"id":2,"v":"dfs(3, 1)"},{"id":3,"v":"dfs(4, 1)","tone":"cur"}]}]},
+  {"line":8,"text":"(2, 1) is not an unmarked O — nothing to do.","views":[{"t":"grid","id":"board","title":"board  (orange = O, green = safe, connected to the border)","cells":[[{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"O","tone":"mark"},{"v":"O","tone":"mark"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"X","tone":"cur"},{"v":"O","tone":"mark"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"E","tone":"good"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"}]]},{"t":"stack","id":"calls","title":"call stack","kind":"calls","items":[{"id":2,"v":"dfs(3, 1)"},{"id":4,"v":"dfs(2, 1)","tone":"cur"}]}]},
+  {"line":39,"text":"The border has been handled. Final pass over every cell: an `O` that is **still** `O` was never reached from the border, so it is surrounded.","views":[{"t":"grid","id":"board","title":"board  (orange = O, green = safe, connected to the border)","cells":[[{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"O","tone":"mark"},{"v":"O","tone":"mark"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"O","tone":"mark"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"E","tone":"good"},{"v":"X","tone":"dim"},{"v":"X","tone":"cur"}]]},{"t":"stack","id":"calls","title":"call stack","kind":"calls","items":[]}]},
+  {"line":42,"text":"(1, 1) is still `O` → surrounded on all sides. **Capture** it: flip to `X`.","views":[{"t":"grid","id":"board","title":"board  (orange = O, green = safe, connected to the border)","cells":[[{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"X","tone":"bad"},{"v":"O","tone":"mark"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"O","tone":"mark"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"E","tone":"good"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"}]]},{"t":"stack","id":"calls","title":"call stack","kind":"calls","items":[]}]},
+  {"line":42,"text":"(1, 2) is still `O` → surrounded on all sides. **Capture** it: flip to `X`.","views":[{"t":"grid","id":"board","title":"board  (orange = O, green = safe, connected to the border)","cells":[[{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"bad"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"O","tone":"mark"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"E","tone":"good"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"}]]},{"t":"stack","id":"calls","title":"call stack","kind":"calls","items":[]}]},
+  {"line":42,"text":"(2, 2) is still `O` → surrounded on all sides. **Capture** it: flip to `X`.","views":[{"t":"grid","id":"board","title":"board  (orange = O, green = safe, connected to the border)","cells":[[{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"bad"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"E","tone":"good"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"}]]},{"t":"stack","id":"calls","title":"call stack","kind":"calls","items":[]}]},
+  {"line":44,"text":"(3, 1) carries the safe mark `E`: turn it back into `O`.","views":[{"t":"grid","id":"board","title":"board  (orange = O, green = safe, connected to the border)","cells":[[{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"O","tone":"good"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"}]]},{"t":"stack","id":"calls","title":"call stack","kind":"calls","items":[]}]},
+  {"line":39,"text":"Done. The enclosed region was captured and the `O` on the border survived. The board was changed in place, so nothing is returned.","views":[{"t":"grid","id":"board","title":"board  (orange = O, green = safe, connected to the border)","cells":[[{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"},{"v":"X","tone":"dim"}],[{"v":"X","tone":"dim"},{"v":"O","tone":"mark"},{"v":"X","tone":"dim"},{"v":"X","tone":"cur"}]]},{"t":"stack","id":"calls","title":"call stack","kind":"calls","items":[]}],"final":true}
+ ]
+}

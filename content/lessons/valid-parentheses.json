@@ -1,0 +1,63 @@
+{
+ "id": 21,
+ "number": 20,
+ "title": "Valid Parentheses",
+ "slug": "valid-parentheses",
+ "category": "stack",
+ "difficulty": "Easy",
+ "url": "https://leetcode.com/problems/valid-parentheses/",
+ "pattern": "Stack of unclosed brackets",
+ "statement": "Given a string made only of the characters `( ) [ ] { }`, decide whether it is valid: every opening bracket must be closed by the **same type** of bracket, and brackets must be closed in the correct order.",
+ "example": {
+  "input": "s = \"([]{})\"",
+  "output": "True",
+  "why": "Every bracket is closed by its own kind, innermost first."
+ },
+ "more": [
+  {
+   "input": "s = \"()[]{}\"",
+   "output": "True"
+  },
+  {
+   "input": "s = \"(]\"",
+   "output": "False"
+  },
+  {
+   "input": "s = \"([\"",
+   "output": "False"
+  },
+  {
+   "input": "s = \"]\"",
+   "output": "False"
+  }
+ ],
+ "idea": [
+  "The bracket opened **last** must be the one closed **first**. That is exactly how a stack behaves: last in, first out.",
+  "See an opening bracket → push it. It waits on the stack for its partner.",
+  "See a closing bracket → it must match the **top** of the stack. If it does, pop. If it does not (or the stack is empty), the string is invalid.",
+  "At the end the stack must be empty — anything left was never closed."
+ ],
+ "code": "class Solution:\n    def isValid(self, s: str) -> bool:\n        stack = []\n        parentheses_map = {\")\": \"(\", \"}\": \"{\", \"]\": \"[\"}\n\n        for char in s:\n            if char in parentheses_map.values():\n                stack.append(char)\n            elif char in parentheses_map:\n                if not stack or stack[-1] != parentheses_map[char]:\n                    return False\n                stack.pop()\n            else:\n                return False\n\n        return not stack",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "Each character is pushed and popped at most once.",
+  "space": "O(n)",
+  "spaceWhy": "A string of only opening brackets puts every character on the stack."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`s = \"([]{})\"`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"("},{"v":"["},{"v":"]"},{"v":"{"},{"v":"}"},{"v":")"}]}]},
+  {"line":3,"text":"We keep a **stack** of opening brackets that are still waiting to be closed. It starts empty.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"("},{"v":"["},{"v":"]"},{"v":"{"},{"v":"}"},{"v":")"}]},{"t":"stack","id":"stack","title":"stack","kind":"stack","items":[]}]},
+  {"line":4,"text":"This map tells us which opening bracket each closing bracket needs.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"("},{"v":"["},{"v":"]"},{"v":"{"},{"v":"}"},{"v":")"}]},{"t":"stack","id":"stack","title":"stack","kind":"stack","items":[]},{"t":"map","id":"parentheses_map","title":"closing → opening it needs","kind":"map","entries":[{"k":")","v":"("},{"k":"}","v":"{"},{"k":"]","v":"["}]}]},
+  {"line":8,"text":"`(` is an **opening** bracket. Push it — it now waits on top of the stack for its partner.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"(","tone":"cur"},{"v":"["},{"v":"]"},{"v":"{"},{"v":"}"},{"v":")"}],"ptrs":[{"name":"char","at":0}]},{"t":"stack","id":"stack","title":"stack","kind":"stack","items":[{"id":1,"v":"("}]},{"t":"map","id":"parentheses_map","title":"closing → opening it needs","kind":"map","entries":[{"k":")","v":"("},{"k":"}","v":"{"},{"k":"]","v":"["}]}]},
+  {"line":8,"text":"`[` is an **opening** bracket. Push it — it now waits on top of the stack for its partner.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"(","tone":"dim"},{"v":"[","tone":"cur"},{"v":"]"},{"v":"{"},{"v":"}"},{"v":")"}],"ptrs":[{"name":"char","at":1}]},{"t":"stack","id":"stack","title":"stack","kind":"stack","items":[{"id":1,"v":"("},{"id":2,"v":"["}]},{"t":"map","id":"parentheses_map","title":"closing → opening it needs","kind":"map","entries":[{"k":")","v":"("},{"k":"}","v":"{"},{"k":"]","v":"["}]}]},
+  {"line":9,"text":"`]` is a **closing** bracket. It has to match the most recent unclosed opening bracket, which is the **top of the stack**: `[`.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"(","tone":"dim"},{"v":"[","tone":"dim"},{"v":"]","tone":"cur"},{"v":"{"},{"v":"}"},{"v":")"}],"ptrs":[{"name":"char","at":2}]},{"t":"stack","id":"stack","title":"stack","kind":"stack","items":[{"id":1,"v":"("},{"id":2,"v":"[","tone":"alt"}]},{"t":"map","id":"parentheses_map","title":"closing → opening it needs","kind":"map","entries":[{"k":")","v":"("},{"k":"}","v":"{"},{"k":"]","v":"[","tone":"cur"}]}]},
+  {"line":12,"text":"The top is `[`, exactly what `]` needs. The pair is complete, so pop it.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"(","tone":"dim"},{"v":"[","tone":"dim"},{"v":"]","tone":"cur"},{"v":"{"},{"v":"}"},{"v":")"}],"ptrs":[{"name":"char","at":2}]},{"t":"stack","id":"stack","title":"stack","kind":"stack","items":[{"id":1,"v":"("}]},{"t":"map","id":"parentheses_map","title":"closing → opening it needs","kind":"map","entries":[{"k":")","v":"("},{"k":"}","v":"{"},{"k":"]","v":"["}]}]},
+  {"line":8,"text":"`{` is an **opening** bracket. Push it — it now waits on top of the stack for its partner.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"(","tone":"dim"},{"v":"[","tone":"dim"},{"v":"]","tone":"dim"},{"v":"{","tone":"cur"},{"v":"}"},{"v":")"}],"ptrs":[{"name":"char","at":3}]},{"t":"stack","id":"stack","title":"stack","kind":"stack","items":[{"id":1,"v":"("},{"id":3,"v":"{"}]},{"t":"map","id":"parentheses_map","title":"closing → opening it needs","kind":"map","entries":[{"k":")","v":"("},{"k":"}","v":"{"},{"k":"]","v":"["}]}]},
+  {"line":9,"text":"`}` is a **closing** bracket. It has to match the most recent unclosed opening bracket, which is the **top of the stack**: `{`.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"(","tone":"dim"},{"v":"[","tone":"dim"},{"v":"]","tone":"dim"},{"v":"{","tone":"dim"},{"v":"}","tone":"cur"},{"v":")"}],"ptrs":[{"name":"char","at":4}]},{"t":"stack","id":"stack","title":"stack","kind":"stack","items":[{"id":1,"v":"("},{"id":3,"v":"{","tone":"alt"}]},{"t":"map","id":"parentheses_map","title":"closing → opening it needs","kind":"map","entries":[{"k":")","v":"("},{"k":"}","v":"{","tone":"cur"},{"k":"]","v":"["}]}]},
+  {"line":12,"text":"The top is `{`, exactly what `}` needs. The pair is complete, so pop it.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"(","tone":"dim"},{"v":"[","tone":"dim"},{"v":"]","tone":"dim"},{"v":"{","tone":"dim"},{"v":"}","tone":"cur"},{"v":")"}],"ptrs":[{"name":"char","at":4}]},{"t":"stack","id":"stack","title":"stack","kind":"stack","items":[{"id":1,"v":"("}]},{"t":"map","id":"parentheses_map","title":"closing → opening it needs","kind":"map","entries":[{"k":")","v":"("},{"k":"}","v":"{"},{"k":"]","v":"["}]}]},
+  {"line":9,"text":"`)` is a **closing** bracket. It has to match the most recent unclosed opening bracket, which is the **top of the stack**: `(`.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"(","tone":"dim"},{"v":"[","tone":"dim"},{"v":"]","tone":"dim"},{"v":"{","tone":"dim"},{"v":"}","tone":"dim"},{"v":")","tone":"cur"}],"ptrs":[{"name":"char","at":5}]},{"t":"stack","id":"stack","title":"stack","kind":"stack","items":[{"id":1,"v":"(","tone":"alt"}]},{"t":"map","id":"parentheses_map","title":"closing → opening it needs","kind":"map","entries":[{"k":")","v":"(","tone":"cur"},{"k":"}","v":"{"},{"k":"]","v":"["}]}]},
+  {"line":12,"text":"The top is `(`, exactly what `)` needs. The pair is complete, so pop it.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"(","tone":"dim"},{"v":"[","tone":"dim"},{"v":"]","tone":"dim"},{"v":"{","tone":"dim"},{"v":"}","tone":"dim"},{"v":")","tone":"cur"}],"ptrs":[{"name":"char","at":5}]},{"t":"stack","id":"stack","title":"stack","kind":"stack","items":[]},{"t":"map","id":"parentheses_map","title":"closing → opening it needs","kind":"map","entries":[{"k":")","v":"("},{"k":"}","v":"{"},{"k":"]","v":"["}]}]},
+  {"line":16,"text":"All characters are processed and the stack is **empty**: every opening bracket found its partner. Return **True**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"(","tone":"dim"},{"v":"[","tone":"dim"},{"v":"]","tone":"dim"},{"v":"{","tone":"dim"},{"v":"}","tone":"dim"},{"v":")","tone":"dim"}]},{"t":"stack","id":"stack","title":"stack","kind":"stack","items":[]},{"t":"map","id":"parentheses_map","title":"closing → opening it needs","kind":"map","entries":[{"k":")","v":"("},{"k":"}","v":"{"},{"k":"]","v":"["}]}]},
+  {"line":16,"text":"Done — the answer is **`True`**. Every bracket is closed by its own kind, innermost first.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"(","tone":"dim"},{"v":"[","tone":"dim"},{"v":"]","tone":"dim"},{"v":"{","tone":"dim"},{"v":"}","tone":"dim"},{"v":")","tone":"dim"}]},{"t":"stack","id":"stack","title":"stack","kind":"stack","items":[]},{"t":"map","id":"parentheses_map","title":"closing → opening it needs","kind":"map","entries":[{"k":")","v":"("},{"k":"}","v":"{"},{"k":"]","v":"["}]}],"final":true}
+ ]
+}

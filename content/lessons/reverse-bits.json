@@ -1,0 +1,63 @@
+{
+ "id": 147,
+ "number": 190,
+ "title": "Reverse Bits",
+ "slug": "reverse-bits",
+ "category": "bit-manipulation",
+ "difficulty": "Easy",
+ "url": "https://leetcode.com/problems/reverse-bits/",
+ "pattern": "Take the lowest bit, append it to the result",
+ "statement": "Reverse the bits of a 32-bit unsigned integer `n`: the lowest bit becomes the highest, the second lowest the second highest, and so on.",
+ "example": {
+  "input": "n = 11",
+  "output": "3489660928",
+  "why": "11 is 000…01011. Reversed, the bits read 11010…000, which is 3489660928."
+ },
+ "more": [
+  {
+   "input": "n = 43261596",
+   "output": "964176192"
+  },
+  {
+   "input": "n = 4294967293",
+   "output": "3221225471"
+  },
+  {
+   "input": "n = 0",
+   "output": "0"
+  },
+  {
+   "input": "n = 1",
+   "output": "2147483648"
+  }
+ ],
+ "idea": [
+  "Build the result one bit at a time. `n & 1` reads the **lowest** bit of `n`.",
+  "Shift the result **left** by one to make room, and put that bit into the free lowest place. Then shift `n` **right** so its next bit becomes the lowest.",
+  "Do this exactly 32 times. The bit read first is pushed left 31 more times and ends up highest — the order is reversed."
+ ],
+ "code": "class Solution:\n    def reverseBits(self, n: int) -> int:\n        reversed_num = 0\n        for _ in range(32):\n            reversed_num = (reversed_num << 1) | (n & 1)\n            n = n >> 1\n        return reversed_num",
+ "complexity": {
+  "time": "O(1)",
+  "timeWhy": "Always exactly 32 rounds.",
+  "space": "O(1)",
+  "spaceWhy": "One result variable."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`n = 11`**. Each step runs one highlighted line of the code.","views":[{"t":"bits","id":"bits","title":"32-bit view  (the lowest bit is on the right)","rows":[{"label":"n","bits":"00000000000000000000000000001011","v":"11"}],"hi":[31]}]},
+  {"line":3,"text":"`reversed_num` starts empty (all zeros). We will feed it the bits of n, lowest bit first.","views":[{"t":"bits","id":"bits","title":"32-bit view  (the lowest bit is on the right)","rows":[{"label":"n","bits":"00000000000000000000000000001011","v":"11"},{"label":"reversed_num","bits":"00000000000000000000000000000000","v":"0","tone":"good"}],"hi":[31]}]},
+  {"line":5,"text":"Round 1: shift the result left by one, then drop in the lowest bit of n, which is **1**.","views":[{"t":"bits","id":"bits","title":"32-bit view  (the lowest bit is on the right)","rows":[{"label":"n","bits":"00000000000000000000000000001011","v":"11"},{"label":"reversed_num","bits":"00000000000000000000000000000001","v":"1","tone":"good"}],"hi":[31]}]},
+  {"line":6,"text":"Shift n right by one: the bit just used falls off, and the next bit moves into the lowest place.","views":[{"t":"bits","id":"bits","title":"32-bit view  (the lowest bit is on the right)","rows":[{"label":"n","bits":"00000000000000000000000000000101","v":"5"},{"label":"reversed_num","bits":"00000000000000000000000000000001","v":"1","tone":"good"}],"hi":[31]}]},
+  {"line":5,"text":"Round 2: shift the result left by one, then drop in the lowest bit of n, which is **1**.","views":[{"t":"bits","id":"bits","title":"32-bit view  (the lowest bit is on the right)","rows":[{"label":"n","bits":"00000000000000000000000000000101","v":"5"},{"label":"reversed_num","bits":"00000000000000000000000000000011","v":"3","tone":"good"}],"hi":[31]}]},
+  {"line":6,"text":"Shift n right by one: the bit just used falls off, and the next bit moves into the lowest place.","views":[{"t":"bits","id":"bits","title":"32-bit view  (the lowest bit is on the right)","rows":[{"label":"n","bits":"00000000000000000000000000000010","v":"2"},{"label":"reversed_num","bits":"00000000000000000000000000000011","v":"3","tone":"good"}],"hi":[31]}]},
+  {"line":5,"text":"Round 3: shift the result left by one, then drop in the lowest bit of n, which is **0**.","views":[{"t":"bits","id":"bits","title":"32-bit view  (the lowest bit is on the right)","rows":[{"label":"n","bits":"00000000000000000000000000000010","v":"2"},{"label":"reversed_num","bits":"00000000000000000000000000000110","v":"6","tone":"good"}],"hi":[31]}]},
+  {"line":6,"text":"Shift n right by one: the bit just used falls off, and the next bit moves into the lowest place.","views":[{"t":"bits","id":"bits","title":"32-bit view  (the lowest bit is on the right)","rows":[{"label":"n","bits":"00000000000000000000000000000001","v":"1"},{"label":"reversed_num","bits":"00000000000000000000000000000110","v":"6","tone":"good"}],"hi":[31]}]},
+  {"line":5,"text":"Round 4: shift the result left by one, then drop in the lowest bit of n, which is **1**.","views":[{"t":"bits","id":"bits","title":"32-bit view  (the lowest bit is on the right)","rows":[{"label":"n","bits":"00000000000000000000000000000001","v":"1"},{"label":"reversed_num","bits":"00000000000000000000000000001101","v":"13","tone":"good"}],"hi":[31]}]},
+  {"line":6,"text":"Shift n right by one: the bit just used falls off, and the next bit moves into the lowest place.","views":[{"t":"bits","id":"bits","title":"32-bit view  (the lowest bit is on the right)","rows":[{"label":"n","bits":"00000000000000000000000000000000","v":"0"},{"label":"reversed_num","bits":"00000000000000000000000000001101","v":"13","tone":"good"}],"hi":[31]}]},
+  {"line":5,"text":"Round 5: shift the result left by one, then drop in the lowest bit of n, which is **0**.","views":[{"t":"bits","id":"bits","title":"32-bit view  (the lowest bit is on the right)","rows":[{"label":"n","bits":"00000000000000000000000000000000","v":"0"},{"label":"reversed_num","bits":"00000000000000000000000000011010","v":"26","tone":"good"}],"hi":[31]}]},
+  {"line":6,"text":"Shift n right by one: the bit just used falls off, and the next bit moves into the lowest place.","views":[{"t":"bits","id":"bits","title":"32-bit view  (the lowest bit is on the right)","rows":[{"label":"n","bits":"00000000000000000000000000000000","v":"0"},{"label":"reversed_num","bits":"00000000000000000000000000011010","v":"26","tone":"good"}],"hi":[31]}]},
+  {"line":4,"text":"The same two moves repeat for all 32 bits. n has no 1-bits left, so from now on only zeros are appended — each round still pushes the bits already placed one position further left.","views":[{"t":"bits","id":"bits","title":"32-bit view  (the lowest bit is on the right)","rows":[{"label":"n","bits":"00000000000000000000000000000000","v":"0"},{"label":"reversed_num","bits":"00000000000000000000000000011010","v":"26","tone":"good"}],"hi":[31]}]},
+  {"line":7,"text":"After 32 rounds the bit that was lowest has travelled to the highest place: the bits are reversed. As a number: **3489660928**.","views":[{"t":"bits","id":"bits","title":"32-bit view  (the lowest bit is on the right)","rows":[{"label":"n","bits":"00000000000000000000000000000000","v":"0"},{"label":"reversed_num","bits":"11010000000000000000000000000000","v":"3489660928","tone":"good"}],"hi":[31]}]},
+  {"line":7,"text":"Done — the answer is **`3489660928`**. 11 is 000…01011. Reversed, the bits read 11010…000, which is 3489660928.","views":[{"t":"bits","id":"bits","title":"32-bit view  (the lowest bit is on the right)","rows":[{"label":"n","bits":"00000000000000000000000000000000","v":"0"},{"label":"reversed_num","bits":"11010000000000000000000000000000","v":"3489660928","tone":"good"}],"hi":[31]}],"final":true}
+ ]
+}

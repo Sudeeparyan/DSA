@@ -1,0 +1,55 @@
+{
+ "id": 23,
+ "number": 150,
+ "title": "Evaluate Reverse Polish Notation",
+ "slug": "evaluate-reverse-polish-notation",
+ "category": "stack",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/evaluate-reverse-polish-notation/",
+ "pattern": "Stack of operands",
+ "statement": "Evaluate an arithmetic expression written in **Reverse Polish Notation**, where each operator comes *after* its two operands (`3 4 +` means 3 + 4). The operators are `+ - * /`, and division truncates toward zero.",
+ "example": {
+  "input": "tokens = [\"4\",\"13\",\"5\",\"/\",\"+\"]",
+  "output": "6",
+  "why": "13 / 5 = 2 (truncated), then 4 + 2 = 6."
+ },
+ "more": [
+  {
+   "input": "tokens = [\"2\",\"1\",\"+\",\"3\",\"*\"]",
+   "output": "9"
+  },
+  {
+   "input": "tokens = [\"10\",\"6\",\"9\",\"3\",\"+\",\"-11\",\"*\",\"/\",\"*\",\"17\",\"+\",\"5\",\"+\"]",
+   "output": "22"
+  },
+  {
+   "input": "tokens = [\"3\",\"-4\",\"-\"]",
+   "output": "7"
+  }
+ ],
+ "idea": [
+  "In this notation an operator always applies to the **two most recent values** — either numbers just read, or results just computed.",
+  "*Most recent first* is exactly what a stack gives. Number → push it. Operator → pop two values, combine them, and push the result back.",
+  "The first value popped is the **right-hand** operand. That matters for `−` and `/`. At the end, the one value left on the stack is the answer."
+ ],
+ "code": "class Solution:\n    def evalRPN(self, tokens: List[str]) -> int:\n        stack = []\n\n        for token in tokens:\n            if token.isdigit() or (token[0] == \"-\" and token[1:].isdigit()):\n                stack.append(int(token))\n            else:\n                num2 = stack.pop()\n                num1 = stack.pop()\n                if token == \"+\":\n                    stack.append(num1 + num2)\n                elif token == \"-\":\n                    stack.append(num1 - num2)\n                elif token == \"*\":\n                    stack.append(num1 * num2)\n                elif token == \"/\":\n                    stack.append(int(num1 / num2))\n\n        return stack[0]",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "Each token is handled once with O(1) stack work.",
+  "space": "O(n)",
+  "spaceWhy": "The stack can hold up to about half of the tokens."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`tokens = [\"4\",\"13\",\"5\",\"/\",\"+\"]`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"tokens","title":"tokens","cells":[{"v":"4"},{"v":"13"},{"v":"5"},{"v":"/"},{"v":"+"}]}]},
+  {"line":3,"text":"Numbers wait on a stack until an operator comes along to use them.","views":[{"t":"array","id":"tokens","title":"tokens","cells":[{"v":"4"},{"v":"13"},{"v":"5"},{"v":"/"},{"v":"+"}]},{"t":"stack","id":"stack","title":"stack","kind":"stack","items":[]}]},
+  {"line":7,"text":"`4` is a number. Push it onto the stack.","views":[{"t":"array","id":"tokens","title":"tokens","cells":[{"v":"4","tone":"cur"},{"v":"13"},{"v":"5"},{"v":"/"},{"v":"+"}],"ptrs":[{"name":"token","at":0}]},{"t":"stack","id":"stack","title":"stack","kind":"stack","items":[{"id":1,"v":"4","tone":"cur"}]}]},
+  {"line":7,"text":"`13` is a number. Push it onto the stack.","views":[{"t":"array","id":"tokens","title":"tokens","cells":[{"v":"4","tone":"dim"},{"v":"13","tone":"cur"},{"v":"5"},{"v":"/"},{"v":"+"}],"ptrs":[{"name":"token","at":1}]},{"t":"stack","id":"stack","title":"stack","kind":"stack","items":[{"id":1,"v":"4"},{"id":2,"v":"13","tone":"cur"}]}]},
+  {"line":7,"text":"`5` is a number. Push it onto the stack.","views":[{"t":"array","id":"tokens","title":"tokens","cells":[{"v":"4","tone":"dim"},{"v":"13","tone":"dim"},{"v":"5","tone":"cur"},{"v":"/"},{"v":"+"}],"ptrs":[{"name":"token","at":2}]},{"t":"stack","id":"stack","title":"stack","kind":"stack","items":[{"id":1,"v":"4"},{"id":2,"v":"13"},{"id":3,"v":"5","tone":"cur"}]}]},
+  {"line":10,"text":"`/` is an **operator**. It uses the two most recent values, so pop them: first the right-hand one, `num2` = 5, then the left-hand one, `num1` = 13.","views":[{"t":"array","id":"tokens","title":"tokens","cells":[{"v":"4","tone":"dim"},{"v":"13","tone":"dim"},{"v":"5","tone":"dim"},{"v":"/","tone":"cur"},{"v":"+"}],"ptrs":[{"name":"token","at":3}]},{"t":"stack","id":"stack","title":"stack","kind":"stack","items":[{"id":1,"v":"4"}]},{"t":"vars","id":"vars","items":[{"k":"num1","v":"13"},{"k":"num2","v":"5"}]}]},
+  {"line":18,"text":"13 / 5 = 2.60, truncated toward zero → **2**. Push the result back — it may be an operand for a later operator.","views":[{"t":"array","id":"tokens","title":"tokens","cells":[{"v":"4","tone":"dim"},{"v":"13","tone":"dim"},{"v":"5","tone":"dim"},{"v":"/","tone":"cur"},{"v":"+"}],"ptrs":[{"name":"token","at":3}]},{"t":"stack","id":"stack","title":"stack","kind":"stack","items":[{"id":1,"v":"4"},{"id":4,"v":"2","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"num1","v":"13"},{"k":"num2","v":"5"}]}]},
+  {"line":10,"text":"`+` is an **operator**. It uses the two most recent values, so pop them: first the right-hand one, `num2` = 2, then the left-hand one, `num1` = 4.","views":[{"t":"array","id":"tokens","title":"tokens","cells":[{"v":"4","tone":"dim"},{"v":"13","tone":"dim"},{"v":"5","tone":"dim"},{"v":"/","tone":"dim"},{"v":"+","tone":"cur"}],"ptrs":[{"name":"token","at":4}]},{"t":"stack","id":"stack","title":"stack","kind":"stack","items":[]},{"t":"vars","id":"vars","items":[{"k":"num1","v":"4","changed":true},{"k":"num2","v":"2","changed":true}]}]},
+  {"line":12,"text":"4 + 2 = **6**. Push the result back — it may be an operand for a later operator.","views":[{"t":"array","id":"tokens","title":"tokens","cells":[{"v":"4","tone":"dim"},{"v":"13","tone":"dim"},{"v":"5","tone":"dim"},{"v":"/","tone":"dim"},{"v":"+","tone":"cur"}],"ptrs":[{"name":"token","at":4}]},{"t":"stack","id":"stack","title":"stack","kind":"stack","items":[{"id":5,"v":"6","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"num1","v":"4"},{"k":"num2","v":"2"}]}]},
+  {"line":20,"text":"Every token has been used. The single value left on the stack is the answer: **6**.","views":[{"t":"array","id":"tokens","title":"tokens","cells":[{"v":"4","tone":"dim"},{"v":"13","tone":"dim"},{"v":"5","tone":"dim"},{"v":"/","tone":"dim"},{"v":"+","tone":"dim"}]},{"t":"stack","id":"stack","title":"stack","kind":"stack","items":[{"id":5,"v":"6","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"num1","v":"4"},{"k":"num2","v":"2"}]}]},
+  {"line":20,"text":"Done — the answer is **`6`**. 13 / 5 = 2 (truncated), then 4 + 2 = 6.","views":[{"t":"array","id":"tokens","title":"tokens","cells":[{"v":"4","tone":"dim"},{"v":"13","tone":"dim"},{"v":"5","tone":"dim"},{"v":"/","tone":"dim"},{"v":"+","tone":"dim"}]},{"t":"stack","id":"stack","title":"stack","kind":"stack","items":[{"id":5,"v":"6","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"num1","v":"4"},{"k":"num2","v":"2"}]}],"final":true}
+ ]
+}

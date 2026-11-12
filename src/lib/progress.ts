@@ -1,92 +1,95 @@
-export type ProblemStatus =
-  | "not_started"
-  | "learning"
-  | "understood"
-  | "need_revision";
+/**
+ * Progress kept in the browser (localStorage): which problems the learner has
+ * ticked "I understand this one", and the last lesson they opened.
+ *
+ * Nothing here ever throws: storage can be switched off, full, or blocked
+ * (private windows, strict cookie settings).  Progress then just is not saved.
+ *
+ * Stored format, kept as it is so existing progress survives updates:
+ *   "nc150-progress-v1" → { [slug]: { status, notes, updatedAt } }
+ *     (`status` is "understood" when ticked; `notes` is no longer shown but kept)
+ *   "nc150-last-slug"   → slug of the last lesson opened
+ */
 
-export interface ProgressEntry {
-  status: ProblemStatus;
+interface ProgressEntry {
+  status: string;
   notes: string;
   updatedAt: string;
 }
 
 const KEY = "nc150-progress-v1";
 const LAST_KEY = "nc150-last-slug";
+/** fired on this tab when a tick changes ("storage" covers the other tabs) */
+const EVENT = "nc150-progress";
 
-function canUseStorage(): boolean {
-  return typeof window !== "undefined" && !!window.localStorage;
+function storage(): Storage | null {
+  try {
+    // reading window.localStorage itself throws in some browsers when storage is blocked
+    return typeof window !== "undefined" ? window.localStorage : null;
+  } catch {
+    return null;
+  }
 }
 
-export function loadProgress(): Record<string, ProgressEntry> {
-  if (!canUseStorage()) return {};
+function loadAll(): Record<string, ProgressEntry> {
   try {
-    const raw = localStorage.getItem(KEY);
-    return raw ? (JSON.parse(raw) as Record<string, ProgressEntry>) : {};
+    const raw = storage()?.getItem(KEY);
+    const parsed: unknown = raw ? JSON.parse(raw) : null;
+    return parsed && typeof parsed === "object" && !Array.isArray(parsed)
+      ? (parsed as Record<string, ProgressEntry>)
+      : {};
   } catch {
     return {};
   }
 }
 
-export function saveProgress(all: Record<string, ProgressEntry>) {
-  if (!canUseStorage()) return;
-  localStorage.setItem(KEY, JSON.stringify(all));
+function saveAll(all: Record<string, ProgressEntry>): void {
+  try {
+    storage()?.setItem(KEY, JSON.stringify(all));
+    window.dispatchEvent(new Event(EVENT));
+  } catch {
+    /* storage is full or blocked; the change just will not persist */
+  }
 }
 
-export function getEntry(slug: string): ProgressEntry {
-  return (
-    loadProgress()[slug] ?? {
-      status: "not_started",
-      notes: "",
-      updatedAt: new Date(0).toISOString(),
-    }
-  );
+/** Slugs of every problem ticked "I understand this one". */
+export function loadUnderstood(): Set<string> {
+  const all = loadAll();
+  return new Set(Object.keys(all).filter((slug) => all[slug]?.status === "understood"));
 }
 
-export function setStatus(slug: string, status: ProblemStatus) {
-  const all = loadProgress();
+export function setUnderstood(slug: string, understood: boolean): void {
+  const all = loadAll();
   all[slug] = {
-    ...(all[slug] ?? { notes: "" }),
-    status,
     notes: all[slug]?.notes ?? "",
+    status: understood ? "understood" : "not_started",
     updatedAt: new Date().toISOString(),
   };
-  saveProgress(all);
-  setLastSlug(slug);
+  saveAll(all);
 }
 
-export function setNotes(slug: string, notes: string) {
-  const all = loadProgress();
-  all[slug] = {
-    status: all[slug]?.status ?? "not_started",
-    notes,
-    updatedAt: new Date().toISOString(),
+/** Calls `listener` whenever a tick changes (in this tab or another one). Returns the unsubscribe. */
+export function onProgressChange(listener: () => void): () => void {
+  window.addEventListener(EVENT, listener);
+  window.addEventListener("storage", listener);
+  return () => {
+    window.removeEventListener(EVENT, listener);
+    window.removeEventListener("storage", listener);
   };
-  saveProgress(all);
 }
 
-export function setLastSlug(slug: string) {
-  if (!canUseStorage()) return;
-  localStorage.setItem(LAST_KEY, slug);
+export function setLastSlug(slug: string): void {
+  try {
+    storage()?.setItem(LAST_KEY, slug);
+  } catch {
+    /* ignore */
+  }
 }
 
 export function getLastSlug(): string | null {
-  if (!canUseStorage()) return null;
-  return localStorage.getItem(LAST_KEY);
-}
-
-export function countByStatus(
-  slugs: string[],
-): Record<ProblemStatus, number> {
-  const all = loadProgress();
-  const counts: Record<ProblemStatus, number> = {
-    not_started: 0,
-    learning: 0,
-    understood: 0,
-    need_revision: 0,
-  };
-  for (const slug of slugs) {
-    const s = all[slug]?.status ?? "not_started";
-    counts[s] += 1;
+  try {
+    return storage()?.getItem(LAST_KEY) ?? null;
+  } catch {
+    return null;
   }
-  return counts;
 }

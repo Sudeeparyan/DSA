@@ -1,0 +1,60 @@
+{
+ "id": 45,
+ "number": 25,
+ "title": "Reverse Nodes in k-Group",
+ "slug": "reverse-nodes-in-k-group",
+ "category": "linked-list",
+ "difficulty": "Hard",
+ "url": "https://leetcode.com/problems/reverse-nodes-in-k-group/",
+ "pattern": "Reverse k nodes, recurse on the rest",
+ "statement": "Reverse the nodes of a linked list `k` at a time and return the new head. If fewer than `k` nodes remain at the end, leave them in their original order. Only the links may change, not the values.",
+ "example": {
+  "input": "head = [1,2,3,4,5], k = 2",
+  "output": "[2,1,4,3,5]",
+  "why": "1,2 becomes 2,1 and 3,4 becomes 4,3. The single node 5 is fewer than k, so it stays."
+ },
+ "more": [
+  {
+   "input": "head = [1,2,3,4,5], k = 3",
+   "output": "[3,2,1,4,5]"
+  },
+  {
+   "input": "head = [1,2], k = 2",
+   "output": "[2,1]"
+  },
+  {
+   "input": "head = [1], k = 1",
+   "output": "[1]"
+  }
+ ],
+ "idea": [
+  "Handle one group at a time: check that at least `k` nodes are left, then reverse exactly those `k` with the usual prev / current / next technique.",
+  "After reversing, the group's old first node has become its **last** node — the right place to attach whatever comes next.",
+  "What comes next is the same problem on the rest of the list, so solve it recursively and attach the result. A leftover of fewer than `k` nodes is returned unchanged."
+ ],
+ "code": "class Solution:\n    def reverseKGroup(self, head: ListNode, k: int) -> ListNode:\n        if not head or k == 1:\n            return head\n\n        # Are at least k nodes left?  Look only k nodes ahead.\n        count = 0\n        current = head\n        while current and count < k:\n            count += 1\n            current = current.next\n\n        if count < k:\n            return head\n\n        # Reverse the first k nodes\n        prev, current = None, head\n        for _ in range(k):\n            next_node = current.next\n            current.next = prev\n            prev = current\n            current = next_node\n\n        # Recursively reverse the remaining part of the list\n        head.next = self.reverseKGroup(current, k)\n\n        return prev",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "Every node is counted once (the count stops after k nodes) and has its arrow flipped once.",
+  "space": "O(n / k)",
+  "spaceWhy": "One recursive call per group waits on the call stack. (Doing the same group by group in a loop, with a dummy node in front, needs only O(1).)"
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`head = [1,2,3,4,5], k = 2`**. Each step runs one highlighted line of the code.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"next":2},{"id":2,"v":"2","x":1,"y":0,"next":3},{"id":3,"v":"3","x":2,"y":0,"next":4},{"id":4,"v":"4","x":3,"y":0,"next":5},{"id":5,"v":"5","x":4,"y":0}],"ptrs":[{"name":"head","at":1}]},{"t":"stack","id":"calls","title":"call stack","kind":"calls","items":[{"id":1,"v":"reverseKGroup(head = node 1)","tone":"cur"}]}]},
+  {"line":13,"text":"Counting ahead from node 1 found 2 nodes, so a full group of k = 2 is there. Reverse those 2.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"next":2},{"id":2,"v":"2","x":1,"y":0,"next":3},{"id":3,"v":"3","x":2,"y":0,"next":4},{"id":4,"v":"4","x":3,"y":0,"next":5},{"id":5,"v":"5","x":4,"y":0}],"ptrs":[{"name":"head","at":1},{"name":"current","at":3}]},{"t":"stack","id":"calls","title":"call stack","kind":"calls","items":[{"id":1,"v":"reverseKGroup(head = node 1)","tone":"cur"}]}]},
+  {"line":20,"text":"Flip the arrow of node 1 so it points back at None.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0},{"id":2,"v":"2","x":1,"y":0,"next":3},{"id":3,"v":"3","x":2,"y":0,"next":4},{"id":4,"v":"4","x":3,"y":0,"next":5},{"id":5,"v":"5","x":4,"y":0}],"ptrs":[{"name":"head","at":1},{"name":"prev","at":null},{"name":"current","at":1}]},{"t":"stack","id":"calls","title":"call stack","kind":"calls","items":[{"id":1,"v":"reverseKGroup(head = node 1)","tone":"cur"}]}]},
+  {"line":20,"text":"Flip the arrow of node 2 so it points back at node 1.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0},{"id":2,"v":"2","x":1,"y":0,"next":1},{"id":3,"v":"3","x":2,"y":0,"next":4},{"id":4,"v":"4","x":3,"y":0,"next":5},{"id":5,"v":"5","x":4,"y":0}],"ptrs":[{"name":"head","at":1},{"name":"prev","at":1},{"name":"current","at":2}]},{"t":"stack","id":"calls","title":"call stack","kind":"calls","items":[{"id":1,"v":"reverseKGroup(head = node 1)","tone":"cur"}]}]},
+  {"line":25,"text":"This group is reversed: node 2 is its new front and node 1 its new end. Now solve **the rest of the list** (starting at node 3) in the same way.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0},{"id":2,"v":"2","x":1,"y":0,"next":1},{"id":3,"v":"3","x":2,"y":0,"next":4},{"id":4,"v":"4","x":3,"y":0,"next":5},{"id":5,"v":"5","x":4,"y":0}],"ptrs":[{"name":"head","at":1},{"name":"prev","at":2},{"name":"current","at":3}]},{"t":"stack","id":"calls","title":"call stack","kind":"calls","items":[{"id":1,"v":"reverseKGroup(head = node 1)","tone":"cur"}]}]},
+  {"line":13,"text":"Counting ahead from node 3 found 2 nodes, so a full group of k = 2 is there. Reverse those 2.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0},{"id":2,"v":"2","x":1,"y":0,"next":1},{"id":3,"v":"3","x":2,"y":0,"next":4},{"id":4,"v":"4","x":3,"y":0,"next":5},{"id":5,"v":"5","x":4,"y":0}],"ptrs":[{"name":"head","at":3},{"name":"prev","at":2},{"name":"current","at":5}]},{"t":"stack","id":"calls","title":"call stack","kind":"calls","items":[{"id":1,"v":"reverseKGroup(head = node 1)"},{"id":2,"v":"reverseKGroup(head = node 3)","tone":"cur"}]}]},
+  {"line":20,"text":"Flip the arrow of node 3 so it points back at None.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0},{"id":2,"v":"2","x":1,"y":0,"next":1},{"id":3,"v":"3","x":2,"y":0},{"id":4,"v":"4","x":3,"y":0,"next":5},{"id":5,"v":"5","x":4,"y":0}],"ptrs":[{"name":"head","at":3},{"name":"prev","at":null},{"name":"current","at":3}]},{"t":"stack","id":"calls","title":"call stack","kind":"calls","items":[{"id":1,"v":"reverseKGroup(head = node 1)"},{"id":2,"v":"reverseKGroup(head = node 3)","tone":"cur"}]}]},
+  {"line":20,"text":"Flip the arrow of node 4 so it points back at node 3.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0},{"id":2,"v":"2","x":1,"y":0,"next":1},{"id":3,"v":"3","x":2,"y":0},{"id":4,"v":"4","x":3,"y":0,"next":3},{"id":5,"v":"5","x":4,"y":0}],"ptrs":[{"name":"head","at":3},{"name":"prev","at":3},{"name":"current","at":4}]},{"t":"stack","id":"calls","title":"call stack","kind":"calls","items":[{"id":1,"v":"reverseKGroup(head = node 1)"},{"id":2,"v":"reverseKGroup(head = node 3)","tone":"cur"}]}]},
+  {"line":25,"text":"This group is reversed: node 4 is its new front and node 3 its new end. Now solve **the rest of the list** (starting at node 5) in the same way.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0},{"id":2,"v":"2","x":1,"y":0,"next":1},{"id":3,"v":"3","x":2,"y":0},{"id":4,"v":"4","x":3,"y":0,"next":3},{"id":5,"v":"5","x":4,"y":0}],"ptrs":[{"name":"head","at":3},{"name":"prev","at":4},{"name":"current","at":5}]},{"t":"stack","id":"calls","title":"call stack","kind":"calls","items":[{"id":1,"v":"reverseKGroup(head = node 1)"},{"id":2,"v":"reverseKGroup(head = node 3)","tone":"cur"}]}]},
+  {"line":13,"text":"Starting at node 5 only 1 node remains — fewer than k = 2. It stays as it is.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0},{"id":2,"v":"2","x":1,"y":0,"next":1},{"id":3,"v":"3","x":2,"y":0},{"id":4,"v":"4","x":3,"y":0,"next":3},{"id":5,"v":"5","x":4,"y":0}],"ptrs":[{"name":"head","at":5},{"name":"prev","at":4},{"name":"current","at":null}]},{"t":"stack","id":"calls","title":"call stack","kind":"calls","items":[{"id":1,"v":"reverseKGroup(head = node 1)"},{"id":2,"v":"reverseKGroup(head = node 3)"},{"id":3,"v":"reverseKGroup(head = node 5)","tone":"cur"}]}]},
+  {"line":14,"text":"Return node 5 unchanged.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0},{"id":2,"v":"2","x":1,"y":0,"next":1},{"id":3,"v":"3","x":2,"y":0},{"id":4,"v":"4","x":3,"y":0,"next":3},{"id":5,"v":"5","x":4,"y":0}],"ptrs":[{"name":"head","at":5},{"name":"prev","at":4},{"name":"current","at":null}]},{"t":"stack","id":"calls","title":"call stack","kind":"calls","items":[{"id":1,"v":"reverseKGroup(head = node 1)"},{"id":2,"v":"reverseKGroup(head = node 3)"},{"id":3,"v":"reverseKGroup(head = node 5)","tone":"cur"}]}]},
+  {"line":25,"text":"The rest came back with node 5 in front. Attach it after node 3, the end of this group.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0},{"id":2,"v":"2","x":1,"y":0,"next":1},{"id":3,"v":"3","x":2,"y":0,"next":5},{"id":4,"v":"4","x":3,"y":0,"next":3},{"id":5,"v":"5","x":4,"y":0}],"ptrs":[{"name":"head","at":3},{"name":"prev","at":4},{"name":"current","at":5}]},{"t":"stack","id":"calls","title":"call stack","kind":"calls","items":[{"id":1,"v":"reverseKGroup(head = node 1)"},{"id":2,"v":"reverseKGroup(head = node 3)","tone":"cur"}]}]},
+  {"line":27,"text":"Return node 4, the new front of this group.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0},{"id":2,"v":"2","x":1,"y":0,"next":1},{"id":3,"v":"3","x":2,"y":0,"next":5},{"id":4,"v":"4","x":3,"y":0,"next":3},{"id":5,"v":"5","x":4,"y":0}],"ptrs":[{"name":"head","at":3},{"name":"prev","at":4},{"name":"current","at":5}]},{"t":"stack","id":"calls","title":"call stack","kind":"calls","items":[{"id":1,"v":"reverseKGroup(head = node 1)"},{"id":2,"v":"reverseKGroup(head = node 3)","tone":"cur"}]}]},
+  {"line":25,"text":"The rest came back with node 4 in front. Attach it after node 1, the end of this group.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"next":4},{"id":2,"v":"2","x":1,"y":0,"next":1},{"id":3,"v":"3","x":2,"y":0,"next":5},{"id":4,"v":"4","x":3,"y":0,"next":3},{"id":5,"v":"5","x":4,"y":0}],"ptrs":[{"name":"head","at":1},{"name":"prev","at":2},{"name":"current","at":3}]},{"t":"stack","id":"calls","title":"call stack","kind":"calls","items":[{"id":1,"v":"reverseKGroup(head = node 1)","tone":"cur"}]}]},
+  {"line":27,"text":"Return node 2, the new front of this group.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"next":4},{"id":2,"v":"2","x":1,"y":0,"next":1},{"id":3,"v":"3","x":2,"y":0,"next":5},{"id":4,"v":"4","x":3,"y":0,"next":3},{"id":5,"v":"5","x":4,"y":0}],"ptrs":[{"name":"head","at":1},{"name":"prev","at":2},{"name":"current","at":3}]},{"t":"stack","id":"calls","title":"call stack","kind":"calls","items":[{"id":1,"v":"reverseKGroup(head = node 1)","tone":"cur"}]}]},
+  {"line":27,"text":"Done — the answer is **`[2,1,4,3,5]`**. 1,2 becomes 2,1 and 3,4 becomes 4,3. The single node 5 is fewer than k, so it stays.","views":[{"t":"list","id":"list","nodes":[{"id":1,"v":"1","x":0,"y":0,"next":4,"tone":"good"},{"id":2,"v":"2","x":1,"y":0,"next":1,"tone":"good"},{"id":3,"v":"3","x":2,"y":0,"next":5,"tone":"good"},{"id":4,"v":"4","x":3,"y":0,"next":3,"tone":"good"},{"id":5,"v":"5","x":4,"y":0,"tone":"good"}],"ptrs":[{"name":"head","at":1},{"name":"prev","at":2},{"name":"current","at":3}]},{"t":"stack","id":"calls","title":"call stack","kind":"calls","items":[{"id":1,"v":"reverseKGroup(head = node 1)","tone":"cur"}]}],"final":true}
+ ]
+}

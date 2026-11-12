@@ -1,0 +1,75 @@
+{
+ "id": 118,
+ "number": 115,
+ "title": "Distinct Subsequences",
+ "slug": "distinct-subsequences",
+ "category": "2d-dp",
+ "difficulty": "Hard",
+ "url": "https://leetcode.com/problems/distinct-subsequences/",
+ "pattern": "2-D DP: use the letter or skip it",
+ "statement": "Given strings `s` and `t`, return the number of distinct **subsequences of `s`** that are equal to `t` — the number of ways to delete letters from `s` so that `t` remains.",
+ "example": {
+  "input": "s = \"babag\", t = \"bag\"",
+  "output": "3",
+  "why": "b(0) a(1) g(4), b(0) a(3) g(4) and b(2) a(3) g(4)."
+ },
+ "more": [
+  {
+   "input": "s = \"rabbbit\", t = \"rabbit\"",
+   "output": "3"
+  },
+  {
+   "input": "s = \"babgbag\", t = \"bag\"",
+   "output": "5"
+  },
+  {
+   "input": "s = \"a\", t = \"b\"",
+   "output": "0"
+  },
+  {
+   "input": "s = \"abc\", t = \"\"",
+   "output": "1"
+  },
+  {
+   "input": "s = \"\", t = \"a\"",
+   "output": "0"
+  },
+  {
+   "input": "s = \"aaa\", t = \"aa\"",
+   "output": "3"
+  }
+ ],
+ "idea": [
+  "Let `dp[i][j]` be the number of ways to form the first `j` letters of `t` from the first `i` letters of `s`.",
+  "Look at the last letter of that prefix of `s`. It can always be **skipped**: `dp[i − 1][j]` ways. If it equals the last needed letter of `t`, it can also be **used** for it: then the earlier letters must form the rest, `dp[i − 1][j − 1]` ways.",
+  "An empty `t` can be formed in exactly one way from any prefix (delete everything), so the first column is 1."
+ ],
+ "code": "class Solution:\n    def numDistinct(self, s: str, t: str) -> int:\n        m, n = len(s), len(t)\n\n        # dp[i][j] = number of ways to form t[:j] from s[:i]\n        dp = [[0] * (n + 1) for _ in range(m + 1)]\n\n        # The empty target can always be formed in exactly one way.\n        for i in range(m + 1):\n            dp[i][0] = 1\n\n        for i in range(1, m + 1):\n            for j in range(1, n + 1):\n                if s[i - 1] == t[j - 1]:\n                    # use this letter of s for t[j - 1], or skip it\n                    dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j]\n                else:\n                    # the letter cannot be used here: skip it\n                    dp[i][j] = dp[i - 1][j]\n\n        return dp[m][n]",
+ "complexity": {
+  "time": "O(m · n)",
+  "timeWhy": "One cell per pair of prefix lengths.",
+  "space": "O(m · n)",
+  "spaceWhy": "The table (one row would be enough)."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`s = \"babag\", t = \"bag\"`**. Each step runs one highlighted line of the code.","views":[]},
+  {"line":10,"text":"First column: the **empty** target can be formed from any prefix of `s` in exactly 1 way — use no letters at all.","views":[{"t":"grid","id":"dp","title":"dp[i][j] = ways to form t[:j] from s[:i]","cells":[[{"v":"1","tone":"good"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1","tone":"good"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1","tone":"good"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1","tone":"good"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1","tone":"good"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1","tone":"good"},{"v":"0"},{"v":"0"},{"v":"0"}]],"rows":["ø","b","a","b","a","g"],"cols":["ø","b","a","g"]}]},
+  {"line":16,"text":"`b` (s) = `b` (t). **Use** this letter as letter 1 of `t`: the earlier letters must form `\"\"` → 1 way (diagonal). Or **skip** it → 0 ways (above). Together **1**.","views":[{"t":"grid","id":"dp","title":"dp[i][j] = ways to form t[:j] from s[:i]","cells":[[{"v":"1","tone":"alt"},{"v":"0","tone":"alt"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"1","tone":"good"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}]],"rows":["ø","b","a","b","a","g"],"cols":["ø","b","a","g"],"ptrs":[{"name":"i, j","r":1,"c":1}]}]},
+  {"line":19,"text":"`b` (s) ≠ `a` (t): this letter of `s` cannot end `ba`, so it must be skipped. Same count as without it (cell above): **0**.","views":[{"t":"grid","id":"dp","title":"dp[i][j] = ways to form t[:j] from s[:i]","cells":[[{"v":"1"},{"v":"0"},{"v":"0","tone":"alt"},{"v":"0"}],[{"v":"1"},{"v":"1"},{"v":"0","tone":"cur"},{"v":"0"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}]],"rows":["ø","b","a","b","a","g"],"cols":["ø","b","a","g"],"ptrs":[{"name":"i, j","r":1,"c":2}]}]},
+  {"line":19,"text":"`b` (s) ≠ `g` (t): this letter of `s` cannot end `bag`, so it must be skipped. Same count as without it (cell above): **0**.","views":[{"t":"grid","id":"dp","title":"dp[i][j] = ways to form t[:j] from s[:i]","cells":[[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0","tone":"alt"}],[{"v":"1"},{"v":"1"},{"v":"0"},{"v":"0","tone":"cur"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}]],"rows":["ø","b","a","b","a","g"],"cols":["ø","b","a","g"],"ptrs":[{"name":"i, j","r":1,"c":3}]}]},
+  {"line":19,"text":"`a` (s) ≠ `b` (t): this letter of `s` cannot end `b`, so it must be skipped. Same count as without it (cell above): **1**.","views":[{"t":"grid","id":"dp","title":"dp[i][j] = ways to form t[:j] from s[:i]","cells":[[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"1","tone":"alt"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"1","tone":"cur"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}]],"rows":["ø","b","a","b","a","g"],"cols":["ø","b","a","g"],"ptrs":[{"name":"i, j","r":2,"c":1}]}]},
+  {"line":16,"text":"`a` (s) = `a` (t). **Use** this letter as letter 2 of `t`: the earlier letters must form `\"b\"` → 1 way (diagonal). Or **skip** it → 0 ways (above). Together **1**.","views":[{"t":"grid","id":"dp","title":"dp[i][j] = ways to form t[:j] from s[:i]","cells":[[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"1","tone":"alt"},{"v":"0","tone":"alt"},{"v":"0"}],[{"v":"1"},{"v":"1"},{"v":"1","tone":"good"},{"v":"0"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}]],"rows":["ø","b","a","b","a","g"],"cols":["ø","b","a","g"],"ptrs":[{"name":"i, j","r":2,"c":2}]}]},
+  {"line":19,"text":"`a` (s) ≠ `g` (t): this letter of `s` cannot end `bag`, so it must be skipped. Same count as without it (cell above): **0**.","views":[{"t":"grid","id":"dp","title":"dp[i][j] = ways to form t[:j] from s[:i]","cells":[[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"1"},{"v":"0"},{"v":"0","tone":"alt"}],[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"0","tone":"cur"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}]],"rows":["ø","b","a","b","a","g"],"cols":["ø","b","a","g"],"ptrs":[{"name":"i, j","r":2,"c":3}]}]},
+  {"line":16,"text":"`b` (s) = `b` (t). **Use** this letter as letter 1 of `t`: the earlier letters must form `\"\"` → 1 way (diagonal). Or **skip** it → 1 way (above). Together **2**.","views":[{"t":"grid","id":"dp","title":"dp[i][j] = ways to form t[:j] from s[:i]","cells":[[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"1"},{"v":"0"},{"v":"0"}],[{"v":"1","tone":"alt"},{"v":"1","tone":"alt"},{"v":"1"},{"v":"0"}],[{"v":"1"},{"v":"2","tone":"good"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}]],"rows":["ø","b","a","b","a","g"],"cols":["ø","b","a","g"],"ptrs":[{"name":"i, j","r":3,"c":1}]}]},
+  {"line":19,"text":"`b` (s) ≠ `a` (t): this letter of `s` cannot end `ba`, so it must be skipped. Same count as without it (cell above): **1**.","views":[{"t":"grid","id":"dp","title":"dp[i][j] = ways to form t[:j] from s[:i]","cells":[[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"1"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"1"},{"v":"1","tone":"alt"},{"v":"0"}],[{"v":"1"},{"v":"2"},{"v":"1","tone":"cur"},{"v":"0"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}]],"rows":["ø","b","a","b","a","g"],"cols":["ø","b","a","g"],"ptrs":[{"name":"i, j","r":3,"c":2}]}]},
+  {"line":19,"text":"`b` (s) ≠ `g` (t): this letter of `s` cannot end `bag`, so it must be skipped. Same count as without it (cell above): **0**.","views":[{"t":"grid","id":"dp","title":"dp[i][j] = ways to form t[:j] from s[:i]","cells":[[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"1"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"0","tone":"alt"}],[{"v":"1"},{"v":"2"},{"v":"1"},{"v":"0","tone":"cur"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}]],"rows":["ø","b","a","b","a","g"],"cols":["ø","b","a","g"],"ptrs":[{"name":"i, j","r":3,"c":3}]}]},
+  {"line":19,"text":"`a` (s) ≠ `b` (t): this letter of `s` cannot end `b`, so it must be skipped. Same count as without it (cell above): **2**.","views":[{"t":"grid","id":"dp","title":"dp[i][j] = ways to form t[:j] from s[:i]","cells":[[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"1"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"0"}],[{"v":"1"},{"v":"2","tone":"alt"},{"v":"1"},{"v":"0"}],[{"v":"1"},{"v":"2","tone":"cur"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}]],"rows":["ø","b","a","b","a","g"],"cols":["ø","b","a","g"],"ptrs":[{"name":"i, j","r":4,"c":1}]}]},
+  {"line":16,"text":"`a` (s) = `a` (t). **Use** this letter as letter 2 of `t`: the earlier letters must form `\"b\"` → 2 ways (diagonal). Or **skip** it → 1 way (above). Together **3**.","views":[{"t":"grid","id":"dp","title":"dp[i][j] = ways to form t[:j] from s[:i]","cells":[[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"1"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"0"}],[{"v":"1"},{"v":"2","tone":"alt"},{"v":"1","tone":"alt"},{"v":"0"}],[{"v":"1"},{"v":"2"},{"v":"3","tone":"good"},{"v":"0"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}]],"rows":["ø","b","a","b","a","g"],"cols":["ø","b","a","g"],"ptrs":[{"name":"i, j","r":4,"c":2}]}]},
+  {"line":19,"text":"`a` (s) ≠ `g` (t): this letter of `s` cannot end `bag`, so it must be skipped. Same count as without it (cell above): **0**.","views":[{"t":"grid","id":"dp","title":"dp[i][j] = ways to form t[:j] from s[:i]","cells":[[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"1"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"0"}],[{"v":"1"},{"v":"2"},{"v":"1"},{"v":"0","tone":"alt"}],[{"v":"1"},{"v":"2"},{"v":"3"},{"v":"0","tone":"cur"}],[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}]],"rows":["ø","b","a","b","a","g"],"cols":["ø","b","a","g"],"ptrs":[{"name":"i, j","r":4,"c":3}]}]},
+  {"line":19,"text":"`g` (s) ≠ `b` (t): this letter of `s` cannot end `b`, so it must be skipped. Same count as without it (cell above): **2**.","views":[{"t":"grid","id":"dp","title":"dp[i][j] = ways to form t[:j] from s[:i]","cells":[[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"1"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"0"}],[{"v":"1"},{"v":"2"},{"v":"1"},{"v":"0"}],[{"v":"1"},{"v":"2","tone":"alt"},{"v":"3"},{"v":"0"}],[{"v":"1"},{"v":"2","tone":"cur"},{"v":"0"},{"v":"0"}]],"rows":["ø","b","a","b","a","g"],"cols":["ø","b","a","g"],"ptrs":[{"name":"i, j","r":5,"c":1}]}]},
+  {"line":19,"text":"`g` (s) ≠ `a` (t): this letter of `s` cannot end `ba`, so it must be skipped. Same count as without it (cell above): **3**.","views":[{"t":"grid","id":"dp","title":"dp[i][j] = ways to form t[:j] from s[:i]","cells":[[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"1"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"0"}],[{"v":"1"},{"v":"2"},{"v":"1"},{"v":"0"}],[{"v":"1"},{"v":"2"},{"v":"3","tone":"alt"},{"v":"0"}],[{"v":"1"},{"v":"2"},{"v":"3","tone":"cur"},{"v":"0"}]],"rows":["ø","b","a","b","a","g"],"cols":["ø","b","a","g"],"ptrs":[{"name":"i, j","r":5,"c":2}]}]},
+  {"line":16,"text":"`g` (s) = `g` (t). **Use** this letter as letter 3 of `t`: the earlier letters must form `\"ba\"` → 3 ways (diagonal). Or **skip** it → 0 ways (above). Together **3**.","views":[{"t":"grid","id":"dp","title":"dp[i][j] = ways to form t[:j] from s[:i]","cells":[[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"1"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"0"}],[{"v":"1"},{"v":"2"},{"v":"1"},{"v":"0"}],[{"v":"1"},{"v":"2"},{"v":"3","tone":"alt"},{"v":"0","tone":"alt"}],[{"v":"1"},{"v":"2"},{"v":"3"},{"v":"3","tone":"good"}]],"rows":["ø","b","a","b","a","g"],"cols":["ø","b","a","g"],"ptrs":[{"name":"i, j","r":5,"c":3}]}]},
+  {"line":21,"text":"The bottom-right cell uses all of `s` and all of `t`: **3** ways.","views":[{"t":"grid","id":"dp","title":"dp[i][j] = ways to form t[:j] from s[:i]","cells":[[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"1"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"0"}],[{"v":"1"},{"v":"2"},{"v":"1"},{"v":"0"}],[{"v":"1"},{"v":"2"},{"v":"3"},{"v":"0"}],[{"v":"1"},{"v":"2"},{"v":"3"},{"v":"3","tone":"good"}]],"rows":["ø","b","a","b","a","g"],"cols":["ø","b","a","g"],"ptrs":[{"name":"i, j","r":5,"c":3}]}]},
+  {"line":21,"text":"Done — the answer is **`3`**. b(0) a(1) g(4), b(0) a(3) g(4) and b(2) a(3) g(4).","views":[{"t":"grid","id":"dp","title":"dp[i][j] = ways to form t[:j] from s[:i]","cells":[[{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"1"},{"v":"0"},{"v":"0"}],[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"0"}],[{"v":"1"},{"v":"2"},{"v":"1"},{"v":"0"}],[{"v":"1"},{"v":"2"},{"v":"3"},{"v":"0"}],[{"v":"1"},{"v":"2"},{"v":"3"},{"v":"3","tone":"good"}]],"rows":["ø","b","a","b","a","g"],"cols":["ø","b","a","g"],"ptrs":[{"name":"i, j","r":5,"c":3}]}],"final":true}
+ ]
+}

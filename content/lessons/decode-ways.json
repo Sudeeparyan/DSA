@@ -1,0 +1,77 @@
+{
+ "id": 105,
+ "number": 91,
+ "title": "Decode Ways",
+ "slug": "decode-ways",
+ "category": "1d-dp",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/decode-ways/",
+ "pattern": "DP on the last one or two digits",
+ "statement": "Letters are encoded as numbers: `A → 1`, `B → 2`, … `Z → 26`. Given a string of digits `s`, return the number of ways to decode it into letters. A group may not have a leading zero (`06` is not `6`), and `0` alone is not a letter.",
+ "example": {
+  "input": "s = \"11106\"",
+  "output": "2",
+  "why": "\"1 1 10 6\" (AAJF) and \"11 10 6\" (KJF). The 0 can only be used as part of \"10\"."
+ },
+ "more": [
+  {
+   "input": "s = \"12\"",
+   "output": "2"
+  },
+  {
+   "input": "s = \"226\"",
+   "output": "3"
+  },
+  {
+   "input": "s = \"06\"",
+   "output": "0"
+  },
+  {
+   "input": "s = \"0\"",
+   "output": "0"
+  },
+  {
+   "input": "s = \"10\"",
+   "output": "1"
+  },
+  {
+   "input": "s = \"27\"",
+   "output": "1"
+  },
+  {
+   "input": "s = \"100\"",
+   "output": "0"
+  }
+ ],
+ "idea": [
+  "Let `dp[i]` be the number of ways to decode the **first i digits**.",
+  "The last letter of such a decoding comes from the last digit alone (valid if it is 1–9) or from the last two digits (valid if they form 10–26).",
+  "If the single digit is valid, every decoding of the first `i − 1` digits can be extended: add `dp[i − 1]`. If the pair is valid, add `dp[i − 2]`. A `0` therefore contributes nothing on its own."
+ ],
+ "code": "class Solution:\n    def numDecodings(self, s: str) -> int:\n        n = len(s)\n\n        # Initialize a DP array to store the number of ways to decode substrings.\n        dp = [0] * (n + 1)\n\n        # Base cases:\n        dp[0] = 1  # An empty string can be decoded in one way.\n        dp[1] = (\n            1 if s[0] != \"0\" else 0\n        )  # The first character can be decoded in one way if it's not '0'.\n\n        # Fill in the DP array.\n        for i in range(2, n + 1):\n            # Check the one-digit and two-digit possibilities.\n            one_digit = int(s[i - 1])\n            two_digits = int(s[i - 2 : i])\n\n            # If the one-digit is not '0', it can be decoded in the same way as dp[i-1].\n            if one_digit != 0:\n                dp[i] += dp[i - 1]\n\n            # If the two-digit is between 10 and 26, it can be decoded in the same way as dp[i-2].\n            if 10 <= two_digits <= 26:\n                dp[i] += dp[i - 2]\n\n        return dp[n]",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "One pass over the digits.",
+  "space": "O(n)",
+  "spaceWhy": "The dp array (the last two entries would be enough)."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`s = \"11106\"`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"0"},{"v":"6"}]}]},
+  {"line":9,"text":"`dp[i]` counts the decodings of the first i digits. For zero digits there is exactly **1** way: decode nothing. (This makes the additions below work out.)","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"0"},{"v":"6"}]},{"t":"array","id":"dp","title":"dp[i] = ways to decode the first i digits","cells":[{"v":"1","tone":"good"},{"v":"0"},{"v":"0"},{"v":"0"},{"v":"0"},{"v":"0"}]}]},
+  {"line":10,"text":"The first digit `1` is a letter by itself → `dp[1]` = 1.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"1","tone":"cur"},{"v":"1"},{"v":"1"},{"v":"0"},{"v":"6"}]},{"t":"array","id":"dp","title":"dp[i] = ways to decode the first i digits","cells":[{"v":"1"},{"v":"1","tone":"good"},{"v":"0"},{"v":"0"},{"v":"0"},{"v":"0"}]}]},
+  {"line":18,"text":"Now the first 2 digits, `11`. Its last letter is made from the last digit alone (`1`) or from the last two digits (`11`).","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"1"},{"v":"1","tone":"cur"},{"v":"1"},{"v":"0"},{"v":"6"}],"ranges":[{"from":0,"to":1,"label":"last two","tone":"alt"}]},{"t":"array","id":"dp","title":"dp[i] = ways to decode the first i digits","cells":[{"v":"1"},{"v":"1"},{"v":"0"},{"v":"0"},{"v":"0"},{"v":"0"}]},{"t":"vars","id":"vars","items":[{"k":"one_digit","v":"1"},{"k":"two_digits","v":"11"}]}]},
+  {"line":22,"text":"`1` alone is a letter. Every decoding of the first 1 digit can be extended by it: add `dp[1]` = 1 → `dp[2]` = 1.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"1"},{"v":"1","tone":"cur"},{"v":"1"},{"v":"0"},{"v":"6"}],"ranges":[{"from":0,"to":1,"label":"last two","tone":"alt"}]},{"t":"array","id":"dp","title":"dp[i] = ways to decode the first i digits","cells":[{"v":"1"},{"v":"1","tone":"alt"},{"v":"1","tone":"cur"},{"v":"0"},{"v":"0"},{"v":"0"}]},{"t":"vars","id":"vars","items":[{"k":"one_digit","v":"1"},{"k":"two_digits","v":"11"}]}]},
+  {"line":26,"text":"The pair `11` is a letter (10–26). Every decoding of the first 0 digits can be extended by it: add `dp[0]` = 1 → `dp[2]` = **2**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"1"},{"v":"1","tone":"cur"},{"v":"1"},{"v":"0"},{"v":"6"}],"ranges":[{"from":0,"to":1,"label":"last two","tone":"alt"}]},{"t":"array","id":"dp","title":"dp[i] = ways to decode the first i digits","cells":[{"v":"1","tone":"alt"},{"v":"1"},{"v":"2","tone":"good"},{"v":"0"},{"v":"0"},{"v":"0"}]},{"t":"vars","id":"vars","items":[{"k":"one_digit","v":"1"},{"k":"two_digits","v":"11"}]}]},
+  {"line":18,"text":"Now the first 3 digits, `111`. Its last letter is made from the last digit alone (`1`) or from the last two digits (`11`).","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"1"},{"v":"1"},{"v":"1","tone":"cur"},{"v":"0"},{"v":"6"}],"ranges":[{"from":1,"to":2,"label":"last two","tone":"alt"}]},{"t":"array","id":"dp","title":"dp[i] = ways to decode the first i digits","cells":[{"v":"1"},{"v":"1"},{"v":"2"},{"v":"0"},{"v":"0"},{"v":"0"}]},{"t":"vars","id":"vars","items":[{"k":"one_digit","v":"1"},{"k":"two_digits","v":"11"}]}]},
+  {"line":22,"text":"`1` alone is a letter. Every decoding of the first 2 digits can be extended by it: add `dp[2]` = 2 → `dp[3]` = 2.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"1"},{"v":"1"},{"v":"1","tone":"cur"},{"v":"0"},{"v":"6"}],"ranges":[{"from":1,"to":2,"label":"last two","tone":"alt"}]},{"t":"array","id":"dp","title":"dp[i] = ways to decode the first i digits","cells":[{"v":"1"},{"v":"1"},{"v":"2","tone":"alt"},{"v":"2","tone":"cur"},{"v":"0"},{"v":"0"}]},{"t":"vars","id":"vars","items":[{"k":"one_digit","v":"1"},{"k":"two_digits","v":"11"}]}]},
+  {"line":26,"text":"The pair `11` is a letter (10–26). Every decoding of the first 1 digit can be extended by it: add `dp[1]` = 1 → `dp[3]` = **3**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"1"},{"v":"1"},{"v":"1","tone":"cur"},{"v":"0"},{"v":"6"}],"ranges":[{"from":1,"to":2,"label":"last two","tone":"alt"}]},{"t":"array","id":"dp","title":"dp[i] = ways to decode the first i digits","cells":[{"v":"1"},{"v":"1","tone":"alt"},{"v":"2"},{"v":"3","tone":"good"},{"v":"0"},{"v":"0"}]},{"t":"vars","id":"vars","items":[{"k":"one_digit","v":"1"},{"k":"two_digits","v":"11"}]}]},
+  {"line":18,"text":"Now the first 4 digits, `1110`. Its last letter is made from the last digit alone (`0`) or from the last two digits (`10`).","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"0","tone":"cur"},{"v":"6"}],"ranges":[{"from":2,"to":3,"label":"last two","tone":"alt"}]},{"t":"array","id":"dp","title":"dp[i] = ways to decode the first i digits","cells":[{"v":"1"},{"v":"1"},{"v":"2"},{"v":"3"},{"v":"0"},{"v":"0"}]},{"t":"vars","id":"vars","items":[{"k":"one_digit","v":"0","changed":true},{"k":"two_digits","v":"10","changed":true}]}]},
+  {"line":21,"text":"`0` on its own is not a letter, so this option adds nothing.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"0","tone":"cur"},{"v":"6"}],"ranges":[{"from":2,"to":3,"label":"last two","tone":"alt"}]},{"t":"array","id":"dp","title":"dp[i] = ways to decode the first i digits","cells":[{"v":"1"},{"v":"1"},{"v":"2"},{"v":"3"},{"v":"0"},{"v":"0"}]},{"t":"vars","id":"vars","items":[{"k":"one_digit","v":"0"},{"k":"two_digits","v":"10"}]}]},
+  {"line":26,"text":"The pair `10` is a letter (10–26). Every decoding of the first 2 digits can be extended by it: add `dp[2]` = 2 → `dp[4]` = **2**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"0","tone":"cur"},{"v":"6"}],"ranges":[{"from":2,"to":3,"label":"last two","tone":"alt"}]},{"t":"array","id":"dp","title":"dp[i] = ways to decode the first i digits","cells":[{"v":"1"},{"v":"1"},{"v":"2","tone":"alt"},{"v":"3"},{"v":"2","tone":"good"},{"v":"0"}]},{"t":"vars","id":"vars","items":[{"k":"one_digit","v":"0"},{"k":"two_digits","v":"10"}]}]},
+  {"line":18,"text":"Now the first 5 digits, `11106`. Its last letter is made from the last digit alone (`6`) or from the last two digits (`06`).","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"0"},{"v":"6","tone":"cur"}],"ranges":[{"from":3,"to":4,"label":"last two","tone":"alt"}]},{"t":"array","id":"dp","title":"dp[i] = ways to decode the first i digits","cells":[{"v":"1"},{"v":"1"},{"v":"2"},{"v":"3"},{"v":"2"},{"v":"0"}]},{"t":"vars","id":"vars","items":[{"k":"one_digit","v":"6","changed":true},{"k":"two_digits","v":"6","changed":true}]}]},
+  {"line":22,"text":"`6` alone is a letter. Every decoding of the first 4 digits can be extended by it: add `dp[4]` = 2 → `dp[5]` = 2.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"0"},{"v":"6","tone":"cur"}],"ranges":[{"from":3,"to":4,"label":"last two","tone":"alt"}]},{"t":"array","id":"dp","title":"dp[i] = ways to decode the first i digits","cells":[{"v":"1"},{"v":"1"},{"v":"2"},{"v":"3"},{"v":"2","tone":"alt"},{"v":"2","tone":"cur"}]},{"t":"vars","id":"vars","items":[{"k":"one_digit","v":"6"},{"k":"two_digits","v":"6"}]}]},
+  {"line":25,"text":"`06` is not between 10 and 26, so the last two digits do not form a letter. `dp[5]` stays **2**.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"0"},{"v":"6","tone":"cur"}],"ranges":[{"from":3,"to":4,"label":"last two","tone":"alt"}]},{"t":"array","id":"dp","title":"dp[i] = ways to decode the first i digits","cells":[{"v":"1"},{"v":"1"},{"v":"2"},{"v":"3"},{"v":"2"},{"v":"2","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"one_digit","v":"6"},{"k":"two_digits","v":"6"}]}]},
+  {"line":28,"text":"`dp[5]` covers the whole string: **2** ways to decode it.","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"0"},{"v":"6","tone":"cur"}],"ranges":[{"from":3,"to":4,"label":"last two","tone":"alt"}]},{"t":"array","id":"dp","title":"dp[i] = ways to decode the first i digits","cells":[{"v":"1"},{"v":"1"},{"v":"2"},{"v":"3"},{"v":"2"},{"v":"2","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"one_digit","v":"6"},{"k":"two_digits","v":"6"}]}]},
+  {"line":28,"text":"Done — the answer is **`2`**. \"1 1 10 6\" (AAJF) and \"11 10 6\" (KJF). The 0 can only be used as part of \"10\".","views":[{"t":"array","id":"s","title":"s","cells":[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"0"},{"v":"6","tone":"cur"}],"ranges":[{"from":3,"to":4,"label":"last two","tone":"alt"}]},{"t":"array","id":"dp","title":"dp[i] = ways to decode the first i digits","cells":[{"v":"1"},{"v":"1"},{"v":"2"},{"v":"3"},{"v":"2"},{"v":"2","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"one_digit","v":"6"},{"k":"two_digits","v":"6"}]}],"final":true}
+ ]
+}

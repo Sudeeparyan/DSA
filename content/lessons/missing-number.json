@@ -1,0 +1,55 @@
+{
+ "id": 148,
+ "number": 268,
+ "title": "Missing Number",
+ "slug": "missing-number",
+ "category": "bit-manipulation",
+ "difficulty": "Easy",
+ "url": "https://leetcode.com/problems/missing-number/",
+ "pattern": "XOR every index with every value",
+ "statement": "`nums` contains `n` **distinct** numbers taken from the range `0 … n`, so exactly one number of that range is missing. Return the missing number.",
+ "example": {
+  "input": "nums = [3,0,1]",
+  "output": "2",
+  "why": "The range is 0 … 3, and 2 is the only number that does not appear."
+ },
+ "more": [
+  {
+   "input": "nums = [0,1]",
+   "output": "2"
+  },
+  {
+   "input": "nums = [9,6,4,2,3,5,7,0,1]",
+   "output": "8"
+  },
+  {
+   "input": "nums = [0]",
+   "output": "1"
+  },
+  {
+   "input": "nums = [1]",
+   "output": "0"
+  }
+ ],
+ "idea": [
+  "Imagine two lists: all the numbers `0 … n`, and the values in `nums`. Every number except the missing one appears in **both** lists.",
+  "XOR cancels pairs (`a ^ a = 0`). So XOR-ing both lists together cancels everything that is present, and only the missing number survives.",
+  "The loop supplies the indexes `0 … n − 1` and the values; the remaining number `n` is put in as the starting value."
+ ],
+ "code": "class Solution:\n    def missingNumber(self, nums: List[int]) -> int:\n        n = len(nums)\n        missing_num = n\n\n        for i in range(n):\n            missing_num ^= i ^ nums[i]\n\n        return missing_num",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "One pass over the array, with two XOR operations per index.",
+  "space": "O(1)",
+  "spaceWhy": "One variable."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`nums = [3,0,1]`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"0"},{"v":"1"}]}]},
+  {"line":4,"text":"The full range is 0 … 3. The loop will XOR in the indexes 0 … 2, so start with the one number it never visits: `missing_num` = **3**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"0"},{"v":"1"}]},{"t":"bits","id":"bits","rows":[{"label":"missing_num","bits":"0011","v":"3","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"missing_num","v":"3"}]}]},
+  {"line":7,"text":"XOR in the index 0 and the value 3: 3 ^ 0 ^ 3 = **0**. Any number that has been put in **twice** (once from the range, once as a value) has cancelled out.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"0"},{"v":"1"}],"ptrs":[{"name":"i","at":0}]},{"t":"bits","id":"bits","rows":[{"label":"missing_num","bits":"0000","v":"0","tone":"good"},{"label":"i","bits":"0000","v":"0"},{"label":"nums[i]","bits":"0011","v":"3","tone":"alt"}]},{"t":"vars","id":"vars","items":[{"k":"missing_num","v":"0","changed":true}]}]},
+  {"line":7,"text":"XOR in the index 1 and the value 0: 0 ^ 1 ^ 0 = **1**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"0"},{"v":"1"}],"ptrs":[{"name":"i","at":1}]},{"t":"bits","id":"bits","rows":[{"label":"missing_num","bits":"0001","v":"1","tone":"good"},{"label":"i","bits":"0001","v":"1"},{"label":"nums[i]","bits":"0000","v":"0","tone":"alt"}]},{"t":"vars","id":"vars","items":[{"k":"missing_num","v":"1","changed":true}]}]},
+  {"line":7,"text":"XOR in the index 2 and the value 1: 1 ^ 2 ^ 1 = **2**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"0"},{"v":"1"}],"ptrs":[{"name":"i","at":2}]},{"t":"bits","id":"bits","rows":[{"label":"missing_num","bits":"0010","v":"2","tone":"good"},{"label":"i","bits":"0010","v":"2"},{"label":"nums[i]","bits":"0001","v":"1","tone":"alt"}]},{"t":"vars","id":"vars","items":[{"k":"missing_num","v":"2","changed":true}]}]},
+  {"line":9,"text":"All indexes 0 … 3 and all values have been XOR-ed together. Every number present cancelled itself; what is left is the missing one: **2**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"0"},{"v":"1"}],"ptrs":[{"name":"i","at":2}]},{"t":"bits","id":"bits","rows":[{"label":"missing_num","bits":"0010","v":"2","tone":"good"},{"label":"i","bits":"0010","v":"2"},{"label":"nums[i]","bits":"0001","v":"1","tone":"alt"}]},{"t":"vars","id":"vars","items":[{"k":"missing_num","v":"2"}]}]},
+  {"line":9,"text":"Done — the answer is **`2`**. The range is 0 … 3, and 2 is the only number that does not appear.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"0"},{"v":"1"}],"ptrs":[{"name":"i","at":2}]},{"t":"bits","id":"bits","rows":[{"label":"missing_num","bits":"0010","v":"2","tone":"good"},{"label":"i","bits":"0010","v":"2"},{"label":"nums[i]","bits":"0001","v":"1","tone":"alt"}]},{"t":"vars","id":"vars","items":[{"k":"missing_num","v":"2"}]}],"final":true}
+ ]
+}

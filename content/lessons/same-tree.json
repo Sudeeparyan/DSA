@@ -1,0 +1,52 @@
+{
+ "id": 50,
+ "number": 100,
+ "title": "Same Tree",
+ "slug": "same-tree",
+ "category": "trees",
+ "difficulty": "Easy",
+ "url": "https://leetcode.com/problems/same-tree/",
+ "pattern": "Walk two trees in step",
+ "statement": "Given the roots of two binary trees `p` and `q`, return `True` if they are the same: identical shape, and equal values in every position.",
+ "example": {
+  "input": "p = [1,2,3], q = [1,2,4]",
+  "output": "False",
+  "why": "The right children differ: 3 in one tree, 4 in the other."
+ },
+ "more": [
+  {
+   "input": "p = [1,2,3], q = [1,2,3]",
+   "output": "True"
+  },
+  {
+   "input": "p = [1,2], q = [1,None,2]",
+   "output": "False"
+  },
+  {
+   "input": "p = None, q = None",
+   "output": "True"
+  }
+ ],
+ "idea": [
+  "Two trees are the same when their roots match, their left subtrees are the same, **and** their right subtrees are the same.",
+  "That definition is recursive, so the code is too: compare one pair of nodes, then recurse into both pairs of children.",
+  "Two base cases stop it: both spots empty → equal; exactly one empty, or different values → not equal."
+ ],
+ "code": "class Solution:\n    def isSameTree(self, p: TreeNode, q: TreeNode) -> bool:\n        if not p and not q:\n            return True\n        if not p or not q or p.val != q.val:\n            return False\n        return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "Each pair of nodes is compared once (n = size of the smaller tree).",
+  "space": "O(h)",
+  "spaceWhy": "The recursion stack is as deep as the tree's height h."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`p = [1,2,3], q = [1,2,4]`**. Each step runs one highlighted line of the code.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"cur"},{"id":2,"v":"2"},{"id":3,"v":"3"},{"id":4,"v":"1","l":5,"r":6,"tone":"cur"},{"id":5,"v":"2"},{"id":6,"v":"4"}],"roots":[1,4],"ptrs":[{"name":"p","at":1},{"name":"q","at":4}]}]},
+  {"line":5,"text":"`p` holds 1 and `q` holds 1: these match. Now their left subtrees must match **and** their right subtrees must match.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"good"},{"id":2,"v":"2"},{"id":3,"v":"3"},{"id":4,"v":"1","l":5,"r":6,"tone":"good"},{"id":5,"v":"2"},{"id":6,"v":"4"}],"roots":[1,4],"ptrs":[{"name":"p","at":1},{"name":"q","at":4}]}]},
+  {"line":5,"text":"`p` holds 2 and `q` holds 2: these match. Now their left subtrees must match **and** their right subtrees must match.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3},{"id":2,"v":"2","tone":"good"},{"id":3,"v":"3"},{"id":4,"v":"1","l":5,"r":6},{"id":5,"v":"2","tone":"good"},{"id":6,"v":"4"}],"roots":[1,4],"ptrs":[{"name":"p","at":2},{"name":"q","at":5}]}]},
+  {"line":3,"text":"Both spots are empty, so they match: return True. (Every pair of empty spots ends this way.)","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3},{"id":2,"v":"2"},{"id":3,"v":"3"},{"id":4,"v":"1","l":5,"r":6},{"id":5,"v":"2"},{"id":6,"v":"4"}],"roots":[1,4]}]},
+  {"line":7,"text":"Below the pair of 2s: both sides matched, so return **True**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3},{"id":2,"v":"2","tone":"cur"},{"id":3,"v":"3"},{"id":4,"v":"1","l":5,"r":6},{"id":5,"v":"2","tone":"cur"},{"id":6,"v":"4"}],"roots":[1,4],"ptrs":[{"name":"p","at":2},{"name":"q","at":5}]}]},
+  {"line":5,"text":"`p` holds 3 but `q` holds 4. The values differ → **different**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3},{"id":2,"v":"2"},{"id":3,"v":"3","tone":"bad"},{"id":4,"v":"1","l":5,"r":6},{"id":5,"v":"2"},{"id":6,"v":"4","tone":"bad"}],"roots":[1,4],"ptrs":[{"name":"p","at":3},{"name":"q","at":6}]}]},
+  {"line":7,"text":"Below the pair of 1s: not everything matched, so return **False**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"cur"},{"id":2,"v":"2"},{"id":3,"v":"3"},{"id":4,"v":"1","l":5,"r":6,"tone":"cur"},{"id":5,"v":"2"},{"id":6,"v":"4"}],"roots":[1,4],"ptrs":[{"name":"p","at":1},{"name":"q","at":4}]}]},
+  {"line":7,"text":"Done — the answer is **`False`**. The right children differ: 3 in one tree, 4 in the other.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"cur"},{"id":2,"v":"2"},{"id":3,"v":"3"},{"id":4,"v":"1","l":5,"r":6,"tone":"cur"},{"id":5,"v":"2"},{"id":6,"v":"4"}],"roots":[1,4],"ptrs":[{"name":"p","at":1},{"name":"q","at":4}]}],"final":true}
+ ]
+}

@@ -1,0 +1,62 @@
+{
+ "id": 111,
+ "number": 62,
+ "title": "Unique Paths",
+ "slug": "unique-paths",
+ "category": "2d-dp",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/unique-paths/",
+ "pattern": "Grid DP: paths from above + paths from the left",
+ "statement": "A robot starts in the top-left corner of an `m × n` grid and can only move **right or down**. How many different paths lead to the bottom-right corner?",
+ "example": {
+  "input": "m = 3, n = 4",
+  "output": "10",
+  "why": "Every path consists of 2 moves down and 3 moves right in some order: 5! / (2! · 3!) = 10."
+ },
+ "more": [
+  {
+   "input": "m = 3, n = 7",
+   "output": "28"
+  },
+  {
+   "input": "m = 3, n = 2",
+   "output": "3"
+  },
+  {
+   "input": "m = 1, n = 1",
+   "output": "1"
+  },
+  {
+   "input": "m = 1, n = 9",
+   "output": "1"
+  },
+  {
+   "input": "m = 7, n = 3",
+   "output": "28"
+  }
+ ],
+ "idea": [
+  "Let `dp[i][j]` be the number of paths from the start to cell `(i, j)`.",
+  "The robot can enter a cell only **from above** or **from the left**. Every path to either of those cells extends to exactly one path into this cell, so `dp[i][j] = dp[i − 1][j] + dp[i][j − 1]`.",
+  "Cells in the top row or the left column can be reached in exactly one way (straight along the edge), so they are 1."
+ ],
+ "code": "class Solution:\n    def uniquePaths(self, m: int, n: int) -> int:\n        # Initialize a 2D dp grid of size m x n with all values set to 1.\n        dp = [[1] * n for _ in range(m)]\n\n        # Fill in the dp grid using dynamic programming.\n        for i in range(1, m):\n            for j in range(1, n):\n                dp[i][j] = dp[i - 1][j] + dp[i][j - 1]\n\n        # The value in dp[m-1][n-1] represents the number of unique paths.\n        return dp[m - 1][n - 1]",
+ "complexity": {
+  "time": "O(m · n)",
+  "timeWhy": "Each cell is filled once with one addition.",
+  "space": "O(m · n)",
+  "spaceWhy": "The table (a single row would be enough, since only the row above is read)."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`m = 3, n = 4`**. Each step runs one highlighted line of the code.","views":[]},
+  {"line":4,"text":"Fill the whole table with 1. For the **top row** and the **left column** that is already the final answer: there is exactly one way to get there — straight along the edge. The inner cells are computed next.","views":[{"t":"grid","id":"dp","title":"dp[i][j] = number of paths from the top-left corner to (i, j)","cells":[[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"1"}],[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"1"}],[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"1"}]]}]},
+  {"line":9,"text":"Cell (1, 1) is entered from above (1 paths) or from the left (1 paths): 1 + 1 = **2** paths.","views":[{"t":"grid","id":"dp","title":"dp[i][j] = number of paths from the top-left corner to (i, j)","cells":[[{"v":"1","tone":"seen"},{"v":"1","tone":"alt"},{"v":"1","tone":"seen"},{"v":"1","tone":"seen"}],[{"v":"1","tone":"alt"},{"v":"2","tone":"good"},{"v":"1"},{"v":"1"}],[{"v":"1","tone":"seen"},{"v":"1"},{"v":"1"},{"v":"1"}]],"ptrs":[{"name":"i, j","r":1,"c":1}]}]},
+  {"line":9,"text":"Cell (1, 2) is entered from above (1 paths) or from the left (2 paths): 1 + 2 = **3** paths.","views":[{"t":"grid","id":"dp","title":"dp[i][j] = number of paths from the top-left corner to (i, j)","cells":[[{"v":"1","tone":"seen"},{"v":"1","tone":"seen"},{"v":"1","tone":"alt"},{"v":"1","tone":"seen"}],[{"v":"1","tone":"seen"},{"v":"2","tone":"alt"},{"v":"3","tone":"good"},{"v":"1"}],[{"v":"1","tone":"seen"},{"v":"1"},{"v":"1"},{"v":"1"}]],"ptrs":[{"name":"i, j","r":1,"c":2}]}]},
+  {"line":9,"text":"Cell (1, 3) is entered from above (1 paths) or from the left (3 paths): 1 + 3 = **4** paths.","views":[{"t":"grid","id":"dp","title":"dp[i][j] = number of paths from the top-left corner to (i, j)","cells":[[{"v":"1","tone":"seen"},{"v":"1","tone":"seen"},{"v":"1","tone":"seen"},{"v":"1","tone":"alt"}],[{"v":"1","tone":"seen"},{"v":"2","tone":"seen"},{"v":"3","tone":"alt"},{"v":"4","tone":"good"}],[{"v":"1","tone":"seen"},{"v":"1"},{"v":"1"},{"v":"1"}]],"ptrs":[{"name":"i, j","r":1,"c":3}]}]},
+  {"line":9,"text":"Cell (2, 1) is entered from above (2 paths) or from the left (1 paths): 2 + 1 = **3** paths.","views":[{"t":"grid","id":"dp","title":"dp[i][j] = number of paths from the top-left corner to (i, j)","cells":[[{"v":"1","tone":"seen"},{"v":"1","tone":"seen"},{"v":"1","tone":"seen"},{"v":"1","tone":"seen"}],[{"v":"1","tone":"seen"},{"v":"2","tone":"alt"},{"v":"3","tone":"seen"},{"v":"4","tone":"seen"}],[{"v":"1","tone":"alt"},{"v":"3","tone":"good"},{"v":"1"},{"v":"1"}]],"ptrs":[{"name":"i, j","r":2,"c":1}]}]},
+  {"line":9,"text":"Cell (2, 2) is entered from above (3 paths) or from the left (3 paths): 3 + 3 = **6** paths.","views":[{"t":"grid","id":"dp","title":"dp[i][j] = number of paths from the top-left corner to (i, j)","cells":[[{"v":"1","tone":"seen"},{"v":"1","tone":"seen"},{"v":"1","tone":"seen"},{"v":"1","tone":"seen"}],[{"v":"1","tone":"seen"},{"v":"2","tone":"seen"},{"v":"3","tone":"alt"},{"v":"4","tone":"seen"}],[{"v":"1","tone":"seen"},{"v":"3","tone":"alt"},{"v":"6","tone":"good"},{"v":"1"}]],"ptrs":[{"name":"i, j","r":2,"c":2}]}]},
+  {"line":9,"text":"Cell (2, 3) is entered from above (4 paths) or from the left (6 paths): 4 + 6 = **10** paths.","views":[{"t":"grid","id":"dp","title":"dp[i][j] = number of paths from the top-left corner to (i, j)","cells":[[{"v":"1","tone":"seen"},{"v":"1","tone":"seen"},{"v":"1","tone":"seen"},{"v":"1","tone":"seen"}],[{"v":"1","tone":"seen"},{"v":"2","tone":"seen"},{"v":"3","tone":"seen"},{"v":"4","tone":"alt"}],[{"v":"1","tone":"seen"},{"v":"3","tone":"seen"},{"v":"6","tone":"alt"},{"v":"10","tone":"good"}]],"ptrs":[{"name":"i, j","r":2,"c":3}]}]},
+  {"line":12,"text":"The bottom-right cell holds the answer: **10** paths.","views":[{"t":"grid","id":"dp","title":"dp[i][j] = number of paths from the top-left corner to (i, j)","cells":[[{"v":"1","tone":"seen"},{"v":"1","tone":"seen"},{"v":"1","tone":"seen"},{"v":"1","tone":"seen"}],[{"v":"1","tone":"seen"},{"v":"2","tone":"seen"},{"v":"3","tone":"seen"},{"v":"4","tone":"seen"}],[{"v":"1","tone":"seen"},{"v":"3","tone":"seen"},{"v":"6","tone":"seen"},{"v":"10","tone":"good"}]],"ptrs":[{"name":"i, j","r":2,"c":3}]}]},
+  {"line":12,"text":"Done — the answer is **`10`**. Every path consists of 2 moves down and 3 moves right in some order: 5! / (2! · 3!) = 10.","views":[{"t":"grid","id":"dp","title":"dp[i][j] = number of paths from the top-left corner to (i, j)","cells":[[{"v":"1","tone":"seen"},{"v":"1","tone":"seen"},{"v":"1","tone":"seen"},{"v":"1","tone":"seen"}],[{"v":"1","tone":"seen"},{"v":"2","tone":"seen"},{"v":"3","tone":"seen"},{"v":"4","tone":"seen"}],[{"v":"1","tone":"seen"},{"v":"3","tone":"seen"},{"v":"6","tone":"seen"},{"v":"10","tone":"good"}]],"ptrs":[{"name":"i, j","r":2,"c":3}]}],"final":true}
+ ]
+}

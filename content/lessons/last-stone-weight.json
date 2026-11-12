@@ -1,0 +1,62 @@
+{
+ "id": 65,
+ "number": 1046,
+ "title": "Last Stone Weight",
+ "slug": "last-stone-weight",
+ "category": "heap-priority-queue",
+ "difficulty": "Easy",
+ "url": "https://leetcode.com/problems/last-stone-weight/",
+ "pattern": "Max-heap: repeatedly take the largest",
+ "statement": "You have stones with positive weights. Each turn, smash the **two heaviest** stones `x ≥ y` together: if they are equal both are destroyed, otherwise the lighter one is destroyed and the heavier one is left with weight `x − y`. Return the weight of the last remaining stone, or 0 if none is left.",
+ "example": {
+  "input": "stones = [2,7,4,1,8,1]",
+  "output": "1",
+  "why": "8 vs 7 → 1, 4 vs 2 → 2, 2 vs 1 → 1, 1 vs 1 → gone. One stone of weight 1 remains."
+ },
+ "more": [
+  {
+   "input": "stones = [1]",
+   "output": "1"
+  },
+  {
+   "input": "stones = [2,2]",
+   "output": "0"
+  },
+  {
+   "input": "stones = [3,7,2]",
+   "output": "2"
+  }
+ ],
+ "idea": [
+  "Every turn we need the two heaviest stones *right now* — and the list keeps changing as new stones are pushed back.",
+  "Re-sorting after every smash is wasteful. A **max-heap** hands us the largest item in O(log n) and accepts new items in O(log n).",
+  "Python only has a min-heap, so store each weight as a **negative** number: the heaviest stone becomes the smallest value and sits on top."
+ ],
+ "code": "import heapq\n\nclass Solution:\n    def lastStoneWeight(self, stones: List[int]) -> int:\n        max_heap = [-stone for stone in stones]  # Use negative values for max-heap\n\n        heapq.heapify(max_heap)\n\n        while len(max_heap) > 1:\n            x = -heapq.heappop(max_heap)  # Extract the largest stone\n            y = -heapq.heappop(max_heap)  # Extract the second largest stone\n\n            if x != y:\n                heapq.heappush(max_heap, -(x - y))  # Push the remaining weight\n\n        return -max_heap[0] if max_heap else 0",
+ "complexity": {
+  "time": "O(n log n)",
+  "timeWhy": "At most n smashes, and each one does a few heap pushes/pops costing O(log n).",
+  "space": "O(n)",
+  "spaceWhy": "The heap holds every stone."
+ },
+ "steps": [
+  {"line":4,"text":"Our example: **`stones = [2,7,4,1,8,1]`**. Each step runs one highlighted line of the code.","views":[]},
+  {"line":5,"text":"Python's `heapq` is a **min**-heap. Storing every weight as a negative number turns it into a max-heap. (The picture shows the real, positive weights.)","views":[{"t":"tree","id":"max_heap","title":"max-heap  (heaviest stone on top)","nodes":[{"id":1,"v":"2","l":2,"r":3,"tone":"cur"},{"id":2,"v":"7","l":4,"r":5},{"id":3,"v":"4","l":6},{"id":4,"v":"1"},{"id":5,"v":"8"},{"id":6,"v":"1"}],"roots":[1],"shape":"circle"}]},
+  {"line":7,"text":"Heapify rearranges the list into a heap in O(n). The heaviest stone, **8**, is now on top.","views":[{"t":"tree","id":"max_heap","title":"max-heap  (heaviest stone on top)","nodes":[{"id":1,"v":"8","l":2,"r":3,"tone":"cur"},{"id":2,"v":"7","l":4,"r":5},{"id":3,"v":"4","l":6},{"id":4,"v":"1"},{"id":5,"v":"2"},{"id":6,"v":"1"}],"roots":[1],"shape":"circle"}]},
+  {"line":10,"text":"Pop the heaviest stone: `x` = **8**.","views":[{"t":"tree","id":"max_heap","title":"max-heap  (heaviest stone on top)","nodes":[{"id":1,"v":"7","l":2,"r":3,"tone":"cur"},{"id":2,"v":"2","l":4,"r":5},{"id":3,"v":"4"},{"id":4,"v":"1"},{"id":5,"v":"1"}],"roots":[1],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"x","v":"8"}]}]},
+  {"line":11,"text":"Pop the next heaviest: `y` = **7**. Smash 8 against 7.","views":[{"t":"tree","id":"max_heap","title":"max-heap  (heaviest stone on top)","nodes":[{"id":1,"v":"4","l":2,"r":3,"tone":"cur"},{"id":2,"v":"2","l":4},{"id":3,"v":"1"},{"id":4,"v":"1"}],"roots":[1],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"x","v":"8"},{"k":"y","v":"7"}]}]},
+  {"line":14,"text":"They differ, so the lighter one is destroyed and 8 − 7 = **1** is left. Push that back into the heap.","views":[{"t":"tree","id":"max_heap","title":"max-heap  (heaviest stone on top)","nodes":[{"id":1,"v":"4","l":2,"r":3,"tone":"cur"},{"id":2,"v":"2","l":4,"r":5},{"id":3,"v":"1"},{"id":4,"v":"1"},{"id":5,"v":"1"}],"roots":[1],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"x","v":"8"},{"k":"y","v":"7"}]}]},
+  {"line":10,"text":"Pop the heaviest stone: `x` = **4**.","views":[{"t":"tree","id":"max_heap","title":"max-heap  (heaviest stone on top)","nodes":[{"id":1,"v":"2","l":2,"r":3,"tone":"cur"},{"id":2,"v":"1","l":4},{"id":3,"v":"1"},{"id":4,"v":"1"}],"roots":[1],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"x","v":"4","changed":true},{"k":"y","v":"7"}]}]},
+  {"line":11,"text":"Pop the next heaviest: `y` = **2**. Smash 4 against 2.","views":[{"t":"tree","id":"max_heap","title":"max-heap  (heaviest stone on top)","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"cur"},{"id":2,"v":"1"},{"id":3,"v":"1"}],"roots":[1],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"x","v":"4"},{"k":"y","v":"2","changed":true}]}]},
+  {"line":14,"text":"They differ, so the lighter one is destroyed and 4 − 2 = **2** is left. Push that back into the heap.","views":[{"t":"tree","id":"max_heap","title":"max-heap  (heaviest stone on top)","nodes":[{"id":1,"v":"2","l":2,"r":3,"tone":"cur"},{"id":2,"v":"1","l":4},{"id":3,"v":"1"},{"id":4,"v":"1"}],"roots":[1],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"x","v":"4"},{"k":"y","v":"2"}]}]},
+  {"line":10,"text":"Pop the heaviest stone: `x` = **2**.","views":[{"t":"tree","id":"max_heap","title":"max-heap  (heaviest stone on top)","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"cur"},{"id":2,"v":"1"},{"id":3,"v":"1"}],"roots":[1],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"x","v":"2","changed":true},{"k":"y","v":"2"}]}]},
+  {"line":11,"text":"Pop the next heaviest: `y` = **1**. Smash 2 against 1.","views":[{"t":"tree","id":"max_heap","title":"max-heap  (heaviest stone on top)","nodes":[{"id":1,"v":"1","l":2,"tone":"cur"},{"id":2,"v":"1"}],"roots":[1],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"x","v":"2"},{"k":"y","v":"1","changed":true}]}]},
+  {"line":14,"text":"They differ, so the lighter one is destroyed and 2 − 1 = **1** is left. Push that back into the heap.","views":[{"t":"tree","id":"max_heap","title":"max-heap  (heaviest stone on top)","nodes":[{"id":1,"v":"1","l":2,"r":3,"tone":"cur"},{"id":2,"v":"1"},{"id":3,"v":"1"}],"roots":[1],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"x","v":"2"},{"k":"y","v":"1"}]}]},
+  {"line":10,"text":"Pop the heaviest stone: `x` = **1**.","views":[{"t":"tree","id":"max_heap","title":"max-heap  (heaviest stone on top)","nodes":[{"id":1,"v":"1","l":2,"tone":"cur"},{"id":2,"v":"1"}],"roots":[1],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"x","v":"1","changed":true},{"k":"y","v":"1"}]}]},
+  {"line":11,"text":"Pop the next heaviest: `y` = **1**. Smash 1 against 1.","views":[{"t":"tree","id":"max_heap","title":"max-heap  (heaviest stone on top)","nodes":[{"id":1,"v":"1","tone":"cur"}],"roots":[1],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"x","v":"1"},{"k":"y","v":"1"}]}]},
+  {"line":13,"text":"Both stones weigh 1, so they destroy each other completely. Nothing goes back into the heap.","views":[{"t":"tree","id":"max_heap","title":"max-heap  (heaviest stone on top)","nodes":[{"id":1,"v":"1","tone":"cur"}],"roots":[1],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"x","v":"1"},{"k":"y","v":"1"}]}]},
+  {"line":9,"text":"Fewer than two stones remain, so there is nothing left to smash.","views":[{"t":"tree","id":"max_heap","title":"max-heap  (heaviest stone on top)","nodes":[{"id":1,"v":"1","tone":"cur"}],"roots":[1],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"x","v":"1"},{"k":"y","v":"1"}]}]},
+  {"line":16,"text":"One stone is left with weight 1 → return **1**.","views":[{"t":"tree","id":"max_heap","title":"max-heap  (heaviest stone on top)","nodes":[{"id":1,"v":"1","tone":"cur"}],"roots":[1],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"x","v":"1"},{"k":"y","v":"1"}]}]},
+  {"line":16,"text":"Done — the answer is **`1`**. 8 vs 7 → 1, 4 vs 2 → 2, 2 vs 1 → 1, 1 vs 1 → gone. One stone of weight 1 remains.","views":[{"t":"tree","id":"max_heap","title":"max-heap  (heaviest stone on top)","nodes":[{"id":1,"v":"1","tone":"cur"}],"roots":[1],"shape":"circle"},{"t":"vars","id":"vars","items":[{"k":"x","v":"1"},{"k":"y","v":"1"}]}],"final":true}
+ ]
+}

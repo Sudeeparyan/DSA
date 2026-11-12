@@ -1,0 +1,53 @@
+{
+ "id": 146,
+ "number": 338,
+ "title": "Counting Bits",
+ "slug": "counting-bits",
+ "category": "bit-manipulation",
+ "difficulty": "Easy",
+ "url": "https://leetcode.com/problems/counting-bits/",
+ "pattern": "DP on bits: drop the last bit",
+ "statement": "Given an integer `num`, return an array where entry `i` (for every `i` from 0 to `num`) is the **number of 1 bits** in the binary form of `i`.",
+ "example": {
+  "input": "num = 5",
+  "output": "[0,1,1,2,1,2]",
+  "why": "0 = 0, 1 = 1, 2 = 10, 3 = 11, 4 = 100, 5 = 101 in binary."
+ },
+ "more": [
+  {
+   "input": "num = 2",
+   "output": "[0,1,1]"
+  },
+  {
+   "input": "num = 0",
+   "output": "[0]"
+  },
+  {
+   "input": "num = 8",
+   "output": "[0,1,1,2,1,2,2,3,1]"
+  }
+ ],
+ "idea": [
+  "Counting the bits of each number separately works, but the numbers are closely related — reuse earlier answers.",
+  "Dropping the last binary digit of `i` gives `i // 2`, a **smaller** number whose bit count is already known.",
+  "The dropped digit is `i % 2`. So `bits(i) = bits(i // 2) + (i % 2)` — one lookup and one addition per number."
+ ],
+ "code": "class Solution:\n    def countBits(self, num: int) -> List[int]:\n        bits_count = [0] * (num + 1)\n\n        for i in range(1, num + 1):\n            bits_count[i] = bits_count[i // 2] + (i % 2)\n\n        return bits_count",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "One table lookup per number.",
+  "space": "O(1)",
+  "spaceWhy": "Nothing besides the output array."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`num = 5`**. Each step runs one highlighted line of the code.","views":[]},
+  {"line":3,"text":"`bits_count[i]` will be the number of 1 bits in i. The number 0 has none, so `bits_count[0]` = 0 is already right.","views":[{"t":"array","id":"bits_count","title":"bits_count[i] = number of 1 bits in i","cells":[{"v":"0"},{"v":"0"},{"v":"0"},{"v":"0"},{"v":"0"},{"v":"0"}]}]},
+  {"line":6,"text":"1 is `0001`. Without its last bit it is `0000` = 0, which has 0 one-bits (already computed). The last bit is 1. So `bits_count[1]` = 0 + 1 = **1**.","views":[{"t":"bits","id":"bits","title":"i and i // 2  (i without its last bit)","rows":[{"label":"i","bits":"0001","v":"1"},{"label":"i // 2","bits":"0000","v":"0","tone":"alt"}],"hi":[3]},{"t":"array","id":"bits_count","title":"bits_count[i] = number of 1 bits in i","cells":[{"v":"0","tone":"alt"},{"v":"1","tone":"good"},{"v":"0"},{"v":"0"},{"v":"0"},{"v":"0"}],"ptrs":[{"name":"i","at":1}]}]},
+  {"line":6,"text":"2 is `0010`. Without its last bit it is `0001` = 1, which has 1 one-bit (already computed). The last bit is 0. So `bits_count[2]` = 1 + 0 = **1**.","views":[{"t":"bits","id":"bits","title":"i and i // 2  (i without its last bit)","rows":[{"label":"i","bits":"0010","v":"2"},{"label":"i // 2","bits":"0001","v":"1","tone":"alt"}],"hi":[3]},{"t":"array","id":"bits_count","title":"bits_count[i] = number of 1 bits in i","cells":[{"v":"0"},{"v":"1","tone":"alt"},{"v":"1","tone":"good"},{"v":"0"},{"v":"0"},{"v":"0"}],"ptrs":[{"name":"i","at":2}]}]},
+  {"line":6,"text":"3 is `0011`. Without its last bit it is `0001` = 1, which has 1 one-bit (already computed). The last bit is 1. So `bits_count[3]` = 1 + 1 = **2**.","views":[{"t":"bits","id":"bits","title":"i and i // 2  (i without its last bit)","rows":[{"label":"i","bits":"0011","v":"3"},{"label":"i // 2","bits":"0001","v":"1","tone":"alt"}],"hi":[3]},{"t":"array","id":"bits_count","title":"bits_count[i] = number of 1 bits in i","cells":[{"v":"0"},{"v":"1","tone":"alt"},{"v":"1"},{"v":"2","tone":"good"},{"v":"0"},{"v":"0"}],"ptrs":[{"name":"i","at":3}]}]},
+  {"line":6,"text":"4 is `0100`. Without its last bit it is `0010` = 2, which has 1 one-bit (already computed). The last bit is 0. So `bits_count[4]` = 1 + 0 = **1**.","views":[{"t":"bits","id":"bits","title":"i and i // 2  (i without its last bit)","rows":[{"label":"i","bits":"0100","v":"4"},{"label":"i // 2","bits":"0010","v":"2","tone":"alt"}],"hi":[3]},{"t":"array","id":"bits_count","title":"bits_count[i] = number of 1 bits in i","cells":[{"v":"0"},{"v":"1"},{"v":"1","tone":"alt"},{"v":"2"},{"v":"1","tone":"good"},{"v":"0"}],"ptrs":[{"name":"i","at":4}]}]},
+  {"line":6,"text":"5 is `0101`. Without its last bit it is `0010` = 2, which has 1 one-bit (already computed). The last bit is 1. So `bits_count[5]` = 1 + 1 = **2**.","views":[{"t":"bits","id":"bits","title":"i and i // 2  (i without its last bit)","rows":[{"label":"i","bits":"0101","v":"5"},{"label":"i // 2","bits":"0010","v":"2","tone":"alt"}],"hi":[3]},{"t":"array","id":"bits_count","title":"bits_count[i] = number of 1 bits in i","cells":[{"v":"0"},{"v":"1"},{"v":"1","tone":"alt"},{"v":"2"},{"v":"1"},{"v":"2","tone":"good"}],"ptrs":[{"name":"i","at":5}]}]},
+  {"line":8,"text":"Every number from 0 to 5 is done: **[0, 1, 1, 2, 1, 2]**.","views":[{"t":"bits","id":"bits","title":"i and i // 2  (i without its last bit)","rows":[{"label":"i","bits":"0101","v":"5"},{"label":"i // 2","bits":"0010","v":"2","tone":"alt"}],"hi":[3]},{"t":"array","id":"bits_count","title":"bits_count[i] = number of 1 bits in i","cells":[{"v":"0"},{"v":"1"},{"v":"1"},{"v":"2"},{"v":"1"},{"v":"2"}],"ptrs":[{"name":"i","at":5}]}]},
+  {"line":8,"text":"Done — the answer is **`[0,1,1,2,1,2]`**. 0 = 0, 1 = 1, 2 = 10, 3 = 11, 4 = 100, 5 = 101 in binary.","views":[{"t":"bits","id":"bits","title":"i and i // 2  (i without its last bit)","rows":[{"label":"i","bits":"0101","v":"5"},{"label":"i // 2","bits":"0010","v":"2","tone":"alt"}],"hi":[3]},{"t":"array","id":"bits_count","title":"bits_count[i] = number of 1 bits in i","cells":[{"v":"0"},{"v":"1"},{"v":"1"},{"v":"2"},{"v":"1"},{"v":"2"}],"ptrs":[{"name":"i","at":5}]}],"final":true}
+ ]
+}

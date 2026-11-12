@@ -1,76 +1,70 @@
-# How to run NeetCode 150 Learn
+# How to run the site
 
 This guide is for beginners. You do not need to know JavaScript.
 
-## 1. Install Node.js
+## 1. Install Node.js (and Python, only to change lessons)
 
-1. Open https://nodejs.org
-2. Download the **LTS** version for your computer.
-3. Install it with the default options.
-4. Open a terminal (Mac: Terminal, Windows: PowerShell) and check:
+1. Download the **LTS** version from https://nodejs.org and install it with the default options.
+2. Open a terminal (Windows: PowerShell, Mac: Terminal) and check:
 
 ```bash
 node -v
 npm -v
 ```
 
-You should see version numbers. If not, restart the terminal and try again.
+You only need Python (3.10 or newer, from https://www.python.org) if you want to change or
+rebuild the lessons. The built lessons are already in `content/lessons/`.
 
-## 2. Open the project folder
+## 2. Install and start
 
 ```bash
 cd path/to/DSA
-```
-
-## 3. Install dependencies (one time)
-
-```bash
-npm install
-```
-
-Wait until it finishes. This downloads the libraries the website needs.
-
-## 4. Start the learning site
-
-```bash
+npm install        # one time
 npm run dev
 ```
 
-Then open your browser to:
+Open **http://localhost:3000**. Leave the terminal open while you study; `Ctrl+C` stops it.
 
-**http://localhost:3000**
+## 3. Using a lesson
 
-Leave the terminal open while you study. Press `Ctrl+C` to stop the server.
+- **Next step →** / **← Back**, or the arrow keys, move one step. **Space** plays or pauses.
+- Drag the 3D stage to look around it; click it, then scroll to zoom. On a phone, swipe sideways
+  to rotate and pinch to zoom (an up/down swipe scrolls the page as usual). **Reset view** puts the
+  camera back.
+- **Full screen** (or the **F** key) gives the stage the whole screen; useful for the busier lessons.
+- A link can open a lesson at a given step: `/problem/two-sum/?step=7`.
+- Tick **I understand this one** at the bottom; the home page shows your progress and a
+  **Continue** button.
 
-## 5. Useful commands
+## 4. Useful commands
 
 | Command | What it does |
 | --- | --- |
-| `npm run dev` | Start local website |
-| `npm run build` | Build a static site into the `out/` folder |
-| `npm test` | Unit tests + all-150 animation gate |
-| `npm run content:validate` | Check all 150 problem JSON files |
-| `npm run content:animate` | Regenerate cinema steps from examples |
-| `npm run content:verify-animations` | Fail if any answer animation is stubby |
+| `npm run dev` | Start the site locally |
+| `npm run build` | Build the static site into `out/` |
+| `npm test` | Check all 150 lesson files, plus the app's unit tests |
+| `npm run lessons` | Rebuild the lesson files after changing `lessons/specs/` (needs Python) |
+| `npm run lessons:verify` | Test every solution against a brute-force reference on random inputs |
+| `npm run check` | Everything above, plus type check and lint. Run it before you commit |
 
-For how the code is structured so you can keep improving it safely, read **[docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md)** and **[docs/EXTENDING.md](./docs/EXTENDING.md)**.
+The Python commands find Python by themselves (`python`, `python3` or `py`), so they work the same
+on Windows, macOS and Linux.
 
-## 6. Deploy for free
+How to change a lesson: **[docs/LESSONS.md](./docs/LESSONS.md)**.
+How the code is organised: **[docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md)**.
 
-### Option A — Vercel
+**If `npm run dev` shows an error page right after `npm run build`**, stop it, delete the `.next`
+folder and start it again: the two commands share that folder.
 
-1. Push this repo to GitHub.
-2. Go to https://vercel.com and sign in with GitHub.
-3. Click **Add New Project** → import this repo.
-4. Click **Deploy**. Vercel detects Next.js automatically.
+## 5. Deploy for free
 
-### Option B — GitHub Pages
+**Vercel**: push the repo to GitHub, import it at https://vercel.com, click **Deploy**.
 
-1. Run `npm run build` (creates `out/`).
-2. Publish the `out/` folder to GitHub Pages (Settings → Pages → deploy from a branch/folder, or use an Actions workflow that uploads `out/`).
+**GitHub Pages**: run `npm run build` and publish the `out/` folder (Settings → Pages, or an
+Actions workflow that uploads `out/`).
 
-## 7. Offline use
+## 6. Offline use
 
-After you open the site once on a device (production / deployed build), the service worker caches pages so you can keep studying without internet while travelling.
-
-Progress, notes, and revision cards are saved in your browser (`localStorage`) on that device.
+After you open the deployed site once, it keeps working without internet: the home page and every
+lesson you have opened before are saved on the device. Opening a lesson you have never visited
+needs a connection the first time. Progress is saved in the browser (`localStorage`) on that device.

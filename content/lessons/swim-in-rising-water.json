@@ -1,0 +1,64 @@
+{
+ "id": 96,
+ "number": 778,
+ "title": "Swim in Rising Water",
+ "slug": "swim-in-rising-water",
+ "category": "advanced-graphs",
+ "difficulty": "Hard",
+ "url": "https://leetcode.com/problems/swim-in-rising-water/",
+ "pattern": "Dijkstra on a grid: minimise the highest cell on the path",
+ "statement": "`grid[r][c]` is the elevation of each cell of an `n × n` grid. At time `t` the water level is `t`, and you can swim between neighbouring cells only if **both** are at elevation `≤ t`. Swimming takes no time. Return the earliest time at which you can get from the top-left cell to the bottom-right cell.",
+ "example": {
+  "input": "grid = [[0,1,2],[5,8,3],[7,6,4]]",
+  "output": "4",
+  "why": "The path 0 → 1 → 2 → 3 → 4 along the top and right edge never climbs above 4; every other route passes a higher cell."
+ },
+ "more": [
+  {
+   "input": "grid = [[0,2],[1,3]]",
+   "output": "3"
+  },
+  {
+   "input": "grid = [[0]]",
+   "output": "0"
+  },
+  {
+   "input": "grid = [[0,1,2,3,4],\n        [24,23,22,21,5],\n        [12,13,14,15,16],\n        [11,17,18,19,20],\n        [10,9,8,7,6]]",
+   "output": "16"
+  },
+  {
+   "input": "grid = [[3,2],[0,1]]",
+   "output": "3"
+  }
+ ],
+ "idea": [
+  "A path is usable as soon as the water covers its **highest** cell. So we want the path from the top-left to the bottom-right whose highest cell is as low as possible.",
+  "Explore like Dijkstra: keep all reachable-but-unexplored cells in a min-heap, keyed by the water level needed to get there = the highest cell on the way.",
+  "Always expand the cell that needs the **lowest** level. When the bottom-right cell is popped, no cheaper way to it can exist — its level is the answer."
+ ],
+ "code": "class Solution:\n    def swimInWater(self, grid: List[List[int]]) -> int:\n        n = len(grid)\n        visited = {(0, 0)}\n        min_heap = [(grid[0][0], 0, 0)]  # (water level needed, row, col)\n\n        while min_heap:\n            time, r, c = heapq.heappop(min_heap)\n            if r == n - 1 and c == n - 1:\n                return time\n\n            for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):\n                nr, nc = r + dr, c + dc\n                if 0 <= nr < n and 0 <= nc < n and (nr, nc) not in visited:\n                    visited.add((nr, nc))\n                    heapq.heappush(min_heap, (max(time, grid[nr][nc]), nr, nc))",
+ "complexity": {
+  "time": "O(n² log n)",
+  "timeWhy": "Each of the n² cells is pushed and popped at most once, at O(log n²) each.",
+  "space": "O(n²)",
+  "spaceWhy": "The visited set and the heap."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`grid = [[0,1,2],[5,8,3],[7,6,4]]`**. Each step runs one highlighted line of the code.","views":[{"t":"grid","id":"grid","title":"grid  (elevations)","cells":[[{"v":"0"},{"v":"1"},{"v":"2"}],[{"v":"5"},{"v":"8"},{"v":"3"}],[{"v":"7"},{"v":"6"},{"v":"4"}]]}]},
+  {"line":5,"text":"Start in the top-left cell. A heap entry is (water level needed to reach the cell, row, col); standing on the start already needs level 0.","views":[{"t":"grid","id":"grid","title":"grid  (elevations)","cells":[[{"v":"0","tone":"seen"},{"v":"1"},{"v":"2"}],[{"v":"5"},{"v":"8"},{"v":"3"}],[{"v":"7"},{"v":"6"},{"v":"4"}]]},{"t":"items","id":"heap","title":"min_heap  (level needed, row, col) - smallest first","items":[{"v":"(0, 0, 0)"}]}]},
+  {"line":8,"text":"Pop the reachable cell that needs the **lowest** water level: (0, 0), at level 0.","views":[{"t":"grid","id":"grid","title":"grid  (elevations)","cells":[[{"v":"0","tone":"cur"},{"v":"1"},{"v":"2"}],[{"v":"5"},{"v":"8"},{"v":"3"}],[{"v":"7"},{"v":"6"},{"v":"4"}]]},{"t":"items","id":"heap","title":"min_heap  (level needed, row, col) - smallest first","items":[]},{"t":"vars","id":"vars","items":[{"k":"time","v":"0"}]}]},
+  {"line":16,"text":"Neighbour (1, 0) has elevation 5. Reaching it through here needs level max(0, 5) = **5**. Push it.","views":[{"t":"grid","id":"grid","title":"grid  (elevations)","cells":[[{"v":"0","tone":"cur"},{"v":"1"},{"v":"2"}],[{"v":"5","tone":"alt"},{"v":"8"},{"v":"3"}],[{"v":"7"},{"v":"6"},{"v":"4"}]]},{"t":"items","id":"heap","title":"min_heap  (level needed, row, col) - smallest first","items":[{"v":"(5, 1, 0)","tone":"cur"}]},{"t":"vars","id":"vars","items":[{"k":"time","v":"0"}]}]},
+  {"line":16,"text":"Neighbour (0, 1) has elevation 1. Reaching it through here needs level max(0, 1) = **1**. Push it.","views":[{"t":"grid","id":"grid","title":"grid  (elevations)","cells":[[{"v":"0","tone":"cur"},{"v":"1","tone":"alt"},{"v":"2"}],[{"v":"5","tone":"seen"},{"v":"8"},{"v":"3"}],[{"v":"7"},{"v":"6"},{"v":"4"}]]},{"t":"items","id":"heap","title":"min_heap  (level needed, row, col) - smallest first","items":[{"v":"(1, 0, 1)","tone":"cur"},{"v":"(5, 1, 0)"}]},{"t":"vars","id":"vars","items":[{"k":"time","v":"0"}]}]},
+  {"line":8,"text":"Pop the reachable cell that needs the **lowest** water level: (0, 1), at level 1.","views":[{"t":"grid","id":"grid","title":"grid  (elevations)","cells":[[{"v":"0","tone":"good"},{"v":"1","tone":"cur"},{"v":"2"}],[{"v":"5","tone":"seen"},{"v":"8"},{"v":"3"}],[{"v":"7"},{"v":"6"},{"v":"4"}]]},{"t":"items","id":"heap","title":"min_heap  (level needed, row, col) - smallest first","items":[{"v":"(5, 1, 0)"}]},{"t":"vars","id":"vars","items":[{"k":"time","v":"1","changed":true}]}]},
+  {"line":16,"text":"Neighbour (1, 1) has elevation 8. Reaching it through here needs level max(1, 8) = **8**. Push it.","views":[{"t":"grid","id":"grid","title":"grid  (elevations)","cells":[[{"v":"0","tone":"good"},{"v":"1","tone":"cur"},{"v":"2"}],[{"v":"5","tone":"seen"},{"v":"8","tone":"alt"},{"v":"3"}],[{"v":"7"},{"v":"6"},{"v":"4"}]]},{"t":"items","id":"heap","title":"min_heap  (level needed, row, col) - smallest first","items":[{"v":"(5, 1, 0)"},{"v":"(8, 1, 1)","tone":"cur"}]},{"t":"vars","id":"vars","items":[{"k":"time","v":"1"}]}]},
+  {"line":16,"text":"Neighbour (0, 2) has elevation 2. Reaching it through here needs level max(1, 2) = **2**. Push it.","views":[{"t":"grid","id":"grid","title":"grid  (elevations)","cells":[[{"v":"0","tone":"good"},{"v":"1","tone":"cur"},{"v":"2","tone":"alt"}],[{"v":"5","tone":"seen"},{"v":"8","tone":"seen"},{"v":"3"}],[{"v":"7"},{"v":"6"},{"v":"4"}]]},{"t":"items","id":"heap","title":"min_heap  (level needed, row, col) - smallest first","items":[{"v":"(2, 0, 2)","tone":"cur"},{"v":"(5, 1, 0)"},{"v":"(8, 1, 1)"}]},{"t":"vars","id":"vars","items":[{"k":"time","v":"1"}]}]},
+  {"line":8,"text":"Pop the reachable cell that needs the **lowest** water level: (0, 2), at level 2.","views":[{"t":"grid","id":"grid","title":"grid  (elevations)","cells":[[{"v":"0","tone":"good"},{"v":"1","tone":"good"},{"v":"2","tone":"cur"}],[{"v":"5","tone":"seen"},{"v":"8","tone":"seen"},{"v":"3"}],[{"v":"7"},{"v":"6"},{"v":"4"}]]},{"t":"items","id":"heap","title":"min_heap  (level needed, row, col) - smallest first","items":[{"v":"(5, 1, 0)"},{"v":"(8, 1, 1)"}]},{"t":"vars","id":"vars","items":[{"k":"time","v":"2","changed":true}]}]},
+  {"line":16,"text":"Neighbour (1, 2) has elevation 3. Reaching it through here needs level max(2, 3) = **3**. Push it.","views":[{"t":"grid","id":"grid","title":"grid  (elevations)","cells":[[{"v":"0","tone":"good"},{"v":"1","tone":"good"},{"v":"2","tone":"cur"}],[{"v":"5","tone":"seen"},{"v":"8","tone":"seen"},{"v":"3","tone":"alt"}],[{"v":"7"},{"v":"6"},{"v":"4"}]]},{"t":"items","id":"heap","title":"min_heap  (level needed, row, col) - smallest first","items":[{"v":"(3, 1, 2)","tone":"cur"},{"v":"(5, 1, 0)"},{"v":"(8, 1, 1)"}]},{"t":"vars","id":"vars","items":[{"k":"time","v":"2"}]}]},
+  {"line":8,"text":"Pop the reachable cell that needs the **lowest** water level: (1, 2), at level 3.","views":[{"t":"grid","id":"grid","title":"grid  (elevations)","cells":[[{"v":"0","tone":"good"},{"v":"1","tone":"good"},{"v":"2","tone":"good"}],[{"v":"5","tone":"seen"},{"v":"8","tone":"seen"},{"v":"3","tone":"cur"}],[{"v":"7"},{"v":"6"},{"v":"4"}]]},{"t":"items","id":"heap","title":"min_heap  (level needed, row, col) - smallest first","items":[{"v":"(5, 1, 0)"},{"v":"(8, 1, 1)"}]},{"t":"vars","id":"vars","items":[{"k":"time","v":"3","changed":true}]}]},
+  {"line":16,"text":"Neighbour (2, 2) has elevation 4. Reaching it through here needs level max(3, 4) = **4**. Push it.","views":[{"t":"grid","id":"grid","title":"grid  (elevations)","cells":[[{"v":"0","tone":"good"},{"v":"1","tone":"good"},{"v":"2","tone":"good"}],[{"v":"5","tone":"seen"},{"v":"8","tone":"seen"},{"v":"3","tone":"cur"}],[{"v":"7"},{"v":"6"},{"v":"4","tone":"alt"}]]},{"t":"items","id":"heap","title":"min_heap  (level needed, row, col) - smallest first","items":[{"v":"(4, 2, 2)","tone":"cur"},{"v":"(5, 1, 0)"},{"v":"(8, 1, 1)"}]},{"t":"vars","id":"vars","items":[{"k":"time","v":"3"}]}]},
+  {"line":8,"text":"Pop the reachable cell that needs the **lowest** water level: (2, 2), at level 4.","views":[{"t":"grid","id":"grid","title":"grid  (elevations)","cells":[[{"v":"0","tone":"good"},{"v":"1","tone":"good"},{"v":"2","tone":"good"}],[{"v":"5","tone":"seen"},{"v":"8","tone":"seen"},{"v":"3","tone":"good"}],[{"v":"7"},{"v":"6"},{"v":"4","tone":"cur"}]]},{"t":"items","id":"heap","title":"min_heap  (level needed, row, col) - smallest first","items":[{"v":"(5, 1, 0)"},{"v":"(8, 1, 1)"}]},{"t":"vars","id":"vars","items":[{"k":"time","v":"4","changed":true}]}]},
+  {"line":9,"text":"(2, 2) is the bottom-right cell. Cells were expanded in order of the level they need, so no route with a lower level exists.","views":[{"t":"grid","id":"grid","title":"grid  (elevations)","cells":[[{"v":"0","tone":"good"},{"v":"1","tone":"good"},{"v":"2","tone":"good"}],[{"v":"5","tone":"seen"},{"v":"8","tone":"seen"},{"v":"3","tone":"good"}],[{"v":"7"},{"v":"6"},{"v":"4","tone":"cur"}]]},{"t":"items","id":"heap","title":"min_heap  (level needed, row, col) - smallest first","items":[{"v":"(5, 1, 0)"},{"v":"(8, 1, 1)"}]},{"t":"vars","id":"vars","items":[{"k":"time","v":"4"}]}]},
+  {"line":10,"text":"The earliest time to swim across is **4**.","views":[{"t":"grid","id":"grid","title":"grid  (elevations)","cells":[[{"v":"0","tone":"good"},{"v":"1","tone":"good"},{"v":"2","tone":"good"}],[{"v":"5","tone":"seen"},{"v":"8","tone":"seen"},{"v":"3","tone":"good"}],[{"v":"7"},{"v":"6"},{"v":"4","tone":"cur"}]]},{"t":"items","id":"heap","title":"min_heap  (level needed, row, col) - smallest first","items":[{"v":"(5, 1, 0)"},{"v":"(8, 1, 1)"}]},{"t":"vars","id":"vars","items":[{"k":"time","v":"4"}]}]},
+  {"line":10,"text":"Done — the answer is **`4`**. The path 0 → 1 → 2 → 3 → 4 along the top and right edge never climbs above 4; every other route passes a higher cell.","views":[{"t":"grid","id":"grid","title":"grid  (elevations)","cells":[[{"v":"0","tone":"good"},{"v":"1","tone":"good"},{"v":"2","tone":"good"}],[{"v":"5","tone":"seen"},{"v":"8","tone":"seen"},{"v":"3","tone":"good"}],[{"v":"7"},{"v":"6"},{"v":"4","tone":"cur"}]]},{"t":"items","id":"heap","title":"min_heap  (level needed, row, col) - smallest first","items":[{"v":"(5, 1, 0)"},{"v":"(8, 1, 1)"}]},{"t":"vars","id":"vars","items":[{"k":"time","v":"4"}]}],"final":true}
+ ]
+}

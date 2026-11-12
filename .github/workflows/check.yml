@@ -1,0 +1,38 @@
+# Runs every check on each push to main and on each pull request.
+# A red cross here means something in the lessons or the site is wrong: see the failing step.
+name: check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: npm ci
+
+      # rebuild + verify all lessons, type check, tests, lint, production build
+      - run: npm run check
+
+      - name: Built lessons are committed and up to date
+        run: |
+          changed="$(git status --porcelain -- content/lessons)"
+          if [ -n "$changed" ]; then
+            echo "::error::content/lessons/ does not match lessons/specs/. Run 'npm run lessons' and commit the result."
+            echo "$changed"
+            exit 1
+          fi

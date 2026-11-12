@@ -1,0 +1,62 @@
+{
+ "id": 6,
+ "number": 238,
+ "title": "Product of Array Except Self",
+ "slug": "product-of-array-except-self",
+ "category": "arrays-hashing",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/product-of-array-except-self/",
+ "pattern": "Prefix product × suffix product",
+ "statement": "Given an integer array `nums`, return an array where `answer[i]` is the product of **every element except** `nums[i]`. It must run in O(n) time and may **not use division**.",
+ "example": {
+  "input": "nums = [1,2,3,4]",
+  "output": "[24,12,8,6]",
+  "why": "24 = 2·3·4, 12 = 1·3·4, 8 = 1·2·4, 6 = 1·2·3."
+ },
+ "more": [
+  {
+   "input": "nums = [-1,1,0,-3,3]",
+   "output": "[0,0,9,0,0]"
+  },
+  {
+   "input": "nums = [2,3]",
+   "output": "[3,2]"
+  }
+ ],
+ "idea": [
+  "The product of everything except `nums[i]` splits into two parts: (everything to the **left** of i) × (everything to the **right** of i).",
+  "A running product gives all the left parts in one left-to-right pass.",
+  "A second pass from right to left carries the running product of the right parts and multiplies it in. Two passes, no division."
+ ],
+ "code": "class Solution:\n    def productExceptSelf(self, nums: List[int]) -> List[int]:\n        n = len(nums)\n        result = [1] * n\n\n        # Calculate the left product of each element\n        left_product = 1\n        for i in range(n):\n            result[i] *= left_product\n            left_product *= nums[i]\n\n        # Calculate the right product of each element and update the result list\n        right_product = 1\n        for i in range(n - 1, -1, -1):\n            result[i] *= right_product\n            right_product *= nums[i]\n\n        return result",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "Two passes over the array.",
+  "space": "O(1)",
+  "spaceWhy": "Only two running products are stored besides the output array."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`nums = [1,2,3,4]`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2"},{"v":"3"},{"v":"4"}]}]},
+  {"line":4,"text":"Every answer slot starts at 1 (the neutral value for multiplication).","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2"},{"v":"3"},{"v":"4"}]},{"t":"array","id":"result","title":"result","cells":[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"1"}]}]},
+  {"line":7,"text":"**Pass 1, left → right.** `left_product` is the product of all numbers to the *left* of the current index. Nothing is left of index 0, so it starts at 1.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2"},{"v":"3"},{"v":"4"}]},{"t":"array","id":"result","title":"result","cells":[{"v":"1"},{"v":"1"},{"v":"1"},{"v":"1"}]},{"t":"vars","id":"vars","items":[{"k":"left_product","v":"1"}]}]},
+  {"line":9,"text":"Index 0: everything to its left multiplies to 1. Store it: `result[0]` = 1.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1","tone":"cur"},{"v":"2"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"i","at":0}]},{"t":"array","id":"result","title":"result","cells":[{"v":"1","tone":"cur"},{"v":"1"},{"v":"1"},{"v":"1"}],"ptrs":[{"name":"i","at":0}]},{"t":"vars","id":"vars","items":[{"k":"left_product","v":"1"}]}]},
+  {"line":10,"text":"Include `nums[0]` = 1 for the next index: `left_product` = 1.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1","tone":"cur"},{"v":"2"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"i","at":0}]},{"t":"array","id":"result","title":"result","cells":[{"v":"1","tone":"cur"},{"v":"1"},{"v":"1"},{"v":"1"}],"ptrs":[{"name":"i","at":0}]},{"t":"vars","id":"vars","items":[{"k":"left_product","v":"1"}]}]},
+  {"line":9,"text":"Index 1: everything to its left multiplies to 1. Store it: `result[1]` = 1.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2","tone":"cur"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"i","at":1}]},{"t":"array","id":"result","title":"result","cells":[{"v":"1"},{"v":"1","tone":"cur"},{"v":"1"},{"v":"1"}],"ptrs":[{"name":"i","at":1}]},{"t":"vars","id":"vars","items":[{"k":"left_product","v":"1"}]}]},
+  {"line":10,"text":"Include `nums[1]` = 2 for the next index: `left_product` = 2.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2","tone":"cur"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"i","at":1}]},{"t":"array","id":"result","title":"result","cells":[{"v":"1"},{"v":"1","tone":"cur"},{"v":"1"},{"v":"1"}],"ptrs":[{"name":"i","at":1}]},{"t":"vars","id":"vars","items":[{"k":"left_product","v":"2","changed":true}]}]},
+  {"line":9,"text":"Index 2: everything to its left multiplies to 2. Store it: `result[2]` = 2.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2"},{"v":"3","tone":"cur"},{"v":"4"}],"ptrs":[{"name":"i","at":2}]},{"t":"array","id":"result","title":"result","cells":[{"v":"1"},{"v":"1"},{"v":"2","tone":"cur"},{"v":"1"}],"ptrs":[{"name":"i","at":2}]},{"t":"vars","id":"vars","items":[{"k":"left_product","v":"2"}]}]},
+  {"line":10,"text":"Include `nums[2]` = 3 for the next index: `left_product` = 6.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2"},{"v":"3","tone":"cur"},{"v":"4"}],"ptrs":[{"name":"i","at":2}]},{"t":"array","id":"result","title":"result","cells":[{"v":"1"},{"v":"1"},{"v":"2","tone":"cur"},{"v":"1"}],"ptrs":[{"name":"i","at":2}]},{"t":"vars","id":"vars","items":[{"k":"left_product","v":"6","changed":true}]}]},
+  {"line":9,"text":"Index 3: everything to its left multiplies to 6. Store it: `result[3]` = 6.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2"},{"v":"3"},{"v":"4","tone":"cur"}],"ptrs":[{"name":"i","at":3}]},{"t":"array","id":"result","title":"result","cells":[{"v":"1"},{"v":"1"},{"v":"2"},{"v":"6","tone":"cur"}],"ptrs":[{"name":"i","at":3}]},{"t":"vars","id":"vars","items":[{"k":"left_product","v":"6"}]}]},
+  {"line":10,"text":"Include `nums[3]` = 4 for the next index: `left_product` = 24.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2"},{"v":"3"},{"v":"4","tone":"cur"}],"ptrs":[{"name":"i","at":3}]},{"t":"array","id":"result","title":"result","cells":[{"v":"1"},{"v":"1"},{"v":"2"},{"v":"6","tone":"cur"}],"ptrs":[{"name":"i","at":3}]},{"t":"vars","id":"vars","items":[{"k":"left_product","v":"24","changed":true}]}]},
+  {"line":13,"text":"**Pass 2, right → left.** `right_product` is the product of all numbers to the *right* of the current index. It also starts at 1.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2"},{"v":"3"},{"v":"4","tone":"cur"}],"ptrs":[{"name":"i","at":3}]},{"t":"array","id":"result","title":"result","cells":[{"v":"1"},{"v":"1"},{"v":"2"},{"v":"6","tone":"cur"}],"ptrs":[{"name":"i","at":3}]},{"t":"vars","id":"vars","items":[{"k":"left_product","v":"24"},{"k":"right_product","v":"1"}]}]},
+  {"line":15,"text":"Index 3: left part 6 × right part 1 = **6**. This slot is finished.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2"},{"v":"3"},{"v":"4","tone":"cur"}],"ptrs":[{"name":"i","at":3}]},{"t":"array","id":"result","title":"result","cells":[{"v":"1"},{"v":"1"},{"v":"2"},{"v":"6","tone":"good"}],"ptrs":[{"name":"i","at":3}]},{"t":"vars","id":"vars","items":[{"k":"left_product","v":"24"},{"k":"right_product","v":"1"}]}]},
+  {"line":16,"text":"Include `nums[3]` = 4 for the next index to the left: `right_product` = 4.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2"},{"v":"3"},{"v":"4","tone":"cur"}],"ptrs":[{"name":"i","at":3}]},{"t":"array","id":"result","title":"result","cells":[{"v":"1"},{"v":"1"},{"v":"2"},{"v":"6","tone":"good"}],"ptrs":[{"name":"i","at":3}]},{"t":"vars","id":"vars","items":[{"k":"left_product","v":"24"},{"k":"right_product","v":"4","changed":true}]}]},
+  {"line":15,"text":"Index 2: left part 2 × right part 4 = **8**. This slot is finished.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2"},{"v":"3","tone":"cur"},{"v":"4"}],"ptrs":[{"name":"i","at":2}]},{"t":"array","id":"result","title":"result","cells":[{"v":"1"},{"v":"1"},{"v":"8","tone":"good"},{"v":"6","tone":"good"}],"ptrs":[{"name":"i","at":2}]},{"t":"vars","id":"vars","items":[{"k":"left_product","v":"24"},{"k":"right_product","v":"4"}]}]},
+  {"line":16,"text":"Include `nums[2]` = 3 for the next index to the left: `right_product` = 12.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2"},{"v":"3","tone":"cur"},{"v":"4"}],"ptrs":[{"name":"i","at":2}]},{"t":"array","id":"result","title":"result","cells":[{"v":"1"},{"v":"1"},{"v":"8","tone":"good"},{"v":"6","tone":"good"}],"ptrs":[{"name":"i","at":2}]},{"t":"vars","id":"vars","items":[{"k":"left_product","v":"24"},{"k":"right_product","v":"12","changed":true}]}]},
+  {"line":15,"text":"Index 1: left part 1 × right part 12 = **12**. This slot is finished.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2","tone":"cur"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"i","at":1}]},{"t":"array","id":"result","title":"result","cells":[{"v":"1"},{"v":"12","tone":"good"},{"v":"8","tone":"good"},{"v":"6","tone":"good"}],"ptrs":[{"name":"i","at":1}]},{"t":"vars","id":"vars","items":[{"k":"left_product","v":"24"},{"k":"right_product","v":"12"}]}]},
+  {"line":16,"text":"Include `nums[1]` = 2 for the next index to the left: `right_product` = 24.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1"},{"v":"2","tone":"cur"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"i","at":1}]},{"t":"array","id":"result","title":"result","cells":[{"v":"1"},{"v":"12","tone":"good"},{"v":"8","tone":"good"},{"v":"6","tone":"good"}],"ptrs":[{"name":"i","at":1}]},{"t":"vars","id":"vars","items":[{"k":"left_product","v":"24"},{"k":"right_product","v":"24","changed":true}]}]},
+  {"line":15,"text":"Index 0: left part 1 × right part 24 = **24**. This slot is finished.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1","tone":"cur"},{"v":"2"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"i","at":0}]},{"t":"array","id":"result","title":"result","cells":[{"v":"24","tone":"good"},{"v":"12","tone":"good"},{"v":"8","tone":"good"},{"v":"6","tone":"good"}],"ptrs":[{"name":"i","at":0}]},{"t":"vars","id":"vars","items":[{"k":"left_product","v":"24"},{"k":"right_product","v":"24"}]}]},
+  {"line":16,"text":"Include `nums[0]` = 1 for the next index to the left: `right_product` = 24.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1","tone":"cur"},{"v":"2"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"i","at":0}]},{"t":"array","id":"result","title":"result","cells":[{"v":"24","tone":"good"},{"v":"12","tone":"good"},{"v":"8","tone":"good"},{"v":"6","tone":"good"}],"ptrs":[{"name":"i","at":0}]},{"t":"vars","id":"vars","items":[{"k":"left_product","v":"24"},{"k":"right_product","v":"24"}]}]},
+  {"line":18,"text":"Every slot holds the product of all the *other* numbers: **[24, 12, 8, 6]**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1","tone":"cur"},{"v":"2"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"i","at":0}]},{"t":"array","id":"result","title":"result","cells":[{"v":"24","tone":"cur"},{"v":"12"},{"v":"8"},{"v":"6"}],"ptrs":[{"name":"i","at":0}]},{"t":"vars","id":"vars","items":[{"k":"left_product","v":"24"},{"k":"right_product","v":"24"}]}]},
+  {"line":18,"text":"Done — the answer is **`[24,12,8,6]`**. 24 = 2·3·4, 12 = 1·3·4, 8 = 1·2·4, 6 = 1·2·3.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"1","tone":"cur"},{"v":"2"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"i","at":0}]},{"t":"array","id":"result","title":"result","cells":[{"v":"24","tone":"good"},{"v":"12","tone":"good"},{"v":"8","tone":"good"},{"v":"6","tone":"good"}],"ptrs":[{"name":"i","at":0}]},{"t":"vars","id":"vars","items":[{"k":"left_product","v":"24"},{"k":"right_product","v":"24"}]}],"final":true}
+ ]
+}

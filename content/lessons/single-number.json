@@ -1,0 +1,57 @@
+{
+ "id": 144,
+ "number": 136,
+ "title": "Single Number",
+ "slug": "single-number",
+ "category": "bit-manipulation",
+ "difficulty": "Easy",
+ "url": "https://leetcode.com/problems/single-number/",
+ "pattern": "XOR cancels pairs",
+ "statement": "In the array `nums` every number appears **exactly twice**, except for one number that appears only once. Find that single number, using constant extra space.",
+ "example": {
+  "input": "nums = [4,1,2,1,2]",
+  "output": "4",
+  "why": "1 and 2 each appear twice; 4 appears once."
+ },
+ "more": [
+  {
+   "input": "nums = [2,2,1]",
+   "output": "1"
+  },
+  {
+   "input": "nums = [1]",
+   "output": "1"
+  },
+  {
+   "input": "nums = [-1,7,-1]",
+   "output": "7"
+  },
+  {
+   "input": "nums = [0,3,3]",
+   "output": "0"
+  }
+ ],
+ "idea": [
+  "XOR (`^`) compares two numbers bit by bit: equal bits give 0, different bits give 1.",
+  "Two facts follow: `a ^ a = 0` (a number cancels itself) and `a ^ 0 = a`. And the order of XOR operations does not matter.",
+  "So XOR **all** numbers together: every pair cancels to 0, and what is left is the number without a partner."
+ ],
+ "code": "class Solution:\n    def singleNumber(self, nums: List[int]) -> int:\n        result = 0\n        for num in nums:\n            result ^= num\n        return result",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "One XOR per number.",
+  "space": "O(1)",
+  "spaceWhy": "One variable."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`nums = [4,1,2,1,2]`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"4"},{"v":"1"},{"v":"2"},{"v":"1"},{"v":"2"}]}]},
+  {"line":3,"text":"Start with 0: XOR with 0 changes nothing (`0 ^ a = a`).","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"4"},{"v":"1"},{"v":"2"},{"v":"1"},{"v":"2"}],"ptrs":[{"name":"num","at":-1}]},{"t":"bits","id":"bits","title":"result ^ num  (a column gives 1 when its two bits differ)","rows":[{"label":"result","bits":"0000","v":"0","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"result","v":"0"}]}]},
+  {"line":5,"text":"0 ^ 4 = **4** (`0000` ^ `0100` = `0100`).","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"4"},{"v":"1"},{"v":"2"},{"v":"1"},{"v":"2"}],"ptrs":[{"name":"num","at":0}]},{"t":"bits","id":"bits","title":"result ^ num  (a column gives 1 when its two bits differ)","rows":[{"label":"result before","bits":"0000","v":"0"},{"label":"num","bits":"0100","v":"4","tone":"alt"},{"label":"result","bits":"0100","v":"4","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"result","v":"4","changed":true}]}]},
+  {"line":5,"text":"4 ^ 1 = **5** (`0100` ^ `0001` = `0101`).","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"4"},{"v":"1"},{"v":"2"},{"v":"1"},{"v":"2"}],"ptrs":[{"name":"num","at":1}]},{"t":"bits","id":"bits","title":"result ^ num  (a column gives 1 when its two bits differ)","rows":[{"label":"result before","bits":"0100","v":"4"},{"label":"num","bits":"0001","v":"1","tone":"alt"},{"label":"result","bits":"0101","v":"5","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"result","v":"5","changed":true}]}]},
+  {"line":5,"text":"5 ^ 2 = **7** (`0101` ^ `0010` = `0111`).","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"4"},{"v":"1"},{"v":"2"},{"v":"1"},{"v":"2"}],"ptrs":[{"name":"num","at":2}]},{"t":"bits","id":"bits","title":"result ^ num  (a column gives 1 when its two bits differ)","rows":[{"label":"result before","bits":"0101","v":"5"},{"label":"num","bits":"0010","v":"2","tone":"alt"},{"label":"result","bits":"0111","v":"7","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"result","v":"7","changed":true}]}]},
+  {"line":5,"text":"7 ^ 1 = **6** (`0111` ^ `0001` = `0110`). This is the **second** 1: its bits cancel the bits the first 1 put in.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"4"},{"v":"1"},{"v":"2"},{"v":"1"},{"v":"2"}],"ptrs":[{"name":"num","at":3}]},{"t":"bits","id":"bits","title":"result ^ num  (a column gives 1 when its two bits differ)","rows":[{"label":"result before","bits":"0111","v":"7"},{"label":"num","bits":"0001","v":"1","tone":"alt"},{"label":"result","bits":"0110","v":"6","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"result","v":"6","changed":true}]}]},
+  {"line":5,"text":"6 ^ 2 = **4** (`0110` ^ `0010` = `0100`). This is the **second** 2: its bits cancel the bits the first 2 put in.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"4"},{"v":"1"},{"v":"2"},{"v":"1"},{"v":"2"}],"ptrs":[{"name":"num","at":4}]},{"t":"bits","id":"bits","title":"result ^ num  (a column gives 1 when its two bits differ)","rows":[{"label":"result before","bits":"0110","v":"6"},{"label":"num","bits":"0010","v":"2","tone":"alt"},{"label":"result","bits":"0100","v":"4","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"result","v":"4","changed":true}]}]},
+  {"line":6,"text":"Every pair has cancelled itself out. What remains is the single number: **4**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"4"},{"v":"1"},{"v":"2"},{"v":"1"},{"v":"2"}],"ptrs":[{"name":"num","at":5}]},{"t":"bits","id":"bits","title":"result ^ num  (a column gives 1 when its two bits differ)","rows":[{"label":"result before","bits":"0100","v":"4"},{"label":"num","bits":"0010","v":"2","tone":"alt"},{"label":"result","bits":"0100","v":"4","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"result","v":"4"}]}]},
+  {"line":6,"text":"Done — the answer is **`4`**. 1 and 2 each appear twice; 4 appears once.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"4"},{"v":"1"},{"v":"2"},{"v":"1"},{"v":"2"}],"ptrs":[{"name":"num","at":5}]},{"t":"bits","id":"bits","title":"result ^ num  (a column gives 1 when its two bits differ)","rows":[{"label":"num","bits":"0010","v":"2","tone":"alt"},{"label":"result","bits":"0100","v":"4","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"result","v":"4"}]}],"final":true}
+ ]
+}

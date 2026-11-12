@@ -1,3 +1,8 @@
+> **Note for this project:** this is the README of the repository these Python solutions were
+> copied from, kept for credit. Only the Python files were copied, so its C++ and Rust links lead
+> nowhere here. 18 lessons run their own version of the code instead of the one in this folder
+> (see `docs/LESSONS.md`), and every solution that is shown is tested by `npm run lessons:verify`.
+
 ## What is NeetCode 150?
 
 Neetcode 150 is a curated list of 150 LeetCode problems designed to cover all topics in data structures. It is an invaluable resource to study for LeetCode-style interviews you might enounter at FAANG and other big tech companies.

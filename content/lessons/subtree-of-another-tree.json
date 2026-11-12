@@ -1,0 +1,55 @@
+{
+ "id": 51,
+ "number": 572,
+ "title": "Subtree Of Another Tree",
+ "slug": "subtree-of-another-tree",
+ "category": "trees",
+ "difficulty": "Easy",
+ "url": "https://leetcode.com/problems/subtree-of-another-tree/",
+ "pattern": "Try every node as the starting point",
+ "statement": "Given two binary trees `s` and `t`, return `True` if `t` appears inside `s` as a **subtree**: some node of `s`, together with *all* of its descendants, is identical to `t`.",
+ "example": {
+  "input": "s = [3,4,5,1,2], t = [4,1,2]",
+  "output": "True",
+  "why": "The node 4 in s, with its children 1 and 2, is exactly the tree t."
+ },
+ "more": [
+  {
+   "input": "s = [3,4,5,1,2,None,None,None,None,0], t = [4,1,2]",
+   "output": "False"
+  },
+  {
+   "input": "s = [1], t = [1]",
+   "output": "True"
+  },
+  {
+   "input": "s = [1,1], t = [1]",
+   "output": "True"
+  }
+ ],
+ "idea": [
+  "If `t` is inside `s`, it must start at **some node** of `s`.",
+  "So visit every node of `s` and ask: is the tree starting here identical to `t`? That check is the *Same Tree* problem.",
+  "If it is not identical here, the answer may still be in the left or the right subtree — recurse into both."
+ ],
+ "code": "class Solution:\n    def isSubtree(self, s: TreeNode, t: TreeNode) -> bool:\n        if not s:\n            return False\n        if self.isSameTree(s, t):\n            return True\n        return self.isSubtree(s.left, t) or self.isSubtree(s.right, t)\n\n    def isSameTree(self, p, q):\n        if not p and not q:\n            return True\n        if not p or not q or p.val != q.val:\n            return False\n        return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)",
+ "complexity": {
+  "time": "O(m · n)",
+  "timeWhy": "In the worst case, each of the m nodes of s starts a comparison that visits up to n nodes of t.",
+  "space": "O(h)",
+  "spaceWhy": "The recursion stack is as deep as the height of s."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`s = [3,4,5,1,2], t = [4,1,2]`**. Each step runs one highlighted line of the code.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"win"},{"id":2,"v":"4","l":4,"r":5},{"id":3,"v":"5"},{"id":4,"v":"1"},{"id":5,"v":"2"},{"id":6,"v":"4","l":7,"r":8},{"id":7,"v":"1"},{"id":8,"v":"2"}],"roots":[1,6],"ptrs":[{"name":"s","at":1},{"name":"t","at":6}]}]},
+  {"line":5,"text":"Could `t` start at node 3? Compare the two trees node by node.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"win"},{"id":2,"v":"4","l":4,"r":5},{"id":3,"v":"5"},{"id":4,"v":"1"},{"id":5,"v":"2"},{"id":6,"v":"4","l":7,"r":8},{"id":7,"v":"1"},{"id":8,"v":"2"}],"roots":[1,6],"ptrs":[{"name":"s","at":1},{"name":"t","at":6}]}]},
+  {"line":12,"text":"Comparing node 3 with node 4: they differ.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"bad"},{"id":2,"v":"4","l":4,"r":5},{"id":3,"v":"5"},{"id":4,"v":"1"},{"id":5,"v":"2"},{"id":6,"v":"4","l":7,"r":8,"tone":"bad"},{"id":7,"v":"1"},{"id":8,"v":"2"}],"roots":[1,6],"ptrs":[{"name":"s","at":1},{"name":"t","at":6},{"name":"p","at":1},{"name":"q","at":6}]}]},
+  {"line":5,"text":"They are not identical, so `t` does not start at node 3. Look inside its left subtree, then its right.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"win"},{"id":2,"v":"4","l":4,"r":5},{"id":3,"v":"5"},{"id":4,"v":"1"},{"id":5,"v":"2"},{"id":6,"v":"4","l":7,"r":8},{"id":7,"v":"1"},{"id":8,"v":"2"}],"roots":[1,6],"ptrs":[{"name":"s","at":1},{"name":"t","at":6}]}]},
+  {"line":5,"text":"Could `t` start at node 4? Compare the two trees node by node.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3},{"id":2,"v":"4","l":4,"r":5,"tone":"win"},{"id":3,"v":"5"},{"id":4,"v":"1"},{"id":5,"v":"2"},{"id":6,"v":"4","l":7,"r":8},{"id":7,"v":"1"},{"id":8,"v":"2"}],"roots":[1,6],"ptrs":[{"name":"s","at":2},{"name":"t","at":6}]}]},
+  {"line":12,"text":"Node 4 matches node 4. Keep comparing the nodes below them.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3},{"id":2,"v":"4","l":4,"r":5,"tone":"good"},{"id":3,"v":"5"},{"id":4,"v":"1"},{"id":5,"v":"2"},{"id":6,"v":"4","l":7,"r":8,"tone":"good"},{"id":7,"v":"1"},{"id":8,"v":"2"}],"roots":[1,6],"ptrs":[{"name":"s","at":2},{"name":"t","at":6},{"name":"p","at":2},{"name":"q","at":6}]}]},
+  {"line":12,"text":"Node 1 matches node 1. Keep comparing the nodes below them.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3},{"id":2,"v":"4","l":4,"r":5,"tone":"win"},{"id":3,"v":"5"},{"id":4,"v":"1","tone":"good"},{"id":5,"v":"2"},{"id":6,"v":"4","l":7,"r":8},{"id":7,"v":"1","tone":"good"},{"id":8,"v":"2"}],"roots":[1,6],"ptrs":[{"name":"s","at":2},{"name":"t","at":6},{"name":"p","at":4},{"name":"q","at":7}]}]},
+  {"line":12,"text":"Node 2 matches node 2. Keep comparing the nodes below them.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3},{"id":2,"v":"4","l":4,"r":5,"tone":"win"},{"id":3,"v":"5"},{"id":4,"v":"1"},{"id":5,"v":"2","tone":"good"},{"id":6,"v":"4","l":7,"r":8},{"id":7,"v":"1"},{"id":8,"v":"2","tone":"good"}],"roots":[1,6],"ptrs":[{"name":"s","at":2},{"name":"t","at":6},{"name":"p","at":5},{"name":"q","at":8}]}]},
+  {"line":5,"text":"Every node matched: the subtree at node 4 **is** `t`.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3},{"id":2,"v":"4","l":4,"r":5,"tone":"good"},{"id":3,"v":"5"},{"id":4,"v":"1","tone":"good"},{"id":5,"v":"2","tone":"good"},{"id":6,"v":"4","l":7,"r":8,"tone":"good"},{"id":7,"v":"1","tone":"good"},{"id":8,"v":"2","tone":"good"}],"roots":[1,6],"ptrs":[{"name":"s","at":2},{"name":"t","at":6}]}]},
+  {"line":6,"text":"A matching subtree was found → **True**.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3},{"id":2,"v":"4","l":4,"r":5,"tone":"good"},{"id":3,"v":"5"},{"id":4,"v":"1","tone":"good"},{"id":5,"v":"2","tone":"good"},{"id":6,"v":"4","l":7,"r":8,"tone":"good"},{"id":7,"v":"1","tone":"good"},{"id":8,"v":"2","tone":"good"}],"roots":[1,6],"ptrs":[{"name":"s","at":2},{"name":"t","at":6}]}]},
+  {"line":7,"text":"Done — the answer is **`True`**. The node 4 in s, with its children 1 and 2, is exactly the tree t.","views":[{"t":"tree","id":"tree","nodes":[{"id":1,"v":"3","l":2,"r":3,"tone":"win"},{"id":2,"v":"4","l":4,"r":5},{"id":3,"v":"5"},{"id":4,"v":"1"},{"id":5,"v":"2"},{"id":6,"v":"4","l":7,"r":8},{"id":7,"v":"1"},{"id":8,"v":"2"}],"roots":[1,6],"ptrs":[{"name":"s","at":1},{"name":"t","at":6}]}],"final":true}
+ ]
+}

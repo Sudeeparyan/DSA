@@ -1,0 +1,69 @@
+{
+ "id": 106,
+ "number": 322,
+ "title": "Coin Change",
+ "slug": "coin-change",
+ "category": "1d-dp",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/coin-change/",
+ "pattern": "Unbounded knapsack: fewest coins for every amount",
+ "statement": "You have coins of the given denominations (as many of each as you like). Return the **fewest** coins needed to make up exactly `amount`, or `-1` if it cannot be done.",
+ "example": {
+  "input": "coins = [1,3,4], amount = 6",
+  "output": "2",
+  "why": "3 + 3 = 6 uses two coins. (Greedy — always taking the largest coin — would give 4 + 1 + 1, three coins.)"
+ },
+ "more": [
+  {
+   "input": "coins = [1,2,5], amount = 11",
+   "output": "3"
+  },
+  {
+   "input": "coins = [2], amount = 3",
+   "output": "-1"
+  },
+  {
+   "input": "coins = [1], amount = 0",
+   "output": "0"
+  },
+  {
+   "input": "coins = [186,419,83,408], amount = 6249",
+   "output": "20"
+  }
+ ],
+ "idea": [
+  "Taking the largest coin first can fail (see the example), so compute the best answer for **every** amount from 0 up to the target.",
+  "`dp[a]` = fewest coins that add up to `a`. If the last coin used is `c`, the rest is the amount `a − c`, so `dp[a] = dp[a − c] + 1`.",
+  "Try each coin as that last coin and keep the minimum. Amounts that cannot be made stay at ∞."
+ ],
+ "code": "class Solution:\n    def coinChange(self, coins: List[int], amount: int) -> int:\n        # Initialize the DP array with a maximum value to represent impossible cases.\n        dp = [float(\"inf\")] * (amount + 1)\n\n        # Base case: It takes 0 coins to make up the amount of 0.\n        dp[0] = 0\n\n        # Iterate through the DP array and update the minimum number of coins needed.\n        for coin in coins:\n            for i in range(coin, amount + 1):\n                dp[i] = min(dp[i], dp[i - coin] + 1)\n\n        # If dp[amount] is still float('inf'), it means it's impossible to make up the amount.\n        # Otherwise, dp[amount] contains the minimum number of coins needed.\n        return dp[amount] if dp[amount] != float(\"inf\") else -1",
+ "complexity": {
+  "time": "O(amount × coins)",
+  "timeWhy": "Every amount is checked once for every coin.",
+  "space": "O(amount)",
+  "spaceWhy": "One dp entry per amount."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`coins = [1,3,4], amount = 6`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"3"},{"v":"4"}]}]},
+  {"line":4,"text":"`dp[a]` will hold the fewest coins needed for amount a. ∞ means *not possible (so far)*.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"3"},{"v":"4"}]},{"t":"array","id":"dp","title":"dp[a] = fewest coins that add up to amount a","cells":[{"v":"∞"},{"v":"∞"},{"v":"∞"},{"v":"∞"},{"v":"∞"},{"v":"∞"},{"v":"∞"}]}]},
+  {"line":7,"text":"Amount 0 needs **0** coins.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"coin","at":-1}]},{"t":"array","id":"dp","title":"dp[a] = fewest coins that add up to amount a","cells":[{"v":"0","tone":"good"},{"v":"∞"},{"v":"∞"},{"v":"∞"},{"v":"∞"},{"v":"∞"},{"v":"∞"}]}]},
+  {"line":10,"text":"Now allow the coin **1**. For every amount from 1 upward: would using a 1-coin give a better result?","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"coin","at":0}]},{"t":"array","id":"dp","title":"dp[a] = fewest coins that add up to amount a","cells":[{"v":"0"},{"v":"∞"},{"v":"∞"},{"v":"∞"},{"v":"∞"},{"v":"∞"},{"v":"∞"}]}]},
+  {"line":12,"text":"Amount 1: use a 1-coin, and the remaining 0 needs 0 coins → 0 + 1 = **1**. Better than ∞ → update.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"coin","at":0}]},{"t":"array","id":"dp","title":"dp[a] = fewest coins that add up to amount a","cells":[{"v":"0","tone":"alt"},{"v":"1","tone":"good"},{"v":"∞"},{"v":"∞"},{"v":"∞"},{"v":"∞"},{"v":"∞"}],"ptrs":[{"name":"i","at":1}]}]},
+  {"line":12,"text":"Amount 2: use a 1-coin, and the remaining 1 needs 1 coin → 1 + 1 = **2**. Better than ∞ → update.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"coin","at":0}]},{"t":"array","id":"dp","title":"dp[a] = fewest coins that add up to amount a","cells":[{"v":"0"},{"v":"1","tone":"alt"},{"v":"2","tone":"good"},{"v":"∞"},{"v":"∞"},{"v":"∞"},{"v":"∞"}],"ptrs":[{"name":"i","at":2}]}]},
+  {"line":12,"text":"Amount 3: use a 1-coin, and the remaining 2 needs 2 coins → 2 + 1 = **3**. Better than ∞ → update.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"coin","at":0}]},{"t":"array","id":"dp","title":"dp[a] = fewest coins that add up to amount a","cells":[{"v":"0"},{"v":"1"},{"v":"2","tone":"alt"},{"v":"3","tone":"good"},{"v":"∞"},{"v":"∞"},{"v":"∞"}],"ptrs":[{"name":"i","at":3}]}]},
+  {"line":12,"text":"Amount 4: use a 1-coin, and the remaining 3 needs 3 coins → 3 + 1 = **4**. Better than ∞ → update.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"coin","at":0}]},{"t":"array","id":"dp","title":"dp[a] = fewest coins that add up to amount a","cells":[{"v":"0"},{"v":"1"},{"v":"2"},{"v":"3","tone":"alt"},{"v":"4","tone":"good"},{"v":"∞"},{"v":"∞"}],"ptrs":[{"name":"i","at":4}]}]},
+  {"line":12,"text":"Amount 5: use a 1-coin, and the remaining 4 needs 4 coins → 4 + 1 = **5**. Better than ∞ → update.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"coin","at":0}]},{"t":"array","id":"dp","title":"dp[a] = fewest coins that add up to amount a","cells":[{"v":"0"},{"v":"1"},{"v":"2"},{"v":"3"},{"v":"4","tone":"alt"},{"v":"5","tone":"good"},{"v":"∞"}],"ptrs":[{"name":"i","at":5}]}]},
+  {"line":12,"text":"Amount 6: use a 1-coin, and the remaining 5 needs 5 coins → 5 + 1 = **6**. Better than ∞ → update.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"coin","at":0}]},{"t":"array","id":"dp","title":"dp[a] = fewest coins that add up to amount a","cells":[{"v":"0"},{"v":"1"},{"v":"2"},{"v":"3"},{"v":"4"},{"v":"5","tone":"alt"},{"v":"6","tone":"good"}],"ptrs":[{"name":"i","at":6}]}]},
+  {"line":10,"text":"Now allow the coin **3**. For every amount from 3 upward: would using a 3-coin give a better result?","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"coin","at":1}]},{"t":"array","id":"dp","title":"dp[a] = fewest coins that add up to amount a","cells":[{"v":"0"},{"v":"1"},{"v":"2"},{"v":"3"},{"v":"4"},{"v":"5"},{"v":"6"}],"ptrs":[{"name":"i","at":6}]}]},
+  {"line":12,"text":"Amount 3: use a 3-coin, and the remaining 0 needs 0 coins → 0 + 1 = **1**. Better than 3 → update.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"coin","at":1}]},{"t":"array","id":"dp","title":"dp[a] = fewest coins that add up to amount a","cells":[{"v":"0","tone":"alt"},{"v":"1"},{"v":"2"},{"v":"1","tone":"good"},{"v":"4"},{"v":"5"},{"v":"6"}],"ptrs":[{"name":"i","at":3}]}]},
+  {"line":12,"text":"Amount 4: use a 3-coin, and the remaining 1 needs 1 coin → 1 + 1 = **2**. Better than 4 → update.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"coin","at":1}]},{"t":"array","id":"dp","title":"dp[a] = fewest coins that add up to amount a","cells":[{"v":"0"},{"v":"1","tone":"alt"},{"v":"2"},{"v":"1"},{"v":"2","tone":"good"},{"v":"5"},{"v":"6"}],"ptrs":[{"name":"i","at":4}]}]},
+  {"line":12,"text":"Amount 5: use a 3-coin, and the remaining 2 needs 2 coins → 2 + 1 = **3**. Better than 5 → update.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"coin","at":1}]},{"t":"array","id":"dp","title":"dp[a] = fewest coins that add up to amount a","cells":[{"v":"0"},{"v":"1"},{"v":"2","tone":"alt"},{"v":"1"},{"v":"2"},{"v":"3","tone":"good"},{"v":"6"}],"ptrs":[{"name":"i","at":5}]}]},
+  {"line":12,"text":"Amount 6: use a 3-coin, and the remaining 3 needs 1 coin → 1 + 1 = **2**. Better than 6 → update.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"coin","at":1}]},{"t":"array","id":"dp","title":"dp[a] = fewest coins that add up to amount a","cells":[{"v":"0"},{"v":"1"},{"v":"2"},{"v":"1","tone":"alt"},{"v":"2"},{"v":"3"},{"v":"2","tone":"good"}],"ptrs":[{"name":"i","at":6}]}]},
+  {"line":10,"text":"Now allow the coin **4**. For every amount from 4 upward: would using a 4-coin give a better result?","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"coin","at":2}]},{"t":"array","id":"dp","title":"dp[a] = fewest coins that add up to amount a","cells":[{"v":"0"},{"v":"1"},{"v":"2"},{"v":"1"},{"v":"2"},{"v":"3"},{"v":"2"}],"ptrs":[{"name":"i","at":6}]}]},
+  {"line":12,"text":"Amount 4: use a 4-coin, and the remaining 0 needs 0 coins → 0 + 1 = **1**. Better than 2 → update.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"coin","at":2}]},{"t":"array","id":"dp","title":"dp[a] = fewest coins that add up to amount a","cells":[{"v":"0","tone":"alt"},{"v":"1"},{"v":"2"},{"v":"1"},{"v":"1","tone":"good"},{"v":"3"},{"v":"2"}],"ptrs":[{"name":"i","at":4}]}]},
+  {"line":12,"text":"Amount 5: use a 4-coin, and the remaining 1 needs 1 coin → 1 + 1 = **2**. Better than 3 → update.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"coin","at":2}]},{"t":"array","id":"dp","title":"dp[a] = fewest coins that add up to amount a","cells":[{"v":"0"},{"v":"1","tone":"alt"},{"v":"2"},{"v":"1"},{"v":"1"},{"v":"2","tone":"good"},{"v":"2"}],"ptrs":[{"name":"i","at":5}]}]},
+  {"line":12,"text":"Amount 6: with a 4-coin it would take 2 + 1 = 3 coins — not better than the 2 already known. Keep 2.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"coin","at":2}]},{"t":"array","id":"dp","title":"dp[a] = fewest coins that add up to amount a","cells":[{"v":"0"},{"v":"1"},{"v":"2","tone":"alt"},{"v":"1"},{"v":"1"},{"v":"2"},{"v":"2","tone":"good"}],"ptrs":[{"name":"i","at":6}]}]},
+  {"line":16,"text":"`dp[6]` = **2**: that is the fewest coins for the target amount.","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"coin","at":3}]},{"t":"array","id":"dp","title":"dp[a] = fewest coins that add up to amount a","cells":[{"v":"0"},{"v":"1"},{"v":"2"},{"v":"1"},{"v":"1"},{"v":"2"},{"v":"2","tone":"good"}],"ptrs":[{"name":"i","at":6}]}]},
+  {"line":16,"text":"Done — the answer is **`2`**. 3 + 3 = 6 uses two coins. (Greedy — always taking the largest coin — would give 4 + 1 + 1, three coins.)","views":[{"t":"array","id":"coins","title":"coins","cells":[{"v":"1"},{"v":"3"},{"v":"4"}],"ptrs":[{"name":"coin","at":3}]},{"t":"array","id":"dp","title":"dp[a] = fewest coins that add up to amount a","cells":[{"v":"0"},{"v":"1"},{"v":"2"},{"v":"1"},{"v":"1"},{"v":"2"},{"v":"2","tone":"good"}],"ptrs":[{"name":"i","at":6}]}],"final":true}
+ ]
+}

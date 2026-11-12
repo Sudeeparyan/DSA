@@ -1,0 +1,57 @@
+{
+ "id": 123,
+ "number": 55,
+ "title": "Jump Game",
+ "slug": "jump-game",
+ "category": "greedy",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/jump-game/",
+ "pattern": "Greedy: farthest reachable index",
+ "statement": "You start at index 0 of `nums`. The value `nums[i]` is the **maximum** jump length from index `i`. Return `True` if the last index can be reached.",
+ "example": {
+  "input": "nums = [3,2,1,0,4]",
+  "output": "False",
+  "why": "Every route ends up on index 3, whose jump length is 0. Index 4 can never be reached."
+ },
+ "more": [
+  {
+   "input": "nums = [2,3,1,1,4]",
+   "output": "True"
+  },
+  {
+   "input": "nums = [0]",
+   "output": "True"
+  },
+  {
+   "input": "nums = [1,0,1]",
+   "output": "False"
+  },
+  {
+   "input": "nums = [2,0,0]",
+   "output": "True"
+  }
+ ],
+ "idea": [
+  "It does not matter *how* we get somewhere, only **how far we can get at all**. Keep one number: `max_reachable`, the farthest index reachable so far.",
+  "Walk through the indexes in order. If index `i` is within reach, then everything up to `i + nums[i]` is within reach too — update `max_reachable`.",
+  "If we ever arrive at an index **beyond** `max_reachable`, there is a gap nobody can jump over → `False`. If the loop finishes, every index (including the last) was reachable → `True`."
+ ],
+ "code": "class Solution:\n    def canJump(self, nums: List[int]) -> bool:\n        max_reachable = 0\n\n        for i, jump_length in enumerate(nums):\n            if i > max_reachable:\n                return False\n            max_reachable = max(max_reachable, i + jump_length)\n\n        return True",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "One pass over the array; each index is looked at once.",
+  "space": "O(1)",
+  "spaceWhy": "A single number."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`nums = [3,2,1,0,4]`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"2"},{"v":"1"},{"v":"0"},{"v":"4"}]}]},
+  {"line":3,"text":"`max_reachable` is the farthest index we know how to reach. At the start that is index 0, where we stand.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"2"},{"v":"1"},{"v":"0"},{"v":"4"}],"ranges":[{"from":0,"to":0,"label":"reachable","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"max_reachable","v":"0"}]}]},
+  {"line":8,"text":"Index 0 is reachable, and from it we can jump up to 3 → as far as index 3. That is farther than before: `max_reachable` = **3**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"cur"},{"v":"2"},{"v":"1"},{"v":"0"},{"v":"4"}],"ptrs":[{"name":"i","at":0}],"ranges":[{"from":0,"to":3,"label":"reachable","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"max_reachable","v":"3","changed":true}]}]},
+  {"line":8,"text":"Index 1 is reachable, but from it we get at most to index 1 + 2 = 3 — no farther than the 3 we already have.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"2","tone":"cur"},{"v":"1"},{"v":"0"},{"v":"4"}],"ptrs":[{"name":"i","at":1}],"ranges":[{"from":0,"to":3,"label":"reachable","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"max_reachable","v":"3"}]}]},
+  {"line":8,"text":"Index 2 is reachable, but from it we get at most to index 2 + 1 = 3 — no farther than the 3 we already have.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"2"},{"v":"1","tone":"cur"},{"v":"0"},{"v":"4"}],"ptrs":[{"name":"i","at":2}],"ranges":[{"from":0,"to":3,"label":"reachable","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"max_reachable","v":"3"}]}]},
+  {"line":8,"text":"Index 3 is reachable, but from it we get at most to index 3 + 0 = 3 — no farther than the 3 we already have.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"2"},{"v":"1"},{"v":"0","tone":"cur"},{"v":"4"}],"ptrs":[{"name":"i","at":3}],"ranges":[{"from":0,"to":3,"label":"reachable","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"max_reachable","v":"3"}]}]},
+  {"line":6,"text":"Index 4 lies **beyond** the farthest reachable index (3). Nothing can get us here — or past it.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"2"},{"v":"1"},{"v":"0"},{"v":"4","tone":"bad"}],"ptrs":[{"name":"i","at":4}],"ranges":[{"from":0,"to":3,"label":"reachable","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"max_reachable","v":"3"}]}]},
+  {"line":7,"text":"The last index cannot be reached → **False**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"2"},{"v":"1"},{"v":"0"},{"v":"4"}],"ptrs":[{"name":"i","at":4}],"ranges":[{"from":0,"to":3,"label":"reachable","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"max_reachable","v":"3"}]}]},
+  {"line":7,"text":"Done — the answer is **`False`**. Every route ends up on index 3, whose jump length is 0. Index 4 can never be reached.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"2"},{"v":"1"},{"v":"0"},{"v":"4"}],"ptrs":[{"name":"i","at":4}],"ranges":[{"from":0,"to":3,"label":"reachable","tone":"win"}]},{"t":"vars","id":"vars","items":[{"k":"max_reachable","v":"3"}]}],"final":true}
+ ]
+}

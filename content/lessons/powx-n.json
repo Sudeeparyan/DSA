@@ -1,0 +1,65 @@
+{
+ "id": 141,
+ "number": 50,
+ "title": "Pow(x, n)",
+ "slug": "powx-n",
+ "category": "math-geometry",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/powx-n/",
+ "pattern": "Fast exponentiation (square the half)",
+ "statement": "Implement `pow(x, n)`: compute `x` raised to the integer power `n` (which may be negative).",
+ "example": {
+  "input": "x = 2.0, n = 10",
+  "output": "1024.0",
+  "why": "2¹⁰ = (2⁵)² = 32² = 1024."
+ },
+ "more": [
+  {
+   "input": "x = 2.1, n = 3",
+   "output": "9.261"
+  },
+  {
+   "input": "x = 2.0, n = -2",
+   "output": "0.25"
+  },
+  {
+   "input": "x = 5.0, n = 0",
+   "output": "1.0"
+  },
+  {
+   "input": "x = 1.0, n = 2147483647",
+   "output": "1.0"
+  },
+  {
+   "input": "x = -2.0, n = 3",
+   "output": "-8.0"
+  }
+ ],
+ "idea": [
+  "Multiplying `x` by itself `n` times costs O(n) — far too slow for exponents in the billions.",
+  "Use `xⁿ = (x^(n/2))²`: compute the **half** power once and square it. If `n` is odd, one extra factor `x` is needed: `xⁿ = x · (x^(n//2))²`.",
+  "Each call halves the exponent, so only about log₂(n) multiplications are needed. A negative exponent is handled first with `x⁻ⁿ = (1/x)ⁿ`."
+ ],
+ "code": "class Solution:\n    def myPow(self, x: float, n: int) -> float:\n        def helper(base, exp):\n            if exp == 0:\n                return 1.0\n            temp = helper(base, exp // 2)\n            if exp % 2 == 0:\n                return temp * temp\n            else:\n                return base * temp * temp\n\n        if n < 0:\n            x = 1 / x\n            n = -n\n\n        return helper(x, n)",
+ "complexity": {
+  "time": "O(log n)",
+  "timeWhy": "The exponent is halved on every call.",
+  "space": "O(log n)",
+  "spaceWhy": "The recursion is about log₂(n) calls deep."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`x = 2.0, n = 10`**. Each step runs one highlighted line of the code.","views":[]},
+  {"line":12,"text":"The exponent 10 is not negative, so x and n can be used as they are.","views":[]},
+  {"line":6,"text":"2^10: instead of 10 separate multiplications, compute the **half** power 2^5 once and square it.","views":[{"t":"tree","id":"rec","title":"recursion  (each call halves the exponent)","nodes":[{"id":2,"v":"2^10","tone":"cur"}],"roots":[2],"shape":"box"}]},
+  {"line":6,"text":"2^5: instead of 5 separate multiplications, compute the **half** power 2^2 once and square it.","views":[{"t":"tree","id":"rec","title":"recursion  (each call halves the exponent)","nodes":[{"id":2,"v":"2^10","kids":[3],"tone":"win"},{"id":3,"v":"2^5","tone":"cur"}],"roots":[2],"shape":"box"}]},
+  {"line":6,"text":"2^2: instead of 2 separate multiplications, compute the **half** power 2^1 once and square it.","views":[{"t":"tree","id":"rec","title":"recursion  (each call halves the exponent)","nodes":[{"id":2,"v":"2^10","kids":[3],"tone":"win"},{"id":3,"v":"2^5","kids":[4],"tone":"win"},{"id":4,"v":"2^2","tone":"cur"}],"roots":[2],"shape":"box"}]},
+  {"line":6,"text":"2^1: instead of 1 separate multiplications, compute the **half** power 2^0 once and square it.","views":[{"t":"tree","id":"rec","title":"recursion  (each call halves the exponent)","nodes":[{"id":2,"v":"2^10","kids":[3],"tone":"win"},{"id":3,"v":"2^5","kids":[4],"tone":"win"},{"id":4,"v":"2^2","kids":[5],"tone":"win"},{"id":5,"v":"2^1","tone":"cur"}],"roots":[2],"shape":"box"}]},
+  {"line":4,"text":"Anything to the power 0 is **1**. This is where the halving stops.","views":[{"t":"tree","id":"rec","title":"recursion  (each call halves the exponent)","nodes":[{"id":2,"v":"2^10","kids":[3],"tone":"win"},{"id":3,"v":"2^5","kids":[4],"tone":"win"},{"id":4,"v":"2^2","kids":[5],"tone":"win"},{"id":5,"v":"2^1","kids":[6],"tone":"win"},{"id":6,"v":"2^0","tone":"cur"}],"roots":[2],"shape":"box"}]},
+  {"line":10,"text":"1 is **odd**: one extra factor is needed. 2^1 = 2 × (2^0)² = 2 × 1 × 1 = **2**.","views":[{"t":"tree","id":"rec","title":"recursion  (each call halves the exponent)","nodes":[{"id":2,"v":"2^10","kids":[3],"tone":"win"},{"id":3,"v":"2^5","kids":[4],"tone":"win"},{"id":4,"v":"2^2","kids":[5],"tone":"win"},{"id":5,"v":"2^1","kids":[6],"tone":"cur"},{"id":6,"v":"2^0","badge":"1"}],"roots":[2],"shape":"box"},{"t":"vars","id":"vars","items":[{"k":"temp","v":"1.0"}]}]},
+  {"line":8,"text":"2 is **even**: 2^2 = (2^1)² = 2 × 2 = **4**.","views":[{"t":"tree","id":"rec","title":"recursion  (each call halves the exponent)","nodes":[{"id":2,"v":"2^10","kids":[3],"tone":"win"},{"id":3,"v":"2^5","kids":[4],"tone":"win"},{"id":4,"v":"2^2","kids":[5],"tone":"cur"},{"id":5,"v":"2^1","kids":[6],"badge":"2"},{"id":6,"v":"2^0","badge":"1"}],"roots":[2],"shape":"box"},{"t":"vars","id":"vars","items":[{"k":"temp","v":"2.0","changed":true}]}]},
+  {"line":10,"text":"5 is **odd**: one extra factor is needed. 2^5 = 2 × (2^2)² = 2 × 4 × 4 = **32**.","views":[{"t":"tree","id":"rec","title":"recursion  (each call halves the exponent)","nodes":[{"id":2,"v":"2^10","kids":[3],"tone":"win"},{"id":3,"v":"2^5","kids":[4],"tone":"cur"},{"id":4,"v":"2^2","kids":[5],"badge":"4"},{"id":5,"v":"2^1","kids":[6],"badge":"2"},{"id":6,"v":"2^0","badge":"1"}],"roots":[2],"shape":"box"},{"t":"vars","id":"vars","items":[{"k":"temp","v":"4.0","changed":true}]}]},
+  {"line":8,"text":"10 is **even**: 2^10 = (2^5)² = 32 × 32 = **1024**.","views":[{"t":"tree","id":"rec","title":"recursion  (each call halves the exponent)","nodes":[{"id":2,"v":"2^10","kids":[3],"tone":"cur"},{"id":3,"v":"2^5","kids":[4],"badge":"32"},{"id":4,"v":"2^2","kids":[5],"badge":"4"},{"id":5,"v":"2^1","kids":[6],"badge":"2"},{"id":6,"v":"2^0","badge":"1"}],"roots":[2],"shape":"box"},{"t":"vars","id":"vars","items":[{"k":"temp","v":"32.0","changed":true}]}]},
+  {"line":16,"text":"The answer is **1024**.","views":[{"t":"tree","id":"rec","title":"recursion  (each call halves the exponent)","nodes":[{"id":2,"v":"2^10","kids":[3],"badge":"1024"},{"id":3,"v":"2^5","kids":[4],"badge":"32"},{"id":4,"v":"2^2","kids":[5],"badge":"4"},{"id":5,"v":"2^1","kids":[6],"badge":"2"},{"id":6,"v":"2^0","badge":"1"}],"roots":[2],"shape":"box"}]},
+  {"line":16,"text":"Done — the answer is **`1024.0`**. 2¹⁰ = (2⁵)² = 32² = 1024.","views":[{"t":"tree","id":"rec","title":"recursion  (each call halves the exponent)","nodes":[{"id":2,"v":"2^10","kids":[3],"badge":"1024"},{"id":3,"v":"2^5","kids":[4],"badge":"32"},{"id":4,"v":"2^2","kids":[5],"badge":"4"},{"id":5,"v":"2^1","kids":[6],"badge":"2"},{"id":6,"v":"2^0","badge":"1"}],"roots":[2],"shape":"box"}],"final":true}
+ ]
+}

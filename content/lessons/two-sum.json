@@ -1,0 +1,59 @@
+{
+ "id": 3,
+ "number": 1,
+ "title": "Two Sum",
+ "slug": "two-sum",
+ "category": "arrays-hashing",
+ "difficulty": "Easy",
+ "url": "https://leetcode.com/problems/two-sum/",
+ "pattern": "Hash map lookup",
+ "statement": "Given a list of integers `nums` and a number `target`, find the two numbers that add up to `target` and return their **indices**. Exactly one pair works, and you may not use the same element twice.",
+ "example": {
+  "input": "nums = [3,11,5,6], target = 9",
+  "output": "[0,3]",
+  "why": "nums[0] + nums[3] = 3 + 6 = 9."
+ },
+ "more": [
+  {
+   "input": "nums = [2,7,11,15], target = 9",
+   "output": "[0,1]"
+  },
+  {
+   "input": "nums = [3,2,4], target = 6",
+   "output": "[1,2]"
+  },
+  {
+   "input": "nums = [3,3], target = 6",
+   "output": "[0,1]"
+  }
+ ],
+ "idea": [
+  "Checking every pair works but costs O(n²): for each number we search the whole list for its partner.",
+  "For a number `n` the partner is fixed: it must be `target − n`. So the only question is *have I already seen that value?*",
+  "A hash map answers that instantly. Walk the list once: look up the partner, and if it is not there yet, store the current number with its index."
+ ],
+ "code": "class Solution:\n    def twoSum(self, nums: List[int], target: int) -> List[int]:\n        prevMap = {}  # val -> index\n\n        for i, n in enumerate(nums):\n            diff = target - n\n            if diff in prevMap:\n                return [prevMap[diff], i]\n            prevMap[n] = i",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "One pass over the list; every map lookup and insert is O(1) on average.",
+  "space": "O(n)",
+  "spaceWhy": "In the worst case the map stores almost every number before the pair appears."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`nums = [3,11,5,6], target = 9`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"11"},{"v":"5"},{"v":"6"}]},{"t":"vars","id":"vars","items":[{"k":"target","v":"9"}]}]},
+  {"line":3,"text":"Start with an empty hash map. It will remember every number we have passed, and the index where we saw it.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3"},{"v":"11"},{"v":"5"},{"v":"6"}]},{"t":"map","id":"prevMap","title":"prevMap  (value → index)","kind":"map","entries":[]},{"t":"vars","id":"vars","items":[{"k":"target","v":"9"}]}]},
+  {"line":6,"text":"Index 0 holds **3**. To reach 9 it needs a partner worth 9 − 3 = **6**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"cur"},{"v":"11"},{"v":"5"},{"v":"6"}],"ptrs":[{"name":"i","at":0}]},{"t":"map","id":"prevMap","title":"prevMap  (value → index)","kind":"map","entries":[]},{"t":"vars","id":"vars","items":[{"k":"target","v":"9"},{"k":"diff","v":"6"}]}]},
+  {"line":7,"text":"Is 6 in the map? Not yet, so 3 has no partner so far.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"cur"},{"v":"11"},{"v":"5"},{"v":"6"}],"ptrs":[{"name":"i","at":0}]},{"t":"map","id":"prevMap","title":"prevMap  (value → index)","kind":"map","entries":[]},{"t":"vars","id":"vars","items":[{"k":"target","v":"9"},{"k":"diff","v":"6"}]}]},
+  {"line":9,"text":"Remember **3 → index 0**. If a later number needs 3, we can answer in one lookup.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"cur"},{"v":"11"},{"v":"5"},{"v":"6"}],"ptrs":[{"name":"i","at":0}]},{"t":"map","id":"prevMap","title":"prevMap  (value → index)","kind":"map","entries":[{"k":"3","v":"0","tone":"cur"}]},{"t":"vars","id":"vars","items":[{"k":"target","v":"9"},{"k":"diff","v":"6"}]}]},
+  {"line":6,"text":"Index 1 holds **11**. To reach 9 it needs a partner worth 9 − 11 = **-2**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"seen"},{"v":"11","tone":"cur"},{"v":"5"},{"v":"6"}],"ptrs":[{"name":"i","at":1}]},{"t":"map","id":"prevMap","title":"prevMap  (value → index)","kind":"map","entries":[{"k":"3","v":"0"}]},{"t":"vars","id":"vars","items":[{"k":"target","v":"9"},{"k":"diff","v":"-2","changed":true}]}]},
+  {"line":7,"text":"Is -2 in the map? Not yet, so 11 has no partner so far.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"seen"},{"v":"11","tone":"cur"},{"v":"5"},{"v":"6"}],"ptrs":[{"name":"i","at":1}]},{"t":"map","id":"prevMap","title":"prevMap  (value → index)","kind":"map","entries":[{"k":"3","v":"0"}]},{"t":"vars","id":"vars","items":[{"k":"target","v":"9"},{"k":"diff","v":"-2"}]}]},
+  {"line":9,"text":"Remember **11 → index 1**. If a later number needs 11, we can answer in one lookup.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"seen"},{"v":"11","tone":"cur"},{"v":"5"},{"v":"6"}],"ptrs":[{"name":"i","at":1}]},{"t":"map","id":"prevMap","title":"prevMap  (value → index)","kind":"map","entries":[{"k":"3","v":"0"},{"k":"11","v":"1","tone":"cur"}]},{"t":"vars","id":"vars","items":[{"k":"target","v":"9"},{"k":"diff","v":"-2"}]}]},
+  {"line":6,"text":"Index 2 holds **5**. To reach 9 it needs a partner worth 9 − 5 = **4**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"seen"},{"v":"11","tone":"seen"},{"v":"5","tone":"cur"},{"v":"6"}],"ptrs":[{"name":"i","at":2}]},{"t":"map","id":"prevMap","title":"prevMap  (value → index)","kind":"map","entries":[{"k":"3","v":"0"},{"k":"11","v":"1"}]},{"t":"vars","id":"vars","items":[{"k":"target","v":"9"},{"k":"diff","v":"4","changed":true}]}]},
+  {"line":7,"text":"Is 4 in the map? Not yet, so 5 has no partner so far.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"seen"},{"v":"11","tone":"seen"},{"v":"5","tone":"cur"},{"v":"6"}],"ptrs":[{"name":"i","at":2}]},{"t":"map","id":"prevMap","title":"prevMap  (value → index)","kind":"map","entries":[{"k":"3","v":"0"},{"k":"11","v":"1"}]},{"t":"vars","id":"vars","items":[{"k":"target","v":"9"},{"k":"diff","v":"4"}]}]},
+  {"line":9,"text":"Remember **5 → index 2**. If a later number needs 5, we can answer in one lookup.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"seen"},{"v":"11","tone":"seen"},{"v":"5","tone":"cur"},{"v":"6"}],"ptrs":[{"name":"i","at":2}]},{"t":"map","id":"prevMap","title":"prevMap  (value → index)","kind":"map","entries":[{"k":"3","v":"0"},{"k":"11","v":"1"},{"k":"5","v":"2","tone":"cur"}]},{"t":"vars","id":"vars","items":[{"k":"target","v":"9"},{"k":"diff","v":"4"}]}]},
+  {"line":6,"text":"Index 3 holds **6**. To reach 9 it needs a partner worth 9 − 6 = **3**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"seen"},{"v":"11","tone":"seen"},{"v":"5","tone":"seen"},{"v":"6","tone":"cur"}],"ptrs":[{"name":"i","at":3}]},{"t":"map","id":"prevMap","title":"prevMap  (value → index)","kind":"map","entries":[{"k":"3","v":"0"},{"k":"11","v":"1"},{"k":"5","v":"2"}]},{"t":"vars","id":"vars","items":[{"k":"target","v":"9"},{"k":"diff","v":"3","changed":true}]}]},
+  {"line":7,"text":"Is 3 in the map? **Yes** — we met it earlier at index 0.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"good"},{"v":"11","tone":"seen"},{"v":"5","tone":"seen"},{"v":"6","tone":"good"}],"ptrs":[{"name":"i","at":3}]},{"t":"map","id":"prevMap","title":"prevMap  (value → index)","kind":"map","entries":[{"k":"3","v":"0","tone":"good"},{"k":"11","v":"1"},{"k":"5","v":"2"}]},{"t":"vars","id":"vars","items":[{"k":"target","v":"9"},{"k":"diff","v":"3"}]}]},
+  {"line":8,"text":"3 + 6 = 9, so return their indices **[0, 3]**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"good"},{"v":"11","tone":"seen"},{"v":"5","tone":"seen"},{"v":"6","tone":"good"}],"ptrs":[{"name":"i","at":3}]},{"t":"map","id":"prevMap","title":"prevMap  (value → index)","kind":"map","entries":[{"k":"3","v":"0","tone":"good"},{"k":"11","v":"1"},{"k":"5","v":"2"}]},{"t":"vars","id":"vars","items":[{"k":"target","v":"9"},{"k":"diff","v":"3"}]}]},
+  {"line":8,"text":"Done — the answer is **`[0,3]`**. nums[0] + nums[3] = 3 + 6 = 9.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"3","tone":"good"},{"v":"11","tone":"seen"},{"v":"5","tone":"seen"},{"v":"6","tone":"good"}],"ptrs":[{"name":"i","at":3}]},{"t":"map","id":"prevMap","title":"prevMap  (value → index)","kind":"map","entries":[{"k":"3","v":"0","tone":"good"},{"k":"11","v":"1"},{"k":"5","v":"2"}]},{"t":"vars","id":"vars","items":[{"k":"target","v":"9"},{"k":"diff","v":"3"}]}],"final":true}
+ ]
+}

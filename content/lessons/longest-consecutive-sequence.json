@@ -1,0 +1,63 @@
+{
+ "id": 9,
+ "number": 128,
+ "title": "Longest Consecutive Sequence",
+ "slug": "longest-consecutive-sequence",
+ "category": "arrays-hashing",
+ "difficulty": "Medium",
+ "url": "https://leetcode.com/problems/longest-consecutive-sequence/",
+ "pattern": "Hash set + only count from sequence starts",
+ "statement": "Given an unsorted array of integers, return the length of the longest run of **consecutive values** (such as 1, 2, 3, 4). The values can be anywhere in the array, and the algorithm must run in O(n) time.",
+ "example": {
+  "input": "nums = [100,4,200,1,3,2]",
+  "output": "4",
+  "why": "The values 1, 2, 3, 4 are all present, a run of length 4."
+ },
+ "more": [
+  {
+   "input": "nums = [0,3,7,2,5,8,4,6,0,1]",
+   "output": "9"
+  },
+  {
+   "input": "nums = []",
+   "output": "0"
+  },
+  {
+   "input": "nums = [1,2,0,1]",
+   "output": "3"
+  }
+ ],
+ "idea": [
+  "Sorting would line the runs up, but sorting costs O(n log n). We need O(n).",
+  "Put all numbers in a hash set. A number `x` **starts** a run exactly when `x − 1` is *not* in the set.",
+  "Only from such a start, count upward: x + 1, x + 2, … while they are in the set. Numbers in the middle of a run are skipped, so every number is counted just once."
+ ],
+ "code": "class Solution:\n    def longestConsecutive(self, nums: List[int]) -> int:\n        num_set = set(nums)\n        max_length = 0\n\n        for num in num_set:\n            if num - 1 not in num_set:\n                current_num = num\n                current_length = 1\n\n                while current_num + 1 in num_set:\n                    current_num += 1\n                    current_length += 1\n\n                max_length = max(max_length, current_length)\n\n        return max_length",
+ "complexity": {
+  "time": "O(n)",
+  "timeWhy": "The inner loop only runs from the start of a run, so each number is visited at most twice in total.",
+  "space": "O(n)",
+  "spaceWhy": "The set stores every distinct number."
+ },
+ "steps": [
+  {"line":2,"text":"Our example: **`nums = [100,4,200,1,3,2]`**. Each step runs one highlighted line of the code.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"100"},{"v":"4"},{"v":"200"},{"v":"1"},{"v":"3"},{"v":"2"}]}]},
+  {"line":3,"text":"Put every number into a **hash set**. Now *is x present?* is answered in O(1), and duplicates disappear.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"100"},{"v":"4"},{"v":"200"},{"v":"1"},{"v":"3"},{"v":"2"}]},{"t":"map","id":"num_set","title":"num_set","kind":"set","entries":[{"k":"1"},{"k":"2"},{"k":"3"},{"k":"4"},{"k":"100"},{"k":"200"}]}]},
+  {"line":7,"text":"Take 1. Is 0 in the set? No — nothing comes right before 1, so it **starts** a run.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"100"},{"v":"4"},{"v":"200"},{"v":"1"},{"v":"3"},{"v":"2"}]},{"t":"map","id":"num_set","title":"num_set","kind":"set","entries":[{"k":"1","tone":"cur"},{"k":"2"},{"k":"3"},{"k":"4"},{"k":"100"},{"k":"200"}]},{"t":"vars","id":"vars","items":[{"k":"max_length","v":"0"}]}]},
+  {"line":13,"text":"2 is in the set too, so the run grows: 1 … 2, length **2**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"100"},{"v":"4"},{"v":"200"},{"v":"1"},{"v":"3"},{"v":"2"}]},{"t":"map","id":"num_set","title":"num_set","kind":"set","entries":[{"k":"1","tone":"good"},{"k":"2","tone":"good"},{"k":"3"},{"k":"4"},{"k":"100"},{"k":"200"}]},{"t":"vars","id":"vars","items":[{"k":"current_num","v":"2"},{"k":"current_length","v":"2"},{"k":"max_length","v":"0"}]}]},
+  {"line":13,"text":"3 is in the set too, so the run grows: 1 … 3, length **3**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"100"},{"v":"4"},{"v":"200"},{"v":"1"},{"v":"3"},{"v":"2"}]},{"t":"map","id":"num_set","title":"num_set","kind":"set","entries":[{"k":"1","tone":"good"},{"k":"2","tone":"good"},{"k":"3","tone":"good"},{"k":"4"},{"k":"100"},{"k":"200"}]},{"t":"vars","id":"vars","items":[{"k":"current_num","v":"3","changed":true},{"k":"current_length","v":"3","changed":true},{"k":"max_length","v":"0"}]}]},
+  {"line":13,"text":"4 is in the set too, so the run grows: 1 … 4, length **4**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"100"},{"v":"4"},{"v":"200"},{"v":"1"},{"v":"3"},{"v":"2"}]},{"t":"map","id":"num_set","title":"num_set","kind":"set","entries":[{"k":"1","tone":"good"},{"k":"2","tone":"good"},{"k":"3","tone":"good"},{"k":"4","tone":"good"},{"k":"100"},{"k":"200"}]},{"t":"vars","id":"vars","items":[{"k":"current_num","v":"4","changed":true},{"k":"current_length","v":"4","changed":true},{"k":"max_length","v":"0"}]}]},
+  {"line":11,"text":"5 is not in the set, so the run that started at 1 ends at 4.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"100"},{"v":"4"},{"v":"200"},{"v":"1"},{"v":"3"},{"v":"2"}]},{"t":"map","id":"num_set","title":"num_set","kind":"set","entries":[{"k":"1","tone":"good"},{"k":"2","tone":"good"},{"k":"3","tone":"good"},{"k":"4","tone":"good"},{"k":"100"},{"k":"200"}]},{"t":"vars","id":"vars","items":[{"k":"current_num","v":"4"},{"k":"current_length","v":"4"},{"k":"max_length","v":"0"}]}]},
+  {"line":15,"text":"This run has length 4. Longest so far: **4**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"100"},{"v":"4"},{"v":"200"},{"v":"1"},{"v":"3"},{"v":"2"}]},{"t":"map","id":"num_set","title":"num_set","kind":"set","entries":[{"k":"1","tone":"good"},{"k":"2","tone":"good"},{"k":"3","tone":"good"},{"k":"4","tone":"good"},{"k":"100"},{"k":"200"}]},{"t":"vars","id":"vars","items":[{"k":"current_num","v":"4"},{"k":"current_length","v":"4"},{"k":"max_length","v":"4","changed":true}]}]},
+  {"line":7,"text":"Take 2. 1 is in the set, so 2 is in the *middle* of a run. Skip it — that run gets counted from its start.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"100"},{"v":"4"},{"v":"200"},{"v":"1"},{"v":"3"},{"v":"2"}]},{"t":"map","id":"num_set","title":"num_set","kind":"set","entries":[{"k":"1","tone":"alt"},{"k":"2","tone":"dim"},{"k":"3"},{"k":"4"},{"k":"100"},{"k":"200"}]},{"t":"vars","id":"vars","items":[{"k":"current_num","v":"4"},{"k":"current_length","v":"4"},{"k":"max_length","v":"4"}]}]},
+  {"line":7,"text":"Take 3. 2 is in the set, so 3 is in the *middle* of a run. Skip it — that run gets counted from its start.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"100"},{"v":"4"},{"v":"200"},{"v":"1"},{"v":"3"},{"v":"2"}]},{"t":"map","id":"num_set","title":"num_set","kind":"set","entries":[{"k":"1"},{"k":"2","tone":"alt"},{"k":"3","tone":"dim"},{"k":"4"},{"k":"100"},{"k":"200"}]},{"t":"vars","id":"vars","items":[{"k":"current_num","v":"4"},{"k":"current_length","v":"4"},{"k":"max_length","v":"4"}]}]},
+  {"line":7,"text":"Take 100. Is 99 in the set? No — nothing comes right before 100, so it **starts** a run.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"100"},{"v":"4"},{"v":"200"},{"v":"1"},{"v":"3"},{"v":"2"}]},{"t":"map","id":"num_set","title":"num_set","kind":"set","entries":[{"k":"1"},{"k":"2"},{"k":"3"},{"k":"4"},{"k":"100","tone":"cur"},{"k":"200"}]},{"t":"vars","id":"vars","items":[{"k":"current_num","v":"4"},{"k":"current_length","v":"4"},{"k":"max_length","v":"4"}]}]},
+  {"line":11,"text":"101 is not in the set, so the run that started at 100 ends at 100.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"100"},{"v":"4"},{"v":"200"},{"v":"1"},{"v":"3"},{"v":"2"}]},{"t":"map","id":"num_set","title":"num_set","kind":"set","entries":[{"k":"1"},{"k":"2"},{"k":"3"},{"k":"4"},{"k":"100","tone":"good"},{"k":"200"}]},{"t":"vars","id":"vars","items":[{"k":"current_num","v":"100","changed":true},{"k":"current_length","v":"1","changed":true},{"k":"max_length","v":"4"}]}]},
+  {"line":15,"text":"This run has length 1. Longest so far: **4**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"100"},{"v":"4"},{"v":"200"},{"v":"1"},{"v":"3"},{"v":"2"}]},{"t":"map","id":"num_set","title":"num_set","kind":"set","entries":[{"k":"1"},{"k":"2"},{"k":"3"},{"k":"4"},{"k":"100","tone":"good"},{"k":"200"}]},{"t":"vars","id":"vars","items":[{"k":"current_num","v":"100"},{"k":"current_length","v":"1"},{"k":"max_length","v":"4"}]}]},
+  {"line":7,"text":"Take 4. 3 is in the set, so 4 is in the *middle* of a run. Skip it — that run gets counted from its start.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"100"},{"v":"4"},{"v":"200"},{"v":"1"},{"v":"3"},{"v":"2"}]},{"t":"map","id":"num_set","title":"num_set","kind":"set","entries":[{"k":"1"},{"k":"2"},{"k":"3","tone":"alt"},{"k":"4","tone":"dim"},{"k":"100"},{"k":"200"}]},{"t":"vars","id":"vars","items":[{"k":"current_num","v":"100"},{"k":"current_length","v":"1"},{"k":"max_length","v":"4"}]}]},
+  {"line":7,"text":"Take 200. Is 199 in the set? No — nothing comes right before 200, so it **starts** a run.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"100"},{"v":"4"},{"v":"200"},{"v":"1"},{"v":"3"},{"v":"2"}]},{"t":"map","id":"num_set","title":"num_set","kind":"set","entries":[{"k":"1"},{"k":"2"},{"k":"3"},{"k":"4"},{"k":"100"},{"k":"200","tone":"cur"}]},{"t":"vars","id":"vars","items":[{"k":"current_num","v":"100"},{"k":"current_length","v":"1"},{"k":"max_length","v":"4"}]}]},
+  {"line":11,"text":"201 is not in the set, so the run that started at 200 ends at 200.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"100"},{"v":"4"},{"v":"200"},{"v":"1"},{"v":"3"},{"v":"2"}]},{"t":"map","id":"num_set","title":"num_set","kind":"set","entries":[{"k":"1"},{"k":"2"},{"k":"3"},{"k":"4"},{"k":"100"},{"k":"200","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"current_num","v":"200","changed":true},{"k":"current_length","v":"1"},{"k":"max_length","v":"4"}]}]},
+  {"line":15,"text":"This run has length 1. Longest so far: **4**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"100"},{"v":"4"},{"v":"200"},{"v":"1"},{"v":"3"},{"v":"2"}]},{"t":"map","id":"num_set","title":"num_set","kind":"set","entries":[{"k":"1"},{"k":"2"},{"k":"3"},{"k":"4"},{"k":"100"},{"k":"200","tone":"good"}]},{"t":"vars","id":"vars","items":[{"k":"current_num","v":"200"},{"k":"current_length","v":"1"},{"k":"max_length","v":"4"}]}]},
+  {"line":17,"text":"Every run was counted exactly once, from its start. The longest has length **4**.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"100"},{"v":"4"},{"v":"200"},{"v":"1"},{"v":"3"},{"v":"2"}]},{"t":"map","id":"num_set","title":"num_set","kind":"set","entries":[{"k":"1"},{"k":"2"},{"k":"3"},{"k":"4"},{"k":"100"},{"k":"200"}]},{"t":"vars","id":"vars","items":[{"k":"current_num","v":"200"},{"k":"current_length","v":"1"},{"k":"max_length","v":"4"}]}]},
+  {"line":17,"text":"Done — the answer is **`4`**. The values 1, 2, 3, 4 are all present, a run of length 4.","views":[{"t":"array","id":"nums","title":"nums","cells":[{"v":"100"},{"v":"4"},{"v":"200"},{"v":"1"},{"v":"3"},{"v":"2"}]},{"t":"map","id":"num_set","title":"num_set","kind":"set","entries":[{"k":"1"},{"k":"2"},{"k":"3"},{"k":"4"},{"k":"100"},{"k":"200"}]},{"t":"vars","id":"vars","items":[{"k":"current_num","v":"200"},{"k":"current_length","v":"1"},{"k":"max_length","v":"4"}]}],"final":true}
+ ]
+}
