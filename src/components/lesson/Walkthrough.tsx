@@ -35,6 +35,20 @@ function tonesUsed(steps: Step[]): Set<string> {
   return used;
 }
 
+/** The calls of a design problem (LRU Cache …): done, running now, still to come. */
+function OpsList({ ops, className }: { ops: OpsView; className: string }) {
+  return (
+    <ol className={className} aria-label="Operations">
+      {ops.items.map((op, i) => (
+        <li key={i} className={`op op-${op.state}`}>
+          <code>{op.call}</code>
+          {op.ret !== undefined && <span className="op-ret">→ {op.ret}</span>}
+        </li>
+      ))}
+    </ol>
+  );
+}
+
 export function Walkthrough({ lesson }: { lesson: Lesson }) {
   const steps = lesson.steps;
   const last = steps.length - 1;
@@ -156,32 +170,60 @@ export function Walkthrough({ lesson }: { lesson: Lesson }) {
           </ul>
         )}
 
-        <div className="caption" aria-live="polite">
-          <div className="caption-step">
-            Step {index + 1} of {steps.length}
+        <div className="caption">
+          <div aria-live="polite">
+            <div className="caption-step">
+              Step {index + 1} of {steps.length}
+            </div>
+            <p key={index} className="caption-text">
+              <Rich text={step.text} />
+            </p>
           </div>
-          <p key={index} className="caption-text">
-            <Rich text={step.text} />
-          </p>
-          {/* on narrow screens the code panel sits below the controls, so repeat the running line here */}
+          {/* on narrow screens the side cards sit below the controls, so repeat the calls, the
+              running line and the variables here, where they can be read together with the stage */}
+          {ops && <OpsList ops={ops} className="ops caption-ops" />}
           <CodeLine code={lesson.code} line={step.line} />
+          {vars && vars.items.length > 0 && (
+            <dl className="caption-vars" aria-label="Variables">
+              {vars.items.map((item) => (
+                <div key={item.k} className={item.changed ? "cvar cvar-changed" : "cvar"}>
+                  <dt>{item.k}</dt>
+                  <dd>{item.v}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
         </div>
 
+        {/* on narrow screens this bar stays at the bottom of the screen while the walkthrough is
+            in view, so "Next step" sits under the thumb and does not move from step to step */}
         <div className="controls">
           <button type="button" className="btn" onClick={() => go(index - 1)} disabled={index === 0}>
             ← Back
           </button>
+          <button type="button" className="btn btn-play" onClick={togglePlay} aria-pressed={playing}>
+            {playing ? "❚❚ Pause" : index >= last ? "↺ Replay" : "▶ Auto-play"}
+          </button>
           <button
             type="button"
-            className="btn btn-primary"
+            className="btn btn-primary btn-next"
             onClick={() => go(index + 1)}
             disabled={index >= last}
           >
             Next step →
           </button>
-          <button type="button" className="btn" onClick={togglePlay} aria-pressed={playing}>
-            {playing ? "❚❚ Pause" : index >= last ? "↺ Replay" : "▶ Auto-play"}
-          </button>
+          <input
+            className="scrub"
+            type="range"
+            min={0}
+            max={last}
+            value={index}
+            onChange={(e) => go(Number(e.target.value))}
+            aria-label="Jump to step"
+          />
+        </div>
+
+        <div className="controls-more">
           <label className="speed">
             Speed
             <select value={speed} onChange={(e) => setSpeed(Number(e.target.value))}>
@@ -192,38 +234,22 @@ export function Walkthrough({ lesson }: { lesson: Lesson }) {
               ))}
             </select>
           </label>
-          <input
-            className="scrub"
-            type="range"
-            min={0}
-            max={last}
-            value={index}
-            onChange={(e) => go(Number(e.target.value))}
-            aria-label="Jump to step"
-          />
           {canFull && (
             <button type="button" className="btn" onClick={toggleFull} aria-pressed={full}>
               {full ? "Exit full screen" : "Full screen"}
             </button>
           )}
+          <p className="keys">
+            Keyboard: ← → to step, space to play or pause{canFull ? ", F for full screen" : ""}.
+          </p>
         </div>
-        <p className="keys">
-          Keyboard: ← → to step, space to play or pause{canFull ? ", F for full screen" : ""}.
-        </p>
       </div>
 
       <aside className="walk-side">
         {ops && (
-          <div className="side-card">
+          <div className="side-card side-ops">
             <h3 className="side-title">Operations</h3>
-            <ol className="ops">
-              {ops.items.map((op, i) => (
-                <li key={i} className={`op op-${op.state}`}>
-                  <code>{op.call}</code>
-                  {op.ret !== undefined && <span className="op-ret">→ {op.ret}</span>}
-                </li>
-              ))}
-            </ol>
+            <OpsList ops={ops} className="ops" />
           </div>
         )}
 
@@ -233,7 +259,7 @@ export function Walkthrough({ lesson }: { lesson: Lesson }) {
         </div>
 
         {tracksVars && (
-          <div className="side-card">
+          <div className="side-card side-vars">
             <h3 className="side-title">Variables</h3>
             {vars && vars.items.length > 0 ? (
               <dl className="vars">

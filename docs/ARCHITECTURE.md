@@ -76,7 +76,10 @@ compared with, `good` match / answer, `bad` rejected, `seen` visited, `win` curr
 (`TONES`) and `components/stage3d/theme.ts`, and the tests reject any other tone.
 
 **Views that are not 3D.** `vars` (plain variables) and `ops` (the calls of a design problem such as
-LRU Cache) are drawn as HTML cards beside the code, not on the stage.
+LRU Cache) are drawn as HTML cards beside the code, not on the stage. Below 1080 px wide the side
+cards sit under the walkthrough, so the caption box repeats the calls, the running line and the
+variables, and the step buttons float at the bottom of the screen (all in `Walkthrough.tsx` and
+`lesson.css`).
 
 ## 3. Shipping
 

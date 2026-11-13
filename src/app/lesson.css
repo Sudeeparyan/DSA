@@ -18,6 +18,17 @@
   --lx-good: #3fcf8e;
   --lx-bad: #ff7a70;
   --lx-mono: var(--font-code), ui-monospace, "Cascadia Code", Consolas, monospace;
+  /* space between the screen edge and the content; on a phone held sideways it also clears the
+     notch (the page covers the whole screen: viewportFit "cover" in layout.tsx) */
+  --gutter: 1.25rem;
+  --gutter-l: max(var(--gutter), env(safe-area-inset-left, 0px));
+  --gutter-r: max(var(--gutter), env(safe-area-inset-right, 0px));
+}
+
+@media (max-width: 639px) {
+  :root {
+    --gutter: 1rem;
+  }
 }
 
 body {
@@ -35,7 +46,8 @@ body {
   gap: 1rem;
   max-width: 1500px;
   margin: 0 auto;
-  padding: 0.35rem 1.25rem;
+  /* the top inset is the status bar of the installed app on an iPhone (0 in a browser tab) */
+  padding: max(0.35rem, env(safe-area-inset-top, 0px)) var(--gutter-r) 0.35rem var(--gutter-l);
 }
 
 .site-name,
@@ -62,15 +74,18 @@ body {
   color: var(--lx-muted);
 }
 
-.site-link:hover,
-.site-name:hover {
-  color: #fff;
+/* hover looks only where there is a mouse: on a touch screen a tapped control would keep them */
+@media (hover: hover) {
+  .site-link:hover,
+  .site-name:hover {
+    color: #fff;
+  }
 }
 
 .site-foot {
   max-width: 1500px;
   margin: 0 auto;
-  padding: 2rem 1.25rem 3rem;
+  padding: 2rem var(--gutter-r) calc(3rem + env(safe-area-inset-bottom, 0px)) var(--gutter-l);
   font-size: 0.8rem;
   color: var(--lx-muted);
 }
@@ -91,12 +106,20 @@ body {
   font-weight: 600;
   white-space: nowrap;
   cursor: pointer;
-  transition: background 120ms ease, border-color 120ms ease, opacity 120ms ease;
+  transition: background 120ms ease, border-color 120ms ease, opacity 120ms ease, transform 80ms ease;
 }
 
-.btn:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.09);
-  border-color: rgba(255, 255, 255, 0.2);
+@media (hover: hover) {
+  .btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.09);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+}
+
+/* a press shows on touch screens too, where there is no hover */
+.btn:active:not(:disabled):not([aria-disabled="true"]) {
+  background: rgba(255, 255, 255, 0.12);
+  transform: scale(0.97);
 }
 
 .btn:disabled,
@@ -111,7 +134,14 @@ body {
   color: #1c1400;
 }
 
-.btn-primary:hover:not(:disabled) {
+@media (hover: hover) {
+  .btn-primary:hover:not(:disabled) {
+    background: #ffc94d;
+    border-color: #ffc94d;
+  }
+}
+
+.btn-primary:active:not(:disabled):not([aria-disabled="true"]) {
   background: #ffc94d;
   border-color: #ffc94d;
 }
@@ -154,7 +184,7 @@ body {
 .home {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 1.5rem 1.25rem 2rem;
+  padding: 1.5rem var(--gutter-r) 2rem var(--gutter-l);
 }
 
 .home-head h1 {
@@ -268,7 +298,14 @@ body {
   transition: border-color 120ms ease, background 120ms ease;
 }
 
-.home-item:hover {
+@media (hover: hover) {
+  .home-item:hover {
+    border-color: rgba(247, 183, 49, 0.55);
+    background: #172132;
+  }
+}
+
+.home-item:active {
   border-color: rgba(247, 183, 49, 0.55);
   background: #172132;
 }
@@ -299,12 +336,46 @@ body {
   color: #03231a;
 }
 
+/* phones: the main button spans the screen (an easy thumb target), the progress bar fills its row */
+@media (max-width: 639px) {
+  .home {
+    padding-top: 1rem;
+  }
+
+  .home-head p {
+    font-size: 1rem;
+  }
+
+  .home-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.9rem;
+  }
+
+  .home-actions .btn {
+    min-height: 3rem;
+  }
+
+  .home-progress-bar {
+    flex: 1;
+    width: auto;
+  }
+
+  .home-group {
+    margin-top: 1.8rem;
+  }
+
+  .home-group ul {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 /* ---- lesson page ----------------------------------------------------------- */
 
 .lesson {
   max-width: 1500px;
   margin: 0 auto;
-  padding: 0.5rem 1.25rem 1rem;
+  padding: 0.5rem var(--gutter-r) 1rem var(--gutter-l);
 }
 
 .lesson-crumbs {
@@ -322,8 +393,10 @@ body {
   padding: 0.3rem 0;
 }
 
-.lesson-crumbs a:hover {
-  color: #fff;
+@media (hover: hover) {
+  .lesson-crumbs a:hover {
+    color: #fff;
+  }
 }
 
 .lesson-title-row {
@@ -371,6 +444,46 @@ body {
 
 .lesson > .card {
   margin-top: 1rem;
+}
+
+/* phones: cards reach closer to the screen edge, so text, code and the stage get the width */
+@media (max-width: 639px) {
+  .lesson .card {
+    margin-inline: -0.5rem;
+    padding: 1rem 1rem 1.1rem;
+    border-radius: 0.9rem;
+  }
+
+  .lesson-intro {
+    gap: 0.75rem;
+    margin-top: 0.9rem;
+  }
+
+  .lesson > .card {
+    margin-top: 0.75rem;
+  }
+
+  .prose {
+    font-size: 1.02rem;
+  }
+
+  .example {
+    padding: 0.75rem 0.85rem;
+  }
+
+  .example-row {
+    grid-template-columns: 3.6rem minmax(0, 1fr);
+    gap: 0.6rem;
+  }
+
+  /* the walkthrough gives the stage, caption and buttons nearly the full width */
+  .lesson .card-walk {
+    padding-inline: 0.5rem;
+  }
+
+  .card-walk > .card-title {
+    padding-inline: 0.5rem;
+  }
 }
 
 .card-title {
@@ -606,6 +719,32 @@ body {
   color: #7fe3b6;
 }
 
+/* phones: one full-width control per row, easy to reach with a thumb */
+@media (max-width: 639px) {
+  .lesson-foot {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+  }
+
+  .understood {
+    min-height: 3rem;
+  }
+
+  .lesson-nav {
+    flex-direction: column;
+  }
+
+  .lesson-nav .btn {
+    min-height: 3rem;
+  }
+
+  /* the empty placeholder that stands in for "previous" on the first problem */
+  .lesson-nav > span:empty {
+    display: none;
+  }
+}
+
 /* ---- walkthrough ----------------------------------------------------------- */
 
 .card-walk {
@@ -660,9 +799,22 @@ body {
   background: #0c111b;
 }
 
-@media (max-width: 640px) {
+/* phones: a little shorter, so the stage, the caption and the step buttons fit on one screen.
+   svh is the height with the browser's address bar showing; unlike dvh it does not change while
+   the page scrolls, which would re-plan the 3D layout mid-scroll */
+@media (max-width: 639px) {
   .stage-frame {
-    height: clamp(300px, 50vh, 460px);
+    height: clamp(250px, 42vh, 440px);
+    height: clamp(250px, 42svh, 440px);
+  }
+}
+
+/* a phone held sideways: the stage on the left at the height of the screen, the caption and the
+   step buttons beside it (the grid itself is set up with the other narrow-screen rules below) */
+@media (max-width: 1079px) and (max-height: 540px) {
+  .stage-frame {
+    height: max(200px, calc(100vh - 2rem));
+    height: max(200px, calc(100svh - 2rem));
   }
 }
 
@@ -800,8 +952,73 @@ body {
   overflow-wrap: anywhere;
 }
 
+/* the variables, repeated under the caption where the Variables card is out of sight */
+.caption-vars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+  font-family: var(--lx-mono);
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.cvar {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4em;
+  min-width: 0;
+  max-width: 100%;
+  padding: 0.18rem 0.5rem;
+  border-radius: 0.45rem;
+  border: 1px solid var(--lx-line);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.cvar dt {
+  flex-shrink: 0;
+  color: var(--lx-muted);
+}
+
+.cvar dt::after {
+  content: "=";
+  margin-left: 0.4em;
+}
+
+.cvar dd {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.cvar-changed {
+  border-color: rgba(247, 183, 49, 0.55);
+  background: rgba(247, 183, 49, 0.12);
+  animation: var-flash 600ms ease;
+}
+
+.cvar-changed dd {
+  color: var(--lx-accent);
+}
+
+/* (".caption" in front: these must win over .ops, which comes later in this file) */
+.caption .caption-ops {
+  margin-top: 0.55rem;
+  font-size: 0.84rem;
+}
+
 @media (min-width: 1080px) {
-  .caption-code {
+  .caption-code,
+  .caption-vars,
+  .caption .caption-ops {
+    display: none;
+  }
+}
+
+/* narrow screens show the calls and the variables in the caption instead
+   (".walk-side" in front: this must win over .side-card, which comes later in this file) */
+@media (max-width: 1079px) {
+  .walk-side .side-vars,
+  .walk-side .side-ops {
     display: none;
   }
 }
@@ -823,6 +1040,129 @@ body {
   align-items: center;
   gap: 0.5rem;
   margin-top: 0.7rem;
+}
+
+/* speed, full screen and the keyboard hint: used less often, so they sit under the main buttons */
+.controls-more {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin-top: 0.6rem;
+}
+
+/*
+ * Narrow screens (phones, tablets, a small window): the walkthrough becomes a "player" at least one
+ * screen tall, and the step buttons float at the bottom of the screen while it is in view.  So the
+ * stage, the caption and "Next step" are seen together, and the button stays under the thumb
+ * instead of moving with the length of each caption.
+ */
+@media (max-width: 1079px) {
+  .walk-main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    min-height: 100vh;
+    min-height: 100svh;
+  }
+
+  .walk-main > * {
+    margin-top: 0;
+  }
+
+  .controls {
+    position: sticky;
+    bottom: calc(0.5rem + env(safe-area-inset-bottom, 0px));
+    z-index: 5;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(16, 23, 35, 0.94);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+
+  /* below the caption, pushed to the end of the "player" */
+  .walk-main > .controls {
+    margin-top: auto;
+  }
+
+  .controls .btn {
+    min-height: 2.9rem;
+  }
+
+  .controls-more {
+    margin-bottom: 0.2rem;
+  }
+}
+
+/* a phone held sideways: stage on the left, everything else in a column on the right */
+@media (min-width: 600px) and (max-width: 1079px) and (max-height: 540px) {
+  .walk-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    grid-template-rows: auto auto 1fr auto;
+    align-content: start;
+    column-gap: 0.8rem;
+  }
+
+  .walk-main > :first-child {
+    grid-column: 1;
+    grid-row: 1 / span 4;
+  }
+
+  .walk-main > :not(:first-child) {
+    grid-column: 2;
+  }
+
+  /* fixed rows, so a lesson without a colour legend lines up the same way */
+  .walk-main > .legend {
+    grid-row: 1;
+  }
+
+  .walk-main > .caption {
+    grid-row: 2;
+  }
+
+  .walk-main > .controls {
+    grid-row: 3;
+    align-self: end;
+  }
+
+  .walk-main > .controls-more {
+    grid-row: 4;
+  }
+}
+
+/* phones (and the narrow right-hand column of a sideways phone): the step slider gets its own row
+   on top, and "Next step" takes the rest of the row */
+@media (max-width: 639px), (max-width: 1079px) and (max-height: 540px) {
+  .controls {
+    gap: 0.45rem;
+  }
+
+  .controls .scrub {
+    order: -1;
+    flex: 1 1 100%;
+    margin: 0 0.25rem;
+  }
+
+  .controls .btn {
+    padding-inline: 0.8rem;
+  }
+
+  .controls .btn-next {
+    flex: 1 1 auto;
+  }
+
+  .caption {
+    min-height: 0;
+  }
+
+  .caption-text {
+    font-size: 1.05rem;
+  }
 }
 
 .speed {
@@ -851,9 +1191,20 @@ body {
 }
 
 .keys {
-  margin-top: 0.4rem;
   font-size: 0.78rem;
   color: #8592a8;
+}
+
+/* touch screens: no keyboard to talk about; and a menu under 16px makes iPhones zoom in on tap */
+@media (hover: none) and (pointer: coarse) {
+  .keys {
+    display: none;
+  }
+
+  .speed select {
+    min-height: 2.6rem;
+    font-size: 1rem;
+  }
 }
 
 /* full screen: the stage takes all the room that the caption and buttons leave */
@@ -871,8 +1222,15 @@ body {
   min-height: 55vh;
 }
 
-.walk-main:fullscreen .caption-code {
+.walk-main:fullscreen .caption-code,
+.walk-main:fullscreen .caption-vars,
+.walk-main:fullscreen .caption .caption-ops {
   display: flex;
+}
+
+.walk-main:fullscreen {
+  padding: max(1rem, env(safe-area-inset-top, 0px)) var(--gutter-r)
+    max(1rem, env(safe-area-inset-bottom, 0px)) var(--gutter-l);
 }
 
 .side-card {
@@ -1082,7 +1440,8 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .caption-text,
-  .var-changed {
+  .var-changed,
+  .cvar-changed {
     animation: none;
   }
 }

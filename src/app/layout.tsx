@@ -25,13 +25,18 @@ export const metadata: Metadata = {
   description:
     "Understand every NeetCode 150 problem: the question in plain words, the key idea, and a 3D walkthrough of the real solution running line by line.",
   manifest: "/manifest.webmanifest",
-  appleWebApp: { capable: true, title: "NeetCode 150" },
+  // installed on an iPhone the page runs under a see-through status bar; the site header leaves
+  // room for it (env(safe-area-inset-top) in lesson.css)
+  appleWebApp: { capable: true, title: "NeetCode 150", statusBarStyle: "black-translucent" },
 };
 
 export const viewport: Viewport = {
   themeColor: "#0b1018",
   width: "device-width",
   initialScale: 1,
+  // use the whole screen (notch, rounded corners, home bar); lesson.css keeps content clear of
+  // them with env(safe-area-inset-*)
+  viewportFit: "cover",
 };
 
 export default function RootLayout({

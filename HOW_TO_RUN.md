@@ -28,6 +28,9 @@ Open **http://localhost:3000**. Leave the terminal open while you study; `Ctrl+C
 ## 3. Using a lesson
 
 - **Next step →** / **← Back**, or the arrow keys, move one step. **Space** plays or pauses.
+  On a phone these buttons stay at the bottom of the screen while the walkthrough is in view, and
+  the caption also shows the variables; turn the phone sideways to see the stage and the caption
+  side by side.
 - Drag the 3D stage to look around it; click it, then scroll to zoom. On a phone, swipe sideways
   to rotate and pinch to zoom (an up/down swipe scrolls the page as usual). **Reset view** puts the
   camera back.

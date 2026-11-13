@@ -23,6 +23,10 @@
 
 html {
   scroll-behavior: smooth;
+  /* touch screens: no grey flash on tap (buttons have their own :active look), and no
+     double-tap zoom, so tapping "Next step" quickly never zooms the page (pinch zoom still works) */
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 body {
