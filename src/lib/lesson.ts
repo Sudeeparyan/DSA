@@ -195,8 +195,14 @@ export const LessonSchema = z.object({
   statement: z.string().min(1),
   example: z.object({ input: z.string(), output: z.string(), why: z.string() }),
   more: z.array(z.object({ input: z.string(), output: z.string() })),
+  /** an everyday picture of the idea, for readers who are new to coding */
+  picture: z.string().min(1),
   idea: z.array(z.string()).min(1),
   code: z.string().min(1),
+  /** what a code line does, in plain words: line number ("6") → text */
+  say: z.record(z.string().regex(/^[1-9]\d*$/), z.string().min(1)),
+  /** legend entries of this lesson: its own colours, or a standard tone with a lesson-specific meaning */
+  key: z.array(z.object({ tone: z.string(), label: z.string().min(1) })).optional(),
   complexity: z.object({
     time: z.string(),
     timeWhy: z.string(),

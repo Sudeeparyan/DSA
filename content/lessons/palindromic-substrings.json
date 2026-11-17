@@ -35,12 +35,31 @@
    "output": "10"
   }
  ],
+ "picture": "Picture every palindrome growing outward from its middle, one matching pair of letters at a time, where each step of growth is one more palindrome. So stand at every middle (each letter, and each gap between two letters), grow outward while the two ends match, and count every step. The total is the number of palindromic substrings.",
  "idea": [
   "Every palindrome has a centre: a letter (odd length) or a gap between two letters (even length).",
   "Grow outward from a centre while the two ends match. **Each successful step is one more palindrome** — a bigger one around the same centre.",
   "Do this for all 2n − 1 centres and add up the counts."
  ],
  "code": "class Solution:\n    def countSubstrings(self, s: str) -> int:\n        def expandAroundCenter(left: int, right: int) -> int:\n            count = 0\n            # Expand around the center while the characters at both ends are equal.\n            while left >= 0 and right < len(s) and s[left] == s[right]:\n                left -= 1\n                right += 1\n                count += 1\n            return count\n\n        if not s:\n            return 0\n\n        total_palindromes = 0\n\n        for i in range(len(s)):\n            # Check for odd-length palindromes.\n            total_palindromes += expandAroundCenter(i, i)\n\n            # Check for even-length palindromes.\n            total_palindromes += expandAroundCenter(i, i + 1)\n\n        return total_palindromes",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the text `s` and returns how many of its substrings are palindromes.",
+  "3": "A helper that grows outward from a middle and counts the palindromes it passes.",
+  "4": "Palindromes found from this middle so far.",
+  "6": "Are both ends inside the text, and do their letters match? Then the text from `left` to `right` is a palindrome.",
+  "7": "Grow: move the left end one step outward.",
+  "8": "And the right end one step outward.",
+  "9": "Count the palindrome just found.",
+  "10": "Report how many were found from this middle.",
+  "12": "Is the text empty?",
+  "13": "Then there are none.",
+  "15": "The total found so far.",
+  "17": "Try every position as a middle.",
+  "19": "Count the odd-length palindromes centred on letter `i`.",
+  "22": "And the even-length ones centred between `i` and `i + 1`.",
+  "24": "Return the total."
+ },
  "complexity": {
   "time": "O(n²)",
   "timeWhy": "2n − 1 centres, each expanded up to n/2 times.",

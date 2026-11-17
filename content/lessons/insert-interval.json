@@ -35,12 +35,36 @@
    "output": "[[1,5]]"
   }
  ],
+ "picture": "Picture a row of booked time slots, in order and not overlapping, and one new booking to fit in. Walk along the row. A slot that ends before the new booking starts stays as it is. A slot that overlaps the new booking melts into it, stretching it. Once a slot starts after the new booking ends, the booking cannot grow any more: put it in, and carry on with the rest of the row.",
  "idea": [
   "Carry one **pending** interval (at first the new one) through the sorted list and compare it with each interval.",
   "An interval that ends **before** the pending one starts lies completely to its left: copy it to the result. An interval that **overlaps** the pending one is absorbed: stretch the pending interval to cover both.",
   "The first interval that starts **after** the pending one ends lies completely to its right: the pending interval is finished and goes into the result — and that interval becomes the new pending one. Append whatever is pending at the end."
  ],
  "code": "class Solution:\n    def insert(\n        self, intervals: List[List[int]], newInterval: List[int]\n    ) -> List[List[int]]:\n        result = []\n        new_start, new_end = newInterval\n\n        for interval in intervals:\n            if interval[1] < new_start:\n                result.append(interval)\n            elif interval[0] > new_end:\n                result.append([new_start, new_end])\n                new_start, new_end = interval\n            else:\n                new_start = min(new_start, interval[0])\n                new_end = max(new_end, interval[1])\n\n        result.append([new_start, new_end])\n        return result",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the sorted `intervals` and the `newInterval` to fit in, and returns the new list.",
+  "5": "The answer, built from left to right.",
+  "6": "The pending interval: at first, the one to insert. This unpacks its two numbers into `new_start` and `new_end`.",
+  "8": "Go through the intervals in order.",
+  "9": "Does this interval end before the pending one starts? Then it lies completely to its left.",
+  "10": "Copy it into the answer unchanged.",
+  "11": "Otherwise, does it start after the pending one ends? Then it lies completely to its right.",
+  "12": "The pending interval cannot grow any more: put it into the answer.",
+  "13": "This interval becomes the pending one. Nothing later overlaps it, so it will simply be added in turn.",
+  "14": "Otherwise the two overlap.",
+  "15": "Absorb it: the pending interval starts at the earlier of the two starts,",
+  "16": "and ends at the later of the two ends.",
+  "18": "After the loop the last pending interval has not been added yet: add it.",
+  "19": "Return the new list."
+ },
+ "key": [
+  {
+   "tone": "alt",
+   "label": "pending interval"
+  }
+ ],
  "complexity": {
   "time": "O(n)",
   "timeWhy": "One pass over the intervals.",

@@ -27,12 +27,24 @@
    "output": "7"
   }
  ],
+ "picture": "Picture a podium with exactly `k` places that always knows who stands on its lowest place. Walk through the numbers and let each one onto the podium. Whenever that makes one too many, the lowest steps off. At the end the `k` biggest numbers are on the podium, and the lowest of them is the `k`-th biggest.",
  "idea": [
   "Sorting the whole array works in O(n log n), but we only care about the top k.",
   "Keep a **min-heap that never holds more than k numbers**: the k largest seen so far.",
   "Push every number; whenever the heap has k + 1 numbers, pop the smallest. At the end the top of the heap is the smallest of the k largest — the k-th largest."
  ],
  "code": "import heapq\n\nclass Solution:\n    def findKthLargest(self, nums: List[int], k: int) -> int:\n        min_heap = []\n\n        for num in nums:\n            heapq.heappush(min_heap, num)\n            if len(min_heap) > k:\n                heapq.heappop(min_heap)\n\n        return min_heap[0]",
+ "say": {
+  "1": "Load `heapq`, Python's ready-made **heap**: a list kept in an order where the smallest item is always at the front.",
+  "3": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "4": "The function we must write. It gets the list `nums` and `k`, and returns the `k`-th biggest number.",
+  "5": "A heap that keeps the `k` biggest numbers seen so far, the smallest of them at the front.",
+  "7": "Go through the numbers one at a time.",
+  "8": "Put this number into the heap.",
+  "9": "Does the heap now hold more than `k` numbers?",
+  "10": "Then remove the smallest: it cannot be among the `k` biggest.",
+  "12": "The smallest of the `k` biggest numbers is the `k`-th biggest."
+ },
  "complexity": {
   "time": "O(n log k)",
   "timeWhy": "Each of the n numbers costs one push (and maybe one pop) on a heap of size k.",

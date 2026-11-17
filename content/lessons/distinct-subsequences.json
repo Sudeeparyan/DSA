@@ -39,12 +39,27 @@
    "output": "3"
   }
  ],
+ "picture": "Picture a grid of boxes: *in how many ways can the first `j` letters of `t` be picked out of the first `i` letters of `s`?* An empty `t` can always be picked out in exactly one way: pick nothing. For any other box, look at the newest letter of `s`. You can always skip it, keeping the count from the box above. If it matches the newest letter of `t`, you can also use it, adding the count from the box diagonally up-left.",
  "idea": [
   "Let `dp[i][j]` be the number of ways to form the first `j` letters of `t` from the first `i` letters of `s`.",
   "Look at the last letter of that prefix of `s`. It can always be **skipped**: `dp[i − 1][j]` ways. If it equals the last needed letter of `t`, it can also be **used** for it: then the earlier letters must form the rest, `dp[i − 1][j − 1]` ways.",
   "An empty `t` can be formed in exactly one way from any prefix (delete everything), so the first column is 1."
  ],
  "code": "class Solution:\n    def numDistinct(self, s: str, t: str) -> int:\n        m, n = len(s), len(t)\n\n        # dp[i][j] = number of ways to form t[:j] from s[:i]\n        dp = [[0] * (n + 1) for _ in range(m + 1)]\n\n        # The empty target can always be formed in exactly one way.\n        for i in range(m + 1):\n            dp[i][0] = 1\n\n        for i in range(1, m + 1):\n            for j in range(1, n + 1):\n                if s[i - 1] == t[j - 1]:\n                    # use this letter of s for t[j - 1], or skip it\n                    dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j]\n                else:\n                    # the letter cannot be used here: skip it\n                    dp[i][j] = dp[i - 1][j]\n\n        return dp[m][n]",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets `s` and `t`, and returns in how many ways `t` can be picked out of `s`, keeping the order.",
+  "3": "The two lengths.",
+  "6": "A grid of boxes: `dp[i][j]` is the number of ways to pick the first `j` letters of `t` out of the first `i` letters of `s`.",
+  "9": "Go through every row.",
+  "10": "Picking out an empty `t` works in exactly one way: pick nothing.",
+  "12": "Fill in the other boxes, row by row: one more letter of `s` in each row.",
+  "13": "And across each row: one more letter of `t` in each column.",
+  "14": "Does the newest letter of `s` match the newest letter of `t`?",
+  "16": "Then either use it (the ways in the box diagonally up-left) or skip it (the ways in the box above). Add both.",
+  "19": "Otherwise it cannot be used here: skip it, keeping the count from the box above.",
+  "21": "The bottom-right box: the ways to pick all of `t` out of all of `s`."
+ },
  "complexity": {
   "time": "O(m · n)",
   "timeWhy": "One cell per pair of prefix lengths.",

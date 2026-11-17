@@ -3,8 +3,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import type { Lesson, OpsView, Step, VarsView } from "@/lib/lesson";
-import { TONE_LEGEND, toneFill } from "@/components/stage3d/theme";
+import { toneFill } from "@/components/stage3d/theme";
 import { CodeLine, CodePanel } from "./CodePanel";
+import { legendFor } from "./legend";
 import { Rich } from "./Rich";
 
 const Stage = dynamic(() => import("@/components/stage3d/Stage").then((m) => m.Stage), {
@@ -18,21 +19,6 @@ const SPEEDS = [0.5, 1, 1.5, 2];
 function dwell(step: Step, speed: number): number {
   const ms = Math.min(7000, Math.max(2200, 1300 + step.text.length * 40));
   return ms / speed;
-}
-
-function tonesUsed(steps: Step[]): Set<string> {
-  const used = new Set<string>();
-  const visit = (node: unknown) => {
-    if (Array.isArray(node)) node.forEach(visit);
-    else if (node && typeof node === "object") {
-      for (const [key, value] of Object.entries(node)) {
-        if (key === "tone" && typeof value === "string") used.add(value);
-        else visit(value);
-      }
-    }
-  };
-  for (const step of steps) visit(step.views);
-  return used;
 }
 
 /** The calls of a design problem (LRU Cache …): done, running now, still to come. */
@@ -144,10 +130,7 @@ export function Walkthrough({ lesson }: { lesson: Lesson }) {
   const step = steps[Math.min(index, last)];
   const vars = step.views.find((v): v is VarsView => v.t === "vars");
   const ops = step.views.find((v): v is OpsView => v.t === "ops");
-  const legend = useMemo(() => {
-    const used = tonesUsed(steps);
-    return TONE_LEGEND.filter((entry) => used.has(entry.tone));
-  }, [steps]);
+  const legend = useMemo(() => legendFor(steps, lesson.key), [steps, lesson.key]);
   // many lessons keep everything on the stage and track no plain variables at all
   const tracksVars = useMemo(
     () => steps.some((s) => s.views.some((v) => v.t === "vars" && v.items.length > 0)),
@@ -182,7 +165,7 @@ export function Walkthrough({ lesson }: { lesson: Lesson }) {
           {/* on narrow screens the side cards sit below the controls, so repeat the calls, the
               running line and the variables here, where they can be read together with the stage */}
           {ops && <OpsList ops={ops} className="ops caption-ops" />}
-          <CodeLine code={lesson.code} line={step.line} />
+          <CodeLine code={lesson.code} line={step.line} say={lesson.say} />
           {vars && vars.items.length > 0 && (
             <dl className="caption-vars" aria-label="Variables">
               {vars.items.map((item) => (
@@ -255,7 +238,7 @@ export function Walkthrough({ lesson }: { lesson: Lesson }) {
 
         <div className="side-card side-code">
           <h3 className="side-title">Code</h3>
-          <CodePanel code={lesson.code} line={step.line} reduced={reduced} />
+          <CodePanel code={lesson.code} line={step.line} say={lesson.say} reduced={reduced} />
         </div>
 
         {tracksVars && (

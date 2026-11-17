@@ -31,12 +31,33 @@
    "output": "[[1,1]]"
   }
  ],
+ "picture": "Picture paying an exact amount with a handful of coins, each usable only once, where several coins may have the same value. Sort the coins first. Add a coin, pay the rest with the coins after it, then take it back and try the next. Two rules save work. At any one point, try each coin value only once, because another coin of the same value would repeat the same mixes. And stop as soon as a coin is bigger than what is left, because every coin after it is bigger too.",
  "idea": [
   "Like Combination Sum, track how much is **still needed**. But each number can be used only once, so after picking index `i` the next pick starts at `i + 1`.",
   "Duplicates in the input would produce the same combination several times. **Sort**, and at each slot skip a value equal to the one just tried there.",
   "Sorting gives a second win: as soon as a candidate is larger than what is needed, every later one is too — **stop** the loop."
  ],
  "code": "class Solution:\n    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:\n        def backtrack(start, target, combination):\n            if target == 0:\n                result.append(combination[:])\n                return\n\n            for i in range(start, len(candidates)):\n                if i > start and candidates[i] == candidates[i - 1]:\n                    continue  # same value already tried for this slot\n                if candidates[i] > target:\n                    break  # sorted: everything after is too large as well\n\n                combination.append(candidates[i])\n                backtrack(i + 1, target - candidates[i], combination)\n                combination.pop()\n\n        candidates.sort()\n        result = []\n        backtrack(0, target, [])\n        return result",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets `candidates` (which may repeat) and the `target`, and returns every different combination, each candidate used at most once.",
+  "3": "A helper. `combination` holds what has been chosen, `target` is the amount still missing, and only candidates from position `start` on may be used.",
+  "4": "Is nothing missing any more?",
+  "5": "Then this combination adds up exactly: save a copy.",
+  "6": "And go back to try other choices.",
+  "8": "Try each candidate from position `start` on.",
+  "9": "Is it the same value as the one just tried for this same place?",
+  "10": "Then skip it: it would only repeat the same combinations.",
+  "11": "Is it bigger than the amount still missing?",
+  "12": "Then stop this loop: the list is sorted, so every later candidate is too big as well.",
+  "14": "**Choose** it.",
+  "15": "**Explore** from here, with less missing. `i + 1` means each candidate is used at most once.",
+  "16": "**Undo**: take it back out and try the next candidate.",
+  "18": "Sort first, so repeats sit side by side and the loop can stop early.",
+  "19": "The list of combinations found.",
+  "20": "Start with nothing chosen.",
+  "21": "Return every combination."
+ },
  "complexity": {
   "time": "O(n · 2ⁿ)",
   "timeWhy": "Each candidate is either in or out, and saving a combination costs O(n). Sorting and pruning cut this down a lot in practice.",

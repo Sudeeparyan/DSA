@@ -31,12 +31,23 @@
    "output": "20"
   }
  ],
+ "picture": "Picture a row of boxes, one for each amount from 0 up to the target, each saying *the fewest coins that make this amount*. The box for 0 says 0. With a coin worth 3, an amount `i` can be made from amount `i − 3` plus that one coin, so its box may improve to *box `i − 3`, plus 1*. Try every coin on every amount, and the last box holds the answer, or stays *impossible*.",
  "idea": [
   "Taking the largest coin first can fail (see the example), so compute the best answer for **every** amount from 0 up to the target.",
   "`dp[a]` = fewest coins that add up to `a`. If the last coin used is `c`, the rest is the amount `a − c`, so `dp[a] = dp[a − c] + 1`.",
   "Try each coin as that last coin and keep the minimum. Amounts that cannot be made stay at ∞."
  ],
  "code": "class Solution:\n    def coinChange(self, coins: List[int], amount: int) -> int:\n        # Initialize the DP array with a maximum value to represent impossible cases.\n        dp = [float(\"inf\")] * (amount + 1)\n\n        # Base case: It takes 0 coins to make up the amount of 0.\n        dp[0] = 0\n\n        # Iterate through the DP array and update the minimum number of coins needed.\n        for coin in coins:\n            for i in range(coin, amount + 1):\n                dp[i] = min(dp[i], dp[i - coin] + 1)\n\n        # If dp[amount] is still float('inf'), it means it's impossible to make up the amount.\n        # Otherwise, dp[amount] contains the minimum number of coins needed.\n        return dp[amount] if dp[amount] != float(\"inf\") else -1",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the `coins` and the `amount`, and returns the fewest coins that make it, or -1.",
+  "4": "One box per amount from 0 to `amount`: the fewest coins that make it. Infinity means *not possible (yet)*.",
+  "7": "Making 0 needs no coins.",
+  "10": "Try each coin in turn.",
+  "11": "Go through every amount this coin fits into, from the coin's value up to `amount`.",
+  "12": "Make amount `i` from amount `i − coin` plus this one coin, if that uses fewer coins than the best way known so far.",
+  "16": "If the box for `amount` was filled, return it. If it still says infinity, the amount cannot be made: return -1."
+ },
  "complexity": {
   "time": "O(amount × coins)",
   "timeWhy": "Every amount is checked once for every coin.",

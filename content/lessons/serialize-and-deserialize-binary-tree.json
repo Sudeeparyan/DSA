@@ -23,12 +23,41 @@
    "output": ""
   }
  ],
+ "picture": "Picture writing a tree down as a list of instructions for rebuilding it, top first: each node's value, then its whole left side, then its whole right side, with *None* wherever a child is missing. Rebuilding just reads the list in the same order: each value makes a node, and a *None* says *nothing here, go back up*. Because the empty spots are written down too, the shape comes back exactly.",
  "idea": [
   "A plain list of values is not enough — many different trees contain the same values. The **shape** has to be stored too.",
   "Write the tree in preorder (node, then left subtree, then right subtree) and write `None` for every empty spot. With those markers the text describes exactly one tree.",
   "To rebuild, read the tokens in the same order: a value creates a node and is followed by its left subtree and then its right subtree; a `None` means *nothing here*."
  ],
  "code": "class Codec:\n    def serialize(self, root):\n        parts = []\n\n        def preorder(node):\n            if not node:\n                parts.append(\"None\")\n                return\n            parts.append(str(node.val))\n            preorder(node.left)\n            preorder(node.right)\n\n        preorder(root)\n        return \",\".join(parts)\n\n    def deserialize(self, data):\n        values = data.split(\",\")\n        pos = 0  # index of the next token to read\n\n        def build_tree():\n            nonlocal pos\n            value = values[pos]\n            pos += 1\n            if value == \"None\":\n                return None\n\n            root = TreeNode(int(value))\n            root.left = build_tree()\n            root.right = build_tree()\n            return root\n\n        return build_tree()",
+ "say": {
+  "1": "The problem asks for a class called `Codec` with two functions, `serialize` and `deserialize`.",
+  "2": "The first function: turn the tree under `root` into one string.",
+  "3": "The pieces of the string, in order.",
+  "5": "A helper that writes a node, then its left side, then its right side.",
+  "6": "Is this an empty spot?",
+  "7": "Write `None`, so the rebuild knows a child is missing here.",
+  "8": "And go back up.",
+  "9": "Write this node's value as text.",
+  "10": "Then write its whole left side (the helper calls itself).",
+  "11": "Then its whole right side.",
+  "13": "Write the whole tree, starting from the top.",
+  "14": "Join the pieces with commas into one string.",
+  "16": "The second function: turn such a string back into a tree.",
+  "17": "Cut the string at the commas, back into its pieces.",
+  "18": "The position of the next piece to read.",
+  "20": "A helper that reads the next pieces and builds the subtree they describe.",
+  "21": "Let the helper move `pos`, which belongs to the outer function.",
+  "22": "Read the next piece.",
+  "23": "Move past it.",
+  "24": "Is it `None`?",
+  "25": "Then there is no node here.",
+  "27": "Otherwise make a node holding that number.",
+  "28": "The pieces that follow describe its left side: build it (the helper calls itself).",
+  "29": "Then the pieces after those describe its right side.",
+  "30": "This node and both its sides are rebuilt: return it.",
+  "32": "Rebuild the whole tree, starting from the first piece."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "Each node (and each empty spot) is written once and read once; the tokens are joined in a single pass.",

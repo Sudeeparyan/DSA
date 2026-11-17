@@ -23,12 +23,26 @@
    "output": "[[],[1],[1,2],[2]]"
   }
  ],
+ "picture": "Picture filling a bag with items from a row, always adding them in the order they stand in the row and never going back to an earlier one. Every bag you make on the way is a subset: first the empty bag, then each way of adding a next item to it. When you have explored every bag that starts a certain way, take the last item out again (*backtrack*) and try the next item in its place. Because items are only ever added in row order, no bag is made twice.",
  "idea": [
   "Build subsets one number at a time. At every moment the current partial choice is itself a subset — record it.",
   "To grow it, try each number that comes **after** the last one picked. Only moving forward means the same set is never produced twice in a different order.",
   "After exploring everything that starts with a pick, **undo** it (pop) and try the next number. Choose → explore → undo is the whole backtracking pattern."
  ],
  "code": "class Solution:\n    def subsets(self, nums: List[int]) -> List[List[int]]:\n        def backtrack(start, subset):\n            subsets.append(subset[:])  # Append a copy of the current subset\n\n            for i in range(start, len(nums)):\n                subset.append(nums[i])\n                backtrack(i + 1, subset)\n                subset.pop()  # Backtrack\n\n        subsets = []\n        backtrack(0, [])\n        return subsets",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the list `nums` and returns every subset.",
+  "3": "A helper. `subset` is the bag built so far; only items from position `start` on may be added next.",
+  "4": "Every bag we reach is a subset: save a copy of it. (`subset[:]` copies the list, so later changes do not touch the saved one.)",
+  "6": "Try each item that may still be added, from position `start` to the end.",
+  "7": "**Choose** it: put it in the bag.",
+  "8": "**Explore** every bag that starts this way, adding only items after `i` (the helper calls itself).",
+  "9": "**Undo**: take the item back out, so the next item can be tried in its place. This is the *backtrack*.",
+  "11": "The list of all subsets found.",
+  "12": "Start with an empty bag, allowed to use every item.",
+  "13": "Return every subset."
+ },
  "complexity": {
   "time": "O(n · 2ⁿ)",
   "timeWhy": "There are 2ⁿ subsets and copying each one into the answer costs up to O(n).",

@@ -31,12 +31,35 @@
    "output": "3"
   }
  ],
+ "picture": "Picture news spreading from one town along one-way roads that take different times to travel. Always deal next with the town the news reaches *earliest* among those not dealt with yet; a heap keeps that town on top. From it, check whether its roads bring the news to a neighbour sooner than any route found before. When every reachable town is done, the answer is when the last town hears the news, or -1 if some town never does. (This is known as Dijkstra's method.)",
  "idea": [
   "The signal reaches each node along its **shortest path** from `k`. The answer is the largest of these shortest times.",
   "Dijkstra's algorithm: keep the best known time for every node, and always process the unfinished node with the **smallest** time next (a min-heap hands it over).",
   "That smallest time can never be improved later — every other route is already at least as long — so the node is final. Then try to improve its neighbours through it (*relaxation*)."
  ],
  "code": "import heapq\nfrom collections import defaultdict\n\nclass Solution:\n    def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:\n        # Create an adjacency list representation of the graph\n        graph = defaultdict(list)\n        for u, v, w in times:\n            graph[u].append((v, w))\n\n        # Initialize distances to all nodes as infinity except for the source node\n        distances = [float(\"inf\")] * (n + 1)\n        distances[k] = 0\n\n        # Priority queue to select the next node to visit based on the minimum distance\n        pq = [(0, k)]\n\n        while pq:\n            distance, node = heapq.heappop(pq)\n            if distance > distances[node]:\n                continue\n            for neighbor, weight in graph[node]:\n                if distance + weight < distances[neighbor]:\n                    distances[neighbor] = distance + weight\n                    heapq.heappush(pq, (distances[neighbor], neighbor))\n\n        # Find the maximum distance among all nodes\n        max_distance = max(distances[1:])\n\n        return max_distance if max_distance < float(\"inf\") else -1",
+ "say": {
+  "1": "Load `heapq`, Python's ready-made **heap**: a list kept in an order where the smallest item is always at the front.",
+  "2": "Load `defaultdict`: a dictionary that creates a starting value by itself the first time a key is used.",
+  "4": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "5": "The function we must write. It gets the travel `times`, the number of nodes `n` and the start node `k`, and returns how long until every node has the signal.",
+  "7": "For each node, the list of `(neighbour, travel time)` pairs leaving it.",
+  "8": "Go through the connections: from `u` to `v`, taking time `w`.",
+  "9": "Record it (one direction only).",
+  "12": "The earliest time the signal is known to reach each node; infinity means *not reached yet*. (Position 0 is unused, since nodes are numbered from 1.)",
+  "13": "The signal starts at node `k`, at time 0.",
+  "16": "A heap of `(arrival time, node)`, earliest first. It starts with the start node.",
+  "18": "Repeat while there are arrivals to deal with.",
+  "19": "Take the earliest arrival.",
+  "20": "Is it out of date, because a quicker route to this node has been found since it was added?",
+  "21": "Then skip it.",
+  "22": "Look at each connection leaving this node.",
+  "23": "Would the signal reach that neighbour sooner this way than by any route found so far?",
+  "24": "Then record the new, earlier time.",
+  "25": "And add the arrival to the heap, so that the neighbour's own connections are looked at later.",
+  "28": "The last node to get the signal decides the answer: take the largest time (`[1:]` skips the unused position 0).",
+  "30": "If every node was reached, return that time; if some node never was, return -1."
+ },
  "complexity": {
   "time": "O(E log V)",
   "timeWhy": "Each link can push one heap entry, and every push or pop costs O(log) of the heap size.",

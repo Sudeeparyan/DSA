@@ -27,12 +27,50 @@
    "output": "[]"
   }
  ],
+ "picture": "Picture placing queens on a chessboard one row at a time, since every row needs exactly one. In the current row, try each square that no earlier queen attacks: no queen in the same column and none on either diagonal. Place a queen there and move on to the next row. If a row has no safe square left, go back, pick the previous queen up and try the next square in its row. Every time all `n` rows have a queen, you have a solution.",
  "idea": [
   "Every row needs exactly one queen, so place them **row by row**: for the current row, try each column.",
   "A square is safe if no earlier queen shares its column or a diagonal. Along a `\\` diagonal (top-left to bottom-right) `row − col` never changes; along a `/` diagonal (top-right to bottom-left) `row + col` never changes. Three sets remember which columns and diagonals are taken, so the check is O(1).",
   "Safe → place the queen and go to the next row. If a row has no safe square, go back, **remove** the previous queen and try its next column. Reaching row `n` means all queens are placed."
  ],
  "code": "class Solution:\n    def solveNQueens(self, n: int) -> List[List[str]]:\n        cols = set()  # columns that already hold a queen\n        diag = set()  # (row - col) is constant along a \"\\\" diagonal\n        anti = set()  # (row + col) is constant along a \"/\" diagonal\n        board = [[\".\"] * n for _ in range(n)]\n        result = []\n\n        def place_queen(row):\n            if row == n:\n                result.append([\"\".join(line) for line in board])\n                return\n\n            for col in range(n):\n                if col in cols or (row - col) in diag or (row + col) in anti:\n                    continue  # this square is attacked\n\n                board[row][col] = \"Q\"\n                cols.add(col)\n                diag.add(row - col)\n                anti.add(row + col)\n\n                place_queen(row + 1)\n\n                board[row][col] = \".\"\n                cols.remove(col)\n                diag.remove(row - col)\n                anti.remove(row + col)\n\n        place_queen(0)\n        return result",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets `n` and returns every way to place `n` queens safely.",
+  "3": "The columns that already hold a queen.",
+  "4": "The `\\` diagonals that hold a queen. Along such a diagonal `row − col` stays the same, so that number names the diagonal.",
+  "5": "The `/` diagonals that hold a queen. Along those, `row + col` stays the same.",
+  "6": "An `n × n` board of empty squares (`.`).",
+  "7": "The list of solutions found.",
+  "9": "A helper that places queens on `row` and on every row below it.",
+  "10": "Has every row got a queen?",
+  "11": "Then this is a solution: save the board, each row turned into one string such as `.Q..`.",
+  "12": "And go back to try other placements.",
+  "14": "Try each square in this row.",
+  "15": "Is the square's column, `\\` diagonal or `/` diagonal already taken by a queen?",
+  "16": "Then the square is attacked: skip it.",
+  "18": "**Choose**: place a queen here.",
+  "19": "Mark its column as taken.",
+  "20": "Mark its `\\` diagonal as taken.",
+  "21": "Mark its `/` diagonal as taken.",
+  "23": "**Explore**: move on to the next row (the helper calls itself).",
+  "25": "**Undo**: pick the queen up again, so the next square in this row can be tried.",
+  "26": "Free its column.",
+  "27": "Free its `\\` diagonal.",
+  "28": "Free its `/` diagonal.",
+  "30": "Start with the first row.",
+  "31": "Return every solution."
+ },
+ "key": [
+  {
+   "tone": "good",
+   "label": "a queen"
+  },
+  {
+   "tone": "bad",
+   "label": "attacked by a queen"
+  }
+ ],
  "complexity": {
   "time": "O(n!)",
   "timeWhy": "The first row has n choices, the next at most n − 1, and so on; the attack sets make each check O(1).",

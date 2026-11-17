@@ -31,12 +31,39 @@
    "output": "[[0,0,0]]"
   }
  ],
+ "picture": "Picture a sheet of numbers where every 0 must wipe out its whole row and column. If you wiped while still reading, the zeros you had just written would look like original ones and wipe out even more. So work in two rounds. First only read, jotting down on a notepad which rows and which columns hold a 0. Then go over the sheet again and clear every number whose row or column is on the notepad.",
  "idea": [
   "Writing zeros while scanning is a trap: a freshly written 0 is indistinguishable from an original one and would wipe out further rows and columns.",
   "So separate the two jobs. **Pass 1**: only look, and record which rows and which columns contain an original 0.",
   "**Pass 2**: set every cell to 0 whose row or column was recorded."
  ],
  "code": "class Solution:\n    def setZeroes(self, matrix: List[List[int]]) -> None:\n        \"\"\"\n        Do not return anything, modify matrix in-place instead.\n        \"\"\"\n        rows, cols = len(matrix), len(matrix[0])\n        zero_rows, zero_cols = set(), set()\n\n        # Mark rows and columns that need to be set to zero\n        for i in range(rows):\n            for j in range(cols):\n                if matrix[i][j] == 0:\n                    zero_rows.add(i)\n                    zero_cols.add(j)\n\n        # Set elements to zero based on marked rows and columns\n        for i in range(rows):\n            for j in range(cols):\n                if i in zero_rows or j in zero_cols:\n                    matrix[i][j] = 0",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the `matrix` and changes it in place; it returns nothing.",
+  "3": "A note from LeetCode (a *docstring*): change the matrix itself, and do not return anything.",
+  "6": "Count the rows and the columns.",
+  "7": "Two empty **sets** (collections without repeats): the rows and the columns that hold a 0. This is the notepad.",
+  "10": "Round 1, only reading: go through every row,",
+  "11": "and every column in it.",
+  "12": "Is this number a 0?",
+  "13": "Then write down its row,",
+  "14": "and its column.",
+  "17": "Round 2, clearing: go through every row again,",
+  "18": "and every column.",
+  "19": "Is this cell's row or its column on the notepad?",
+  "20": "Then set it to 0."
+ },
+ "key": [
+  {
+   "tone": "mark",
+   "label": "in a recorded row or column"
+  },
+  {
+   "tone": "bad",
+   "label": "just set to 0"
+  }
+ ],
  "complexity": {
   "time": "O(m · n)",
   "timeWhy": "Two passes over the matrix.",

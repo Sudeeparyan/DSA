@@ -10,6 +10,10 @@ lesson(
     args="n=5",
     expected=8,
     why="The counts for stairs 1 to 5 are 1, 2, 3, 5, 8 — each is the sum of the two before it.",
+    picture="""Picture standing on any stair. Your last move got you there from either one stair below or two
+    stairs below. So the number of ways to reach a stair is the ways to reach the stair below plus
+    the ways to reach the stair two below. Work upward from the bottom, remembering just the last
+    two answers: each new answer is their sum.""",
     idea=[
         "Think about the **last move** that lands on stair `i`. It was either a single step from stair `i − 1` or a double step from stair `i − 2` — there is no other possibility.",
         "So every way to reach stair `i − 1` and every way to reach stair `i − 2` gives exactly one way to reach stair `i`: `ways(i) = ways(i − 1) + ways(i − 2)`.",
@@ -38,6 +42,29 @@ lesson(
          "Slide the window up by one stair: `prev1` = {prev1} (stair {i - 1}) and `prev2` = {prev2} (stair {i})."),
         ("return prev2", "`prev2` now holds the count for stair {n}: **{prev2}** ways."),
     ],
+    say={
+        "def climbStairs": (
+            "The function we must write. It gets the number of stairs `n` and returns how many "
+            "different ways there are to climb them."
+        ),
+        "if n <= 2": (
+            "With 1 or 2 stairs the answer is simply `n`: one way to climb 1 stair, two ways to "
+            "climb 2."
+        ),
+        "return n": "So return `n`.",
+        "prev1 = 1": "The number of ways to reach stair 1: just one.",
+        "prev2 = 2": "The number of ways to reach stair 2: two (1 + 1, or a single 2).",
+        "for i in range(3, n + 1)": "Work up through stairs 3, 4, … up to `n`.",
+        "current = prev1 + prev2": (
+            "Ways to reach this stair = ways to reach the stair two below + ways to reach the "
+            "stair just below."
+        ),
+        "prev1, prev2 = prev2, current": (
+            "Move up one stair: the last two answers are now the old `prev2` and the new "
+            "`current`."
+        ),
+        "return prev2": "`prev2` now holds the number of ways to reach stair `n`.",
+    },
     time=("O(n)", "One addition per stair."),
     space=("O(1)", "Only the last two counts are kept."),
     tests=[("n=1", 1), ("n=2", 2), ("n=3", 3), ("n=10", 89), ("n=45", 1836311903)],
@@ -52,6 +79,10 @@ lesson(
     args="cost=[10, 15, 20, 5, 30]",
     expected=20,
     why="Start on stair 1 (pay 15), jump to stair 3 (pay 5), then jump over stair 4 to the top: 15 + 5 = 20.",
+    picture="""Picture a price tag on every stair. To stand on a stair you pay its price, arriving from one or
+    two stairs below, so the cheapest way to stand there is its price plus the cheaper of those two.
+    Work up from the bottom, writing each answer into a row of boxes. The top is reached from one of
+    the last two stairs, so the answer is the cheaper of those two boxes.""",
     idea=[
         "Let `dp[i]` be the cheapest total for **standing on stair i** (its own cost included).",
         "You arrive on stair `i` from stair `i − 1` or stair `i − 2`. Come from whichever was cheaper, then pay `cost[i]`: `dp[i] = min(dp[i − 1], dp[i − 2]) + cost[i]`.",
@@ -76,6 +107,29 @@ lesson(
          "stair {n - 2} (total {dp[n - 2]}) without paying anything more. The cheaper one: **{_ret}**.",
          {"dp.alt": "[n - 1, n - 2]"}),
     ],
+    say={
+        "def minCostClimbingStairs": (
+            "The function we must write. It gets the price `cost` of each stair and returns the "
+            "cheapest way to the top."
+        ),
+        "n = len(cost)": "The number of stairs.",
+        "if n <= 1": "With at most one stair, you can step straight to the top from the start.",
+        "return 0": "So it costs nothing.",
+        "dp = [0] * n": (
+            "A row of boxes: `dp[i]` will be the cheapest total for standing on stair `i`."
+        ),
+        "dp[0] = cost[0]": "Starting on stair 0 costs just its own price.",
+        "dp[1] = cost[1]": "Starting on stair 1 costs just its own price.",
+        "for i in range(2, n)": "Fill in the rest of the boxes, from stair 2 up.",
+        "dp[i] = min(dp[i - 1], dp[i - 2]) + cost[i]": (
+            "To stand on stair `i`, arrive from the cheaper of the two stairs below it, then pay "
+            "this stair's price."
+        ),
+        "return min(dp[n - 1], dp[n - 2])": (
+            "The top is one step above the last stair or two above the one before it: return the "
+            "cheaper of those two totals."
+        ),
+    },
     time=("O(n)", "One pass over the stairs."),
     space=("O(n)", "The dp array (two variables would be enough, since only the last two entries are used)."),
     tests=[
@@ -94,6 +148,10 @@ lesson(
     args="nums=[2, 7, 9, 3, 1]",
     expected=12,
     why="Rob houses 0, 2 and 4: 2 + 9 + 1 = 12. No two of them are neighbours.",
+    picture="""Picture walking down the street, deciding house by house. At each house there are two choices:
+    rob it and add the best total from two houses back (the house just before must be skipped), or
+    skip it and keep the best total up to the house just before. A row of boxes remembers the best
+    total up to each house, and each new box needs only the two before it.""",
     idea=[
         "Go along the street and let `dp[i]` be the most money obtainable from houses `0 … i`.",
         "For house `i` there are only two choices. **Rob it**: house `i − 1` is then forbidden, so add the best of houses `0 … i − 2`. **Skip it**: keep the best of houses `0 … i − 1`.",
@@ -119,6 +177,28 @@ lesson(
         ("return dp[-1]", "The last entry covers the whole street: the most that can be robbed is **{_ret}**.",
          {"dp.good": "-1"}),
     ],
+    say={
+        "def rob": (
+            "The function we must write. It gets the money in each house, `nums`, and returns the"
+            " most that can be robbed."
+        ),
+        "n = len(nums)": "The number of houses.",
+        "if n == 0": "Are there no houses?",
+        "return 0": "Then nothing can be robbed.",
+        "if n == 1": "Is there only one house?",
+        "return nums[0]": "Then rob it.",
+        "dp = [0] * n": "A row of boxes: `dp[i]` will be the most money from houses 0 to `i`.",
+        "dp[0] = nums[0]": "With only the first house, rob it.",
+        "dp[1] = max(nums[0], nums[1])": (
+            "With the first two, rob whichever has more (not both: they are neighbours)."
+        ),
+        "for i in range(2, n)": "Fill in the rest of the boxes, house by house.",
+        "dp[i] = max(dp[i - 2] + nums[i], dp[i - 1])": (
+            "Either rob this house and add the best from two houses back, or skip it and keep the"
+            " best up to the house before. Take the better."
+        ),
+        "return dp[-1]": "The last box (`[-1]`) holds the best total for the whole street.",
+    },
     time=("O(n)", "One pass over the houses."),
     space=("O(n)", "The dp array (two variables would do, since only the last two entries are read)."),
     tests=[("nums=[1, 2, 3, 1]", 4), ("nums=[5]", 5), ("nums=[2, 1, 1, 2]", 4), ("nums=[0, 0, 0]", 0), ("nums=[]", 0)],
@@ -140,6 +220,10 @@ lesson(
     args="nums=[2, 7, 9, 3, 1]",
     expected=11,
     why="On a straight street 2 + 9 + 1 = 12 would work, but in a circle house 0 and house 4 are neighbours. The best is 2 + 9 = 11.",
+    picture="""Picture the same street bent into a circle, so the first and the last house are neighbours and
+    can never both be robbed. Solve it as two ordinary streets: one without the first house, one
+    without the last. Each is the plain House Robber problem, and the better of the two answers is
+    the answer for the circle.""",
     idea=[
         "The only new rule: the first and the last house cannot **both** be robbed.",
         "So one of them is certainly left alone. Case A: house 0 is left out → an ordinary straight street of houses `1 … n − 1`. Case B: the last house is left out → a straight street of houses `0 … n − 2`.",
@@ -176,6 +260,36 @@ lesson(
          "The answer is the larger: **{_ret}**."),
     ],
     allow_unused=True,
+    say={
+        "def rob": (
+            "The function we must write. It gets the money in each house of the circle and "
+            "returns the most that can be robbed."
+        ),
+        "def houseRobber": (
+            "A helper: the plain House Robber answer for houses standing in a line."
+        ),
+        "n = len(nums)": "The number of houses in this line.",
+        "if n == 0": "Are there no houses?",
+        "return 0": "Then nothing can be robbed.",
+        "if n == 1": "Is there only one house?",
+        "return nums[0]@1": "Then rob it.",
+        "prev = 0": "The best total up to two houses back.",
+        "curr = 0": "The best total up to the house just before.",
+        "for num in nums": "Go along the houses; `num` is the money in this one.",
+        "temp = curr": "Keep the old `curr` for a moment.",
+        "curr = max(prev + num, curr)": (
+            "Rob this house (plus the best from two back) or skip it (keep the best so far): take"
+            " the better."
+        ),
+        "prev = temp": "Move along: the old best-so-far becomes the best from two back.",
+        "return curr": "The best total for this line of houses.",
+        "if len(nums) == 1": "Is there only one house in the whole circle?",
+        "return nums[0]@2": "Then rob it: it has no neighbours to worry about.",
+        "return max(houseRobber(nums[1:]), houseRobber(nums[:-1]))": (
+            "Solve two lines, one without the first house (`nums[1:]`) and one without the last "
+            "(`nums[:-1]`). The better answer wins."
+        ),
+    },
     time=("O(n)", "Two passes over the houses."),
     space=("O(n)", "The two slices; the robbing itself uses only two variables."),
     tests=[("nums=[2, 3, 2]", 3), ("nums=[1, 2, 3, 1]", 4), ("nums=[1, 2, 3]", 3), ("nums=[7]", 7), ("nums=[1, 2]", 2)],
@@ -189,6 +303,10 @@ lesson(
     args="s='babad'",
     expected="bab",
     why="'bab' is a palindrome of length 3. ('aba' is just as long; this code keeps the first one it finds.)",
+    picture="""Picture every palindrome growing outward from its middle, like ripples: `aba` grows from the
+    `b`, and `abba` grows from the gap between the two `b`s. So stand at every possible middle, each
+    letter and each gap between two letters, and grow outward while the letters on both sides match.
+    Keep the longest palindrome you grow.""",
     idea=[
         "A palindrome is symmetric around its **centre**. So instead of testing every substring, pick a centre and grow outward as long as the two ends match.",
         "A palindrome of odd length has a letter as its centre (`aba`); one of even length has a gap between two letters as its centre (`abba`). Try both kinds at every position: 2n − 1 centres.",
@@ -219,6 +337,40 @@ lesson(
         ("return longest", "Every centre has been tried. The longest palindrome is **`{longest}`**."),
     ],
     allow_unused=True,
+    say={
+        "def longestPalindrome": (
+            "The function we must write. It gets the text `s` and returns its longest palindrome."
+        ),
+        "def expandAroundCenter": (
+            "A helper that grows a palindrome outward from a middle between `left` and `right`, "
+            "and returns the longest one found there."
+        ),
+        "while left >= 0 and right < len(s) and s[left] == s[right]": (
+            "Are both ends still inside the text, and do their letters match?"
+        ),
+        "left -= 1": "Then grow: move the left end one step outward.",
+        "right += 1": "And the right end one step outward.",
+        "return s[left + 1 : right]": (
+            "The ends have gone one step too far, so the palindrome is the text from `left + 1` "
+            "up to just before `right`."
+        ),
+        "if len(s) < 2": "Is the text shorter than 2 letters?",
+        "return s@2": "Then the whole text is its own longest palindrome.",
+        'longest = ""': "The longest palindrome found so far.",
+        "for i in range(len(s))": "Try every position as a middle.",
+        "palindrome1 = expandAroundCenter(i, i)": (
+            "A palindrome of odd length has one middle letter: grow from `i` itself."
+        ),
+        "if len(palindrome1) > len(longest)": "Is it longer than the best so far?",
+        "longest = palindrome1": "Then keep it.",
+        "palindrome2 = expandAroundCenter(i, i + 1)": (
+            "A palindrome of even length has its middle between two letters: grow from between "
+            "`i` and `i + 1`."
+        ),
+        "if len(palindrome2) > len(longest)": "Is that one longer than the best so far?",
+        "longest = palindrome2": "Then keep it.",
+        "return longest": "Return the longest palindrome.",
+    },
     time=("O(n²)", "2n − 1 centres, and each expansion can run across the whole string."),
     space=("O(n)", "Every expansion hands back its palindrome as a new string of up to n characters. "
                    "(Returning the two indexes instead would need only O(1).)"),
@@ -233,6 +385,10 @@ lesson(
     args="s='abba'",
     expected=6,
     why="The four single letters, plus 'bb' and 'abba'.",
+    picture="""Picture every palindrome growing outward from its middle, one matching pair of letters at a
+    time, where each step of growth is one more palindrome. So stand at every middle (each letter,
+    and each gap between two letters), grow outward while the two ends match, and count every step.
+    The total is the number of palindromic substrings.""",
     idea=[
         "Every palindrome has a centre: a letter (odd length) or a gap between two letters (even length).",
         "Grow outward from a centre while the two ends match. **Each successful step is one more palindrome** — a bigger one around the same centre.",
@@ -264,6 +420,35 @@ lesson(
                  "Total so far: **{total_palindromes}**.")),
         ("return total_palindromes", "All centres are done: **{total_palindromes}** palindromic substrings."),
     ],
+    say={
+        "def countSubstrings": (
+            "The function we must write. It gets the text `s` and returns how many of its "
+            "substrings are palindromes."
+        ),
+        "def expandAroundCenter": (
+            "A helper that grows outward from a middle and counts the palindromes it passes."
+        ),
+        "count = 0": "Palindromes found from this middle so far.",
+        "while left >= 0 and right < len(s) and s[left] == s[right]": (
+            "Are both ends inside the text, and do their letters match? Then the text from `left`"
+            " to `right` is a palindrome."
+        ),
+        "left -= 1": "Grow: move the left end one step outward.",
+        "right += 1": "And the right end one step outward.",
+        "count += 1": "Count the palindrome just found.",
+        "return count": "Report how many were found from this middle.",
+        "if not s": "Is the text empty?",
+        "return 0": "Then there are none.",
+        "total_palindromes = 0": "The total found so far.",
+        "for i in range(len(s))": "Try every position as a middle.",
+        "total_palindromes += expandAroundCenter(i, i)": (
+            "Count the odd-length palindromes centred on letter `i`."
+        ),
+        "total_palindromes += expandAroundCenter(i, i + 1)": (
+            "And the even-length ones centred between `i` and `i + 1`."
+        ),
+        "return total_palindromes": "Return the total.",
+    },
     time=("O(n²)", "2n − 1 centres, each expanded up to n/2 times."),
     space=("O(1)", "A few counters and indices."),
     tests=[("s='abc'", 3), ("s='aaa'", 6), ("s='a'", 1), ("s=''", 0), ("s='racecar'", 10)],
@@ -278,6 +463,11 @@ lesson(
     args="s='11106'",
     expected=2,
     why='"1 1 10 6" (AAJF) and "11 10 6" (KJF). The 0 can only be used as part of "10".',
+    picture="""Picture reading the digits from the left and asking at each point: in how many ways can the
+    digits so far be read? The last piece is either one digit (any digit except 0 is a letter) or
+    two digits (10 to 26 is a letter). So the ways up to here are the ways up to one digit back, if
+    the last digit can stand alone, plus the ways up to two digits back, if the last two can stand
+    together. A row of boxes keeps every count.""",
     idea=[
         "Let `dp[i]` be the number of ways to decode the **first i digits**.",
         "The last letter of such a decoding comes from the last digit alone (valid if it is 1–9) or from the last two digits (valid if they form 10–26).",
@@ -316,6 +506,36 @@ lesson(
          {"dp.alt": "i - 2", "dp.good": "i"}),
         ("return dp[n]", "`dp[{n}]` covers the whole string: **{_ret}** ways to decode it.", {"dp.good": "n"}),
     ],
+    say={
+        "def numDecodings": (
+            "The function we must write. It gets the digits `s` and returns in how many ways they"
+            " can be read as letters."
+        ),
+        "n = len(s)": "The number of digits.",
+        "dp = [0] * (n + 1)": (
+            "A row of boxes: `dp[i]` will be the number of ways to read the first `i` digits."
+        ),
+        "dp[0] = 1": (
+            "Zero digits can be read in exactly one way: as nothing. This makes the counting work"
+            " out."
+        ),
+        "dp[1] = (": (
+            "The first digit alone: one way if it is not `0` (no letter has the number 0), "
+            "otherwise none."
+        ),
+        "for i in range(2, n + 1)": "Fill in the boxes for 2 digits, 3 digits, and so on.",
+        "one_digit = int(s[i - 1])": "The last digit, as a number.",
+        "two_digits = int(s[i - 2 : i])": "The last two digits together, as a number.",
+        "if one_digit != 0": "Can the last digit stand alone as a letter (1 to 9)?",
+        "dp[i] += dp[i - 1]": (
+            "Then every way of reading the digits before it still works: add those ways."
+        ),
+        "if 10 <= two_digits <= 26": (
+            "Can the last two digits stand together as a letter (10 to 26)?"
+        ),
+        "dp[i] += dp[i - 2]": "Then add every way of reading the digits before those two.",
+        "return dp[n]": "The number of ways to read all the digits.",
+    },
     time=("O(n)", "One pass over the digits."),
     space=("O(n)", "The dp array (the last two entries would be enough)."),
     tests=[("s='12'", 2), ("s='226'", 3), ("s='06'", 0), ("s='0'", 0), ("s='10'", 1), ("s='27'", 1), ("s='100'", 0)],
@@ -329,6 +549,10 @@ lesson(
     args="coins=[1, 3, 4], amount=6",
     expected=2,
     why="3 + 3 = 6 uses two coins. (Greedy — always taking the largest coin — would give 4 + 1 + 1, three coins.)",
+    picture="""Picture a row of boxes, one for each amount from 0 up to the target, each saying *the fewest
+    coins that make this amount*. The box for 0 says 0. With a coin worth 3, an amount `i` can be
+    made from amount `i − 3` plus that one coin, so its box may improve to *box `i − 3`, plus 1*.
+    Try every coin on every amount, and the last box holds the answer, or stays *impossible*.""",
     idea=[
         "Taking the largest coin first can fail (see the example), so compute the best answer for **every** amount from 0 up to the target.",
         "`dp[a]` = fewest coins that add up to `a`. If the last coin used is `c`, the rest is the amount `a − c`, so `dp[a] = dp[a − c] + 1`.",
@@ -356,6 +580,29 @@ lesson(
             (None, "`dp[{amount}]` is still ∞: the amount cannot be made with these coins → **-1**."),
         ], {"dp.good": "amount"}),
     ],
+    say={
+        "def coinChange": (
+            "The function we must write. It gets the `coins` and the `amount`, and returns the "
+            "fewest coins that make it, or -1."
+        ),
+        'dp = [float("inf")] * (amount + 1)': (
+            "One box per amount from 0 to `amount`: the fewest coins that make it. Infinity means"
+            " *not possible (yet)*."
+        ),
+        "dp[0] = 0": "Making 0 needs no coins.",
+        "for coin in coins": "Try each coin in turn.",
+        "for i in range(coin, amount + 1)": (
+            "Go through every amount this coin fits into, from the coin's value up to `amount`."
+        ),
+        "dp[i] = min(dp[i], dp[i - coin] + 1)": (
+            "Make amount `i` from amount `i − coin` plus this one coin, if that uses fewer coins "
+            "than the best way known so far."
+        ),
+        'return dp[amount] if dp[amount] != float("inf") else -1': (
+            "If the box for `amount` was filled, return it. If it still says infinity, the amount"
+            " cannot be made: return -1."
+        ),
+    },
     time=("O(amount × coins)", "Every amount is checked once for every coin."),
     space=("O(amount)", "One dp entry per amount."),
     tests=[
@@ -374,6 +621,11 @@ lesson(
     args="nums=[2, -3, 4, -2]",
     expected=48,
     why="The whole array: 2 × (−3) × 4 × (−2) = 48. The two negative numbers cancel each other.",
+    picture="""Picture walking along the numbers with two notes in your pocket: the biggest and the smallest
+    product of a run that ends right here. You need the smallest one too, because a negative number
+    flips signs: the most negative product, times a negative number, becomes the biggest. At each
+    number, either start a fresh run there or extend the runs on your notes, and keep the best
+    product seen anywhere.""",
     idea=[
         "For sums, remembering the best subarray *ending here* is enough. For products that fails: a **negative** number turns a very small (very negative) product into a very large one.",
         "So remember two values for subarrays ending at the current index: the **largest** and the **smallest** product.",
@@ -400,6 +652,30 @@ lesson(
          "Best product seen anywhere: max({was.result}, {max_product}) = **{result}**."),
         ("return result", "The largest product of any contiguous subarray is **{result}**."),
     ],
+    say={
+        "def maxProduct": (
+            "The function we must write. It gets the list `nums` and returns the largest product "
+            "of a run of neighbouring numbers."
+        ),
+        "max_product = min_product = result = nums[0]": (
+            "Start with the first number: it is the biggest product, the smallest product and the"
+            " best answer so far."
+        ),
+        "for i in range(1, len(nums))": "Go through the rest of the numbers.",
+        "if nums[i] < 0": "Is this number negative?",
+        "max_product, min_product = min_product, max_product": (
+            "Then multiplying by it will flip biggest and smallest, so swap the two notes first."
+        ),
+        "max_product = max(nums[i], max_product * nums[i])": (
+            "The biggest product of a run ending here: start fresh at this number, or extend the "
+            "biggest run by it."
+        ),
+        "min_product = min(nums[i], min_product * nums[i])": (
+            "The smallest product of a run ending here, found the same way."
+        ),
+        "result = max(result, max_product)": "Keep the best product seen anywhere.",
+        "return result": "Return the best product.",
+    },
     time=("O(n)", "One pass over the array, with a constant amount of work per number."),
     space=("O(1)", "Three numbers."),
     tests=[("nums=[2, 3, -2, 4]", 6), ("nums=[-2, 0, -1]", 0), ("nums=[-2]", -2), ("nums=[-2, 3, -4]", 24),
@@ -414,6 +690,10 @@ lesson(
     args='s="catsand", wordDict=["cats", "and", "cat"]',
     expected=True,
     why='"cats" + "and". (Starting with "cat" leaves "sand", which is not a word — the DP still finds the other cut.)',
+    picture="""Picture marking the points in the text where a cut could go, with every piece before it being a
+    real word. The very start is such a point. A later point `i` is one too if, from some earlier
+    marked point `j`, the text between `j` and `i` is a dictionary word. Mark the points from left
+    to right: the text can be broken up exactly when the very end gets marked.""",
     idea=[
         "Let `dp[i]` say whether the **first i letters** can be cut into dictionary words. `dp[0]` is True: the empty prefix needs no words.",
         "The first `i` letters can be cut if there is some position `j` where the part before it works (`dp[j]` is True) **and** the remaining piece `s[j:i]` is a word.",
@@ -443,6 +723,29 @@ lesson(
             no_marks={"dp.bad": "i"})),
         ("return dp[len(s)]", "`dp[{len(s)}]` covers the whole string → **{_ret}**.", {"dp.good": "len(s)"}),
     ],
+    say={
+        "def wordBreak": (
+            "The function we must write. It gets the text `s` and the words `wordDict`, and "
+            "answers whether the text can be cut into dictionary words."
+        ),
+        "wordSet = set(wordDict)": (
+            "Put the words in a set, so *is this a word?* is answered instantly."
+        ),
+        "dp = [False] * (len(s) + 1)": (
+            "One box per cutting point: `dp[i]` says whether the first `i` letters can be cut "
+            "into words."
+        ),
+        "dp[0] = True": "Before any letters, nothing needs cutting: the start is marked.",
+        "for i in range(1, len(s) + 1)": "Look at each cutting point after the start.",
+        "for j in range(i)": "Try every earlier point `j` as the start of the last word.",
+        "if dp[j] and s[j:i] in wordSet": (
+            "Can the letters before `j` be cut into words, and is the piece from `j` to `i` a "
+            "word?"
+        ),
+        "dp[i] = True": "Then the first `i` letters can be cut into words too.",
+        "break": "One way is enough: stop trying other values of `j`.",
+        "return dp[len(s)]": "Can the whole text be cut into words?",
+    },
     time=("O(n³)", "There are about n² pairs (j, i), and cutting out the piece `s[j:i]` and looking it up "
                    "costs up to O(n) more."),
     space=("O(n)", "The dp array (plus the word set)."),
@@ -462,6 +765,10 @@ lesson(
     args="nums=[3, 1, 4, 2, 5]",
     expected=3,
     why="For example 1, 4, 5 (or 3, 4, 5, or 1, 2, 5). No increasing subsequence has four elements.",
+    picture="""Picture each number asking: *what is the longest rising chain that ends with me?* A number can
+    join the end of any chain that finishes with a smaller number before it, making that chain one
+    longer. So each number looks back at every earlier, smaller number and extends the best chain it
+    can. The longest chain anywhere is the answer.""",
     idea=[
         "Let `dp[i]` be the length of the longest increasing subsequence that **ends exactly at index i**. Alone, every element is a subsequence of length 1.",
         "The element before `nums[i]` in such a subsequence must be an earlier, **smaller** number `nums[j]`. Then `nums[i]` extends the best subsequence ending at `j`: length `dp[j] + 1`.",
@@ -493,6 +800,29 @@ lesson(
         ("return max(dp)", "The longest increasing subsequence may end at any index: the largest `dp` value is **{_ret}**.",
          {"dp.good": "dp.index(max(dp))"}),
     ],
+    say={
+        "def lengthOfLIS": (
+            "The function we must write. It gets the list `nums` and returns the length of the "
+            "longest rising subsequence."
+        ),
+        "if not nums": "Is the list empty?",
+        "return 0": "Then the longest one has length 0.",
+        "dp = [1] * len(nums)": (
+            "One box per number: `dp[i]` is the longest rising chain that ends with `nums[i]`. "
+            "Each number alone is a chain of 1."
+        ),
+        "for i in range(len(nums))": "Go through the numbers, one by one.",
+        "for j in range(i)": "Look back at every number before it.",
+        "if nums[i] > nums[j]": (
+            "Is this number bigger than that earlier one? Then it can join the end of that one's "
+            "chain."
+        ),
+        "dp[i] = max(dp[i], dp[j] + 1)": (
+            "Joining makes a chain one longer than `dp[j]`. Keep it if it is the best for "
+            "`nums[i]` so far."
+        ),
+        "return max(dp)": "The longest chain ending anywhere is the answer.",
+    },
     time=("O(n²)", "Every pair (j, i) is compared once. (A patience-sorting variant with binary search reaches O(n log n).)"),
     space=("O(n)", "The dp array."),
     tests=[
@@ -512,6 +842,11 @@ lesson(
     args="nums=[1, 5, 11, 5]",
     expected=True,
     why="{1, 5, 5} and {11} both sum to 11.",
+    picture="""Picture splitting the numbers into two piles with equal sums: each pile must hold exactly half
+    of the total. So the question becomes: can some of the numbers add up to that half? Keep a row
+    of boxes, one for every sum from 0 to the half, ticked when that sum can be made. At first only
+    0 is ticked. Each number then ticks every sum it can reach from an already ticked one. Going
+    through the sums from the top down makes sure no number is used twice.""",
     idea=[
         "Two equal halves must each sum to `total / 2`. If the total is odd, that is impossible. Otherwise the question becomes: **can some of the numbers add up to exactly `total / 2`?** (The rest then automatically forms the other half.)",
         "Keep a table `dp[x]`: *can the numbers looked at so far reach the sum x?* Initially only 0 is reachable (take nothing).",
@@ -541,6 +876,31 @@ lesson(
             (None, "`dp[{target_sum}]` is False: no subset sums to {target_sum} → **False**."),
         ], {"dp.good": "target_sum"}),
     ],
+    say={
+        "def canPartition": (
+            "The function we must write. It gets the list `nums` and answers whether it splits "
+            "into two piles with equal sums."
+        ),
+        "total_sum = sum(nums)": "Add up all the numbers.",
+        "if total_sum % 2 != 0": "Is the total odd? (`%` gives the remainder after dividing.)",
+        "return False": "Then it cannot be split into two equal whole halves.",
+        "target_sum = total_sum // 2": "Each pile must add up to exactly half the total.",
+        "dp = [False] * (target_sum + 1)": (
+            "A row of boxes, one for every sum from 0 to `target_sum`: can some of the numbers "
+            "add up to it?"
+        ),
+        "dp[0] = True": "A sum of 0 can always be made, by taking nothing.",
+        "for num in nums": "Bring in the numbers one at a time.",
+        "for i in range(target_sum, num - 1, -1)": (
+            "Go through the sums from the top down to `num`. Going downwards stops this number "
+            "from being used twice in one sum."
+        ),
+        "dp[i] = dp[i] or dp[i - num]": (
+            "Sum `i` can be made if it already could, or if `i − num` could and this number is "
+            "added to it."
+        ),
+        "return dp[target_sum]": "Can some of the numbers make exactly half the total?",
+    },
     time=("O(n × sum)", "For every number, every sum up to total / 2 is checked once."),
     space=("O(sum)", "One boolean per possible sum."),
     tests=[

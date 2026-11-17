@@ -31,12 +31,61 @@
    "output": "1"
   }
  ],
+ "picture": "Picture rot spreading through a crate of oranges, minute by minute. Every rotten orange spoils its fresh neighbours (up, down, left, right) in the next minute, and they spoil theirs the minute after, like ripples on a pond. A queue holds the oranges that rotted most recently, one minute's worth at a time. When the rot stops spreading, either every orange is rotten, and the answer is the minutes passed, or some fresh orange could never be reached, and the answer is -1.",
  "idea": [
   "Rot spreads outward from **all** rotten oranges at the same time, one step per minute. That is exactly a breadth-first search with several starting points.",
   "Put every rotten orange in a queue. Process the queue **one whole level at a time**: everything in the queue at the start of a round rots its fresh neighbours during the same minute.",
   "Count the rounds in which something new rotted. At the end, any fresh orange still left was unreachable → `-1`."
  ],
  "code": "class Solution:\n    def orangesRotting(self, grid: List[List[int]]) -> int:\n        if not grid:\n            return -1\n\n        rows, cols = len(grid), len(grid[0])\n        fresh_count = 0  # Count of fresh oranges\n        rotten = deque()  # Queue to store coordinates of rotten oranges\n        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]  # Possible adjacent cells\n\n        # Initialize the queue with coordinates of rotten oranges\n        for row in range(rows):\n            for col in range(cols):\n                if grid[row][col] == 2:\n                    rotten.append((row, col))\n                elif grid[row][col] == 1:\n                    fresh_count += 1\n\n        minutes = 0  # Timer\n\n        while rotten:\n            level_size = len(rotten)\n\n            for _ in range(level_size):\n                row, col = rotten.popleft()\n\n                for dr, dc in directions:\n                    new_row, new_col = row + dr, col + dc\n\n                    # Check if the new cell is within bounds and has a fresh orange\n                    if (\n                        0 <= new_row < rows\n                        and 0 <= new_col < cols\n                        and grid[new_row][new_col] == 1\n                    ):\n                        grid[new_row][new_col] = 2  # Infect the fresh orange\n                        fresh_count -= 1\n                        rotten.append((new_row, new_col))\n\n            if rotten:\n                minutes += 1\n\n        # If there are fresh oranges left, return -1; otherwise, return the elapsed minutes\n        return minutes if fresh_count == 0 else -1",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the `grid` and returns how many minutes pass until no fresh orange is left, or -1.",
+  "3": "Is the grid empty?",
+  "4": "Then the code gives up straight away: -1.",
+  "6": "The grid's size.",
+  "7": "How many fresh oranges are left.",
+  "8": "A queue of the oranges that have just turned rotten and will spread the rot next.",
+  "9": "The four neighbours: down, up, right and left.",
+  "12": "Scan every row…",
+  "13": "…and every column in it.",
+  "14": "Is this orange already rotten (`2`)?",
+  "15": "Then it spreads rot from minute 0: put it in the queue.",
+  "16": "Is it fresh (`1`)?",
+  "17": "Then count it.",
+  "19": "The minutes passed so far.",
+  "21": "Repeat while some orange can still spread rot.",
+  "22": "The queue now holds exactly the oranges that rotted in the last minute. Count them.",
+  "24": "Let each of them spread rot during this minute.",
+  "25": "Take one of them from the front of the queue.",
+  "27": "Look at its four neighbours.",
+  "28": "The neighbour's row and column.",
+  "31": "Is the neighbour inside the grid, and a fresh orange?",
+  "36": "Then it turns rotten.",
+  "37": "One fresh orange fewer.",
+  "38": "It will spread the rot next minute: add it to the queue.",
+  "40": "Did any orange turn rotten during this minute?",
+  "41": "Then a whole minute has passed.",
+  "44": "If no fresh orange is left, return the minutes passed. Otherwise some could never be reached: return -1."
+ },
+ "key": [
+  {
+   "tone": "#f2a33c",
+   "label": "fresh orange (1)"
+  },
+  {
+   "tone": "#8a5a44",
+   "label": "rotten orange (2)"
+  },
+  {
+   "tone": "mark",
+   "label": "in the queue: spreads rot next"
+  },
+  {
+   "tone": "bad",
+   "label": "has just rotted"
+  }
+ ],
  "complexity": {
   "time": "O(rows × cols)",
   "timeWhy": "Each cell enters the queue at most once.",

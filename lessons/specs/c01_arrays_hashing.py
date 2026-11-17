@@ -10,6 +10,10 @@ lesson(
     args="nums=[1, 2, 3, 1]",
     expected=True,
     why="The value 1 appears at index 0 and again at index 3.",
+    picture="""Picture a doorkeeper with a notebook. As each guest arrives, the doorkeeper looks for their name
+    in the notebook: if it is already there, that guest has come in twice. If not, the name is
+    written down and the guest goes in. A **hash set** is that notebook, and looking something up in
+    it takes no time at all, however long it gets.""",
     idea=[
         "Comparing every number with every other number works, but that is O(n²) comparisons.",
         "What we really need is a fast way to ask *have I seen this number before?*",
@@ -34,6 +38,30 @@ lesson(
          "Add {n} to the set, so a later copy of it will be recognised instantly.",
          {"hashset.cur": "n"}),
     ],
+    say={
+        "def containsDuplicate": (
+            "The function we must write. It is given the list `nums` and answers `True` or "
+            "`False`."
+        ),
+        "hashset = set()": (
+            "Make an empty **set**: a collection that can tell instantly whether it already holds"
+            " a value."
+        ),
+        "for n in nums": (
+            "Go through the list one value at a time. `n` is the value we are looking at."
+        ),
+        "if n in hashset": (
+            "Is this value already in the set? That would mean we met it earlier in the list."
+        ),
+        "return True": "Yes: a value repeats, so answer `True` and stop right here.",
+        "hashset.add(n)": (
+            "No: put the value into the set, so that a later copy of it will be caught."
+        ),
+        "return False": (
+            "The loop got through the whole list without a repeat, so every value is different: "
+            "answer `False`."
+        ),
+    },
     time=("O(n)", "One pass; each set lookup and insert takes O(1) on average."),
     space=("O(n)", "If all numbers are different, the set ends up holding every one of them."),
     tests=[("nums=[1, 2, 3, 4]", False), ("nums=[1, 1, 1, 3, 3, 4, 3, 2, 4, 2]", True), ("nums=[7]", False)],
@@ -47,6 +75,9 @@ lesson(
     args="s='apple', t='papel'",
     expected=True,
     why="Both words contain a×1, p×2, l×1, e×1.",
+    picture="""Picture two bags of letter tiles. Tip out the first bag and count its tiles: two `p`s, one `a`,
+    and so on. Then take the tiles of the second bag one by one and cross off a matching tile from
+    your count. If you ever need a tile that is not left, the two words do not use the same letters.""",
     idea=[
         "Two words are anagrams when every letter appears the same number of times in both.",
         "Count the letters of `s` in a hash map: letter → how many.",
@@ -78,6 +109,41 @@ lesson(
          "Every letter of `t` found a partner, and the lengths are equal, so nothing is left over. "
          "They are anagrams → **True**."),
     ],
+    say={
+        "def isAnagram": (
+            "The function we must write. It gets two words, `s` and `t`, and answers `True` or "
+            "`False`."
+        ),
+        "if len(s) != len(t)": (
+            "`len` counts the letters of a word. If the two lengths are different (`!=`), the "
+            "words cannot be made of the same letters."
+        ),
+        "return False@1": "Different lengths: answer `False` straight away.",
+        "char_frequency = {}": (
+            "Make an empty **dictionary** (a hash map). It will pair each letter with how many "
+            "times it appears in `s`."
+        ),
+        "for char in s": "Go through the first word, one letter at a time.",
+        "char_frequency[char] = char_frequency.get(char, 0) + 1": (
+            "Add one to this letter's count. `.get(char, 0)` means: the count so far, or 0 if the"
+            " letter has not appeared yet."
+        ),
+        "for char in t": "Now go through the second word, one letter at a time.",
+        "if char not in char_frequency or": (
+            "Is this letter missing from the counts, or are its copies all used up (count 0)?"
+        ),
+        "return False@2": (
+            "Yes: `t` needs a letter that `s` has no copy of to spare, so answer `False`."
+        ),
+        "char_frequency[char] -= 1": (
+            "Use up one copy of this letter: its count goes down by one (`-=` means *subtract and"
+            " keep the result*)."
+        ),
+        "return True": (
+            "Every letter of `t` was matched and the lengths are equal, so nothing is left over: "
+            "answer `True`."
+        ),
+    },
     time=("O(n)", "One pass over `s` to count and one pass over `t` to match."),
     space=("O(1)", "The map holds at most one entry per distinct letter (26 for lowercase English)."),
     tests=[("s='rat', t='car'", False), ("s='ab', t='abc'", False), ("s='aacc', t='ccac'", False)],
@@ -92,6 +158,10 @@ lesson(
     args="nums=[3, 11, 5, 6], target=9",
     expected=[0, 3],
     why="nums[0] + nums[3] = 3 + 6 = 9.",
+    picture="""Picture a party where every guest wears a number, and you need the two guests whose numbers add
+    up to the target. As each guest walks in, they ask one question: *has my partner (target minus
+    my number) already arrived?* A guest book records every number seen and where that guest is
+    standing, so the answer is one glance away.""",
     idea=[
         "Checking every pair works but costs O(n²): for each number we search the whole list for its partner.",
         "For a number `n` the partner is fixed: it must be `target − n`. So the only question is *have I already seen that value?*",
@@ -118,6 +188,33 @@ lesson(
          "Remember **{n} → index {i}**. If a later number needs {n}, we can answer in one lookup.",
          {"prevMap.cur": "n"}),
     ],
+    say={
+        "def twoSum": (
+            "The function we must write. It gets the list `nums` and the number `target`, and "
+            "must return two positions in the list."
+        ),
+        "prevMap = {}": (
+            "Make an empty **dictionary** (a hash map). It will pair each number we pass with its"
+            " position. (After `#` is a note for people, not code.)"
+        ),
+        "for i, n in enumerate(nums)": (
+            "Go through the list one number at a time. `enumerate` hands us both the position `i`"
+            " and the number `n`."
+        ),
+        "diff = target - n": (
+            "Work out the partner this number needs: `target` minus `n`. Call it `diff`."
+        ),
+        "if diff in prevMap": (
+            "Have we already passed that partner? The dictionary can tell instantly."
+        ),
+        "return [prevMap[diff], i]": (
+            "Yes: return the partner's position (looked up in the dictionary) and our own "
+            "position `i`."
+        ),
+        "prevMap[n] = i": (
+            "No: write down this number and its position, so that a later number can find it."
+        ),
+    },
     time=("O(n)", "One pass over the list; every map lookup and insert is O(1) on average."),
     space=("O(n)", "In the worst case the map stores almost every number before the pair appears."),
     tests=[
@@ -136,6 +233,10 @@ lesson(
     expected=[["eat", "tea", "ate"], ["tan", "nat"], ["bat"]],
     why="eat / tea / ate share the letters a, e, t; tan / nat share a, n, t; bat is alone.",
     unordered=2,
+    picture="""Picture a wall of pigeonholes, each with a label. For every word, write its letters in
+    alphabetical order (`eat`, `tea` and `ate` all become `aet`) and drop the word into the
+    pigeonhole with that label, making a new one if needed. When all the words are sorted, each
+    pigeonhole holds one group of anagrams.""",
     idea=[
         "Anagrams contain exactly the same letters. We need a *label* that is identical for all anagrams and different for everything else.",
         "**Sort the letters** of a word: `eat`, `tea` and `ate` all become `aet`. That sorted string is the label.",
@@ -159,6 +260,31 @@ lesson(
          {"anagrams_map.cur": "sorted_word"}),
         ("return list(anagrams_map.values())", "Each value in the map is one complete group of anagrams. Return them all."),
     ],
+    say={
+        "def groupAnagrams": (
+            "The function we must write. It gets a list of words `strs` and returns them in "
+            "groups."
+        ),
+        "anagrams_map = {}": (
+            "Make an empty dictionary. Each key will be a word's letters in sorted order; its "
+            "value, the list of words with those letters."
+        ),
+        "for word in strs": "Go through the words one at a time.",
+        "sorted_word =": (
+            '`sorted(word)` puts the letters in alphabetical order, and `"".join(...)` glues them'
+            " back into one string: `eat` becomes `aet`."
+        ),
+        "if sorted_word in anagrams_map": "Is there already a group with this label?",
+        "anagrams_map[sorted_word].append(word)": (
+            "Yes: add the word to the end of that group's list."
+        ),
+        "anagrams_map[sorted_word] = [word]": (
+            "No: start a new group, a list holding just this word."
+        ),
+        "return list(anagrams_map.values())": (
+            "Hand back every group: the dictionary's values are the lists of words."
+        ),
+    },
     time=("O(n · k log k)", "n words, and sorting a word of length k costs k log k."),
     space=("O(n · k)", "The map stores every word once."),
     tests=[("strs=['']", [[""]]), ("strs=['a']", [["a"]]), ("strs=['ab', 'ba', 'abc']", [["ab", "ba"], ["abc"]])],
@@ -173,6 +299,9 @@ lesson(
     expected=[3, 5],
     why="5 appears three times and 3 appears twice; 8 appears only once.",
     unordered=1,
+    picture="""Picture a tally sheet with one mark per number every time it appears. Then picture a podium with
+    only `k` places. The numbers climb on one by one; whenever the podium is too full, the one with
+    the fewest marks steps off. Whoever is left standing on the podium appears most often.""",
     idea=[
         "First count how often every number appears, with a hash map.",
         "We then need the k largest counts. Sorting all of them works, but we never need the full order — only the top k.",
@@ -203,6 +332,40 @@ lesson(
         ("return [num for frequency, num in min_heap]",
          "The {k} numbers still in the heap are the most frequent ones: **{_ret}**."),
     ],
+    say={
+        "def topKFrequent": (
+            "The function we must write. It gets the list `nums` and a number `k`, and returns "
+            "the `k` values that appear most often."
+        ),
+        "frequency_map = {}": (
+            "Make an empty dictionary that will pair each number with how many times it appears."
+        ),
+        "for num in nums": "Go through the list one number at a time.",
+        "frequency_map[num] = frequency_map.get(num, 0) + 1": (
+            "Add one to this number's count. `.get(num, 0)` is its count so far, or 0 the first "
+            "time we see it."
+        ),
+        "min_heap = []": (
+            "Start an empty heap. It will hold `(count, number)` pairs, and keep the pair with "
+            "the smallest count at the front."
+        ),
+        "for num, frequency in frequency_map.items()": (
+            "Go through the tally: `.items()` hands us each number together with its count."
+        ),
+        "heapq.heappush(min_heap, (frequency, num))": (
+            "Put the pair `(count, number)` into the heap. The heap moves the smallest count to "
+            "the front."
+        ),
+        "if len(min_heap) > k": "Does the heap now hold more than `k` pairs?",
+        "heapq.heappop(min_heap)": (
+            "Yes: remove the front pair, the one with the smallest count. It cannot be among the "
+            "`k` most frequent."
+        ),
+        "return [num for frequency, num in min_heap]": (
+            "Take just the number out of each pair left in the heap and return them: they are the"
+            " `k` most frequent."
+        ),
+    },
     time=("O(n log k)", "Counting is O(n). Each distinct number is pushed into a heap that never holds more than k + 1 items."),
     space=("O(n)", "The count map can hold every distinct number; the heap holds at most k + 1."),
     tests=[("nums=[1], k=1", [1]), ("nums=[1, 1, 1, 2, 2, 3], k=2", [1, 2]), ("nums=[4, 4, 6, 6, 6, 7], k=1", [6])],
@@ -216,6 +379,10 @@ lesson(
     args="nums=[1, 2, 3, 4]",
     expected=[24, 12, 8, 6],
     why="24 = 2·3·4,  12 = 1·3·4,  8 = 1·2·4,  6 = 1·2·3.",
+    picture="""Picture a row of people, each holding a number, where each person wants the product of everyone
+    else's numbers. Walk along the row from the left, carrying a running product: it tells each
+    person the product of everyone before them. Walk back from the right with a second running
+    product for everyone after them. Each person multiplies the two, and nobody ever divides.""",
     idea=[
         "The product of everything except `nums[i]` splits into two parts: (everything to the **left** of i) × (everything to the **right** of i).",
         "A running product gives all the left parts in one left-to-right pass.",
@@ -247,6 +414,48 @@ lesson(
          {"result.good": "range(i, n)"}),
         ("return result", "Every slot holds the product of all the *other* numbers: **{_ret}**."),
     ],
+    say={
+        "def productExceptSelf": (
+            "The function we must write. It gets the list `nums` and returns a new list of "
+            "products."
+        ),
+        "n = len(nums)": "`n` is how many numbers there are.",
+        "result = [1] * n": (
+            "Make the answer list: `n` ones in a row (`[1] * n` repeats `1` `n` times)."
+        ),
+        "left_product = 1": (
+            "The product of every number to the left of where we are. Before the first number "
+            "there is nothing, and a product of nothing is 1."
+        ),
+        "for i in range(n):": (
+            "Visit the positions from left to right: `range(n)` counts 0, 1, 2, … up to `n − 1`."
+        ),
+        "result[i] *= left_product": (
+            "Multiply this slot by the product of everything to its left. (`*=` means *multiply "
+            "and keep the result*.)"
+        ),
+        "left_product *= nums[i]": (
+            "Fold this number into the running product, ready for the next position."
+        ),
+        "right_product = 1": (
+            "Now the product of every number to the right. Past the last number there is nothing,"
+            " so it also starts at 1."
+        ),
+        "for i in range(n - 1, -1, -1)": (
+            "Visit the positions from right to left: `range(n - 1, -1, -1)` counts down from `n −"
+            " 1` to 0."
+        ),
+        "result[i] *= right_product": (
+            "Multiply this slot by the product of everything to its right. It now holds *left × "
+            "right*: everyone but itself."
+        ),
+        "right_product *= nums[i]": (
+            "Fold this number into the running product, ready for the next position to the left."
+        ),
+        "return result": (
+            "Every slot holds the product of all the other numbers: return the list."
+        ),
+    },
     time=("O(n)", "Two passes over the array."),
     space=("O(1)", "Only two running products are stored besides the output array."),
     tests=[("nums=[-1, 1, 0, -3, 3]", [0, 0, 9, 0, 0]), ("nums=[2, 3]", [3, 2])],
@@ -286,6 +495,10 @@ lesson(
     args=_SUDOKU_BAD,
     expected=False,
     why="There are two 8s in the top-left 3×3 box: at (0, 0) and at (2, 2).",
+    picture="""Picture a checklist of *facts* such as "row 0 has an 8", "column 4 has a 7" and "the top-left
+    box has a 3". Walk over the board once. Each digit adds three facts: one for its row, one for
+    its column and one for its 3×3 box. If one of those facts is already on the list, the digit
+    repeats somewhere it must not, and the board breaks the rules.""",
     idea=[
         "Each filled cell must be unique in three places at once: its row, its column and its 3×3 box.",
         "Turn that into three *facts* per digit — **row r has d**, **column c has d**, **box b has d** — and keep all facts in one hash set. The box of cell (r, c) is (r // 3, c // 3).",
@@ -313,6 +526,32 @@ lesson(
          "them: row {i} has {num}, column {j} has {num}, box ({i // 3}, {j // 3}) has {num}.",
          {"seen.cur": "[(i, num), (num, j), (i // 3, j // 3, num)]"}),
     ],
+    say={
+        "def isValidSudoku": (
+            "The function we must write. It gets the 9×9 `board` and answers `True` or `False`."
+        ),
+        "seen = set()": 'An empty set that will hold facts such as "row 0 has an 8".',
+        "for i in range(9)": "Go through the rows: `i` counts 0 to 8.",
+        "for j in range(9)": "In each row, go through the columns: `j` counts 0 to 8.",
+        'if board[i][j] != "."': (
+            "Skip empty cells: a `.` means nothing is written there. (`board[i][j]` is the cell "
+            "in row `i`, column `j`.)"
+        ),
+        "num = board[i][j]": "`num` is the digit written in this cell.",
+        "if (": (
+            "Is any of this digit's three facts already in the set? `(i, num)` is its row, `(num,"
+            " j)` its column and `(i // 3, j // 3, num)` its 3×3 box. (`//` divides and drops the"
+            " remainder, so rows 0–2 give 0, rows 3–5 give 1, rows 6–8 give 2.)"
+        ),
+        "return False": "The digit repeats in a row, a column or a box: answer `False`.",
+        "seen.add((i, num))": (
+            'Record "row `i` has `num`". A row fact puts the row number first and a column fact '
+            "puts the digit first, so the two kinds can never be mixed up."
+        ),
+        "seen.add((num, j))": 'Record "column `j` has `num`".',
+        "seen.add((i // 3, j // 3, num))": 'Record "this 3×3 box has `num`".',
+        "return True": "Every filled cell passed, so no digit repeats: answer `True`.",
+    },
     time=("O(1)", "The board is always 9×9 = 81 cells, each checked with three O(1) set lookups."),
     space=("O(1)", "At most 3 facts for each of the 81 cells."),
     tests=[(_SUDOKU_OK, True)],
@@ -347,6 +586,9 @@ lesson(
     ops=["Codec()", "encode(['lee', 'code', '#hi'])", "decode(_out[1])"],
     expected=[None, "3#lee4#code3##hi", ["lee", "code", "#hi"]],
     why="Each word is written as its length, a #, then the word — so even a word containing # is read back correctly.",
+    picture="""Picture packing several notes into one long envelope. In front of each note you write how many
+    characters it has, then a `#`: `3#lee4#code`. Whoever opens the envelope reads the number, then
+    counts off exactly that many characters. So even a note full of `#` signs comes out whole.""",
     idea=[
         "Simply joining with a separator such as `,` breaks as soon as a string contains that separator.",
         "Instead write each string as **its length, then `#`, then the string**: `lee` becomes `3#lee`.",
@@ -380,6 +622,45 @@ lesson(
         ("while i < len(s)", dict(no="`i` has reached the end of the text — every chunk is decoded.")),
         ("return decoded", "We are back to the original list: **{_ret}**."),
     ],
+    say={
+        "class Codec": (
+            "The problem asks for a class called `Codec` that holds two functions, `encode` and "
+            "`decode`."
+        ),
+        "def encode": (
+            "The first function: turn the list of strings `strs` into one single string."
+        ),
+        "parts = []": "An empty list that will collect one piece for each string.",
+        "for s in strs": "Go through the strings one at a time.",
+        'parts.append(str(len(s)) + "#" + s)': (
+            "Make this string's piece: its length written as digits (`str(len(s))`), then a `#`, "
+            "then the string itself. `append` adds the piece to the list."
+        ),
+        'return "".join(parts)': (
+            "Glue all the pieces together with nothing in between, and return that one string."
+        ),
+        "def decode": "The second function: turn the one long string `s` back into the list.",
+        "decoded = []": "An empty list for the strings we read back.",
+        "i = 0": "`i` marks where the next piece begins. The first piece begins at index 0.",
+        "while i < len(s)": "Repeat while `i` has not yet reached the end of the text.",
+        'delimiter_pos = s.find("#", i)': (
+            "Find the first `#` at or after position `i`. The digits before it are the length."
+        ),
+        "size = int(s[i:delimiter_pos])": (
+            "Cut out those digits (`s[i:delimiter_pos]` is the text from `i` up to the `#`) and "
+            "turn them into a number with `int`."
+        ),
+        "start_pos = delimiter_pos + 1": "The string itself starts just after the `#`.",
+        "end_pos = start_pos + size": (
+            "It is `size` characters long, so `end_pos` is the position just past its last "
+            "character."
+        ),
+        "decoded.append(s[start_pos:end_pos])": (
+            "Cut out exactly those characters, whatever they are, and add them to the result."
+        ),
+        "i = end_pos": "Move `i` to where the next piece begins.",
+        "return decoded": "Every piece has been read: return the list.",
+    },
     time=("O(n)", "Both functions touch each character a constant number of times (n = total characters). "
                   "The pieces are joined once at the end, so nothing is copied again and again."),
     space=("O(n)", "The encoded string and the decoded list are as large as the input."),
@@ -398,6 +679,10 @@ lesson(
     args="nums=[100, 4, 200, 1, 3, 2]",
     expected=4,
     why="The values 1, 2, 3, 4 are all present, a run of length 4.",
+    picture="""Picture numbered cards scattered on a table. A card can only *start* a run when the card one
+    below it is missing, like a 1 when there is no 0. From each such start, count upward, 2, 3, 4,
+    for as long as the next card is on the table. Cards in the middle of a run never start a count
+    of their own, so every card is counted only once.""",
     idea=[
         "Sorting would line the runs up, but sorting costs O(n log n). We need O(n).",
         "Put all numbers in a hash set. A number `x` **starts** a run exactly when `x − 1` is *not* in the set.",
@@ -428,6 +713,32 @@ lesson(
          {"num_set.good": "range(num, current_num + 1)"}),
         ("return max_length", "Every run was counted exactly once, from its start. The longest has length **{_ret}**."),
     ],
+    say={
+        "def longestConsecutive": (
+            "The function we must write. It gets the list `nums` and returns the length of the "
+            "longest run."
+        ),
+        "num_set = set(nums)": (
+            "Put all the numbers into a set, so *is x here?* is answered instantly. Repeated "
+            "numbers keep just one copy."
+        ),
+        "max_length = 0": "The longest run found so far. We have found none yet.",
+        "for num in num_set": "Go through each different number once.",
+        "if num - 1 not in num_set": (
+            "Is the number just below `num` missing? Then `num` is where a run starts."
+        ),
+        "current_num = num": "Start walking up the run at `num`.",
+        "current_length = 1": "So far the run is just one number long.",
+        "while current_num + 1 in num_set": (
+            "Is the next number up in the set too? Keep walking for as long as it is."
+        ),
+        "current_num += 1": "Step up to that next number (`+= 1` adds one).",
+        "current_length += 1": "The run is now one number longer.",
+        "max_length = max(max_length, current_length)": (
+            "Keep whichever is bigger: the best run so far, or this one."
+        ),
+        "return max_length": "Return the length of the longest run.",
+    },
     time=("O(n)", "The inner loop only runs from the start of a run, so each number is visited at most twice in total."),
     space=("O(n)", "The set stores every distinct number."),
     tests=[("nums=[0, 3, 7, 2, 5, 8, 4, 6, 0, 1]", 9), ("nums=[]", 0), ("nums=[1, 2, 0, 1]", 3)],

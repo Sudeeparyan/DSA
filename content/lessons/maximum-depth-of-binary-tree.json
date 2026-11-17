@@ -27,12 +27,22 @@
    "output": "1"
   }
  ],
+ "picture": "Picture asking everyone in a family tree: *how many generations are there from you down to the youngest?* Someone with no children answers 1. Anyone else first asks both children, takes the bigger answer and adds 1 for themselves. The answer that reaches the top person is the depth of the whole tree.",
  "idea": [
   "The depth of a tree is 1 (for the root itself) plus the depth of its **deeper** subtree.",
   "The depth of each subtree is the same question on a smaller tree — so ask it recursively.",
   "The recursion stops at an empty spot, whose depth is 0. Each node then answers `max(left, right) + 1`."
  ],
  "code": "class Solution:\n    def maxDepth(self, root: TreeNode) -> int:\n        if not root:\n            return 0\n\n        left_depth = self.maxDepth(root.left)\n        right_depth = self.maxDepth(root.right)\n\n        return max(left_depth, right_depth) + 1",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets a node and returns how many levels the tree below it has.",
+  "3": "Is this an empty spot, with no node?",
+  "4": "Then it adds no levels: 0.",
+  "6": "Ask the same question of the left child: how deep is the tree below it? (The function calls itself.)",
+  "7": "And of the right child.",
+  "9": "This node's depth is its deeper side plus 1 for the node itself."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "Every node is visited once.",

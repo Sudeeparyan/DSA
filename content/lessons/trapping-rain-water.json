@@ -27,12 +27,31 @@
    "output": "3"
   }
  ],
+ "picture": "Picture rain falling on a row of bars. The water over a bar can only rise to the lower of two walls: the tallest bar somewhere on its left and the tallest somewhere on its right. Any higher and it would spill. Two people walk inward from the two ends, each remembering the tallest bar behind them. The one standing on the lower bar moves next: the other side is known to have a bar at least that tall, so the water here depends only on the tallest bar behind them.",
  "idea": [
   "Water above a bar rises to the **lower** of the tallest wall on its left and the tallest wall on its right. Anything higher would spill over that lower wall.",
   "Use a pointer at each end and remember the tallest wall seen so far from each side (`max_left`, `max_right`).",
   "Always process the side whose bar is **lower**. The other side is known to have a wall at least that tall, so the water on this bar depends only on its own side's maximum: `max − height`."
  ],
  "code": "class Solution:\n    def trap(self, height: List[int]) -> int:\n        left, right = 0, len(height) - 1\n        max_left, max_right = 0, 0\n        trapped_water = 0\n\n        while left < right:\n            if height[left] <= height[right]:\n                if height[left] >= max_left:\n                    max_left = height[left]\n                else:\n                    trapped_water += max_left - height[left]\n                left += 1\n            else:\n                if height[right] >= max_right:\n                    max_right = height[right]\n                else:\n                    trapped_water += max_right - height[right]\n                right -= 1\n\n        return trapped_water",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the bar heights `height` and returns how much water is trapped.",
+  "3": "Put `left` on the first bar and `right` on the last one.",
+  "4": "The tallest bar seen so far from each side. Nothing seen yet, so both start at 0.",
+  "5": "The total amount of water found so far.",
+  "7": "Repeat while the two pointers have not met.",
+  "8": "Is the left bar the lower one (or are they equal)? Then the left side is the one we can settle now.",
+  "9": "Is this bar at least as tall as everything seen from the left?",
+  "10": "Yes: it becomes the tallest left wall. No water can sit on top of it.",
+  "12": "No: water fills it up to the tallest left wall. Add that depth, `max_left − height[left]`, to the total.",
+  "13": "This bar is done: move `left` one step right.",
+  "15": "Otherwise the right bar is the lower one. Is it at least as tall as everything seen from the right?",
+  "16": "Yes: it becomes the tallest right wall.",
+  "18": "No: water fills it up to the tallest right wall. Add `max_right − height[right]` to the total.",
+  "19": "This bar is done: move `right` one step left.",
+  "21": "Return the total amount of water."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "Each step moves one pointer inward; every bar is handled once.",

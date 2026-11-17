@@ -27,12 +27,22 @@
    "output": "1"
   }
  ],
+ "picture": "Picture the number written in binary as a row of light switches, each on (1) or off (0): 11 is `1011`. To count the switches that are on, look only at the last one and note whether it is on. Then slide the whole row one place to the right, so the last switch drops off and the next one takes its place. Repeat until every switch has dropped off.",
  "idea": [
   "A number is stored as bits. `n & 1` keeps only the **lowest** bit — it is 1 exactly when the last binary digit is 1.",
   "`n >> 1` shifts every bit one place to the right: the lowest bit drops off and the next one takes its place.",
   "Repeat *read the lowest bit, then shift* until nothing is left (n becomes 0), adding up the bits we read."
  ],
  "code": "class Solution:\n    def hammingWeight(self, n: int) -> int:\n        count = 0\n        while n:\n            count += n & 1\n            n = n >> 1\n        return count",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets a number `n` and returns how many 1s its binary form has.",
+  "3": "The 1s counted so far.",
+  "4": "Keep going while `n` is not 0, that is while some 1 is left.",
+  "5": "`n & 1` is the last binary digit of `n`, 0 or 1. Add it to the count.",
+  "6": "`>> 1` shifts every binary digit one place right, so the last one drops off. (For whole numbers this is the same as halving and rounding down.)",
+  "7": "Return the count."
+ },
  "complexity": {
   "time": "O(log n)",
   "timeWhy": "One loop per binary digit of n — at most 32 for a 32-bit integer.",

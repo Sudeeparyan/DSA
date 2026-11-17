@@ -23,12 +23,26 @@
    "output": "[[3,3],[-2,4]]"
   }
  ],
+ "picture": "Picture everyone standing on a map, each holding a tag that says how far they are from the centre. Put all the tags into a heap, which can always hand you the smallest tag next. Take out the first `k` tags: those people are the `k` closest. The distance is measured as x² + y². Taking its square root would not change who is closest, so that step is skipped.",
  "idea": [
   "The distance from (x, y) to the origin is √(x² + y²). To *compare* distances the square root is not needed: x² + y² orders the points the same way.",
   "We need the k smallest distances, not a full sort.",
   "Put every (distance, point) pair in a **min-heap** and pop k times. Each pop hands back the closest point that is still left."
  ],
  "code": "import heapq\n\nclass Solution:\n    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:\n        def distance(point):\n            return point[0] ** 2 + point[1] ** 2\n\n        min_heap = [(distance(point), point) for point in points]\n        heapq.heapify(min_heap)\n\n        result = []\n        for _ in range(k):\n            result.append(heapq.heappop(min_heap)[1])\n\n        return result",
+ "say": {
+  "1": "Load `heapq`, Python's ready-made **heap**: a list kept in an order where the smallest item is always at the front.",
+  "3": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "4": "The function we must write. It gets the `points` and `k`, and returns the `k` points closest to (0, 0).",
+  "5": "A helper that measures how far a point is from the centre.",
+  "6": "x² + y² (`**` means *to the power of*). This squared distance puts the points in the same order as the real distance, so no square root is needed.",
+  "8": "Pair every point with its distance: `(distance, point)`.",
+  "9": "Arrange the pairs into a heap, so the smallest distance is at the front.",
+  "11": "The closest points, as we take them out.",
+  "12": "Repeat `k` times.",
+  "13": "Take out the pair with the smallest distance and keep its point (`[1]` is the second item of the pair).",
+  "15": "Return the `k` closest points."
+ },
  "complexity": {
   "time": "O(n + k log n)",
   "timeWhy": "Heapify is O(n); each of the k pops costs O(log n).",

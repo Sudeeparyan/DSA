@@ -35,12 +35,28 @@
    "output": "True"
   }
  ],
+ "picture": "Picture a chain where every number points to exactly one next number: the sum of its digits squared. Following it, you either reach 1 (and stay there) or go round in a circle forever. To tell which without writing every number down, send two walkers along the chain: one takes one step at a time, the other two. If there is a circle, the fast walker catches up with the slow one, the way a fast runner laps a slow one on a track.",
  "idea": [
   "Each number leads to exactly one next number, like a linked list. The chain either arrives at 1 (and then stays there, since 1² = 1) or runs into a **cycle**.",
   "A cycle can be detected without remembering every number seen: let `slow` advance one step at a time and `fast` two steps. In a cycle, `fast` eventually catches up with `slow`.",
   "So loop until `fast` reaches 1 (happy) or `fast` meets `slow` (a cycle that does not contain 1)."
  ],
  "code": "class Solution:\n    def isHappy(self, n: int) -> bool:\n        def get_next(num):\n            next_num = 0\n            while num > 0:\n                num, digit = divmod(num, 10)\n                next_num += digit**2\n            return next_num\n\n        slow, fast = n, get_next(n)\n\n        while fast != 1 and slow != fast:\n            slow = get_next(slow)\n            fast = get_next(get_next(fast))\n\n        return fast == 1",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the number `n` and answers whether it is happy.",
+  "3": "A small helper that works out the next number in the chain: the sum of the squares of `num`'s digits.",
+  "4": "The sum so far.",
+  "5": "While digits are left:",
+  "6": "`divmod(num, 10)` splits off the last digit: for 82 it gives 8 (the rest) and 2 (the last digit).",
+  "7": "Add that digit squared. `**2` means \"to the power 2\".",
+  "8": "Hand back the sum.",
+  "10": "Two walkers on the chain: `slow` starts at `n`, `fast` one step ahead.",
+  "12": "Keep going while `fast` has not reached 1 and has not caught up with `slow`.",
+  "13": "`slow` takes one step.",
+  "14": "`fast` takes two steps.",
+  "16": "If `fast` stopped at 1, the number is happy (`True`). Otherwise it met `slow` in a circle (`False`)."
+ },
  "complexity": {
   "time": "O(log n)",
   "timeWhy": "The numbers shrink very quickly (any number below 1000 maps to at most 243), and the cycle is short.",

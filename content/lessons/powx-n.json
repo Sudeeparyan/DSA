@@ -35,12 +35,35 @@
    "output": "-8.0"
   }
  ],
+ "picture": "Picture working out 2¹⁰ by halving. 2¹⁰ is 2⁵ times 2⁵, so work out 2⁵ just once and multiply it by itself. 2⁵ is 2 × 2² × 2², and so on, down to a power of 0. Each step halves the power, so even a power of a billion takes about 30 steps instead of a billion multiplications.",
  "idea": [
   "Multiplying `x` by itself `n` times costs O(n) — far too slow for exponents in the billions.",
   "Use `xⁿ = (x^(n/2))²`: compute the **half** power once and square it. If `n` is odd, one extra factor `x` is needed: `xⁿ = x · (x^(n//2))²`.",
   "Each call halves the exponent, so only about log₂(n) multiplications are needed. A negative exponent is handled first with `x⁻ⁿ = (1/x)ⁿ`."
  ],
  "code": "class Solution:\n    def myPow(self, x: float, n: int) -> float:\n        def helper(base, exp):\n            if exp == 0:\n                return 1.0\n            temp = helper(base, exp // 2)\n            if exp % 2 == 0:\n                return temp * temp\n            else:\n                return base * temp * temp\n\n        if n < 0:\n            x = 1 / x\n            n = -n\n\n        return helper(x, n)",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets a number `x` and a whole-number power `n`, and returns `x` to the power `n`.",
+  "3": "A helper that works out `base` to the power `exp` (0 or more). It calls itself on half the power.",
+  "4": "Is the power 0?",
+  "5": "Any number to the power 0 is 1.",
+  "6": "Work out the half power once. `//` divides and drops the remainder, so 5 // 2 is 2.",
+  "7": "Is the power even? `%` gives the remainder after dividing, so this asks \"does 2 go into it exactly?\"",
+  "8": "Then the answer is the half power times itself.",
+  "9": "Otherwise the power is odd,",
+  "10": "and the two halves miss one factor: multiply in one more `base`.",
+  "12": "Is the power negative?",
+  "13": "Then use x⁻ⁿ = (1/x)ⁿ: replace `x` by 1 divided by `x`,",
+  "14": "and make the power positive.",
+  "16": "Work out the power with the helper and return it."
+ },
+ "key": [
+  {
+   "tone": "win",
+   "label": "call waiting for its half power"
+  }
+ ],
  "complexity": {
   "time": "O(log n)",
   "timeWhy": "The exponent is halved on every call.",

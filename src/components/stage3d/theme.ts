@@ -94,6 +94,8 @@ export const INK = {
   edge: "#8799b8",
   edgeHot: "#3bd6c6",
   panel: "#172135",
+  /** the card a key → value pair sits on, a step lighter than the panel */
+  card: "#24324b",
   wall: "#0b1019",
   water: "#3aa0ff",
 };

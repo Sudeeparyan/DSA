@@ -10,6 +10,10 @@ lesson(
     args="prices=[7, 1, 5, 3, 6, 4]",
     expected=5,
     why="Buy on day 1 at price 1 and sell on day 4 at price 6: 6 − 1 = 5.",
+    picture="""Picture walking along a price chart one day at a time, with a sticky note in your pocket that
+    says *the cheapest price so far*. Each day you ask: if I had bought on that cheapest day and
+    sold today, how much would I make? You keep the best answer. You never have to look back,
+    because the sticky note already remembers the only buying day that matters.""",
     idea=[
         "Trying every (buy day, sell day) pair is O(n²).",
         "If we sell today, the best day to have bought is simply the **cheapest day before today**.",
@@ -42,6 +46,31 @@ lesson(
         ]),
         ("return max_profit", "The best profit over all selling days is **{_ret}**."),
     ],
+    say={
+        "def maxProfit": (
+            "The function we must write. It gets the daily `prices` and returns the best possible"
+            " profit."
+        ),
+        "if not prices": "Is the list empty? (`not prices` is `True` for an empty list.)",
+        "return 0": "No days means no trade, so the profit is 0.",
+        'min_price = float("inf")': (
+            'The cheapest price seen so far. It starts at infinity (`float("inf")`), so the first'
+            " real price is sure to be cheaper."
+        ),
+        "max_profit = 0": (
+            "The best profit found so far. Not trading at all earns 0, so start there."
+        ),
+        "for price in prices": "Go through the days in order. `price` is that day's price.",
+        "min_price = min(min_price, price)": (
+            "If today is cheaper than every day before, remember it as the best day to buy. "
+            "(`min` picks the smaller.)"
+        ),
+        "max_profit = max(max_profit, price - min_price)": (
+            "Selling today, after buying at the cheapest price, earns `price − min_price`. Keep "
+            "it if it beats the best so far."
+        ),
+        "return max_profit": "Return the best profit.",
+    },
     time=("O(n)", "One pass over the prices."),
     space=("O(1)", "Only the lowest price and the best profit are stored."),
     tests=[("prices=[7, 6, 4, 3, 1]", 0), ("prices=[2, 4, 1]", 2), ("prices=[]", 0)],
@@ -55,6 +84,10 @@ lesson(
     args="s='abcabcbb'",
     expected=3,
     why='The longest stretch without a repeat is "abc", of length 3.',
+    picture="""Picture a stretchy frame sliding along the letters. It grows on the right as long as each new
+    letter is not already inside it. When the next letter would appear twice, the frame lets go of
+    letters on its left, one at a time, until the old copy is gone. The widest the frame ever gets
+    is the answer.""",
     idea=[
         "Checking every substring is O(n²) or worse. Instead, keep one **window** `[left … right]` that never contains a repeated character.",
         "Grow the window on the right while the next character is new. A set of the characters inside the window makes that check O(1).",
@@ -80,6 +113,39 @@ lesson(
         ("while right < len(s)", dict(no="`right` has passed the end of the string, so the scan is over.")),
         ("return max_length", "The longest window without a repeated letter had length **{_ret}**."),
     ],
+    say={
+        "def lengthOfLongestSubstring": (
+            "The function we must write. It gets the text `s` and returns the length of the "
+            "longest stretch with no repeated character."
+        ),
+        "left, right = 0, 0": (
+            "The window runs from `left` up to just before `right`. Both start at 0, so the "
+            "window begins empty."
+        ),
+        "max_length = 0": "The longest window found so far.",
+        "unique_chars = set()": (
+            "A set of the characters inside the window, so *is this letter already inside?* is "
+            "answered instantly."
+        ),
+        "while right < len(s)": "Repeat until `right` has gone past the last character.",
+        "if s[right] not in unique_chars": (
+            "Is the next character, `s[right]`, new to the window?"
+        ),
+        "unique_chars.add(s[right])": "Yes: take it into the window.",
+        "max_length = max(max_length, right - left + 1)": (
+            "The window now holds `right − left + 1` characters. Keep the bigger of that and the "
+            "best so far."
+        ),
+        "right += 1": "Move `right` on to the next character.",
+        "unique_chars.remove(s[left])": (
+            "No, it is a repeat: let go of the leftmost character of the window."
+        ),
+        "left += 1": (
+            "Move `left` one step right. The loop then tries the same `s[right]` again, until its"
+            " old copy has left the window."
+        ),
+        "return max_length": "Return the longest length seen.",
+    },
     time=("O(n)", "`left` and `right` each move forward at most n times."),
     space=("O(k)", "The set holds the characters of the current window: at most the alphabet size k."),
     tests=[("s='bbbbb'", 1), ("s='pwwkew'", 3), ("s=''", 0), ("s='dvdf'", 3)],
@@ -94,6 +160,10 @@ lesson(
     args="s='AABABBA', k=1",
     expected=4,
     why='Change one B in "AABA" to A and the four letters are all the same.',
+    picture="""Picture a frame sliding over a row of letter tiles, and you may repaint up to `k` tiles. Inside
+    the frame, the cheapest plan is to keep the most common letter and repaint all the others. As
+    long as *frame size − count of the most common letter* is at most `k`, the frame is fine and
+    keeps growing. When it is not, the frame slides its left edge forward one tile.""",
     idea=[
         "Inside any window, the cheapest plan is to keep the **most common** letter and replace all the others.",
         "So a window is valid exactly when `window length − count of its most common letter ≤ k`.",
@@ -106,10 +176,11 @@ lesson(
     ],
     notes=[
         ("max_freq = 0",
-         "`char_freq` counts each letter inside the window, and `max_freq` is the count of the most common one."),
+         "`char_freq` counts each letter inside the window. `max_freq` remembers the highest count any one "
+         "letter has reached: those letters can stay, the rest would have to change."),
         ("max_freq = max(max_freq, char_freq[s[right]])",
          "`{s[right]}` enters the window → `{s[left:right + 1]}`. It appears {plural(char_freq[s[right]], 'time')} "
-         "there; the most common letter appears **{max_freq}** times.",
+         "there; the most common letter appears **{plural(max_freq, 'time')}**.",
          {"char_freq.cur": "s[right]"}),
         ("if (right - left + 1) - max_freq > k", dict(
             yes="Length {right - left + 1} − most common {max_freq} = {right - left + 1 - max_freq} letters would "
@@ -125,6 +196,40 @@ lesson(
         ]),
         ("return max_length", "The longest window that can be turned into one repeated letter has length **{_ret}**."),
     ],
+    say={
+        "def characterReplacement": (
+            "The function we must write. It gets the text `s` and the number of changes allowed, "
+            "`k`, and returns the longest run of one letter we can make."
+        ),
+        "left, right = 0, 0": "The window's left and right edges, both on the first character.",
+        "max_length = 0": "The longest good window found so far.",
+        "char_freq = {}": "A dictionary that counts each letter inside the window.",
+        "max_freq = 0": (
+            "The highest count any one letter has reached so far. Those letters can stay; the "
+            "others are the ones to change."
+        ),
+        "while right < len(s)": "Repeat until `right` has gone past the last character.",
+        "char_freq[s[right]] = char_freq.get(s[right], 0) + 1": (
+            "Take the letter at `right` into the window: add one to its count."
+        ),
+        "max_freq = max(max_freq, char_freq[s[right]])": (
+            "If this letter's count is now the highest, remember it."
+        ),
+        "if (right - left + 1) - max_freq > k": (
+            "Window size minus the most common letter's count is how many letters would have to "
+            "change. Is that more than `k`?"
+        ),
+        "char_freq[s[left]] -= 1": (
+            "Yes, too many changes: let go of the leftmost letter, so one fewer of it is inside."
+        ),
+        "left += 1": "Move the left edge one step right.",
+        "max_length = max(max_length, right - left + 1)": (
+            "The window holds `right − left + 1` letters. Keep the bigger of that and the best so"
+            " far."
+        ),
+        "right += 1": "Move `right` on to the next letter.",
+        "return max_length": "Return the longest length found.",
+    },
     time=("O(n)", "`right` visits each character once and `left` only ever moves forward."),
     space=("O(1)", "The count map has at most 26 entries."),
     tests=[("s='ABAB', k=2", 4), ("s='AAAA', k=0", 4), ("s='ABCDE', k=1", 2)],
@@ -138,6 +243,10 @@ lesson(
     args="s1='ab', s2='eidbaooo'",
     expected=True,
     why='The substring "ba" of s2 is a rearrangement of "ab".',
+    picture="""Picture a window exactly as wide as `s1`, sliding along `s2` one letter at a time. You count the
+    letters you see through the window. Whenever the counts match those of `s1` (say, one `a` and
+    one `b`), the window holds a rearrangement of `s1`. Each slide changes only two counts: one
+    letter enters on the right and one leaves on the left.""",
     idea=[
         "A permutation of `s1` has the same length and exactly the same letter counts as `s1`.",
         "So slide a window of length `len(s1)` across `s2` and compare its letter counts with those of `s1`.",
@@ -167,6 +276,43 @@ lesson(
         ("return True", "A matching window exists → **True**.", {"s2.good": "range(left, right + 1)"}),
         ("left += 1", "Slide on: `{s2[left - 1]}` leaves the window on the left.", {"s2.bad": "left - 1"}),
     ],
+    say={
+        "def checkInclusion": (
+            "The function we must write. It gets `s1` and `s2`, and answers whether some stretch "
+            "of `s2` uses exactly the letters of `s1`."
+        ),
+        "if len(s1) > len(s2)": (
+            "If `s1` is longer than `s2`, no stretch of `s2` can hold all its letters."
+        ),
+        "return False@1": "So answer `False` straight away.",
+        "char_freq_s1 = {}": "A dictionary to count each letter of `s1`.",
+        "for char in s1": "Go through `s1`, one letter at a time.",
+        "char_freq_s1[char] = char_freq_s1.get(char, 0) + 1": "Add one to this letter's count.",
+        "left, right = 0, 0": "The window's edges on `s2`, both on the first letter.",
+        "char_freq_temp = {}": "A second dictionary that counts the letters inside the window.",
+        "while right < len(s2)": "Repeat until `right` has gone past the end of `s2`.",
+        "char_freq_temp[s2[right]] = char_freq_temp.get(s2[right], 0) + 1": (
+            "Take the letter at `right` into the window: add one to its count."
+        ),
+        "if right - left + 1 == len(s1)": "Is the window now exactly as long as `s1`?",
+        "if char_freq_temp == char_freq_s1": (
+            "Do the window's letter counts equal those of `s1`? (`==` on two dictionaries "
+            "compares every entry.)"
+        ),
+        "return True": "Yes: this window is a rearrangement of `s1`, so answer `True`.",
+        "char_freq_temp[s2[left]] -= 1": (
+            "No: get ready to slide. The leftmost letter leaves the window, so its count goes "
+            "down by one."
+        ),
+        "if char_freq_temp[s2[left]] == 0": "Has that letter's count dropped to 0?",
+        "del char_freq_temp[s2[left]]": (
+            "Then remove it from the dictionary (`del`), so the comparison with `s1`'s counts "
+            "stays fair."
+        ),
+        "left += 1": "Move the left edge one step right.",
+        "right += 1": "Move the right edge one step right, onto the next letter.",
+        "return False@2": "No window matched, so answer `False`.",
+    },
     time=("O(n)", "Each character of `s2` enters and leaves the window once; comparing two maps of at most 26 letters is O(1)."),
     space=("O(1)", "Two count maps with at most 26 entries each."),
     tests=[("s1='ab', s2='eidboaoo'", False), ("s1='adc', s2='dcda'", True), ("s1='abc', s2='ab'", False)],
@@ -226,6 +372,11 @@ lesson(
     args="s='ABXCBA', t='ABC'",
     expected="CBA",
     why='"CBA" contains A, B and C, and no shorter substring of s does.',
+    picture="""Picture a stretchy frame on `s` and a shopping list made from `t`. Stretch the frame's right
+    edge until everything on the list is inside. Then squeeze it from the left for as long as it
+    still holds the whole list, writing down the smallest frame you manage. As soon as squeezing
+    would lose a needed letter, go back to stretching. The smallest frame you wrote down is the
+    answer.""",
     idea=[
         "Use a window `[left … right]`. Moving `right` adds characters until the window contains everything `t` needs.",
         "Once the window is valid, try to make it **shorter**: move `left` forward while it stays valid, recording the best size. As soon as it breaks, go back to growing.",
@@ -273,6 +424,67 @@ lesson(
          "Cut the best window out of `s` once: the shortest window that contains all of `t` is **`{_ret}`**.",
          {"s.good": "range(min_start, min_start + min_length)"}),
     ],
+    say={
+        "def minWindow": (
+            "The function we must write. It gets the text `s` and the letters `t`, and returns "
+            "the shortest stretch of `s` that contains all of `t`."
+        ),
+        "if not s or not t": "Is either text empty? Then there is nothing to find.",
+        'return ""@1': "Return an empty string.",
+        "char_freq_t = {}": "A dictionary counting each letter `t` needs: the shopping list.",
+        "for char in t": "Go through `t`, one letter at a time.",
+        "char_freq_t[char] = char_freq_t.get(char, 0) + 1": (
+            "Add one to this letter's count on the list."
+        ),
+        "left, right = 0, 0": "The window's two edges, both at the start of `s`.",
+        "char_freq_temp = {}": "A dictionary counting the letters inside the window.",
+        "required_chars = len(char_freq_t)": (
+            "How many *different* letters the list has. Each must be fully covered."
+        ),
+        "formed_chars = 0": (
+            "How many of those different letters the window already has enough copies of."
+        ),
+        'min_length = float("inf")': (
+            "The length of the best window so far. Infinity means none has been found yet."
+        ),
+        "min_start = 0": "Where the best window begins.",
+        "while right < len(s)": "Repeat until `right` has gone past the end of `s`.",
+        "char_freq_temp[s[right]] = char_freq_temp.get(s[right], 0) + 1": (
+            "Take the letter at `right` into the window: add one to its count."
+        ),
+        "if (@1": (
+            "Is it a letter from the list, and does the window now have *exactly* as many copies "
+            "of it as the list needs?"
+        ),
+        "formed_chars += 1": "Then one more of the list's letters is fully covered.",
+        "while left <= right and formed_chars == required_chars": (
+            "While the window covers the whole list, try squeezing it from the left."
+        ),
+        "if right - left + 1 < min_length": "Is this window shorter than the best one so far?",
+        "min_length = right - left + 1": "Yes: remember its length.",
+        "min_start = left": (
+            "And remember where it begins. (The text itself is copied only once, at the very "
+            "end.)"
+        ),
+        "char_freq_temp[s[left]] -= 1": (
+            "Squeeze: the leftmost letter leaves the window, so its count goes down by one."
+        ),
+        "if (@2": (
+            "Was it a letter from the list, and does the window now have *too few* copies of it?"
+        ),
+        "formed_chars -= 1": (
+            "Then that letter is no longer covered. One fewer letter is complete, so the "
+            "squeezing stops."
+        ),
+        "left += 1": "Move the left edge one step right.",
+        "right += 1": "Move the right edge on, to keep stretching.",
+        'if min_length == float("inf")': "Did we never find a window that covers the list?",
+        'return ""@2': "Then there is no answer: return an empty string.",
+        "return s[min_start : min_start + min_length]": (
+            "Cut the best window out of `s` (it starts at `min_start` and is `min_length` letters"
+            " long) and return it."
+        ),
+    },
     time=("O(n + m)", "Each character of `s` enters and leaves the window at most once; counting `t` takes O(m). "
                       "The answer is cut out of `s` only once, at the very end."),
     space=("O(k)", "Two count maps, at most one entry per distinct character."),
@@ -287,6 +499,11 @@ lesson(
     args="nums=[1, 5, 3, 2, 1, 4], k=3",
     expected=[5, 5, 3, 4],
     why="The windows are [1,5,3], [5,3,2], [3,2,1] and [2,1,4], with maximums 5, 5, 3 and 4.",
+    picture="""Picture a line of candidates for *the biggest number in the window*. When a new number arrives,
+    every smaller number at the back of the line leaves: the newcomer is bigger *and* will stay in
+    the window longer, so they can never be the biggest again. That keeps the line in order, biggest
+    at the front. The front of the line answers each window, and it leaves only once the window has
+    slid past it.""",
     idea=[
         "Scanning each window for its maximum costs O(n · k). Most of that work is repeated.",
         "When a new number arrives, every **smaller number before it** can never be a maximum again — the new one is bigger *and* will stay in the window longer. Throw those away.",
@@ -317,6 +534,41 @@ lesson(
          {"nums.good": "window[0]", "window.good": "0", "result.good": "-1"}),
         ("return result", "One maximum per window: **{_ret}**."),
     ],
+    say={
+        "def maxSlidingWindow": (
+            "The function we must write. It gets the list `nums` and the window size `k`, and "
+            "returns the biggest number of every window."
+        ),
+        "if not nums or k <= 0": "Nothing to do if the list is empty or the window has no size.",
+        "return []": "So return an empty list.",
+        "result = []": "The answers: one biggest number per window.",
+        "window = deque()": (
+            "The line of candidates. It holds *positions* (not values), with the biggest value at"
+            " the front."
+        ),
+        "for i, num in enumerate(nums)": (
+            "Go through the list: `i` is the position and `num` the value there."
+        ),
+        "while window and nums[window[-1]] < num": (
+            "Is the value at the back of the line smaller than the new number? (`window[-1]` is "
+            "the last item.)"
+        ),
+        "window.pop()": "Then it can never be the biggest again: remove it from the back.",
+        "window.append(i)": "Add the new number's position to the back of the line.",
+        "if i - window[0] >= k": (
+            "Has the front candidate (`window[0]`) slid out of the window? It has once it is `k` "
+            "or more positions behind `i`."
+        ),
+        "window.popleft()": "Then remove it from the front.",
+        "if i >= k - 1": (
+            "Is the first full window complete yet? From position `k − 1` on, every step "
+            "completes a window."
+        ),
+        "result.append(nums[window[0]])": (
+            "The front of the line is this window's biggest number: add its value to the answers."
+        ),
+        "return result": "Return the biggest number of every window.",
+    },
     time=("O(n)", "Every index is added to the deque once and removed at most once."),
     space=("O(k)", "The deque never holds more than k indexes."),
     tests=[("nums=[1, 3, -1, -3, 5, 3, 6, 7], k=3", [3, 3, 5, 5, 6, 7]), ("nums=[1], k=1", [1]),

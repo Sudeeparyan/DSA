@@ -70,10 +70,20 @@ each view (by its `id`) one fixed slot, sized for the largest it will ever get. 
 around and the camera never re-frames mid-lesson. Moving to another step only changes what is
 inside the slots; the components ease from the old picture to the new one.
 
+**Changes are shown as motion.** Every piece eases to its new place and colour
+(`primitives.tsx`). Two cues make cause and effect visible without any per-lesson work: a new
+piece whose value is shown by exactly one highlighted piece elsewhere flies in from that piece
+(a number written into a map comes from its array cell; `SourceProvider` in `Stage.tsx` keeps
+track of the highlighted pieces), and a highlighted piece whose value changes lets its old value
+rise and fade (`Ghost`). Both switch off with `prefers-reduced-motion`.
+
 **Colours mean the same thing everywhere.** A highlight is a *tone*: `cur` looking at now, `alt`
 compared with, `good` match / answer, `bad` rejected, `seen` visited, `win` current range / path,
 `mark` queued / flagged, `dim` no longer needed. The tones are defined in `lessons/engine/core.py`
-(`TONES`) and `components/stage3d/theme.ts`, and the tests reject any other tone.
+(`TONES`) and `components/stage3d/theme.ts`, and the tests reject any other tone. A lesson may also draw
+its own `#rrggbb` colours (land and water, for instance); its `key=` then names them in the
+legend, and can rename a standard tone where it means something more specific
+(`components/lesson/legend.ts` builds the legend).
 
 **Views that are not 3D.** `vars` (plain variables) and `ops` (the calls of a design problem such as
 LRU Cache) are drawn as HTML cards beside the code, not on the stage. Below 1080 px wide the side

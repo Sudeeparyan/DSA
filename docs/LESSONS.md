@@ -51,6 +51,41 @@ lesson(
 Design problems (LRU Cache, Min Stack, ...) use `ops=["LRUCache(2)", "put(1, 10)", ...]` instead
 of `args=`, and `expected=` lists what each call returns.
 
+## Written for people new to coding
+
+Many readers have never written code, so every lesson has two more fields that explain it without
+jargon. Both are required: the build stops without them.
+
+```python
+    picture="""Picture a party where every guest wears a number, ... A guest book records every
+    number seen and where that guest is standing, so the answer is one glance away.""",
+    say={                                         # code line (an anchor, as in notes) → plain words
+        "prevMap = {}": "Make an empty **dictionary** (a hash map). It will pair each number we "
+                        "pass with its position.",
+        "for i, n in enumerate(nums)": "Go through the list one number at a time. `enumerate` "
+                                       "hands us both the position `i` and the number `n`.",
+        "diff = target - n": "Work out the partner this number needs: `target` minus `n`.",
+    },
+```
+
+- `picture=` is an everyday picture of the idea (a notebook, a party, a pile of cards). It is shown
+  in a box above the idea's numbered points. It must describe the *same* method the code uses.
+- `say=` reads code lines in plain words. The page shows the reading of the running line under
+  the code (and in the caption box on narrow screens); pointing at or tapping another line shows
+  that line's reading. Explain Python syntax the first time it matters (`//`, `+=`, `.get(k, 0)`,
+  `range(n - 1, -1, -1)`), say *why* where it is not obvious, and keep each reading to one or two
+  short sentences. Anchors work like note anchors (`"return False@2"` is the second match).
+- Every line the walkthrough stops on must have a reading: the build stops and names any line it
+  misses. `class Solution:` and `import heapq` get a standard reading (`COMMON_SAY` in
+  `lessons/build.py`) unless the lesson gives its own. A line that only continues a statement
+  (the rest of a multi-line `if (` or `count += (`) shares the reading of the line it starts on.
+- Read them back with `python lessons/trace.py <slug>`, which prints both fields.
+- `key=` names the colours of the legend under the stage: a lesson's own colours
+  (`key={LAND: "land (1)", WATER: "water (0)"}`) or a standard tone that means something more
+  specific in this lesson (`"good": "gate (0)"`). Use it whenever a colour would otherwise be
+  unexplained, or its usual label ("match / answer") would be misleading. The build rejects a key
+  for a colour the lesson never draws.
+
 ## Notes (captions)
 
 - The anchor is the start of a code line (`"diff = target - n"`). `"...@2"` picks the second line

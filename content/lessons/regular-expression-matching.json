@@ -43,12 +43,36 @@
    "output": "True"
   }
  ],
+ "picture": "Picture a grid of boxes: *do the first `i` letters of the text match the first `j` characters of the pattern?* An ordinary letter, or `.`, must match exactly one letter, so the box copies the one diagonally up-left. A `*` is more flexible. It can mean *zero copies*, ignoring the letter before it (the box two columns to the left), or, if the text's newest letter matches that letter, it can swallow one more copy (the box above). The bottom-right box answers the whole question.",
  "idea": [
   "Let `dp[i][j]` say whether the first `i` characters of `s` match the first `j` symbols of `p`.",
   "A letter or a `.` in the pattern must match the current character of `s`; both are then consumed: `dp[i][j] = dp[i − 1][j − 1]`.",
   "A `*` belongs to the symbol before it (`x*`). Either the pair stands for **nothing** — drop it: `dp[i][j − 2]` — or it absorbs **one more** character of `s`, if that character matches `x`: `dp[i − 1][j]` (the pair stays available for more)."
  ],
  "code": "class Solution:\n    def isMatch(self, s: str, p: str) -> bool:\n        m, n = len(s), len(p)\n\n        # Create a 2D table dp to store whether s[:i] matches p[:j].\n        dp = [[False] * (n + 1) for _ in range(m + 1)]\n\n        # Base case: empty string matches empty pattern.\n        dp[0][0] = True\n\n        # Fill the first row of dp based on '*' in the pattern.\n        for j in range(2, n + 1):\n            if p[j - 1] == \"*\":\n                dp[0][j] = dp[0][j - 2]\n\n        # Fill the dp table based on characters in s and p.\n        for i in range(1, m + 1):\n            for j in range(1, n + 1):\n                if p[j - 1] == s[i - 1] or p[j - 1] == \".\":\n                    dp[i][j] = dp[i - 1][j - 1]\n                elif p[j - 1] == \"*\":\n                    dp[i][j] = dp[i][j - 2] or (\n                        dp[i - 1][j] and (s[i - 1] == p[j - 2] or p[j - 2] == \".\")\n                    )\n\n        return dp[m][n]",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the text `s` and the pattern `p`, and answers whether the whole text matches the whole pattern.",
+  "3": "The two lengths.",
+  "6": "A grid of boxes: `dp[i][j]` says whether the first `i` letters of `s` match the first `j` characters of `p`.",
+  "9": "An empty text matches an empty pattern.",
+  "12": "First row: which beginnings of the pattern can match an empty text?",
+  "13": "Only those where each letter is followed by a `*`. Is this character a `*`?",
+  "14": "Then `*` can mean zero copies: it matches whatever the pattern two characters back matched.",
+  "17": "Fill in the other boxes, row by row.",
+  "18": "And across each row.",
+  "19": "Does this pattern character match the text's letter exactly, or is it `.` (any letter)?",
+  "20": "Then both use up one character: copy the box diagonally up-left.",
+  "21": "Is it a `*`?",
+  "22": "Either `*` means zero copies (the box two columns to the left), or the text's letter matches the letter before the `*` and the `*` swallows it as one more copy (the box above).",
+  "26": "The bottom-right box: does the whole text match the whole pattern?"
+ },
+ "key": [
+  {
+   "tone": "seen",
+   "label": "ticked: True (this much matches)"
+  }
+ ],
  "complexity": {
   "time": "O(m · n)",
   "timeWhy": "One cell per pair of prefix lengths, each in O(1).",

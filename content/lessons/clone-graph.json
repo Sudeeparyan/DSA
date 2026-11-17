@@ -31,12 +31,30 @@
    "output": "[[2,3],[1,3],[1,2]]"
   }
  ],
+ "picture": "Picture copying a network of friends, where each person keeps a list of their friends. Visit the people one by one, making a new copy of each person the first time you meet them. Keep a register of *original → copy*: when you meet someone again you reuse their copy instead of making a second one, and a circle of friends cannot send you round forever.",
  "idea": [
   "Walk the graph with DFS and create one new node for every original node.",
   "Graphs have cycles, so the walk will come back to nodes it has already seen. A hash map **original → copy** answers two questions at once: *have I copied this node?* and *where is its copy?*",
   "Register the copy in the map **before** visiting the neighbours. Then when a cycle leads back here, the existing copy is returned instead of starting an endless loop."
  ],
  "code": "class Solution:\n    def cloneGraph(self, node: \"Node\") -> \"Node\":\n        if not node:\n            return None\n\n        visited = {}  # Dictionary to store the cloned nodes\n\n        def dfs(original_node):\n            if original_node in visited:\n                return visited[original_node]\n\n            new_node = Node(original_node.val)\n            visited[original_node] = new_node\n\n            for neighbor in original_node.neighbors:\n                new_neighbor = dfs(neighbor)\n                new_node.neighbors.append(new_neighbor)\n\n            return new_node\n\n        return dfs(node)",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets one node and returns the matching node of a complete copy of the graph.",
+  "3": "Is there no graph at all?",
+  "4": "Then there is nothing to copy.",
+  "6": "A dictionary from each original node to its copy: the register of copies already made.",
+  "8": "A helper that returns the copy of `original_node`, making it (and copies of everything it links to) if needed.",
+  "9": "Has this node been copied already?",
+  "10": "Then reuse its copy. This also stops the copying from going round a circle forever.",
+  "12": "Make a new node with the same value.",
+  "13": "Record it in the register *before* copying the neighbours, so a neighbour that links back finds it.",
+  "15": "Go through the original's neighbours.",
+  "16": "Get that neighbour's copy (the helper calls itself, making it if needed).",
+  "17": "Link the copy to the neighbour's copy.",
+  "19": "Return the finished copy.",
+  "21": "Copy the whole graph, starting from the given node."
+ },
  "complexity": {
   "time": "O(V + E)",
   "timeWhy": "Every node is copied once and every edge is followed once from each side.",

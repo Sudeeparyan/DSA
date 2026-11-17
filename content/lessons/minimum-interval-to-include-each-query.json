@@ -31,12 +31,39 @@
    "output": "[4,3,6,3,6]"
   }
  ],
+ "picture": "Picture rulers of different lengths lying along a number line, and a list of numbers to look up. Look the numbers up from smallest to largest, so you only ever move forward. Before each number, add every ruler that starts at or before it to a pile that keeps the shortest ruler on top. Throw away rulers from the top that end before the number: later numbers are even bigger, so those rulers will never be useful again. The shortest ruler left on top is the answer for that number.",
  "idea": [
   "Answer the queries in **increasing order** (remembering where each came from). Then intervals can be handled in order of start time, each one only once.",
   "For the current query, push every interval that **starts at or before it** onto a min-heap keyed by size. Those are the only intervals that might contain it.",
   "Pop intervals from the top while they **end before the query** — they cannot contain this query or any later one. The top that remains is the smallest interval containing the query."
  ],
  "code": "import heapq\n\nclass Solution:\n    def minInterval(self, intervals: List[List[int]], queries: List[int]) -> List[int]:\n        intervals.sort(key=lambda x: x[0])\n        queries_sorted = sorted(enumerate(queries), key=lambda x: x[1])\n\n        min_heap = []\n        ans = [-1] * len(queries)\n        i = 0\n\n        for query_index, query in queries_sorted:\n            while i < len(intervals) and intervals[i][0] <= query:\n                start, end = intervals[i]\n                heapq.heappush(min_heap, (end - start + 1, end))\n                i += 1\n\n            while min_heap and min_heap[0][1] < query:\n                heapq.heappop(min_heap)\n\n            if min_heap:\n                ans[query_index] = min_heap[0][0]\n\n        return ans",
+ "say": {
+  "1": "Load `heapq`, Python's ready-made **heap**: a list kept in an order where the smallest item is always at the front.",
+  "3": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "4": "The function we must write. It gets the `intervals` and the `queries`, and returns for each query the size of the smallest interval that contains it.",
+  "5": "Sort the intervals by start, so they can be taken in order as the queries grow.",
+  "6": "Pair each query with its position (`enumerate`), then sort the pairs by value. The position says where each answer belongs.",
+  "8": "A **min-heap** of `(size, end)` pairs: the smallest interval is always on top.",
+  "9": "One answer per query, all `-1` (\"no interval\") to start with.",
+  "10": "The first interval not yet added to the heap.",
+  "12": "Take the queries from smallest to largest: `query` is the value, `query_index` its original position.",
+  "13": "While some interval not yet added starts at or before this query:",
+  "14": "take its start and end,",
+  "15": "push it with its size `end - start + 1` first, so the heap orders by size,",
+  "16": "and move on to the next interval.",
+  "18": "While the smallest interval on the heap ends before this query:",
+  "19": "throw it away. It cannot contain this query or any later, bigger one.",
+  "21": "Is any interval left on the heap?",
+  "22": "The top one contains the query, and it is the smallest that does: store its size at the query's original position.",
+  "24": "Return the answers in the queries' original order."
+ },
+ "key": [
+  {
+   "tone": "seen",
+   "label": "already pushed onto the heap"
+  }
+ ],
  "complexity": {
   "time": "O(n log n + q log q)",
   "timeWhy": "Sorting both lists; each interval is pushed and popped at most once.",

@@ -27,12 +27,35 @@
    "output": "1"
   }
  ],
+ "picture": "Picture planning a timetable in rounds of `n + 1` time slots. Two runs of the same task must be at least `n` slots apart, so each task appears at most once per round. In each round, run the tasks with the most work left first, since they are the ones at risk of running out of rounds. If a round has more slots than there are different tasks left, the extra slots are spent idle. The very last round only needs as many slots as it has tasks.",
  "idea": [
   "The task with the most runs left is the bottleneck: its runs must be spread out, so it should be started as early and as often as allowed.",
   "Work in blocks of `n + 1` slots. Inside one block each task runs at most once — that automatically keeps equal tasks `n` slots apart.",
   "Fill each block with the tasks that have the most runs left (a max-heap gives them). A full block costs `n + 1` slots, idle ones included; only the very last block costs just the slots it actually used."
  ],
  "code": "import heapq\nfrom collections import Counter\n\nclass Solution:\n    def leastInterval(self, tasks: List[str], n: int) -> int:\n        task_counts = Counter(tasks)\n        max_heap = [-count for count in task_counts.values()]\n        heapq.heapify(max_heap)\n\n        cooldown = 0\n        while max_heap:\n            temp = []\n            for _ in range(n + 1):\n                if max_heap:\n                    temp.append(heapq.heappop(max_heap) + 1)\n\n            for count in temp:\n                if count < 0:\n                    heapq.heappush(max_heap, count)\n\n            if max_heap:\n                cooldown += n + 1\n            else:\n                cooldown += len(temp)\n\n        return cooldown",
+ "say": {
+  "1": "Load `heapq`, Python's ready-made **heap**: a list kept in an order where the smallest item is always at the front.",
+  "2": "Load `Counter`: it counts how many times each item appears in a list or a string.",
+  "4": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "5": "The function we must write. It gets the `tasks` and the cooling time `n`, and returns how many time slots are needed.",
+  "6": "Count how many times each task has to run.",
+  "7": "A list of those counts with minus signs, so that the heap (which gives the smallest first) gives the biggest count first.",
+  "8": "Arrange the list into a heap.",
+  "10": "The number of time slots used so far.",
+  "11": "Repeat while some task still has runs left.",
+  "12": "The tasks run in this round.",
+  "13": "A round has `n + 1` slots: after that, a task may run again.",
+  "14": "Is there another different task to run in this slot?",
+  "15": "Take the task with the most runs left and run it once. Its count is stored with a minus sign, so `+ 1` means *one fewer run left*.",
+  "17": "Look at each task run in this round.",
+  "18": "Does it still have runs left? (Still below 0, because of the minus sign.)",
+  "19": "Then put it back into the heap for a later round.",
+  "21": "After this round, is any work still left?",
+  "22": "Then this round used all `n + 1` slots, idle ones included.",
+  "24": "No, this was the last round: it needs only one slot per task in it.",
+  "26": "Return the total number of slots."
+ },
  "complexity": {
   "time": "O(T · n)",
   "timeWhy": "T = number of tasks, n = the gap. Counting takes O(T). The loop then walks every slot of every block, idle ones included, and there can be as many blocks as the most common task has runs. The heap never holds more than 26 letters, so each heap operation is effectively O(1). (A formula based only on the most common task gets the same answer in O(T).)",

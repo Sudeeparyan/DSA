@@ -31,12 +31,28 @@
    "output": "[1]"
   }
  ],
+ "picture": "Picture cutting the text into as many pieces as possible, so that no letter shows up in two pieces. First note where each letter appears for the last time. Then walk along the text, stretching the current piece to cover the last appearance of every letter it contains. When you reach the end of that stretch, nothing in the piece appears later, so cut there and start a new piece.",
  "idea": [
   "If a part contains a letter, it must contain **all** occurrences of that letter — in particular the last one.",
   "So first record the **last index** of every letter. Then scan from the left with a current part `start … end`: each letter met pushes `end` out to that letter's last index (if it lies further).",
   "When the scan position reaches `end`, every letter inside the part ends inside it. Cutting here is safe, and cutting as early as possible gives the most parts."
  ],
  "code": "class Solution:\n    def partitionLabels(self, s: str) -> List[int]:\n        last_index = {}\n\n        for i, char in enumerate(s):\n            last_index[char] = i\n\n        result = []\n        start, end = 0, 0\n\n        for i, char in enumerate(s):\n            end = max(end, last_index[char])\n\n            if i == end:\n                result.append(end - start + 1)\n                start = end + 1\n\n        return result",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the text `s` and returns the sizes of the pieces.",
+  "3": "For each letter, the position where it appears for the last time.",
+  "5": "Go through the text once: `i` is the position, `char` the letter there.",
+  "6": "Overwrite the letter's position every time it appears; at the end it holds the very last one.",
+  "8": "The sizes of the pieces.",
+  "9": "The current piece starts at `start` and must reach at least as far as `end`.",
+  "11": "Now walk through the text again, letter by letter.",
+  "12": "This letter appears again up to `last_index[char]`, so the piece must stretch at least that far.",
+  "14": "Have we reached the end of the stretch?",
+  "15": "Then no letter in this piece appears later: cut here and record the piece's size.",
+  "16": "The next piece starts right after it.",
+  "18": "Return the sizes of the pieces."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "Two passes over the string.",

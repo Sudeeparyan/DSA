@@ -19,12 +19,43 @@
    "output": ""
   }
  ],
+ "picture": "Picture a tree of letters that branches one letter at a time: from the start you can go to `a`, from `a` to `ap`, from `ap` to `app`. Words that begin the same way share their first branches. Storing a word walks down its letters, adds any branch that is missing, and puts a flag on the last letter. Looking a word up walks the same way: a missing branch means *no*, and at the end the flag says whether a whole word ends there.",
  "idea": [
   "Store words letter by letter in a tree: each node has one child per next letter. Words with the same beginning **share** the same path.",
   "To find a word, start at the root and follow its letters one at a time. If a letter has no branch, the word is not there.",
   "Reaching the last letter is not enough for `search` — `ca` must not count just because `cat` exists. So the node where a real word ends carries an **end-of-word mark**."
  ],
  "code": "class TrieNode:\n    def __init__(self):\n        self.children = {}\n        self.is_end = False\n\nclass Trie:\n    def __init__(self):\n        self.root = TrieNode()\n\n    def insert(self, word: str) -> None:\n        node = self.root\n        for char in word:\n            if char not in node.children:\n                node.children[char] = TrieNode()\n            node = node.children[char]\n        node.is_end = True\n\n    def search(self, word: str) -> bool:\n        node = self.root\n        for char in word:\n            if char not in node.children:\n                return False\n            node = node.children[char]\n        return node.is_end\n\n    def startsWith(self, prefix: str) -> bool:\n        node = self.root\n        for char in prefix:\n            if char not in node.children:\n                return False\n            node = node.children[char]\n        return True",
+ "say": {
+  "1": "One node of the trie: a point where the next letter can branch off.",
+  "2": "A new node starts with no branches and no end-of-word flag.",
+  "3": "Its branches: a dictionary from the next letter to the node it leads to.",
+  "4": "The flag: does a stored word end exactly here? Not yet.",
+  "6": "The trie itself, as the problem asks.",
+  "7": "Runs once, when the trie is created (`Trie()`).",
+  "8": "An empty starting node. Every word begins from here.",
+  "10": "Called for `insert(word)`: store a word.",
+  "11": "Start at the root.",
+  "12": "Walk through the word, one letter at a time.",
+  "13": "Is there no branch for this letter yet?",
+  "14": "Then add one, leading to a new empty node.",
+  "15": "Follow the branch to the next node.",
+  "16": "The last letter is reached: raise the flag, *a word ends here*.",
+  "18": "Called for `search(word)`: was exactly this word stored?",
+  "19": "Start at the root.",
+  "20": "Walk through the word, one letter at a time.",
+  "21": "Is there no branch for this letter?",
+  "22": "Then no stored word continues this way: answer `False`.",
+  "23": "Follow the branch.",
+  "24": "Every letter was found. But was a whole word stored, or is this only the start of a longer one? The flag says.",
+  "26": "Called for `startsWith(prefix)`: does any stored word begin like this?",
+  "27": "Start at the root.",
+  "28": "Walk through the prefix, one letter at a time.",
+  "29": "Is there no branch for this letter?",
+  "30": "Then no word begins like this: answer `False`.",
+  "31": "Follow the branch.",
+  "32": "Every letter had a branch, so some stored word begins with this prefix."
+ },
  "complexity": {
   "time": "O(L) per operation",
   "timeWhy": "Each operation follows one node per letter of the word (length L).",

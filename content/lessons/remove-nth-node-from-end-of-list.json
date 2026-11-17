@@ -27,12 +27,27 @@
    "output": "[2]"
   }
  ],
+ "picture": "Picture two people walking along the list with exactly `n` nodes between them. When the one in front reaches the last node, the one behind is standing just before the node that must go, so it can step over it. A placeholder node in front of the head gives the one behind somewhere to stand even when the very first node is the one to remove.",
  "idea": [
   "We cannot walk backwards from the end, and we do not know the length without a first pass.",
   "Trick: use two pointers that stay **n nodes apart**. Move both forward together; when the front one reaches the last node, the back one is exactly before the node to delete.",
   "A dummy node in front of the head makes deleting the head itself work the same way as deleting any other node."
  ],
  "code": "class Solution:\n    def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:\n        dummy = ListNode(0)\n        dummy.next = head\n        fast = slow = dummy\n\n        # Move 'fast' n nodes ahead\n        for _ in range(n):\n            fast = fast.next\n\n        # Move both pointers until 'fast' reaches the end\n        while fast.next:\n            fast = fast.next\n            slow = slow.next\n\n        # Remove the nth node from the end\n        slow.next = slow.next.next\n\n        return dummy.next",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the first node and `n`, and returns the first node after removing the `n`-th node from the end.",
+  "3": "A placeholder node to put in front of the list.",
+  "4": "Point it at the real first node.",
+  "5": "Both pointers start on the placeholder.",
+  "8": "Repeat `n` times. (`_` is the name for a counter we do not need.)",
+  "9": "Move `fast` one node ahead. After this loop it is `n` nodes ahead of `slow`.",
+  "12": "Repeat until `fast` is on the last node.",
+  "13": "Move `fast` one node on.",
+  "14": "Move `slow` one node on too, so the gap stays the same.",
+  "17": "`slow` is just before the node to remove. Skip over it: point `slow` at the node after it.",
+  "19": "Return the node after the placeholder: the first node of the list."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "One pass: `fast` walks the list once.",

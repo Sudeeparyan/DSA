@@ -27,12 +27,36 @@
    "output": "[1,2]"
   }
  ],
+ "picture": "Picture a row of cards that you want to deal first, last, second, second-to-last, and so on. Do it in three moves. Find the middle: one finger moves two cards for every one card the other moves, so when the fast finger reaches the end, the slow one is halfway. Turn the back half around, so its last card comes first. Then weave the two halves together, one card from each in turn.",
  "idea": [
   "We need nodes from the back, but a singly linked list cannot be walked backwards.",
   "So split it in the middle and **reverse the second half**. Now the back nodes are available in exactly the order we need them.",
   "Three steps, each a classic: find the middle with slow/fast pointers, reverse the second half, then weave the two halves together one node at a time."
  ],
  "code": "class Solution:\n    def reorderList(self, head: ListNode) -> None:\n        if not head or not head.next or not head.next.next:\n            return\n\n        # Find the middle of the list\n        slow, fast = head, head\n        while fast.next and fast.next.next:\n            slow = slow.next\n            fast = fast.next.next\n\n        # Reverse the second half of the list\n        prev, current = None, slow.next\n        slow.next = None\n        while current:\n            next_node = current.next\n            current.next = prev\n            prev = current\n            current = next_node\n\n        # Merge the two halves alternately\n        p1, p2 = head, prev\n        while p2:\n            next_p1, next_p2 = p1.next, p2.next\n            p1.next = p2\n            p2.next = next_p1\n            p1, p2 = next_p1, next_p2",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the first node and rearranges the list in place; it returns nothing.",
+  "3": "With fewer than three nodes the order cannot change.",
+  "4": "So stop here.",
+  "7": "Two pointers at the front. `fast` will move two nodes for every one `slow` moves.",
+  "8": "Repeat while `fast` can still take two steps.",
+  "9": "`slow` moves one node.",
+  "10": "`fast` moves two. When it can go no further, `slow` is at the middle.",
+  "13": "The second half starts right after the middle. Get ready to reverse it.",
+  "14": "Cut the list in two: the first half now ends at the middle.",
+  "15": "Reverse the second half, one node at a time.",
+  "16": "Remember the next node before its arrow changes.",
+  "17": "Turn this node's arrow around, to point back.",
+  "18": "Move `prev` forward.",
+  "19": "Move `current` on to the remembered node.",
+  "22": "`p1` walks the first half from the front; `p2` walks the reversed second half, which now starts with the old last node.",
+  "23": "Repeat while the second half still has nodes to weave in.",
+  "24": "Remember where each half continues.",
+  "25": "After `p1` comes `p2`, a node from the back half.",
+  "26": "After that comes the next node of the front half.",
+  "27": "Move both pointers on to the next pair."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "Each of the three steps is one pass over (part of) the list.",

@@ -39,12 +39,41 @@
    "output": "\"aczb\""
   }
  ],
+ "picture": "Picture a dictionary written in an unknown alphabet. Compare each word with the next one: the first place where they differ gives one rule, *this letter comes before that one*. Collect all such rules. Then build the alphabet like a course timetable: start with the letters that need nothing before them, and every letter placed frees the letters waiting for it. If letters are left over, the rules go round in a circle and there is no valid order.",
  "idea": [
   "Two **neighbouring** words in a sorted list reveal exactly one fact: at the first position where they differ, the letter of the earlier word comes before the letter of the later word.",
   "Collect these facts as arrows `a → b` (*a before b*) between letters. A valid alphabet is an ordering of the letters that respects every arrow — a **topological order**.",
   "Kahn's algorithm produces it: repeatedly take a letter with no incoming arrows. If letters are left over there is a cycle, so the input is contradictory. One more trap: a longer word listed before its own prefix (`abc` before `ab`) is invalid too."
  ],
  "code": "class Solution:\n    def alienOrder(self, words: List[str]) -> str:\n        graph = {char: [] for word in words for char in word}\n        in_degree = {char: 0 for char in graph}\n\n        for i in range(len(words) - 1):\n            word1, word2 = words[i], words[i + 1]\n            if len(word1) > len(word2) and word1.startswith(word2):\n                return \"\"  # a word can never come before its own prefix\n            for a, b in zip(word1, word2):\n                if a != b:\n                    if b not in graph[a]:\n                        graph[a].append(b)  # a comes before b\n                        in_degree[b] += 1\n                    break  # only the first difference tells us anything\n\n        queue = deque(char for char in in_degree if in_degree[char] == 0)\n        result = []\n\n        while queue:\n            char = queue.popleft()\n            result.append(char)\n            for neighbor in graph[char]:\n                in_degree[neighbor] -= 1\n                if in_degree[neighbor] == 0:\n                    queue.append(neighbor)\n\n        if len(result) < len(in_degree):\n            return \"\"  # a cycle: the rules contradict each other\n        return \"\".join(result)",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the `words`, sorted in the alien alphabet, and returns that alphabet's order (or an empty string if there is none).",
+  "3": "For every letter that appears, a list of the letters that must come after it. All empty at first.",
+  "4": "For every letter, how many letters must come before it.",
+  "6": "Compare each word with the word after it.",
+  "7": "The two neighbouring words.",
+  "8": "Is the first word longer and does it *start with* the second (like `abc` before `ab`)? No alphabet can put a word before its own beginning.",
+  "9": "Then the order is impossible: return an empty string.",
+  "10": "Walk through both words side by side, letter by letter (`zip` pairs them up).",
+  "11": "Is this the first place where they differ?",
+  "12": "Is the rule *`a` comes before `b`* new?",
+  "13": "Then record it.",
+  "14": "`b` now has one more letter that must come before it.",
+  "15": "Only the first difference tells us anything, so stop comparing these two words.",
+  "17": "Start a queue with the letters that need nothing before them.",
+  "18": "The alphabet, built in order.",
+  "20": "Repeat while some letter is ready to be placed.",
+  "21": "Take the next ready letter.",
+  "22": "Place it next in the alphabet.",
+  "23": "Look at each letter that had to come after it.",
+  "24": "One fewer letter is still in its way.",
+  "25": "Is nothing in its way any more?",
+  "26": "Then it is ready: add it to the queue.",
+  "28": "Were some letters never placed?",
+  "29": "Then the rules contradict each other (they go round in a circle): return an empty string.",
+  "30": "Join the letters into one string: the alien alphabet."
+ },
  "complexity": {
   "time": "O(C)",
   "timeWhy": "C is the total number of characters: every pair of neighbouring words is compared once, and the graph has at most 26 nodes.",

@@ -27,12 +27,31 @@
    "output": "[1,None,2,None,3]"
   }
  ],
+ "picture": "Picture two lists of the same family. One names every parent before their children (preorder); the other lists everyone from left to right (inorder). The next unused name in the preorder list is always the root of the part being built. Find that name in the inorder list: everyone to its left belongs to its left side, everyone to its right to its right side. Then build each side the same way.",
  "idea": [
   "**Preorder** visits a node *before* its subtrees, so its first value is always the root.",
   "**Inorder** visits the left subtree, then the node, then the right subtree. So once the root is located in `inorder`, everything left of it is the left subtree and everything right of it is the right subtree.",
   "Apply the same step to each side. Roots are taken from `preorder` one after another, which works because preorder lists the entire left subtree before the right one. A value → index map finds each root in `inorder` instantly, and a pair of indexes describes a part of `inorder` without copying it."
  ],
  "code": "class Solution:\n    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:\n        # Where does each value sit in inorder?  (so that no searching is needed)\n        index_of = {value: i for i, value in enumerate(inorder)}\n        next_root = 0  # position in preorder of the next root to use\n\n        def build(left, right):\n            # Builds the subtree whose values are inorder[left..right]\n            nonlocal next_root\n            if left > right:\n                return None\n\n            root_val = preorder[next_root]\n            next_root += 1\n            root = TreeNode(root_val)\n            root_index = index_of[root_val]\n\n            root.left = build(left, root_index - 1)\n            root.right = build(root_index + 1, right)\n\n            return root\n\n        return build(0, len(inorder) - 1)",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the two lists and returns the top node of the rebuilt tree.",
+  "4": "A dictionary from each value to its position in `inorder`, so finding a value needs no searching.",
+  "5": "The position in `preorder` of the next value to use as a root.",
+  "7": "A helper that builds the subtree made of `inorder[left]` to `inorder[right]` and returns its top node.",
+  "9": "Let the helper change `next_root`, which belongs to the outer function.",
+  "10": "Is that range empty?",
+  "11": "Then there is no subtree here.",
+  "13": "In preorder a parent comes before its children, so the next unused value is this subtree's root.",
+  "14": "Mark it as used.",
+  "15": "Make the node.",
+  "16": "Find where it sits in `inorder`. The values to its left form its left side; the values to its right, its right side.",
+  "18": "Build the left side from the values to its left (the helper calls itself). This must come first, because in preorder the whole left side comes before the right.",
+  "19": "Then build the right side from the values to its right.",
+  "21": "This subtree is finished: return its top node.",
+  "23": "Build the whole tree from all the values."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "Every value becomes a node exactly once, and finding it in `inorder` is a single map lookup.",

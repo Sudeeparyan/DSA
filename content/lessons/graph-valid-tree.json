@@ -35,12 +35,34 @@
    "output": "False"
   }
  ],
+ "picture": "Picture towns joined by roads. They form a *tree* when every town can be reached and there is no loop. Two facts decide it. A tree with `n` towns has exactly `n − 1` roads, so any other count fails at once. With exactly `n − 1` roads, the towns form a tree as long as a walk from town 0 reaches all of them without finding a loop.",
  "idea": [
   "A tree on `n` nodes always has **exactly n − 1 edges**. Any other count can be rejected immediately.",
   "With the right number of edges, walk the graph by DFS from node 0. Seeing an already-visited node (other than the one we just came from) means there is a **cycle**.",
   "Finally the walk must have reached **all n nodes** — otherwise the graph is in several pieces."
  ],
  "code": "class Solution:\n    def validTree(self, n: int, edges: List[List[int]]) -> bool:\n        if len(edges) != n - 1:\n            return False\n\n        graph = defaultdict(list)\n        for u, v in edges:\n            graph[u].append(v)\n            graph[v].append(u)\n\n        visited = set()\n\n        def dfs(node, parent):\n            visited.add(node)\n            for neighbor in graph[node]:\n                if neighbor != parent:\n                    if neighbor in visited or not dfs(neighbor, node):\n                        return False\n            return True\n\n        # Check if the graph is connected\n        if not dfs(0, -1):\n            return False\n\n        return len(visited) == n",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets `n` and the `edges`, and answers whether they form a tree.",
+  "3": "A tree on `n` nodes has exactly `n − 1` edges. Is the count different?",
+  "4": "Then it cannot be a tree.",
+  "6": "For each node, the list of its neighbours (a new node gets an empty list by itself).",
+  "7": "Go through the edges.",
+  "8": "Record `v` as a neighbour of `u`.",
+  "9": "And `u` as a neighbour of `v`: the edge goes both ways.",
+  "11": "The nodes visited so far.",
+  "13": "A helper that walks on from `node`, having come from `parent`. It answers `False` if it finds a loop.",
+  "14": "Mark this node as visited.",
+  "15": "Look at each neighbour.",
+  "16": "Skip the node we just came from: going straight back along the same edge is not a loop.",
+  "17": "Have we already seen this neighbour (so there are two routes to it: a loop), or does the walk on from it find a loop?",
+  "18": "Then there is a loop: not a tree.",
+  "19": "No loop down this way.",
+  "22": "Walk from node 0 (it has no parent, so -1). Did it find a loop?",
+  "23": "Then it is not a tree.",
+  "25": "No loop. It is a tree if the walk reached every node."
+ },
  "complexity": {
   "time": "O(V + E)",
   "timeWhy": "Every node and edge is handled a constant number of times.",

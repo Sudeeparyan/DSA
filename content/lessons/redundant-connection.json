@@ -27,12 +27,31 @@
    "output": "[1,3]"
   }
  ],
+ "picture": "Picture joining islands with bridges, one bridge at a time, while keeping track of which islands are already connected. Every connected group has one leader. Before building a bridge, ask both of its ends who their leader is. The same leader means the two islands are already connected, so this bridge would make a loop: it is the extra one. Otherwise build it, and the two groups merge under one leader.",
  "idea": [
   "Add the edges one at a time and keep track of which nodes are **already connected** to each other (which *group* each node is in).",
   "An edge between two nodes of **different** groups is useful: it merges the groups. An edge between two nodes of the **same** group adds a second route between them — a cycle. That is the redundant edge.",
   "Union-Find stores the groups cheaply: every node points to a parent, and following parents leads to the group's **root**. Same root ⇔ same group. `union` simply makes one root point at the other."
  ],
  "code": "class Solution:\n    def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:\n        n = len(edges)\n        parent = list(range(n + 1))  # Initialize each node as its own parent\n\n        def find(x):\n            if parent[x] != x:\n                parent[x] = find(parent[x])  # Path compression\n            return parent[x]\n\n        def union(x, y):\n            parent[find(x)] = find(y)\n\n        for edge in edges:\n            u, v = edge\n            if find(u) == find(v):\n                return edge\n            union(u, v)\n\n        return []",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the `edges` and returns the one that closes a loop.",
+  "3": "There are as many nodes as edges.",
+  "4": "Every node starts as the leader of its own group: `parent[x]` is `x`.",
+  "6": "A helper that finds the leader of `x`'s group.",
+  "7": "Is `x` not its own leader?",
+  "8": "Then follow its parent up to the top leader, and point `x` straight at that leader, so the next search is quicker (the helper calls itself).",
+  "9": "Return the leader.",
+  "11": "A helper that merges the groups of `x` and `y`.",
+  "12": "Make `y`'s leader the leader of `x`'s whole group.",
+  "14": "Go through the edges in order.",
+  "15": "The edge joins `u` and `v`.",
+  "16": "Do `u` and `v` already have the same leader, so are they already connected?",
+  "17": "Then this edge would close a loop: it is the extra one.",
+  "18": "Otherwise add it: merge the two groups.",
+  "20": "Never reached for valid input, which always has one extra edge."
+ },
  "complexity": {
   "time": "O(n log n)",
   "timeWhy": "One find/union pair per edge. With path compression alone each one costs O(log n) amortised — in practice almost constant. (Adding union by rank brings the total down to O(n · α(n)).)",

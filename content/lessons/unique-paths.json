@@ -35,12 +35,22 @@
    "output": "28"
   }
  ],
+ "picture": "Picture the robot's grid as boxes, each saying *how many paths reach this cell*. The top row and the left column can each be reached in only one way, by going straight right or straight down. Every other cell is entered from the cell above or the cell to its left, so its count is the sum of those two. Fill the boxes row by row; the bottom-right box is the answer.",
  "idea": [
   "Let `dp[i][j]` be the number of paths from the start to cell `(i, j)`.",
   "The robot can enter a cell only **from above** or **from the left**. Every path to either of those cells extends to exactly one path into this cell, so `dp[i][j] = dp[i − 1][j] + dp[i][j − 1]`.",
   "Cells in the top row or the left column can be reached in exactly one way (straight along the edge), so they are 1."
  ],
  "code": "class Solution:\n    def uniquePaths(self, m: int, n: int) -> int:\n        # Initialize a 2D dp grid of size m x n with all values set to 1.\n        dp = [[1] * n for _ in range(m)]\n\n        # Fill in the dp grid using dynamic programming.\n        for i in range(1, m):\n            for j in range(1, n):\n                dp[i][j] = dp[i - 1][j] + dp[i][j - 1]\n\n        # The value in dp[m-1][n-1] represents the number of unique paths.\n        return dp[m - 1][n - 1]",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the grid size `m × n` and returns how many paths reach the bottom-right corner.",
+  "4": "A grid of boxes, every one starting at 1. That is already right for the top row and the left column, which can only be reached in a straight line.",
+  "7": "Go down the rows, skipping the first.",
+  "8": "In each row, go across the columns, skipping the first.",
+  "9": "Paths into this cell come from above or from the left: add those two counts.",
+  "12": "The bottom-right box holds the number of paths."
+ },
  "complexity": {
   "time": "O(m · n)",
   "timeWhy": "Each cell is filled once with one addition.",

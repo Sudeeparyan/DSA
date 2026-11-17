@@ -35,12 +35,27 @@
    "output": "False"
   }
  ],
+ "picture": "Picture splitting the numbers into two piles with equal sums: each pile must hold exactly half of the total. So the question becomes: can some of the numbers add up to that half? Keep a row of boxes, one for every sum from 0 to the half, ticked when that sum can be made. At first only 0 is ticked. Each number then ticks every sum it can reach from an already ticked one. Going through the sums from the top down makes sure no number is used twice.",
  "idea": [
   "Two equal halves must each sum to `total / 2`. If the total is odd, that is impossible. Otherwise the question becomes: **can some of the numbers add up to exactly `total / 2`?** (The rest then automatically forms the other half.)",
   "Keep a table `dp[x]`: *can the numbers looked at so far reach the sum x?* Initially only 0 is reachable (take nothing).",
   "Each new number `num` makes `x` reachable whenever `x − num` already was. Going through the sums **from high to low** ensures the same number is not used twice."
  ],
  "code": "class Solution:\n    def canPartition(self, nums: List[int]) -> bool:\n        total_sum = sum(nums)\n\n        # If the total sum is odd, it's impossible to partition into two equal subsets.\n        if total_sum % 2 != 0:\n            return False\n\n        target_sum = total_sum // 2\n\n        # Initialize a dynamic programming array dp with all values set to False.\n        dp = [False] * (target_sum + 1)\n\n        # It's always possible to achieve a sum of 0 using an empty subset.\n        dp[0] = True\n\n        for num in nums:\n            for i in range(target_sum, num - 1, -1):\n                # If it's possible to achieve a sum of 'i - num' using a subset,\n                # then it's also possible to achieve a sum of 'i' using a subset.\n                dp[i] = dp[i] or dp[i - num]\n\n        return dp[target_sum]",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the list `nums` and answers whether it splits into two piles with equal sums.",
+  "3": "Add up all the numbers.",
+  "6": "Is the total odd? (`%` gives the remainder after dividing.)",
+  "7": "Then it cannot be split into two equal whole halves.",
+  "9": "Each pile must add up to exactly half the total.",
+  "12": "A row of boxes, one for every sum from 0 to `target_sum`: can some of the numbers add up to it?",
+  "15": "A sum of 0 can always be made, by taking nothing.",
+  "17": "Bring in the numbers one at a time.",
+  "18": "Go through the sums from the top down to `num`. Going downwards stops this number from being used twice in one sum.",
+  "21": "Sum `i` can be made if it already could, or if `i − num` could and this number is added to it.",
+  "23": "Can some of the numbers make exactly half the total?"
+ },
  "complexity": {
   "time": "O(n × sum)",
   "timeWhy": "For every number, every sum up to total / 2 is checked once.",

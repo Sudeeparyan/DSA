@@ -27,12 +27,27 @@
    "output": "[6]"
   }
  ],
+ "picture": "Picture a tally sheet with one mark per number every time it appears. Then picture a podium with only `k` places. The numbers climb on one by one; whenever the podium is too full, the one with the fewest marks steps off. Whoever is left standing on the podium appears most often.",
  "idea": [
   "First count how often every number appears, with a hash map.",
   "We then need the k largest counts. Sorting all of them works, but we never need the full order — only the top k.",
   "Keep a **min-heap of size k**. Its top is the *weakest* candidate. Push each (count, number); whenever the heap grows past k, pop the top. What survives is the top k."
  ],
  "code": "import heapq\n\nclass Solution:\n    def topKFrequent(self, nums: List[int], k: int) -> List[int]:\n        frequency_map = {}\n        for num in nums:\n            frequency_map[num] = frequency_map.get(num, 0) + 1\n\n        min_heap = []\n        for num, frequency in frequency_map.items():\n            heapq.heappush(min_heap, (frequency, num))\n            if len(min_heap) > k:\n                heapq.heappop(min_heap)\n\n        return [num for frequency, num in min_heap]",
+ "say": {
+  "1": "Load `heapq`, Python's ready-made **heap**: a list kept in an order where the smallest item is always at the front.",
+  "3": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "4": "The function we must write. It gets the list `nums` and a number `k`, and returns the `k` values that appear most often.",
+  "5": "Make an empty dictionary that will pair each number with how many times it appears.",
+  "6": "Go through the list one number at a time.",
+  "7": "Add one to this number's count. `.get(num, 0)` is its count so far, or 0 the first time we see it.",
+  "9": "Start an empty heap. It will hold `(count, number)` pairs, and keep the pair with the smallest count at the front.",
+  "10": "Go through the tally: `.items()` hands us each number together with its count.",
+  "11": "Put the pair `(count, number)` into the heap. The heap moves the smallest count to the front.",
+  "12": "Does the heap now hold more than `k` pairs?",
+  "13": "Yes: remove the front pair, the one with the smallest count. It cannot be among the `k` most frequent.",
+  "15": "Take just the number out of each pair left in the heap and return them: they are the `k` most frequent."
+ },
  "complexity": {
   "time": "O(n log k)",
   "timeWhy": "Counting is O(n). Each distinct number is pushed into a heap that never holds more than k + 1 items.",

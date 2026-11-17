@@ -39,12 +39,27 @@
    "output": "1"
   }
  ],
+ "picture": "Picture splitting the numbers into a *plus* group and a *minus* group. If the plus group adds up to P, the result is P − (total − P), so hitting the target means P = (total + target) / 2. The question becomes: in how many ways can some of the numbers add up to that P? Count it with a row of boxes, one per sum, going through the sums from the top down so that no number is used twice.",
  "idea": [
   "Trying all sign patterns costs 2ⁿ. Look at it differently: the numbers with `+` have some sum P, those with `−` some sum N.",
   "We need `P − N = S`, and we know `P + N = total`. Adding the two equations: `P = (total + S) / 2`. So the task is: **count the subsets of `nums` that sum to P** (everything else gets a minus).",
   "That is a classic subset-sum count: `dp[x]` = number of subsets summing to `x`; each number `num` adds `dp[x − num]` to `dp[x]`, scanning `x` downward so a number is used at most once."
  ],
  "code": "class Solution:\n    def findTargetSumWays(self, nums: List[int], S: int) -> int:\n        # Calculate the sum of all elements in the input array 'nums'.\n        total_sum = sum(nums)\n\n        # If the total sum is less than the target sum 'S', it's not possible to reach 'S'.\n        if (total_sum + S) % 2 != 0 or total_sum < abs(S):\n            return 0\n\n        # Calculate the target sum for positive signs. (total_sum + S) / 2\n        target = (total_sum + S) // 2\n\n        # Initialize a 1D array 'dp' to store the number of ways to reach each sum from 0 to 'target'.\n        dp = [0] * (target + 1)\n\n        # There is one way to reach a sum of 0 (by not selecting any element).\n        dp[0] = 1\n\n        # Iterate through each element in the input array 'nums'.\n        for num in nums:\n            # Update the 'dp' array for each sum from 'target' to 'num'.\n            for i in range(target, num - 1, -1):\n                dp[i] += dp[i - num]\n\n        # The 'dp[target]' contains the number of ways to reach the target sum 'S'.\n        return dp[target]",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the list `nums` and the target `S`, and returns how many choices of signs give exactly `S`.",
+  "4": "Add up all the numbers.",
+  "7": "The plus group must add up to `(total + S) / 2`. If that is not a whole number, or `S` is further from 0 than the total itself, no choice of signs works.",
+  "8": "So there are 0 ways.",
+  "11": "The sum the plus group needs.",
+  "14": "One box per sum from 0 to `target`: in how many ways can some of the numbers make it?",
+  "17": "A sum of 0 can be made in one way: take nothing.",
+  "20": "Bring in the numbers one at a time.",
+  "22": "Go through the sums from the top down to `num`, so this number is used at most once in each way.",
+  "23": "Every way of making `i − num`, plus this number, is a way of making `i`.",
+  "26": "The number of ways the plus group can reach its sum: the number of sign choices that give `S`."
+ },
  "complexity": {
   "time": "O(n × sum)",
   "timeWhy": "For each number, every sum up to P is updated once.",

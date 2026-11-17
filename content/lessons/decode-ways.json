@@ -43,12 +43,29 @@
    "output": "0"
   }
  ],
+ "picture": "Picture reading the digits from the left and asking at each point: in how many ways can the digits so far be read? The last piece is either one digit (any digit except 0 is a letter) or two digits (10 to 26 is a letter). So the ways up to here are the ways up to one digit back, if the last digit can stand alone, plus the ways up to two digits back, if the last two can stand together. A row of boxes keeps every count.",
  "idea": [
   "Let `dp[i]` be the number of ways to decode the **first i digits**.",
   "The last letter of such a decoding comes from the last digit alone (valid if it is 1–9) or from the last two digits (valid if they form 10–26).",
   "If the single digit is valid, every decoding of the first `i − 1` digits can be extended: add `dp[i − 1]`. If the pair is valid, add `dp[i − 2]`. A `0` therefore contributes nothing on its own."
  ],
  "code": "class Solution:\n    def numDecodings(self, s: str) -> int:\n        n = len(s)\n\n        # Initialize a DP array to store the number of ways to decode substrings.\n        dp = [0] * (n + 1)\n\n        # Base cases:\n        dp[0] = 1  # An empty string can be decoded in one way.\n        dp[1] = (\n            1 if s[0] != \"0\" else 0\n        )  # The first character can be decoded in one way if it's not '0'.\n\n        # Fill in the DP array.\n        for i in range(2, n + 1):\n            # Check the one-digit and two-digit possibilities.\n            one_digit = int(s[i - 1])\n            two_digits = int(s[i - 2 : i])\n\n            # If the one-digit is not '0', it can be decoded in the same way as dp[i-1].\n            if one_digit != 0:\n                dp[i] += dp[i - 1]\n\n            # If the two-digit is between 10 and 26, it can be decoded in the same way as dp[i-2].\n            if 10 <= two_digits <= 26:\n                dp[i] += dp[i - 2]\n\n        return dp[n]",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the digits `s` and returns in how many ways they can be read as letters.",
+  "3": "The number of digits.",
+  "6": "A row of boxes: `dp[i]` will be the number of ways to read the first `i` digits.",
+  "9": "Zero digits can be read in exactly one way: as nothing. This makes the counting work out.",
+  "10": "The first digit alone: one way if it is not `0` (no letter has the number 0), otherwise none.",
+  "15": "Fill in the boxes for 2 digits, 3 digits, and so on.",
+  "17": "The last digit, as a number.",
+  "18": "The last two digits together, as a number.",
+  "21": "Can the last digit stand alone as a letter (1 to 9)?",
+  "22": "Then every way of reading the digits before it still works: add those ways.",
+  "25": "Can the last two digits stand together as a letter (10 to 26)?",
+  "26": "Then add every way of reading the digits before those two.",
+  "28": "The number of ways to read all the digits."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "One pass over the digits.",

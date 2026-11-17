@@ -27,12 +27,29 @@
    "output": "2"
   }
  ],
+ "picture": "Picture each position as a stepping stone with an arrow painted on it: the value at position `i` says which stone to hop to next. One value repeats, so two arrows lead to the same stone, and the path runs into a loop whose entrance is exactly that repeated value. First find the loop with a slow runner and a fast one. Then send one runner back to the start and move both one hop at a time: they meet at the entrance.",
  "idea": [
   "Read every value as a pointer: from index `i`, go to index `nums[i]`. Starting at index 0 this traces a path.",
   "Two indexes hold the duplicate value, so two arrows lead to the same place. That makes the path loop — and the **entrance of the loop is the duplicate**.",
   "Find the loop with slow/fast pointers (Floyd's algorithm). Then restart one pointer from the beginning and move both one hop at a time: they meet exactly at the entrance."
  ],
  "code": "class Solution:\n    def findDuplicate(self, nums: List[int]) -> int:\n        slow = nums[0]\n        fast = nums[0]\n\n        # Move slow and fast pointers\n        while True:\n            slow = nums[slow]\n            fast = nums[nums[fast]]\n            if slow == fast:\n                break\n\n        # Find the entrance of the cycle\n        slow = nums[0]\n        while slow != fast:\n            slow = nums[slow]\n            fast = nums[fast]\n\n        return slow",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the list `nums` and returns the number that repeats.",
+  "3": "The slow runner takes its first hop: follow the arrow at position 0.",
+  "4": "The fast runner takes the same first hop.",
+  "7": "Repeat until `break` stops it.",
+  "8": "Slow runner: one hop (to the position its value names).",
+  "9": "Fast runner: two hops.",
+  "10": "Are they on the same position? That can only happen inside the loop.",
+  "11": "Then leave this first loop.",
+  "14": "Phase 2: send the slow runner back to the start (one hop from position 0 again).",
+  "15": "Repeat until the two runners meet.",
+  "16": "Move the slow runner one hop.",
+  "17": "Move the other runner one hop too, no longer two.",
+  "19": "They meet at the loop's entrance, which is the repeated number."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "Both phases walk at most a few times around the path.",

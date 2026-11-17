@@ -31,12 +31,23 @@
    "output": "0"
   }
  ],
+ "picture": "Picture walking along the numbers with a running total of the stretch you are in. If that total has become negative, it can only drag the next numbers down, so drop it and start a fresh stretch at the current number. Keep note of the best total you ever see. (This is known as Kadane's method.)",
  "idea": [
   "Walk through the array and keep `current_sum` = the best sum of a subarray that **ends at the current number**.",
   "That best subarray either **extends** the previous one (`current_sum + num`) or **starts fresh** at this number (`num`). Starting fresh wins exactly when the sum carried so far is negative — a negative prefix only drags the total down.",
   "The answer is the largest `current_sum` seen at any position."
  ],
  "code": "class Solution:\n    def maxSubArray(self, nums: List[int]) -> int:\n        max_sum = float(\"-inf\")\n        current_sum = 0\n\n        for num in nums:\n            current_sum = max(num, current_sum + num)\n            max_sum = max(max_sum, current_sum)\n\n        return max_sum",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the list `nums` and returns the largest sum of a run of neighbouring numbers.",
+  "3": "The best sum found so far. Minus infinity means none yet.",
+  "4": "The sum of the run that ends at the current number.",
+  "6": "Go through the numbers one at a time.",
+  "7": "Either extend the current run with this number or start a fresh run at it, whichever gives more. Starting fresh wins exactly when the old run's sum was negative.",
+  "8": "Keep the best run sum seen so far.",
+  "10": "Return the best sum."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "One pass with O(1) work per number.",

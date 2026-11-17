@@ -43,6 +43,9 @@ export const SLAB_H = 0.62;
 export const ENTRY_H = 0.8;
 /** room for the arrow between a key and its value */
 export const MAP_ARROW = 0.44;
+/** space between two key → value cards, and between rows of them */
+export const MAP_PAIR_GAP = 0.62;
+export const MAP_ROW_GAP = 0.34;
 export const NODE_D = 0.96;
 export const LEVEL_H = 1.6;
 /** recursion trees use flat boxes, so their levels can sit closer together */
@@ -93,6 +96,9 @@ export interface MapMetrics {
   valW: number;
   entryW: number;
   perRow: number;
+  /** space between two entries: wider for key → value pairs, so each pair reads as one card */
+  gap: number;
+  rowGap: number;
 }
 
 export interface StackMetrics {
@@ -292,16 +298,20 @@ function measureMap(snaps: MapView[]): MapMetrics {
   const keyW = widthFor(keyChars, 0.9, 0.38);
   const valW = valChars ? widthFor(valChars, 0.9, 0.38) : 0;
   const entryW = keyW + (valW ? valW + MAP_ARROW : 0);
-  const perRow = Math.max(1, Math.min(Math.max(count, 1), Math.floor((ROW_BUDGET + 0.24) / (entryW + 0.24))));
+  const gap = valW ? MAP_PAIR_GAP : 0.24;
+  const rowGap = valW ? MAP_ROW_GAP : 0.2;
+  const perRow = Math.max(1, Math.min(Math.max(count, 1), Math.floor((ROW_BUDGET + gap) / (entryW + gap))));
   const rows = Math.max(1, Math.ceil(count / perRow));
   return {
     kind: "map",
-    w: Math.max(perRow * (entryW + 0.24) - 0.24, 3.4),
-    h: rows * (ENTRY_H + 0.2) - 0.2,
+    w: Math.max(perRow * (entryW + gap) - gap, 3.4),
+    h: rows * (ENTRY_H + rowGap) - rowGap,
     keyW,
     valW,
     entryW,
     perRow,
+    gap,
+    rowGap,
   };
 }
 

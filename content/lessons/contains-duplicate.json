@@ -27,12 +27,23 @@
    "output": "False"
   }
  ],
+ "picture": "Picture a doorkeeper with a notebook. As each guest arrives, the doorkeeper looks for their name in the notebook: if it is already there, that guest has come in twice. If not, the name is written down and the guest goes in. A **hash set** is that notebook, and looking something up in it takes no time at all, however long it gets.",
  "idea": [
   "Comparing every number with every other number works, but that is O(n²) comparisons.",
   "What we really need is a fast way to ask *have I seen this number before?*",
   "A **hash set** answers that in O(1). Walk the list once: if the current number is already in the set it is a duplicate; otherwise add it and move on."
  ],
  "code": "class Solution:\n    def containsDuplicate(self, nums: List[int]) -> bool:\n        hashset = set()\n\n        for n in nums:\n            if n in hashset:\n                return True\n            hashset.add(n)\n        return False",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It is given the list `nums` and answers `True` or `False`.",
+  "3": "Make an empty **set**: a collection that can tell instantly whether it already holds a value.",
+  "5": "Go through the list one value at a time. `n` is the value we are looking at.",
+  "6": "Is this value already in the set? That would mean we met it earlier in the list.",
+  "7": "Yes: a value repeats, so answer `True` and stop right here.",
+  "8": "No: put the value into the set, so that a later copy of it will be caught.",
+  "9": "The loop got through the whole list without a repeat, so every value is different: answer `False`."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "One pass; each set lookup and insert takes O(1) on average.",

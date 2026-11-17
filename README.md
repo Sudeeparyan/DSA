@@ -4,9 +4,10 @@ A study site for **understanding** the NeetCode 150. It has no practice editor a
 problem gets one page with four parts:
 
 1. **The question** in plain words, with a worked example.
-2. **The idea** that solves it, in two to four short points.
+2. **The idea** that solves it: an everyday picture first, then two to four short points.
 3. **Watch it solve the example**: a 3D walkthrough of the real solution running one line at a
-   time. The running line is lit up in the code, and a caption explains each step.
+   time. The running line is lit up in the code and read out in plain words, and a caption
+   explains each step.
 4. **How fast is it?** Time and extra space, each with the reason.
 
 ```bash

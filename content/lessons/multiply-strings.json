@@ -35,12 +35,38 @@
    "output": "\"81\""
   }
  ],
+ "picture": "Picture long multiplication on paper, with a row of boxes for the answer. Multiply every digit of the first number by every digit of the second. Where each small product goes depends only on the two digits' positions: digit `i` times digit `j` lands in box `i + j + 1`. Add it to what that box already holds, keep the last digit there, and carry the rest into the box on its left.",
  "idea": [
   "Multiply the way it is done on paper: every digit of `num1` times every digit of `num2`.",
   "Where does each small product go? Digit `i` of `num1` times digit `j` of `num2` contributes to position **`i + j + 1`** of the result, and its carry to position **`i + j`**. (An m-digit number times an n-digit number has at most m + n digits.)",
   "Working from the right, add each product to what is already in its cell, keep the last digit there and push the carry one cell to the left."
  ],
  "code": "class Solution:\n    def multiply(self, num1: str, num2: str) -> str:\n        if num1 == \"0\" or num2 == \"0\":\n            return \"0\"\n\n        m, n = len(num1), len(num2)\n        result = [0] * (m + n)\n\n        for i in range(m - 1, -1, -1):\n            for j in range(n - 1, -1, -1):\n                product = int(num1[i]) * int(num2[j])\n                sum_val = product + result[i + j + 1]\n                result[i + j + 1] = sum_val % 10\n                result[i + j] += sum_val // 10\n\n        return \"\".join(map(str, result)).lstrip(\"0\")",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets two numbers written as text, `num1` and `num2`, and returns their product as text.",
+  "3": "Is either number 0?",
+  "4": "Then the product is 0.",
+  "6": "Count the digits of each number.",
+  "7": "A row of `m + n` boxes, all 0. An `m`-digit number times an `n`-digit number has at most `m + n` digits.",
+  "9": "Go through the digits of `num1` from the last to the first,",
+  "10": "and for each one, through the digits of `num2` from the last to the first.",
+  "11": "Multiply the two digits. `int(...)` turns a character such as \"3\" into the number 3.",
+  "12": "Add what box `i + j + 1` already holds.",
+  "13": "Keep the last digit in that box. `% 10` is the remainder after dividing by 10, which is the last digit.",
+  "14": "Carry the rest into the box on its left. `// 10` divides by 10 and drops the remainder.",
+  "16": "Turn every box back into a character, glue them together, and strip the 0s at the front."
+ },
+ "key": [
+  {
+   "tone": "cur",
+   "label": "box i + j + 1: keeps the last digit"
+  },
+  {
+   "tone": "alt",
+   "label": "box i + j: gets the carry"
+  }
+ ],
  "complexity": {
   "time": "O(m · n)",
   "timeWhy": "Every pair of digits is multiplied once.",

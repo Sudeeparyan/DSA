@@ -31,12 +31,36 @@
    "output": "5"
   }
  ],
+ "picture": "Picture each cell asking: *how long is the longest climb that starts at me?* The answer is 1 for the cell itself, plus the best climb from any higher neighbour. Climbs only go up, so they can never loop back. Each cell works its answer out once and writes it into a table, a *memo*; any later question about that cell is answered from the table instead of climbing again.",
  "idea": [
   "For a single cell, the longest increasing path **starting there** is 1 plus the best path starting at any larger neighbour.",
   "Paths only climb to larger values, so they can never loop — the recursion always ends.",
   "Many paths pass through the same cells, so **remember** each cell's answer (`dp`). Every cell is then solved exactly once, and the overall answer is the largest value in `dp`."
  ],
  "code": "class Solution:\n    def longestIncreasingPath(self, matrix: List[List[int]]) -> int:\n        if not matrix:\n            return 0\n\n        # Define directions for moving to neighboring cells: up, down, left, right.\n        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]\n\n        # Function to perform DFS from a given cell (i, j).\n        def dfs(i, j):\n            # If the result for this cell is already calculated, return it.\n            if dp[i][j] != -1:\n                return dp[i][j]\n\n            # Initialize the result for this cell to 1 (counting itself).\n            dp[i][j] = 1\n\n            # Explore the four neighboring cells.\n            for dx, dy in directions:\n                x, y = i + dx, j + dy\n                if 0 <= x < m and 0 <= y < n and matrix[x][y] > matrix[i][j]:\n                    # If the neighboring cell has a larger value, perform DFS.\n                    dp[i][j] = max(dp[i][j], 1 + dfs(x, y))\n\n            return dp[i][j]\n\n        m, n = len(matrix), len(matrix[0])\n        dp = [[-1] * n for _ in range(m)]  # Memoization table to store results.\n        max_path = 0\n\n        # Start DFS from each cell in the matrix.\n        for i in range(m):\n            for j in range(n):\n                max_path = max(max_path, dfs(i, j))\n\n        return max_path",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the `matrix` and returns the length of the longest path that keeps climbing.",
+  "3": "Is the matrix empty?",
+  "4": "Then there is no path.",
+  "7": "The four moves: up, down, left and right.",
+  "10": "A helper: the longest climb that starts at cell `(i, j)`.",
+  "12": "Has this cell's answer been worked out already? (-1 means *not yet*.)",
+  "13": "Then reuse it from the table.",
+  "16": "The climb includes at least the cell itself.",
+  "19": "Try each of the four neighbours.",
+  "20": "The neighbour's row and column.",
+  "21": "Is the neighbour inside the matrix, and higher than this cell?",
+  "23": "Then this cell plus the best climb from that neighbour is a candidate: keep the longest (the helper calls itself).",
+  "25": "Report this cell's answer. It stays in the table for next time.",
+  "27": "The matrix's size.",
+  "28": "The table of answers, one per cell, all *not worked out yet* (-1).",
+  "29": "The longest climb found so far.",
+  "32": "Try every row…",
+  "33": "…and every column: a climb may start at any cell.",
+  "34": "Keep the longest climb found.",
+  "36": "Return the longest climb."
+ },
  "complexity": {
   "time": "O(m · n)",
   "timeWhy": "Thanks to the memo table every cell is solved once, looking at four neighbours.",

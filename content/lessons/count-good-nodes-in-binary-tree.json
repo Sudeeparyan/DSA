@@ -27,12 +27,28 @@
    "output": "1"
   }
  ],
+ "picture": "Picture walking down from the top of the tree carrying a note of the biggest value seen on the way so far. A node is *good* if its value is at least as big as the note, so nothing above it beats it. A good node updates the note before you walk on to its children.",
  "idea": [
   "Whether a node is good depends only on the **largest value above it** on its own path from the root.",
   "So walk down with DFS and pass that maximum along as an argument.",
   "A node is good if its value is at least that maximum; in that case it also becomes the new maximum for everything below it."
  ],
  "code": "class Solution:\n    def goodNodes(self, root: TreeNode) -> int:\n        def dfs(node, max_val):\n            if not node:\n                return 0\n\n            if node.val >= max_val:\n                max_val = node.val\n                count = 1\n            else:\n                count = 0\n\n            count += dfs(node.left, max_val)\n            count += dfs(node.right, max_val)\n\n            return count\n\n        return dfs(root, float(\"-inf\"))",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the top node and returns how many good nodes there are.",
+  "3": "A helper that counts the good nodes from `node` down. `max_val` is the biggest value on the path from the top to here.",
+  "4": "Is this an empty spot?",
+  "5": "Then it has no good nodes.",
+  "7": "Is this node at least as big as everything above it?",
+  "8": "Yes: it is good, and it is now the biggest on the path.",
+  "9": "Count this node.",
+  "11": "No: something above is bigger, so it does not count.",
+  "13": "Add the good nodes on the left side (the helper calls itself and passes the note down).",
+  "14": "And those on the right side.",
+  "16": "Report the total for this part of the tree.",
+  "18": "Start at the top with minus infinity as the biggest value seen, so the top node always counts."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "Every node is visited once.",

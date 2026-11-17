@@ -35,12 +35,33 @@
    "output": "2"
   }
  ],
+ "picture": "Picture the same street bent into a circle, so the first and the last house are neighbours and can never both be robbed. Solve it as two ordinary streets: one without the first house, one without the last. Each is the plain House Robber problem, and the better of the two answers is the answer for the circle.",
  "idea": [
   "The only new rule: the first and the last house cannot **both** be robbed.",
   "So one of them is certainly left alone. Case A: house 0 is left out → an ordinary straight street of houses `1 … n − 1`. Case B: the last house is left out → a straight street of houses `0 … n − 2`.",
   "Solve both with the ordinary House Robber (here with two variables instead of an array) and return the larger result."
  ],
  "code": "class Solution:\n    def rob(self, nums: List[int]) -> int:\n        def houseRobber(nums: List[int]) -> int:\n            n = len(nums)\n            if n == 0:\n                return 0\n            if n == 1:\n                return nums[0]\n\n            prev = 0\n            curr = 0\n\n            for num in nums:\n                temp = curr\n                curr = max(prev + num, curr)\n                prev = temp\n\n            return curr\n\n        if len(nums) == 1:\n            return nums[0]\n\n        # Rob first house and exclude the last house, or exclude the first house and rob the last house.\n        return max(houseRobber(nums[1:]), houseRobber(nums[:-1]))",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the money in each house of the circle and returns the most that can be robbed.",
+  "3": "A helper: the plain House Robber answer for houses standing in a line.",
+  "4": "The number of houses in this line.",
+  "5": "Are there no houses?",
+  "6": "Then nothing can be robbed.",
+  "7": "Is there only one house?",
+  "8": "Then rob it.",
+  "10": "The best total up to two houses back.",
+  "11": "The best total up to the house just before.",
+  "13": "Go along the houses; `num` is the money in this one.",
+  "14": "Keep the old `curr` for a moment.",
+  "15": "Rob this house (plus the best from two back) or skip it (keep the best so far): take the better.",
+  "16": "Move along: the old best-so-far becomes the best from two back.",
+  "18": "The best total for this line of houses.",
+  "20": "Is there only one house in the whole circle?",
+  "21": "Then rob it: it has no neighbours to worry about.",
+  "24": "Solve two lines, one without the first house (`nums[1:]`) and one without the last (`nums[:-1]`). The better answer wins."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "Two passes over the houses.",

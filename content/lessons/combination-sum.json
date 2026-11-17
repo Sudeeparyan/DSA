@@ -27,12 +27,30 @@
    "output": "[[2,2,2,2],[2,3,3],[3,5]]"
   }
  ],
+ "picture": "Picture paying an exact amount with coins of a few sizes, where each size can be used as often as you like. Add a coin and see how much is still left to pay. If that is exactly 0, you have found a way; a coin bigger than what is left cannot be used. When you have tried everything that follows from a coin, take it back out and try the next size. To avoid finding the same mix twice in another order, never go back to a coin size earlier in the list than the last one added.",
  "idea": [
   "Build a combination one number at a time and keep track of how much is **still missing** from the target.",
   "After picking `candidates[i]`, the next pick may be the same number again or a later one — never an earlier one. That keeps every combination in one fixed order, so `[2, 5]` is never produced again as `[5, 2]`.",
   "Missing amount 0 → a full combination, save it. A candidate larger than what is missing cannot help, so it is skipped. After exploring a pick, **undo** it and try the next candidate."
  ],
  "code": "class Solution:\n    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:\n        def backtrack(start, target, combination):\n            if target == 0:\n                result.append(\n                    combination[:]\n                )  # Append a copy of the current combination\n                return\n\n            for i in range(start, len(candidates)):\n                if candidates[i] > target:\n                    continue  # Skip if the candidate is too large\n\n                combination.append(candidates[i])\n                backtrack(i, target - candidates[i], combination)\n                combination.pop()  # Backtrack\n\n        result = []\n        backtrack(0, target, [])\n        return result",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the numbers `candidates` and the `target`, and returns every way to reach the target.",
+  "3": "A helper. `combination` holds the numbers chosen so far, `target` is the amount still missing, and only candidates from position `start` on may be used.",
+  "4": "Is nothing missing any more?",
+  "5": "Then this combination adds up exactly: save a copy of it.",
+  "8": "And go back to try other choices.",
+  "10": "Try each candidate from position `start` on.",
+  "11": "Is it bigger than the amount still missing?",
+  "12": "Then it cannot be used here: skip it.",
+  "14": "**Choose** it: add it to the combination.",
+  "15": "**Explore** from here, with less missing. Passing `i` (not `i + 1`) lets the same number be used again.",
+  "16": "**Undo**: take it back out and try the next candidate.",
+  "18": "The list of combinations found.",
+  "19": "Start with nothing chosen and the whole target missing.",
+  "20": "Return every combination."
+ },
  "complexity": {
   "time": "O(n^(T/m))",
   "timeWhy": "T is the target and m the smallest candidate: a combination has at most T/m picks, and each pick has up to n choices.",

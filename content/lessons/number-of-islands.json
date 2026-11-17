@@ -27,12 +27,48 @@
    "output": "3"
   }
  ],
+ "picture": "Picture a map with patches of land in the sea. Scan the map cell by cell. Each time you step on land that nobody has visited yet, you have found a new island: count it, then flood the whole island (every land cell joined to it up, down, left or right), so that none of its cells is counted again. When the scan ends, the count is the number of islands.",
  "idea": [
   "Scan the grid cell by cell. The first time we touch a piece of land that nobody has visited, we have discovered a new island — count it.",
   "The danger is counting the same island again from another of its cells. So as soon as an island is discovered, visit **all** of it and mark every cell as visited.",
   "That *visit everything connected* step is a flood-fill (DFS): sink the cell to `0`, then recurse into its four neighbours."
  ],
  "code": "class Solution:\n    def numIslands(self, grid: List[List[str]]) -> int:\n        if not grid:\n            return 0\n\n        rows, cols = len(grid), len(grid[0])\n        count = 0\n\n        def dfs(row, col):\n            if (\n                row < 0\n                or row >= rows\n                or col < 0\n                or col >= cols\n                or grid[row][col] == \"0\"\n            ):\n                return\n\n            grid[row][col] = \"0\"  # Mark the cell as visited\n            directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]\n\n            for dr, dc in directions:\n                dfs(row + dr, col + dc)\n\n        for i in range(rows):\n            for j in range(cols):\n                if grid[i][j] == \"1\":\n                    count += 1\n                    dfs(i, j)\n\n        return count",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the `grid` of `\"1\"` (land) and `\"0\"` (water) and returns how many islands there are.",
+  "3": "Is the grid empty?",
+  "4": "Then there are no islands.",
+  "6": "The grid's size.",
+  "7": "The number of islands found so far.",
+  "9": "A helper that floods one island from this cell: it turns every connected land cell into water, so it is not counted again.",
+  "10": "Is this cell outside the grid, or is it water (`\"0\"`)?",
+  "17": "Then there is nothing to flood here.",
+  "19": "Flood this land cell: turn it into water, so it is never visited or counted again.",
+  "20": "The four moves, down, up, right and left, written as (row change, column change).",
+  "22": "Try each of the four moves.",
+  "23": "Flood onward from that neighbouring cell (the helper calls itself).",
+  "25": "Scan every row of the grid…",
+  "26": "…and every column in it.",
+  "27": "Is this cell land that has not been flooded yet?",
+  "28": "Then it belongs to a new island: count it.",
+  "29": "And flood the whole island, so none of its other cells is counted.",
+  "31": "Return the number of islands."
+ },
+ "key": [
+  {
+   "tone": "#3d9950",
+   "label": "land (1)"
+  },
+  {
+   "tone": "#1c3d5e",
+   "label": "water (0)"
+  },
+  {
+   "tone": "seen",
+   "label": "just flooded"
+  }
+ ],
  "complexity": {
   "time": "O(rows × cols)",
   "timeWhy": "Each cell is scanned once, and each land cell is sunk at most once.",

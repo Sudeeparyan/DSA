@@ -31,12 +31,22 @@
    "output": "0"
   }
  ],
+ "picture": "Picture two piles of cards: one with every number from 0 to `n`, and one with the numbers in the list. Every number except the missing one is in both piles. Pair up equal cards and throw each pair away: the one card left is the missing number. XOR (`^`) does exactly this pairing, because a number XOR-ed with itself cancels to 0.",
  "idea": [
   "Imagine two lists: all the numbers `0 … n`, and the values in `nums`. Every number except the missing one appears in **both** lists.",
   "XOR cancels pairs (`a ^ a = 0`). So XOR-ing both lists together cancels everything that is present, and only the missing number survives.",
   "The loop supplies the indexes `0 … n − 1` and the values; the remaining number `n` is put in as the starting value."
  ],
  "code": "class Solution:\n    def missingNumber(self, nums: List[int]) -> int:\n        n = len(nums)\n        missing_num = n\n\n        for i in range(n):\n            missing_num ^= i ^ nums[i]\n\n        return missing_num",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the list `nums` and returns the number from 0 to `n` that is missing.",
+  "3": "How many numbers the list holds. The full range is 0 to `n`.",
+  "4": "Start with `n`. The loop below supplies 0 to `n - 1`, so `n` is put in here.",
+  "6": "Go through the positions 0 to `n - 1`.",
+  "7": "XOR in the position `i` (a card from the full range) and the value `nums[i]` (a card from the list). A number put in twice cancels out.",
+  "9": "Everything present has cancelled out; the missing number is left."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "One pass over the array, with two XOR operations per index.",

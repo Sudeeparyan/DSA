@@ -23,12 +23,40 @@
    "output": "[]"
   }
  ],
+ "picture": "Picture copying a treasure hunt in which every clue also has a secret note pointing to some other clue. First, slip a blank copy in right after each original clue. Now every copy sits just behind its original, so a copy's secret note is easy to fill in: it points to the copy sitting just behind the original's target. Finally, pull the copies out into a line of their own and put the originals back as they were.",
  "idea": [
   "Copying `next` is easy. The hard part is `random`: when we copy a node, the copy of the node its random points to may not exist yet — and afterwards, how do we find it?",
   "Trick: put each copy **right after its original** (A → A′ → B → B′ …). Then the copy of any node `x` is simply `x.next`.",
   "So: (1) weave the copies in, (2) set each copy's random to `original.random.next`, (3) unweave the two lists again."
  ],
  "code": "class Solution:\n    def copyRandomList(self, head: \"Node\") -> \"Node\":\n        if not head:\n            return None\n\n        # Step 1: Duplicate nodes and insert them in between the original nodes\n        current = head\n        while current:\n            duplicate = Node(current.val)\n            duplicate.next = current.next\n            current.next = duplicate\n            current = duplicate.next\n\n        # Step 2: Update random pointers for the duplicate nodes\n        current = head\n        while current:\n            if current.random:\n                current.next.random = current.random.next\n            current = current.next.next\n\n        # Step 3: Split the combined list into two separate lists\n        original = head\n        duplicate_head = head.next\n        current = duplicate_head\n        while original:\n            original.next = original.next.next\n            if current.next:\n                current.next = current.next.next\n            original = original.next\n            current = current.next\n\n        return duplicate_head",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the first node and returns the first node of a complete copy.",
+  "3": "An empty list has nothing to copy.",
+  "4": "So return nothing (`None`).",
+  "7": "Step 1: walk the original list from the front.",
+  "8": "Repeat for every original node.",
+  "9": "Make a new node with the same value.",
+  "10": "Point the copy at the node that came after the original.",
+  "11": "Then point the original at its copy. The copy now sits right after its original.",
+  "12": "Jump to the next original node, just past the copy.",
+  "15": "Step 2: walk the combined list again, from the front.",
+  "16": "Repeat for every original node.",
+  "17": "Does this original have a random pointer?",
+  "18": "Its copy (`current.next`) must point to the *copy* of the random target, and that copy sits right after the target: `current.random.next`.",
+  "19": "Jump two nodes: past the copy, to the next original.",
+  "22": "Step 3: pull the two lists apart. `original` walks along the original nodes.",
+  "23": "The first copy sits right after the first original. It will be the head of the answer.",
+  "24": "`current` walks along the copies.",
+  "25": "Repeat for every original node.",
+  "26": "Point the original past its copy, back to the next original.",
+  "27": "Is there another copy after this one?",
+  "28": "Then point this copy past the next original, to the next copy.",
+  "29": "Move on to the next original.",
+  "30": "Move on to the next copy.",
+  "32": "Return the first node of the copy."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "Three passes over the list.",

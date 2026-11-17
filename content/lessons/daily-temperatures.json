@@ -27,12 +27,26 @@
    "output": "[0,0,0]"
   }
  ],
+ "picture": "Picture walking backwards through the calendar, from the last day to the first, carrying a stack of later days that might be someone's next warmer day. Before answering for today, throw away every day on the stack that is not warmer than today: today is closer *and* at least as warm, so those days will never be anyone's answer again. Whatever day is then on top is today's next warmer day.",
  "idea": [
   "For each day, scanning forward for the next warmer day is O(n²).",
   "Walk **from right to left** and keep a stack of later days that could still be someone's *next warmer day*.",
   "A later day that is not warmer than today is useless from now on: today is closer *and* at least as warm, so today hides it. Pop those. Whatever is then on top is today's next warmer day."
  ],
  "code": "class Solution:\n    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:\n        stack = []\n        result = [0] * len(temperatures)\n\n        for i in range(len(temperatures) - 1, -1, -1):\n            while stack and temperatures[i] >= temperatures[stack[-1]]:\n                stack.pop()\n            if stack:\n                result[i] = stack[-1] - i\n            stack.append(i)\n\n        return result",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the daily `temperatures` and returns how many days each day waits for a warmer one.",
+  "3": "A stack of *day numbers* still worth remembering, the nearest day on top.",
+  "4": "The answers, one per day, all 0 to start with (0 means *no warmer day comes*).",
+  "6": "Visit the days from the last one back to the first: this `range` counts down to 0.",
+  "7": "Is the day on top of the stack (`stack[-1]`) no warmer than today?",
+  "8": "Then it can never be anyone's next warmer day again, because today hides it. Remove it.",
+  "9": "Is any day left on the stack?",
+  "10": "The top day is today's next warmer day. The wait is the difference between the two day numbers.",
+  "11": "Put today on the stack: it may be the next warmer day for an earlier day.",
+  "13": "Return all the waits."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "Each day is pushed once and popped at most once.",

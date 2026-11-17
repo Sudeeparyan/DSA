@@ -46,6 +46,9 @@ class Lesson:
         show_output: str | None = None,
         init: dict | None = None,
         final: dict | None = None,
+        picture: str = "",
+        say: dict | None = None,
+        key: dict | None = None,
     ):
         if slug in LESSONS:
             raise LessonError(f"duplicate lesson {slug!r}")
@@ -80,6 +83,13 @@ class Lesson:
         self.show_output = show_output
         self.init = init
         self.final = final  # marks for the closing step, e.g. {"nums.good": "[0, 3]"}
+        # an everyday picture of the idea, shown above the idea's points
+        self.picture = " ".join(picture.split())
+        # code line (anchor, as in notes) -> what that line does, in plain words
+        self.say = {anchor: " ".join(text.split()) for anchor, text in (say or {}).items()}
+        # colour -> what it means in this lesson, for the legend under the stage: names a lesson's
+        # own colours ("#3d9950": "land") or renames a standard tone ("good": "gate")
+        self.key = {tone: " ".join(label.split()) for tone, label in (key or {}).items()}
         # filled in by the builder
         self.input_text = ""
         self.output_text = ""

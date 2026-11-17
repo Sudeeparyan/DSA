@@ -31,12 +31,29 @@
    "output": "3"
   }
  ],
+ "picture": "Picture a pool of uneven tiles with the water slowly rising. You can step onto a tile once the water covers it, so a route needs a water level as high as its highest tile. Explore from the corner, always taking next the reachable tile that needs the *lowest* water level; a heap keeps that tile on top. Carry along the highest level the route has needed so far. The first time you reach the far corner, that level is the answer.",
  "idea": [
   "A path is usable as soon as the water covers its **highest** cell. So we want the path from the top-left to the bottom-right whose highest cell is as low as possible.",
   "Explore like Dijkstra: keep all reachable-but-unexplored cells in a min-heap, keyed by the water level needed to get there = the highest cell on the way.",
   "Always expand the cell that needs the **lowest** level. When the bottom-right cell is popped, no cheaper way to it can exist — its level is the answer."
  ],
  "code": "class Solution:\n    def swimInWater(self, grid: List[List[int]]) -> int:\n        n = len(grid)\n        visited = {(0, 0)}\n        min_heap = [(grid[0][0], 0, 0)]  # (water level needed, row, col)\n\n        while min_heap:\n            time, r, c = heapq.heappop(min_heap)\n            if r == n - 1 and c == n - 1:\n                return time\n\n            for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):\n                nr, nc = r + dr, c + dc\n                if 0 <= nr < n and 0 <= nc < n and (nr, nc) not in visited:\n                    visited.add((nr, nc))\n                    heapq.heappush(min_heap, (max(time, grid[nr][nc]), nr, nc))",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the `grid` of heights and returns the lowest water level that lets you swim from one corner to the other.",
+  "3": "The grid is `n × n`.",
+  "4": "The cells already added to the heap. The start cell is the first.",
+  "5": "A heap of `(water level needed, row, column)`, lowest level first. It starts with the top-left cell.",
+  "7": "Repeat while there are cells to explore.",
+  "8": "Take the cell that needs the lowest water level to reach.",
+  "9": "Is it the bottom-right corner?",
+  "10": "Then this is the lowest level that works, because cells are taken in order of the level they need.",
+  "12": "Look at its four neighbours.",
+  "13": "The neighbour's row and column.",
+  "14": "Is it inside the grid and not added yet?",
+  "15": "Mark it as added.",
+  "16": "Reaching it needs the route's level so far or the neighbour's own height, whichever is higher. Add it to the heap with that level."
+ },
  "complexity": {
   "time": "O(n² log n)",
   "timeWhy": "Each of the n² cells is pushed and popped at most once, at O(log n²) each.",

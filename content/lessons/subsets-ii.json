@@ -27,12 +27,29 @@
    "output": "[[],[4],[4,4],[4,4,4]]"
   }
  ],
+ "picture": "Picture filling bags as in Subsets, except that some items are identical twins. Sort the items first, so that twins stand side by side. Then, whenever you choose the next item for the same place in a bag, use only the first twin of each kind: choosing the second twin there would only build exactly the same bags again.",
  "idea": [
   "Start from the plain Subsets recipe: record the current choice, then try each later number, explore, undo.",
   "Duplicates break it: with two 2s, *picking the first 2* and *picking the second 2* for the same slot build identical subsets.",
   "Fix: **sort** so equal numbers are neighbours, and at each slot use a value only **once** — if `nums[i]` equals the number just before it (and that one was already tried for this slot), skip it."
  ],
  "code": "class Solution:\n    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:\n        def backtrack(start, subset):\n            subsets.append(subset[:])  # Append a copy of the current subset\n\n            for i in range(start, len(nums)):\n                if i > start and nums[i] == nums[i - 1]:\n                    continue  # Skip duplicates at the same depth level\n                subset.append(nums[i])\n                backtrack(i + 1, subset)\n                subset.pop()  # Backtrack\n\n        nums.sort()  # Sort the input to handle duplicates\n        subsets = []\n        backtrack(0, [])\n        return subsets",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the list `nums`, which may contain repeats, and returns every different subset.",
+  "3": "A helper. `subset` is the bag built so far; only items from position `start` on may be added next.",
+  "4": "Every bag we reach is a subset: save a copy of it.",
+  "6": "Try each item that may still be added.",
+  "7": "Is it the same value as the item just before it, which this loop has already tried for this same place in the bag?",
+  "8": "Then skip it: it would only rebuild the same bags.",
+  "9": "**Choose** it: put it in the bag.",
+  "10": "**Explore** every bag that starts this way (the helper calls itself).",
+  "11": "**Undo**: take it back out and try the next item.",
+  "13": "Sort first, so that equal values sit side by side and repeats are easy to spot.",
+  "14": "The list of all subsets found.",
+  "15": "Start with an empty bag.",
+  "16": "Return every subset."
+ },
  "complexity": {
   "time": "O(n · 2ⁿ)",
   "timeWhy": "At most 2ⁿ subsets, each copied in O(n); sorting adds only O(n log n).",

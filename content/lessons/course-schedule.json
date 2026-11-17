@@ -27,12 +27,30 @@
    "output": "True"
   }
  ],
+ "picture": "Picture a list of courses where some must be taken before others. Start with every course that needs nothing first, and take those. Finishing a course crosses one item off the waiting list of every course that depends on it; when a course's list is empty, it can be taken next. If some course still has prerequisites left at the end, those courses form a circle (A needs B, B needs A), so not everything can be finished.",
  "idea": [
   "Draw every rule as an arrow `b → a`. Finishing everything is impossible only when the arrows form a **cycle** (A needs B and B needs A).",
   "A course with no unmet prerequisites (in-degree 0) can be taken right now. Taking it removes its outgoing arrows, which may free other courses.",
   "Repeat with a queue. If every course gets taken → `True`. Courses on a cycle never reach in-degree 0, so they are left over → `False`."
  ],
  "code": "class Solution:\n    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:\n        graph = {i: [] for i in range(numCourses)}\n        in_degree = [0] * numCourses\n\n        # Construct the graph and count in-degrees\n        for course, prereq in prerequisites:\n            graph[prereq].append(course)\n            in_degree[course] += 1\n\n        # Initialize a queue with nodes having in-degree zero\n        queue = collections.deque(\n            [course for course, degree in enumerate(in_degree) if degree == 0]\n        )\n\n        # Perform topological sorting and update in-degrees\n        while queue:\n            node = queue.popleft()\n            for neighbor in graph[node]:\n                in_degree[neighbor] -= 1\n                if in_degree[neighbor] == 0:\n                    queue.append(neighbor)\n\n        # If any course has in-degree greater than zero, there's a cycle\n        return all(degree == 0 for degree in in_degree)",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the number of courses and the `prerequisites` pairs, and answers whether every course can be finished.",
+  "3": "For each course, a list of the courses that depend on it. All empty at first.",
+  "4": "For each course, how many prerequisites it is still waiting for.",
+  "7": "Go through each pair: `prereq` must come before `course`.",
+  "8": "Record that `course` depends on `prereq`.",
+  "9": "`course` now waits for one more prerequisite.",
+  "12": "Start a queue with every course that waits for nothing: these can be taken right away.",
+  "17": "Repeat while some course is ready to be taken.",
+  "18": "Take the next ready course.",
+  "19": "Go through the courses that depend on it.",
+  "20": "Each of them now waits for one prerequisite fewer.",
+  "21": "Is that course now waiting for nothing?",
+  "22": "Then it is ready: add it to the queue.",
+  "25": "Every course could be taken only if none is still waiting (`all` checks that every count is 0). Anything left over is stuck in a circle."
+ },
  "complexity": {
   "time": "O(V + E)",
   "timeWhy": "Every course (V) is queued once and every prerequisite arrow (E) is followed once.",

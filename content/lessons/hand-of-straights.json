@@ -39,12 +39,29 @@
    "output": "True"
   }
  ],
+ "picture": "Picture sorting your cards and always dealing with the smallest card still in your hand. No smaller card is left, so it cannot sit in the middle or at the end of a run; it must *start* one. Take it and the next `W − 1` values up. If any of them is missing, the hand cannot be split. Repeat until the hand is empty.",
  "idea": [
   "Look at the **smallest** card that is still unused. Nothing smaller exists, so it cannot sit in the middle or at the end of a group — it must be the **start** of one.",
   "So the group is forced: starting at that card `c`, it needs `c, c + 1, …, c + W − 1`. Take one of each from the counts; if any is missing, the hand cannot be arranged.",
   "Repeat with the next smallest unused card until every card is used."
  ],
  "code": "from collections import Counter\n\nclass Solution:\n    def isNStraightHand(self, hand: List[int], W: int) -> bool:\n        if len(hand) % W != 0:\n            return False\n\n        counter = Counter(hand)\n        hand.sort()\n\n        for card in hand:\n            if counter[card] > 0:\n                for i in range(W):\n                    if counter[card + i] <= 0:\n                        return False\n                    counter[card + i] -= 1\n\n        return True",
+ "say": {
+  "1": "Load `Counter`: it counts how many times each item appears in a list or a string.",
+  "3": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "4": "The function we must write. It gets the `hand` and the group size `W`, and answers whether the cards split into runs of `W` consecutive values.",
+  "5": "Is the number of cards not a multiple of `W`?",
+  "6": "Then they cannot split into groups of `W`.",
+  "8": "Count how many copies of each card there are.",
+  "9": "Sort the cards, so the smallest one comes first.",
+  "11": "Go through the cards from smallest to largest.",
+  "12": "Is a copy of this card still unused? Then, as the smallest one left, it must start a run.",
+  "13": "Take the `W` values of that run: `card`, `card + 1`, and so on.",
+  "14": "Is there no copy of `card + i` left?",
+  "15": "Then the run cannot be completed: answer `False`.",
+  "16": "Use one copy of it.",
+  "18": "Every card ended up in a run: answer `True`."
+ },
  "complexity": {
   "time": "O(n log n)",
   "timeWhy": "Sorting dominates; afterwards every card is taken from the counter exactly once.",

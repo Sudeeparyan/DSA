@@ -10,6 +10,10 @@ lesson(
     args="nums=[-2, 1, -3, 4, -1, 2, 1, -5, 4]",
     expected=6,
     why="The subarray [4, -1, 2, 1] sums to 6.",
+    picture="""Picture walking along the numbers with a running total of the stretch you are in. If that total
+    has become negative, it can only drag the next numbers down, so drop it and start a fresh
+    stretch at the current number. Keep note of the best total you ever see. (This is known as
+    Kadane's method.)""",
     idea=[
         "Walk through the array and keep `current_sum` = the best sum of a subarray that **ends at the current number**.",
         "That best subarray either **extends** the previous one (`current_sum + num`) or **starts fresh** at this number (`num`). Starting fresh wins exactly when the sum carried so far is negative — a negative prefix only drags the total down.",
@@ -44,6 +48,21 @@ lesson(
             save={"best": "list(range(cs, i_num + 1)) if max_sum > was.max_sum else best"})),
         ("return max_sum", "The whole array has been scanned. The largest subarray sum is **{max_sum}**."),
     ],
+    say={
+        "def maxSubArray": (
+            "The function we must write. It gets the list `nums` and returns the largest sum of a"
+            " run of neighbouring numbers."
+        ),
+        'max_sum = float("-inf")': "The best sum found so far. Minus infinity means none yet.",
+        "current_sum = 0": "The sum of the run that ends at the current number.",
+        "for num in nums": "Go through the numbers one at a time.",
+        "current_sum = max(num, current_sum + num)": (
+            "Either extend the current run with this number or start a fresh run at it, whichever"
+            " gives more. Starting fresh wins exactly when the old run's sum was negative."
+        ),
+        "max_sum = max(max_sum, current_sum)": "Keep the best run sum seen so far.",
+        "return max_sum": "Return the best sum.",
+    },
     time=("O(n)", "One pass with O(1) work per number."),
     space=("O(1)", "Two running values."),
     tests=[("nums=[1]", 1), ("nums=[5, 4, -1, 7, 8]", 23), ("nums=[-3, -1, -2]", -1), ("nums=[0, -1, 0]", 0)],
@@ -57,6 +76,10 @@ lesson(
     args="nums=[3, 2, 1, 0, 4]",
     expected=False,
     why="Every route ends up on index 3, whose jump length is 0. Index 4 can never be reached.",
+    picture="""Picture walking along a row of stepping stones while tracking the farthest stone you could
+    possibly reach so far. Every stone you stand on may push that limit further. If you ever arrive
+    at a stone beyond the limit, there is a gap you cannot cross. If you never do, the last stone is
+    reachable.""",
     idea=[
         "It does not matter *how* we get somewhere, only **how far we can get at all**. Keep one number: `max_reachable`, the farthest index reachable so far.",
         "Walk through the indexes in order. If index `i` is within reach, then everything up to `i + nums[i]` is within reach too — update `max_reachable`.",
@@ -83,6 +106,25 @@ lesson(
         ("return True", "Every index was within reach, including the last one → **True**."),
     ],
     allow_unused=True,
+    say={
+        "def canJump": (
+            "The function we must write. It gets the jump lengths `nums` and answers whether the "
+            "last position can be reached."
+        ),
+        "max_reachable = 0": (
+            "The farthest position we know we can reach. At first, only the start."
+        ),
+        "for i, jump_length in enumerate(nums)": (
+            "Go through the positions: `i` is the position, `jump_length` its longest jump."
+        ),
+        "if i > max_reachable": "Is this position beyond anything we can reach?",
+        "return False": "Then there is a gap we cannot cross: answer `False`.",
+        "max_reachable = max(max_reachable, i + jump_length)": (
+            "From here we can reach as far as `i + jump_length`. Push the limit out if that is "
+            "further."
+        ),
+        "return True": "Every position was reachable, the last one included: answer `True`.",
+    },
     time=("O(n)", "One pass over the array; each index is looked at once."),
     space=("O(1)", "A single number."),
     tests=[("nums=[2, 3, 1, 1, 4]", True), ("nums=[0]", True), ("nums=[1, 0, 1]", False), ("nums=[2, 0, 0]", True)],
@@ -96,6 +138,11 @@ lesson(
     args="nums=[2, 3, 1, 1, 4]",
     expected=2,
     why="Jump 1 step to index 1, then 3 steps to the last index.",
+    picture="""Picture the jumps as rounds. With no jumps you can stand only on the first stone; with one jump,
+    on any stone the first can reach; with two, on any stone those can reach; and so on. Walk along
+    the stones, noting the farthest point the next jump could reach. When you come to the end of the
+    current round's range, you must jump: count it, and the next round's range ends at that farthest
+    point.""",
     idea=[
         "Group the indexes by **how many jumps** are needed to reach them: index 0 needs 0 jumps; the indexes it can jump to need 1; and so on. Each group is a contiguous window.",
         "While walking through the current window, record the farthest index any of its members can reach (`farthest_reachable`). That is where the **next** window ends.",
@@ -123,6 +170,31 @@ lesson(
          "The best jump from this window reaches index {cur_end}, so that is the end of the new window."),
         ("return jumps", "The window now covers the last index. Minimum number of jumps: **{jumps}**."),
     ],
+    say={
+        "def jump": (
+            "The function we must write. It gets the jump lengths `nums` and returns the fewest "
+            "jumps that reach the last position."
+        ),
+        "jumps = 0": "Jumps made so far.",
+        "cur_end = 0": (
+            "The farthest position the jumps so far can reach: the end of the current round."
+        ),
+        "farthest_reachable = 0": (
+            "The farthest position one more jump could reach, from any position seen so far."
+        ),
+        "for i in range(len(nums) - 1)": (
+            "Go through every position except the last (once there, no more jumps are needed)."
+        ),
+        "farthest_reachable = max(farthest_reachable, i + nums[i])": (
+            "Could a jump from here reach further than anything seen so far?"
+        ),
+        "if i == cur_end": "Have we reached the end of the current round's range?",
+        "jumps += 1": "Then one more jump is needed: count it.",
+        "cur_end = farthest_reachable": (
+            "That jump can take us as far as `farthest_reachable`, so the next round ends there."
+        ),
+        "return jumps": "Return the number of jumps.",
+    },
     time=("O(n)", "One pass over the array; no index is ever revisited."),
     space=("O(1)", "Three numbers."),
     tests=[("nums=[2, 3, 0, 1, 4]", 2), ("nums=[0]", 0), ("nums=[1, 1, 1, 1]", 3), ("nums=[5, 1, 1, 1, 1]", 1), ("nums=[1, 2]", 1)],
@@ -138,6 +210,11 @@ lesson(
     args="gas=[5, 1, 2, 3, 4], cost=[4, 4, 1, 5, 1]",
     expected=4,
     why="From station 4 the tank goes 3, 4, 1, 2, 0 — it never drops below zero.",
+    picture="""Picture driving round the circuit with a fuel gauge that starts at empty. At each station you
+    gain its gas and spend what the next stretch costs. If the gauge would drop below empty, no
+    station from your start up to here can be the start, since each of them would arrive here with
+    even less. So try again from the next station. One more fact settles it: if the total gas is at
+    least the total cost, a start exists, and it is the last one you tried.""",
     idea=[
         "If the total gas is less than the total cost, no start can work. If it is at least the total cost, some start **always** works.",
         "Try a start and keep the tank level. If the tank goes negative at station `i`, this start fails — and so does **every station between the start and i**: each of them would arrive at `i` with even less gas (we reached them with a non-negative tank).",
@@ -176,6 +253,30 @@ lesson(
             (None, "The overall balance is {total_gas} < 0: there is not enough gas on the whole circle → **-1**."),
         ], {"net.good": "start_station"}),
     ],
+    say={
+        "def canCompleteCircuit": (
+            "The function we must write. It gets each station's `gas` and the `cost` of the "
+            "stretch after it, and returns a station to start from, or -1."
+        ),
+        "total_gas = 0": "Gas gained minus gas spent, over the whole circuit.",
+        "current_gas = 0@1": "The fuel in the tank since the current starting station.",
+        "start_station = 0": "The station we are trying as the start.",
+        "for i in range(len(gas))": "Visit the stations in order.",
+        "total_gas += gas[i] - cost[i]": (
+            "Add this station's gas and take away the next stretch's cost, in the total for the "
+            "whole circuit."
+        ),
+        "current_gas += gas[i] - cost[i]": "And in the tank since the current start.",
+        "if current_gas < 0": "Did the tank run dry on the way to the next station?",
+        "start_station = i + 1": (
+            "Then none of the stations tried so far can be the start: try the next one."
+        ),
+        "current_gas = 0@2": "Start again with an empty tank.",
+        "return start_station if total_gas >= 0 else -1": (
+            "If there is enough gas in total, the last start tried works. Otherwise no start can:"
+            " return -1."
+        ),
+    },
     time=("O(n)", "One pass over the stations."),
     space=("O(1)", "Three numbers."),
     tests=[("gas=[1, 2, 3, 4, 5], cost=[3, 4, 5, 1, 2]", 3), ("gas=[2, 3, 4], cost=[3, 4, 3]", -1), ("gas=[5], cost=[4]", 0), ("gas=[3, 1, 1], cost=[1, 2, 2]", 0),
@@ -190,6 +291,10 @@ lesson(
     args="hand=[1, 2, 3, 6, 2, 3, 4, 7, 8], W=3",
     expected=True,
     why="[1, 2, 3], [2, 3, 4] and [6, 7, 8].",
+    picture="""Picture sorting your cards and always dealing with the smallest card still in your hand. No
+    smaller card is left, so it cannot sit in the middle or at the end of a run; it must *start*
+    one. Take it and the next `W − 1` values up. If any of them is missing, the hand cannot be
+    split. Repeat until the hand is empty.""",
     idea=[
         "Look at the **smallest** card that is still unused. Nothing smaller exists, so it cannot sit in the middle or at the end of a group — it must be the **start** of one.",
         "So the group is forced: starting at that card `c`, it needs `c, c + 1, …, c + W − 1`. Take one of each from the counts; if any is missing, the hand cannot be arranged.",
@@ -220,6 +325,26 @@ lesson(
         ("return True", "Every card has found its place in a group of {W} consecutive values → **True**."),
     ],
     allow_unused=True,
+    say={
+        "def isNStraightHand": (
+            "The function we must write. It gets the `hand` and the group size `W`, and answers "
+            "whether the cards split into runs of `W` consecutive values."
+        ),
+        "if len(hand) % W != 0": "Is the number of cards not a multiple of `W`?",
+        "return False@1": "Then they cannot split into groups of `W`.",
+        "counter = Counter(hand)": "Count how many copies of each card there are.",
+        "hand.sort()": "Sort the cards, so the smallest one comes first.",
+        "for card in hand": "Go through the cards from smallest to largest.",
+        "if counter[card] > 0": (
+            "Is a copy of this card still unused? Then, as the smallest one left, it must start a"
+            " run."
+        ),
+        "for i in range(W)": "Take the `W` values of that run: `card`, `card + 1`, and so on.",
+        "if counter[card + i] <= 0": "Is there no copy of `card + i` left?",
+        "return False@2": "Then the run cannot be completed: answer `False`.",
+        "counter[card + i] -= 1": "Use one copy of it.",
+        "return True": "Every card ended up in a run: answer `True`.",
+    },
     time=("O(n log n)", "Sorting dominates; afterwards every card is taken from the counter exactly once."),
     space=("O(n)", "The counter holds one entry per distinct card value."),
     tests=[("hand=[1, 2, 3, 4, 5], W=4", False), ("hand=[1, 2, 3, 4, 5, 6], W=2", True), ("hand=[1, 1, 2, 2, 3, 3], W=3", True),
@@ -235,6 +360,10 @@ lesson(
     args="triplets=[[2, 5, 3], [1, 8, 4], [1, 7, 5]], target=[2, 7, 5]",
     expected=True,
     why="Merging [2, 5, 3] and [1, 7, 5] gives [2, 7, 5]. The triplet [1, 8, 4] must be avoided because of its 8.",
+    picture="""Picture building the target by merging triplets, where a merge keeps the larger value in each
+    position. A triplet with any value *above* the target's can never be used: once merged in, that
+    too-big value could never come down again. Merge all the other triplets together, since that can
+    only help. If the result equals the target, it can be formed.""",
     idea=[
         "Merging only ever makes values **larger**. A triplet with any value above the target at that position would push it past the target for good — such a triplet can never be used.",
         "Every other triplet is harmless: all its values are ≤ the target, so merging it in can never overshoot. So simply **merge all harmless triplets**.",
@@ -266,6 +395,24 @@ lesson(
             (None, "`max_values` = {max_values} does not equal the target {target}: some value can never be reached → **False**."),
         ]),
     ],
+    say={
+        "def mergeTriplets": (
+            "The function we must write. It gets the `triplets` and the `target`, and answers "
+            "whether merging some of them gives exactly the target."
+        ),
+        "max_values = [0, 0, 0]": "The result of merging every usable triplet so far.",
+        "for triplet in triplets": "Look at each triplet.",
+        "if (": (
+            "Is each of its three values at most the target's value in that position? Only then "
+            "can it be used safely."
+        ),
+        "max_values = [max(max_values[i], triplet[i]) for i in range(3)]": (
+            "Merge it in: in each of the three positions keep the larger value."
+        ),
+        "return max_values == target": (
+            "Did merging all the usable triplets give exactly the target?"
+        ),
+    },
     time=("O(n)", "One pass over the triplets."),
     space=("O(1)", "Three numbers."),
     tests=[
@@ -284,6 +431,11 @@ lesson(
     args='s="abacdcee"',
     expected=[3, 3, 2],
     why='"aba" | "cdc" | "ee" — no letter occurs in two different parts.',
+    picture="""Picture cutting the text into as many pieces as possible, so that no letter shows up in two
+    pieces. First note where each letter appears for the last time. Then walk along the text,
+    stretching the current piece to cover the last appearance of every letter it contains. When you
+    reach the end of that stretch, nothing in the piece appears later, so cut there and start a new
+    piece.""",
     idea=[
         "If a part contains a letter, it must contain **all** occurrences of that letter — in particular the last one.",
         "So first record the **last index** of every letter. Then scan from the left with a current part `start … end`: each letter met pushes `end` out to that letter's last index (if it lies further).",
@@ -312,6 +464,35 @@ lesson(
          {"s.good": "range(start, end + 1)", "result.good": "-1"}),
         ("return result", "The whole string is cut. Part sizes: **{_ret}**."),
     ],
+    say={
+        "def partitionLabels": (
+            "The function we must write. It gets the text `s` and returns the sizes of the "
+            "pieces."
+        ),
+        "last_index = {}": "For each letter, the position where it appears for the last time.",
+        "for i, char in enumerate(s):@1": (
+            "Go through the text once: `i` is the position, `char` the letter there."
+        ),
+        "last_index[char] = i": (
+            "Overwrite the letter's position every time it appears; at the end it holds the very "
+            "last one."
+        ),
+        "result = []": "The sizes of the pieces.",
+        "start, end = 0, 0": (
+            "The current piece starts at `start` and must reach at least as far as `end`."
+        ),
+        "for i, char in enumerate(s):@2": "Now walk through the text again, letter by letter.",
+        "end = max(end, last_index[char])": (
+            "This letter appears again up to `last_index[char]`, so the piece must stretch at "
+            "least that far."
+        ),
+        "if i == end": "Have we reached the end of the stretch?",
+        "result.append(end - start + 1)": (
+            "Then no letter in this piece appears later: cut here and record the piece's size."
+        ),
+        "start = end + 1": "The next piece starts right after it.",
+        "return result": "Return the sizes of the pieces.",
+    },
     time=("O(n)", "Two passes over the string."),
     space=("O(1)", "At most 26 entries in the last-index map (not counting the output)."),
     tests=[
@@ -330,6 +511,11 @@ lesson(
     args='s="(*))"',
     expected=True,
     why="Treat the * as an opening bracket: (()) is valid.",
+    picture="""Picture not yet knowing what each `*` will turn into, so you keep a *range* for the number of
+    unclosed `(`: the fewest possible and the most possible. A `(` raises both, a `)` lowers both,
+    and a `*` could go either way, so it lowers the fewest and raises the most. If even the most
+    possible count drops below zero, too many `)` have come. At the end the string can be valid if
+    the fewest possible count is zero.""",
     idea=[
         "Without stars, one counter of currently open brackets is enough. A star makes that count **uncertain** — so track the whole **range** of possible counts: `lower` (fewest open brackets possible) and `upper` (most possible).",
         "`(` raises both ends, `)` lowers both. A `*` lowers `lower` (if used as `)`) and raises `upper` (if used as `(`). `lower` is kept at 0 or above, because scenarios with a negative count are simply invalid.",
@@ -360,6 +546,37 @@ lesson(
         ]),
     ],
     allow_unused=True,
+    say={
+        "def checkValidString": (
+            "The function we must write. It gets the text `s` and answers whether its `*`s can be"
+            " chosen to make it valid."
+        ),
+        "lower = upper = 0": (
+            "The fewest (`lower`) and the most (`upper`) unclosed `(` there could be so far."
+        ),
+        "for char in s": "Go through the characters one at a time.",
+        'if char == "("': "Is it an opening bracket?",
+        "lower += 1": "Then the fewest possible open count goes up by one.",
+        "upper += 1@1": "And so does the most possible.",
+        'elif char == ")"': "Is it a closing bracket?",
+        "lower = max(lower - 1, 0)@1": (
+            "Then the fewest goes down by one, but never below zero: we would simply have counted"
+            " fewer `*` as `(`."
+        ),
+        "upper -= 1": "And the most goes down by one.",
+        "else:": "Otherwise the character is a `*`.",
+        "lower = max(lower - 1, 0)@2": (
+            "A `*` might be a `)`: the fewest possible count goes down by one, but never below "
+            "zero."
+        ),
+        "upper += 1@2": "Or it might be a `(`: the most possible count goes up by one.",
+        "if upper < 0": "Even counting every `*` as `(`, are there now more `)` than `(`?",
+        "return False": "Then the string can never be valid.",
+        "return lower == 0": (
+            "It can be valid if some choice closes every bracket, that is if the fewest possible "
+            "open count is 0."
+        ),
+    },
     time=("O(n)", "One pass over the string, with O(1) work per character."),
     space=("O(1)", "Two counters."),
     tests=[('s="()"', True), ('s="(*)"', True), ('s=")("', False), ('s="(("', False), ('s="**("', False),

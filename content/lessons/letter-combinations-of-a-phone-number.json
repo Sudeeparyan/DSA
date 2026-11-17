@@ -27,12 +27,31 @@
    "output": "[\"pw\",\"px\",\"py\",\"pz\",\"qw\",\"qx\",\"qy\",\"qz\",\"rw\",\"rx\",\"ry\",\"rz\",\"sw\",\"sx\",\"sy\",\"sz\"]"
   }
  ],
+ "picture": "Picture an old phone keypad, where each digit stands for a few letters: 2 for `abc`, 3 for `def`, and so on. Spell the number one digit at a time. For the first digit, try each of its letters; for each of those, try each letter of the next digit; and so on. Every time all the digits have been used, the letters chosen spell one combination.",
  "idea": [
   "Each digit stands for one of its letters. A combination picks **one letter per digit**, in order.",
   "Go digit by digit: for the current digit, try each of its letters and recurse on the next digit with the longer string.",
   "When there are no digits left, the string built so far is one complete combination."
  ],
  "code": "class Solution:\n    def letterCombinations(self, digits: str) -> List[str]:\n        if not digits:\n            return []\n\n        phone_mapping = {\n            \"2\": \"abc\",\n            \"3\": \"def\",\n            \"4\": \"ghi\",\n            \"5\": \"jkl\",\n            \"6\": \"mno\",\n            \"7\": \"pqrs\",\n            \"8\": \"tuv\",\n            \"9\": \"wxyz\",\n        }\n\n        def backtrack(index, combination):\n            if index == len(digits):\n                combinations.append(combination)\n                return\n\n            digit = digits[index]\n            letters = phone_mapping[digit]\n\n            for letter in letters:\n                backtrack(index + 1, combination + letter)\n\n        combinations = []\n        backtrack(0, \"\")\n        return combinations",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the `digits` and returns every letter combination they could spell.",
+  "3": "Were no digits given?",
+  "4": "Then there are no combinations.",
+  "6": "A dictionary from each digit to its letters on a phone keypad.",
+  "17": "A helper. `combination` holds the letters chosen so far, one for each digit before position `index`.",
+  "18": "Has every digit been given a letter?",
+  "19": "Then this is a complete combination: save it.",
+  "20": "And go back to try other letters.",
+  "22": "The next digit to spell.",
+  "23": "The letters it stands for.",
+  "25": "Try each of those letters.",
+  "26": "Add it and move on to the next digit (the helper calls itself). A new text is made with the letter added, so nothing needs undoing afterwards.",
+  "28": "The list of combinations found.",
+  "29": "Start at the first digit, with no letters chosen.",
+  "30": "Return every combination."
+ },
  "complexity": {
   "time": "O(n · 4ⁿ)",
   "timeWhy": "Up to 4 letters per digit gives at most 4ⁿ combinations, each of length n.",

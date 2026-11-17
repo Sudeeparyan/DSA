@@ -27,12 +27,22 @@
    "output": "True"
   }
  ],
+ "picture": "Picture two people walking through two buildings at the same time, room by room, comparing as they go. If one finds a room where the other finds none, or the two rooms have different numbers on the door, the buildings differ. If every pair of rooms matches all the way down, they are the same.",
  "idea": [
   "Two trees are the same when their roots match, their left subtrees are the same, **and** their right subtrees are the same.",
   "That definition is recursive, so the code is too: compare one pair of nodes, then recurse into both pairs of children.",
   "Two base cases stop it: both spots empty → equal; exactly one empty, or different values → not equal."
  ],
  "code": "class Solution:\n    def isSameTree(self, p: TreeNode, q: TreeNode) -> bool:\n        if not p and not q:\n            return True\n        if not p or not q or p.val != q.val:\n            return False\n        return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets two nodes, `p` and `q`, and answers whether the trees below them are identical.",
+  "3": "Are both spots empty?",
+  "4": "Two empty trees are the same.",
+  "5": "Is only one of them empty, or do their values (`.val`) differ?",
+  "6": "Then the trees differ.",
+  "7": "They match here, so check below: the left sides must match *and* the right sides must match. The function checks each by calling itself, and `and` stops early if the left sides already differ."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "Each pair of nodes is compared once (n = size of the smaller tree).",

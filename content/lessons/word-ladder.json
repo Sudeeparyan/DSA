@@ -31,12 +31,34 @@
    "output": "2"
   }
  ],
+ "picture": "Picture a word game in which you change one letter at a time and every step must be a real word, for example `hit` → `hot` → `dot` → `dog` → `cog`. Explore like ripples on a pond: first every word one change away, then every word two changes away, and so on. The first time a ripple reaches the end word, you know the shortest ladder.",
  "idea": [
   "Picture every word as a node, with a line between two words that differ in exactly one letter. A ladder is a **path** in this graph.",
   "The shortest path in an unweighted graph is found by **BFS**: it visits all words 1 step away, then all words 2 steps away, and so on — so the first time `endWord` comes out of the queue, the ladder is as short as possible.",
   "To find a word's neighbours, replace each of its letters by `a … z` and keep the results that are in the word list and not visited yet."
  ],
  "code": "from collections import deque\n\nclass Solution:\n    def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:\n        wordSet = set(wordList)\n        if endWord not in wordSet:\n            return 0\n\n        queue = deque([(beginWord, 1)])  # Start from the beginWord with level 1\n        visited = set()\n\n        while queue:\n            word, level = queue.popleft()\n            if word == endWord:\n                return level\n\n            for i in range(len(word)):\n                for c in \"abcdefghijklmnopqrstuvwxyz\":\n                    new_word = word[:i] + c + word[i + 1 :]\n                    if new_word in wordSet and new_word not in visited:\n                        visited.add(new_word)\n                        queue.append((new_word, level + 1))\n\n        return 0",
+ "say": {
+  "1": "Load `deque`, Python's double-ended queue: a list that can add or remove items quickly at *both* ends.",
+  "3": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "4": "The function we must write. It gets the start word, the end word and the allowed `wordList`, and returns how many words the shortest ladder has (0 if there is none).",
+  "5": "Put the allowed words in a set, so *is this a real word?* is answered instantly.",
+  "6": "Is the end word not even allowed?",
+  "7": "Then no ladder can reach it.",
+  "9": "A queue of `(word, words in the ladder so far)`. It starts with the first word: a ladder of 1.",
+  "10": "Words already put in the queue, so none is explored twice.",
+  "12": "Repeat while there are words left to explore.",
+  "13": "Take the next word, and its ladder length, from the front of the queue.",
+  "14": "Is it the end word?",
+  "15": "Then this ladder is the shortest: every word closer to the start was explored first.",
+  "17": "Try changing each position of the word.",
+  "18": "Try every letter of the alphabet at that position.",
+  "19": "Build the new word: the part before position `i`, the new letter, then the part after it.",
+  "20": "Is it an allowed word that has not been queued yet?",
+  "21": "Mark it as queued.",
+  "22": "Add it to the queue, one step further along the ladder.",
+  "24": "The queue ran out without reaching the end word: there is no ladder."
+ },
  "complexity": {
   "time": "O(N · L²)",
   "timeWhy": "Each of the N words is expanded once: L positions × 26 letters, and building and looking up each candidate word costs O(L).",

@@ -35,12 +35,36 @@
    "output": "4.5"
   }
  ],
+ "picture": "Picture two sorted rows of numbers, and you want the middle of all of them together. Draw a cut across each row so that the numbers left of the two cuts make up exactly half of all the numbers. The cuts are right when every number left of either cut is no bigger than every number right of the other cut. Once the cut in the first row is chosen, the cut in the second is forced, so only one cut has to be found, by halving.",
  "idea": [
   "The median splits all the numbers into a **left half** and a **right half** of equal size, with everything on the left ≤ everything on the right.",
   "Cut `nums1` at some point; the cut in `nums2` is then forced, because the left side must hold exactly half of all the numbers. So there is only one thing to search for: where to cut `nums1`.",
   "A cut is correct when the last left number of each array is ≤ the first right number of the *other* array. If `nums1`'s left part is too big, move its cut left; otherwise move it right. That is a binary search on the shorter array."
  ],
  "code": "class Solution:\n    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:\n        if len(nums1) > len(nums2):\n            nums1, nums2 = nums2, nums1\n\n        m, n = len(nums1), len(nums2)\n        low, high = 0, m\n\n        while low <= high:\n            partition1 = (low + high) // 2\n            partition2 = (m + n + 1) // 2 - partition1\n\n            maxLeft1 = float(\"-inf\") if partition1 == 0 else nums1[partition1 - 1]\n            minRight1 = float(\"inf\") if partition1 == m else nums1[partition1]\n\n            maxLeft2 = float(\"-inf\") if partition2 == 0 else nums2[partition2 - 1]\n            minRight2 = float(\"inf\") if partition2 == n else nums2[partition2]\n\n            if maxLeft1 <= minRight2 and maxLeft2 <= minRight1:\n                if (m + n) % 2 == 0:\n                    return (max(maxLeft1, maxLeft2) + min(minRight1, minRight2)) / 2\n                else:\n                    return max(maxLeft1, maxLeft2)\n            elif maxLeft1 > minRight2:\n                high = partition1 - 1\n            else:\n                low = partition1 + 1\n\n        raise ValueError(\"Input arrays are not sorted.\")",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets two sorted lists and returns the median of all their numbers together.",
+  "3": "Is `nums1` the longer list?",
+  "4": "Then swap the two, so that we always search the shorter one (it has fewer places to cut).",
+  "6": "`m` and `n` are the two lengths.",
+  "7": "The cut in `nums1` can go anywhere from before its first number (0) to after its last (`m`).",
+  "9": "Repeat while there are cut positions left to try.",
+  "10": "Try the cut in the middle of that range: `partition1` numbers of `nums1` go to the left half.",
+  "11": "The left half must hold half of all the numbers (rounded up), so `nums2` supplies the rest: its cut is forced.",
+  "13": "The last number left of the cut in `nums1`. If the cut is at the very start there is none, so use minus infinity, which is smaller than anything.",
+  "14": "The first number right of the cut in `nums1`, or infinity if the cut is at the very end.",
+  "16": "The last number left of the cut in `nums2` (or minus infinity).",
+  "17": "The first number right of the cut in `nums2` (or infinity).",
+  "19": "Is every number on the left no bigger than every number on the right? The rows are sorted already, so only these two cross-checks are needed.",
+  "20": "Yes, the cuts are right. Is the total count even? (`%` gives the remainder after dividing.)",
+  "21": "Even: the median is halfway between the biggest number on the left and the smallest on the right.",
+  "23": "Odd: the left half holds the extra number, so the median is the biggest number on the left.",
+  "24": "Is the last left number of `nums1` too big for the right side of `nums2`?",
+  "25": "Then the cut in `nums1` is too far right: search further left.",
+  "27": "Otherwise it is too far left: search further right.",
+  "29": "Never reached for sorted lists. It stops the program with an error if the lists were not sorted."
+ },
  "complexity": {
   "time": "O(log(min(m, n)))",
   "timeWhy": "The binary search runs only over cut positions of the shorter array.",

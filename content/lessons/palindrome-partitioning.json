@@ -27,12 +27,32 @@
    "output": "[[\"a\",\"b\",\"c\"]]"
   }
  ],
+ "picture": "Picture cutting a ribbon of letters into pieces, where every piece must read the same both ways. Starting from the left, try every possible first piece: one letter, two letters, and so on. Keep only the pieces that are palindromes, and cut the rest of the ribbon the same way. When nothing is left to cut, that is one way to do it. Then undo the last cut and try a longer piece instead.",
  "idea": [
   "Decide the pieces from left to right. The first piece is some prefix `s[start:end]` — try every possible end.",
   "A prefix that is **not** a palindrome can never be part of an answer, so that branch is dropped immediately.",
   "If it is a palindrome, take it as a piece and solve the same problem for the rest of the string. Reaching the end of `s` means every piece was fine → save the partition. Then undo and try a longer piece."
  ],
  "code": "class Solution:\n    def partition(self, s: str) -> List[List[str]]:\n        def is_palindrome(sub):\n            return sub == sub[::-1]\n\n        def backtrack(start, partition):\n            if start == len(s):\n                result.append(partition[:])  # Append a copy of the current partition\n                return\n\n            for end in range(start + 1, len(s) + 1):\n                sub = s[start:end]\n                if is_palindrome(sub):\n                    partition.append(sub)\n                    backtrack(end, partition)\n                    partition.pop()  # Backtrack\n\n        result = []\n        backtrack(0, [])\n        return result",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the text `s` and returns every way to cut it into palindromes.",
+  "3": "A helper: does `sub` read the same backwards?",
+  "4": "`sub[::-1]` is the text written backwards. Compare the two.",
+  "6": "A helper. `partition` holds the pieces cut so far; the rest of the text starts at position `start`.",
+  "7": "Has the whole text been cut up?",
+  "8": "Then this is one complete way: save a copy.",
+  "9": "And go back to try other cuts.",
+  "11": "Try every length for the next piece: it runs from `start` up to just before `end`.",
+  "12": "Cut out that piece.",
+  "13": "Does it read the same both ways?",
+  "14": "**Choose** it as the next piece.",
+  "15": "**Explore**: cut the rest of the text, after this piece, the same way (the helper calls itself).",
+  "16": "**Undo**: undo this cut, so a longer piece can be tried instead.",
+  "18": "The list of all the ways found.",
+  "19": "Start at the beginning of the text, with no pieces cut.",
+  "20": "Return every way."
+ },
  "complexity": {
   "time": "O(n · 2ⁿ)",
   "timeWhy": "There are 2ⁿ⁻¹ ways to place cuts; checking and copying pieces costs O(n) each.",

@@ -31,12 +31,26 @@
    "output": "3"
   }
  ],
+ "picture": "Picture a price tag on every stair. To stand on a stair you pay its price, arriving from one or two stairs below, so the cheapest way to stand there is its price plus the cheaper of those two. Work up from the bottom, writing each answer into a row of boxes. The top is reached from one of the last two stairs, so the answer is the cheaper of those two boxes.",
  "idea": [
   "Let `dp[i]` be the cheapest total for **standing on stair i** (its own cost included).",
   "You arrive on stair `i` from stair `i − 1` or stair `i − 2`. Come from whichever was cheaper, then pay `cost[i]`: `dp[i] = min(dp[i − 1], dp[i − 2]) + cost[i]`.",
   "The top is reached from either of the last two stairs for free, so the answer is the smaller of their totals."
  ],
  "code": "class Solution:\n    def minCostClimbingStairs(self, cost: List[int]) -> int:\n        n = len(cost)\n        if n <= 1:\n            return 0  # No cost if there are 0 or 1 stairs\n\n        dp = [0] * n  # Initialize a list to store minimum costs\n\n        # Base cases\n        dp[0] = cost[0]\n        dp[1] = cost[1]\n\n        for i in range(2, n):\n            dp[i] = min(dp[i - 1], dp[i - 2]) + cost[i]\n\n        return min(dp[n - 1], dp[n - 2])",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the price `cost` of each stair and returns the cheapest way to the top.",
+  "3": "The number of stairs.",
+  "4": "With at most one stair, you can step straight to the top from the start.",
+  "5": "So it costs nothing.",
+  "7": "A row of boxes: `dp[i]` will be the cheapest total for standing on stair `i`.",
+  "10": "Starting on stair 0 costs just its own price.",
+  "11": "Starting on stair 1 costs just its own price.",
+  "13": "Fill in the rest of the boxes, from stair 2 up.",
+  "14": "To stand on stair `i`, arrive from the cheaper of the two stairs below it, then pay this stair's price.",
+  "16": "The top is one step above the last stair or two above the one before it: return the cheaper of those two totals."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "One pass over the stairs.",

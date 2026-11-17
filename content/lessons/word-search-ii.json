@@ -27,12 +27,54 @@
    "output": "[\"a\"]"
   }
  ],
+ "picture": "Picture putting all the words into one letter tree first, so that words with the same beginning share branches. Then start a walk from every cell of the grid. Each step onto a neighbouring cell must also be a step down the letter tree. The moment the tree has no branch for the next letter, the walk stops, because no word continues that way. When the walk reaches a node where a word ends, that word is on the board.",
  "idea": [
   "Searching the grid separately for each word repeats a lot of work when words share beginnings.",
   "Put all the words in a **trie** and walk the grid and the trie *together*: from a cell, only continue while the trie has a branch for the next letter.",
   "Start such a walk from every cell (DFS with backtracking, marking cells as in use). Whenever the trie node marks the end of a word, that word has been found."
  ],
  "code": "class TrieNode:\n    def __init__(self):\n        self.children = {}\n        self.word = None  # set on the node where a whole word ends\n\nclass Solution:\n    def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:\n        root = TrieNode()\n        for word in words:\n            node = root\n            for ch in word:\n                if ch not in node.children:\n                    node.children[ch] = TrieNode()\n                node = node.children[ch]\n            node.word = word\n\n        rows, cols = len(board), len(board[0])\n        found = []\n\n        def dfs(r, c, node):\n            ch = board[r][c]\n            if ch not in node.children:\n                return\n            node = node.children[ch]\n            if node.word:\n                found.append(node.word)\n                node.word = None  # never report the same word twice\n            board[r][c] = \"#\"  # this cell is in use on the current path\n            for nr, nc in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)):\n                if 0 <= nr < rows and 0 <= nc < cols and board[nr][nc] != \"#\":\n                    dfs(nr, nc, node)\n            board[r][c] = ch  # free the cell again on the way back\n\n        for r in range(rows):\n            for c in range(cols):\n                dfs(r, c, root)\n        return found",
+ "say": {
+  "1": "One node of the letter tree.",
+  "2": "A new node starts with no branches and no word.",
+  "3": "Its branches: a dictionary from the next letter to the node it leads to.",
+  "4": "The whole word that ends at this node, if one does (`None` means none).",
+  "6": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "7": "The function we must write. It gets the grid `board` and the list of `words`, and returns the words found on the grid.",
+  "8": "The letter tree's starting node.",
+  "9": "Put each word into the tree.",
+  "10": "Start at the root.",
+  "11": "Walk through the word's letters.",
+  "12": "Is there no branch for this letter yet?",
+  "13": "Then add one.",
+  "14": "Follow the branch.",
+  "15": "At the last letter, store the whole word, so a walk that gets here knows which word it has found.",
+  "17": "The grid's size.",
+  "18": "The words found so far.",
+  "20": "A helper: step onto the cell at row `r`, column `c`, while standing on `node` in the letter tree.",
+  "21": "The letter in this cell.",
+  "22": "Does the letter tree have no branch for this letter here?",
+  "23": "Then no word continues this way: give up on this cell.",
+  "24": "Step down the letter tree as well.",
+  "25": "Does a whole word end at this node?",
+  "26": "Then it is on the board: add it to the answer.",
+  "27": "Clear it, so the same word is never reported twice.",
+  "28": "Mark this cell as in use, so this walk cannot step on it twice.",
+  "29": "Look at the four neighbours: down, up, right and left.",
+  "30": "Is that neighbour inside the grid, and not already in use?",
+  "31": "Then continue the walk there (the helper calls itself).",
+  "32": "On the way back, free the cell again by putting its letter back.",
+  "34": "Go through every row of the grid…",
+  "35": "…and every column in it.",
+  "36": "Start a walk from this cell, at the top of the letter tree.",
+  "37": "Return every word found."
+ },
+ "key": [
+  {
+   "tone": "win",
+   "label": "in use on the current path"
+  }
+ ],
  "complexity": {
   "time": "O(m · n · 4ᴸ)",
   "timeWhy": "A walk starts at each of the m · n cells and branches up to 4 ways for up to L letters; the trie cuts most branches early.",

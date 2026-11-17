@@ -27,12 +27,26 @@
    "output": "False"
   }
  ],
+ "picture": "Picture checking a hanging mobile, joint by joint, from the bottom up. At every joint the two sides may differ in height by at most one level. Each joint asks its two sides how tall they are. If they differ by more, it reports *broken* (here, infinity), and that report travels all the way up to the top.",
  "idea": [
   "Balance is a statement about heights, so compute heights bottom-up with recursion.",
   "At each node compare the two subtree heights. If they differ by more than 1, the tree is unbalanced.",
   "To report that upward without a second return value, this solution returns **infinity** as a failure signal. Infinity survives every `max(...) + 1`, so it reaches the root."
  ],
  "code": "class Solution:\n    def isBalanced(self, root: TreeNode) -> bool:\n        def height(node):\n            if not node:\n                return 0\n            left_height = height(node.left)\n            right_height = height(node.right)\n            if abs(left_height - right_height) > 1:\n                return float(\"inf\")  # Indicate imbalance\n            return max(left_height, right_height) + 1\n\n        return height(root) != float(\"inf\")",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the top node and answers `True` if, at every node, the two sides differ in height by at most 1.",
+  "3": "A helper that returns a node's height, or infinity if anything below it is unbalanced.",
+  "4": "Is this an empty spot?",
+  "5": "Then its height is 0.",
+  "6": "The height of the left side (the helper calls itself).",
+  "7": "The height of the right side.",
+  "8": "Do the two sides differ by more than 1? (`abs` drops the minus sign.) This is also true when either side has already reported infinity.",
+  "9": "Then this part is unbalanced: report infinity, a warning sign that passes all the way up.",
+  "10": "Balanced here: report the taller side plus 1.",
+  "12": "The tree is balanced exactly when the top did not report infinity."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "Each node is visited once; the balance check reuses the heights already computed.",

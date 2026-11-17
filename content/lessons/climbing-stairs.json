@@ -35,12 +35,25 @@
    "output": "1836311903"
   }
  ],
+ "picture": "Picture standing on any stair. Your last move got you there from either one stair below or two stairs below. So the number of ways to reach a stair is the ways to reach the stair below plus the ways to reach the stair two below. Work upward from the bottom, remembering just the last two answers: each new answer is their sum.",
  "idea": [
   "Think about the **last move** that lands on stair `i`. It was either a single step from stair `i − 1` or a double step from stair `i − 2` — there is no other possibility.",
   "So every way to reach stair `i − 1` and every way to reach stair `i − 2` gives exactly one way to reach stair `i`: `ways(i) = ways(i − 1) + ways(i − 2)`.",
   "Start from the two obvious answers (stair 1: 1 way, stair 2: 2 ways) and work upward. Only the last two values are ever needed, so two variables are enough."
  ],
  "code": "class Solution:\n    def climbStairs(self, n: int) -> int:\n        if n <= 2:\n            return n\n\n        prev1 = 1  # Number of ways to reach the 1st stair\n        prev2 = 2  # Number of ways to reach the 2nd stair\n\n        for i in range(3, n + 1):\n            current = prev1 + prev2\n            prev1, prev2 = prev2, current  # Update for the next iteration\n\n        return prev2  # Number of ways to reach the n-th stair",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the number of stairs `n` and returns how many different ways there are to climb them.",
+  "3": "With 1 or 2 stairs the answer is simply `n`: one way to climb 1 stair, two ways to climb 2.",
+  "4": "So return `n`.",
+  "6": "The number of ways to reach stair 1: just one.",
+  "7": "The number of ways to reach stair 2: two (1 + 1, or a single 2).",
+  "9": "Work up through stairs 3, 4, … up to `n`.",
+  "10": "Ways to reach this stair = ways to reach the stair two below + ways to reach the stair just below.",
+  "11": "Move up one stair: the last two answers are now the old `prev2` and the new `current`.",
+  "13": "`prev2` now holds the number of ways to reach stair `n`."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "One addition per stair.",

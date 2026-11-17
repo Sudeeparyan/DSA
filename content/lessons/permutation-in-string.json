@@ -27,12 +27,35 @@
    "output": "False"
   }
  ],
+ "picture": "Picture a window exactly as wide as `s1`, sliding along `s2` one letter at a time. You count the letters you see through the window. Whenever the counts match those of `s1` (say, one `a` and one `b`), the window holds a rearrangement of `s1`. Each slide changes only two counts: one letter enters on the right and one leaves on the left.",
  "idea": [
   "A permutation of `s1` has the same length and exactly the same letter counts as `s1`.",
   "So slide a window of length `len(s1)` across `s2` and compare its letter counts with those of `s1`.",
   "Do not recount each window from scratch: when the window slides one step, one letter enters on the right and one leaves on the left — update just those two counts."
  ],
  "code": "class Solution:\n    def checkInclusion(self, s1: str, s2: str) -> bool:\n        if len(s1) > len(s2):\n            return False\n\n        char_freq_s1 = {}\n        for char in s1:\n            char_freq_s1[char] = char_freq_s1.get(char, 0) + 1\n\n        left, right = 0, 0\n        char_freq_temp = {}\n\n        while right < len(s2):\n            char_freq_temp[s2[right]] = char_freq_temp.get(s2[right], 0) + 1\n\n            if right - left + 1 == len(s1):\n                if char_freq_temp == char_freq_s1:\n                    return True\n                char_freq_temp[s2[left]] -= 1\n                if char_freq_temp[s2[left]] == 0:\n                    del char_freq_temp[s2[left]]\n                left += 1\n\n            right += 1\n\n        return False",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets `s1` and `s2`, and answers whether some stretch of `s2` uses exactly the letters of `s1`.",
+  "3": "If `s1` is longer than `s2`, no stretch of `s2` can hold all its letters.",
+  "4": "So answer `False` straight away.",
+  "6": "A dictionary to count each letter of `s1`.",
+  "7": "Go through `s1`, one letter at a time.",
+  "8": "Add one to this letter's count.",
+  "10": "The window's edges on `s2`, both on the first letter.",
+  "11": "A second dictionary that counts the letters inside the window.",
+  "13": "Repeat until `right` has gone past the end of `s2`.",
+  "14": "Take the letter at `right` into the window: add one to its count.",
+  "16": "Is the window now exactly as long as `s1`?",
+  "17": "Do the window's letter counts equal those of `s1`? (`==` on two dictionaries compares every entry.)",
+  "18": "Yes: this window is a rearrangement of `s1`, so answer `True`.",
+  "19": "No: get ready to slide. The leftmost letter leaves the window, so its count goes down by one.",
+  "20": "Has that letter's count dropped to 0?",
+  "21": "Then remove it from the dictionary (`del`), so the comparison with `s1`'s counts stays fair.",
+  "22": "Move the left edge one step right.",
+  "24": "Move the right edge one step right, onto the next letter.",
+  "26": "No window matched, so answer `False`."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "Each character of `s2` enters and leaves the window once; comparing two maps of at most 26 letters is O(1).",

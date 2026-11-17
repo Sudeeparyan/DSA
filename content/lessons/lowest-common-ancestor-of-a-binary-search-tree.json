@@ -23,12 +23,22 @@
    "output": "2"
   }
  ],
+ "picture": "Picture a sorted family tree where everyone smaller lives to the left and everyone bigger to the right. Walk down from the top looking for two people. While both are smaller than where you stand, go left; while both are bigger, go right. The first place where they would go different ways, or where you meet one of them, is the lowest node above both.",
  "idea": [
   "In a BST everything in a node's left subtree is smaller than the node, and everything in its right subtree is larger.",
   "Start at the root. If **both** targets are smaller, their common ancestor must be in the left subtree; if both are larger, in the right subtree.",
   "The first node where they fall on **different sides** (or which is one of them) is where their paths split — that node is the answer."
  ],
  "code": "class Solution:\n    def lowestCommonAncestor(\n        self, root: TreeNode, p: TreeNode, q: TreeNode\n    ) -> TreeNode:\n        if root.val > p.val and root.val > q.val:\n            return self.lowestCommonAncestor(root.left, p, q)\n        elif root.val < p.val and root.val < q.val:\n            return self.lowestCommonAncestor(root.right, p, q)\n        else:\n            return root",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the tree's top node and two nodes, `p` and `q`, and returns their lowest common ancestor.",
+  "5": "Are both values smaller than this node's? In a search tree, smaller values live on the left.",
+  "6": "Then both are on the left: carry on from the left child.",
+  "7": "Are both bigger? Bigger values live on the right.",
+  "8": "Then carry on from the right child.",
+  "10": "Otherwise they split here, or this node is one of them: it is the lowest common ancestor."
+ },
  "complexity": {
   "time": "O(h)",
   "timeWhy": "One step down the tree per comparison, so at most the height h.",

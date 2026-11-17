@@ -39,12 +39,35 @@
    "output": "2147483641"
   }
  ],
+ "picture": "Picture taking the last digit off the end of the number and writing it at the end of a new number, again and again: from 123 you write 3, then 32, then 321. The sign is set aside at the start and put back at the end. Before writing each digit, check that the new number will not grow too big for 32 bits; if it would, the answer is 0.",
  "idea": [
   "`x % 10` is the last digit of `x`, and `x // 10` removes it. That is a **pop** from the end of the number.",
   "`reversed_num * 10 + digit` appends a digit to the end of the result — a **push**. Popping from one number and pushing onto the other reverses the order.",
   "Before each push, check that it will not exceed the 32-bit limit; if it would, the answer is 0. The sign is put aside at the start and restored at the end."
  ],
  "code": "class Solution:\n    def reverse(self, x: int) -> int:\n        INT_MAX = 2**31 - 1\n        INT_MIN = -(2**31)\n\n        reversed_num = 0\n        sign = 1 if x > 0 else -1\n        x = abs(x)\n\n        while x != 0:\n            pop = x % 10\n            x //= 10\n\n            if reversed_num > (INT_MAX - pop) // 10:\n                return 0\n\n            reversed_num = reversed_num * 10 + pop\n\n        return reversed_num * sign",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets a whole number `x` and returns it with its digits reversed, or 0 if that is too big.",
+  "3": "The largest number that fits in 32 bits: 2,147,483,647. `**` means \"to the power\".",
+  "4": "The smallest one: -2,147,483,648.",
+  "6": "The reversed number, built one digit at a time.",
+  "7": "Remember the sign: 1 if `x` is positive, otherwise -1.",
+  "8": "Carry on with the number without its sign.",
+  "10": "While digits are left:",
+  "11": "`x % 10` is the last digit of `x`: the remainder after dividing by 10.",
+  "12": "Remove that digit. `//= 10` divides by 10 and drops the remainder.",
+  "14": "Would writing this digit at the end make the number bigger than `INT_MAX`?",
+  "15": "Then the reversed number does not fit, and the rules say to return 0.",
+  "17": "Write the digit at the end of the new number: times 10 makes room, then add the digit.",
+  "19": "Put the sign back and return the result."
+ },
+ "key": [
+  {
+   "tone": "good",
+   "label": "digit just written"
+  }
+ ],
  "complexity": {
   "time": "O(log x)",
   "timeWhy": "One round per digit of x.",

@@ -29,15 +29,31 @@ interface Catalog {
   problems: CatalogProblem[];
 }
 
-let catalogCache: Catalog | null = null;
-const lessonCache = new Map<string, Lesson>();
+/**
+ * Parsed files are kept in memory, keyed by the file's modification time: a build reads each file
+ * once, and `npm run dev` picks up a lesson rebuilt by `npm run lessons` on the next page load
+ * (without the time check it kept serving the old copy until restarted).
+ */
+const cache = new Map<string, { mtime: number; value: unknown }>();
+
+function readCached<T>(file: string, parse: (raw: string) => T): T | undefined {
+  let mtime: number;
+  try {
+    mtime = fs.statSync(file).mtimeMs;
+  } catch {
+    return undefined;
+  }
+  const hit = cache.get(file);
+  if (hit && hit.mtime === mtime) return hit.value as T;
+  const value = parse(fs.readFileSync(file, "utf8"));
+  cache.set(file, { mtime, value });
+  return value;
+}
 
 export function getCatalog(): Catalog {
-  if (!catalogCache) {
-    const raw = fs.readFileSync(path.join(CONTENT_DIR, "catalog.json"), "utf8");
-    catalogCache = JSON.parse(raw) as Catalog;
-  }
-  return catalogCache;
+  const catalog = readCached(path.join(CONTENT_DIR, "catalog.json"), (raw) => JSON.parse(raw) as Catalog);
+  if (!catalog) throw new Error("content/catalog.json is missing");
+  return catalog;
 }
 
 export function hasLesson(slug: string): boolean {
@@ -45,16 +61,13 @@ export function hasLesson(slug: string): boolean {
 }
 
 export function getLesson(slug: string): Lesson | undefined {
-  const cached = lessonCache.get(slug);
-  if (cached) return cached;
-  const file = path.join(LESSON_DIR, `${slug}.json`);
-  if (!fs.existsSync(file)) return undefined;
-  const parsed = LessonSchema.safeParse(JSON.parse(fs.readFileSync(file, "utf8")));
-  if (!parsed.success) {
-    throw new Error(`Invalid lesson file ${slug}.json: ${parsed.error.message}`);
-  }
-  lessonCache.set(slug, parsed.data);
-  return parsed.data;
+  return readCached(path.join(LESSON_DIR, `${slug}.json`), (raw) => {
+    const parsed = LessonSchema.safeParse(JSON.parse(raw));
+    if (!parsed.success) {
+      throw new Error(`Invalid lesson file ${slug}.json: ${parsed.error.message}`);
+    }
+    return parsed.data;
+  });
 }
 
 /** Every problem that has a lesson, in NeetCode roadmap order. */

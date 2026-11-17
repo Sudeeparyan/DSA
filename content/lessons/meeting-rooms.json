@@ -35,12 +35,30 @@
    "output": "False"
   }
  ],
+ "picture": "Picture one person's diary with the meetings written in order of start time. Now a clash can only show up between a meeting and the one written just before it. So read down the diary once: if any meeting starts before the one above it has finished, the person cannot go to both.",
  "idea": [
   "Comparing every pair of meetings would take O(n²). **Sort by start time** instead.",
   "After sorting, a clash can only happen between **neighbours**: if a meeting overlaps any earlier one, it overlaps the one directly before it or that one already clashed.",
   "So one pass is enough: a meeting that starts before the previous one has ended means `False`."
  ],
  "code": "class Solution:\n    def canAttendMeetings(self, intervals: List[List[int]]) -> bool:\n        if not intervals:\n            return True\n\n        intervals.sort(key=lambda x: x[0])\n\n        for i in range(1, len(intervals)):\n            if intervals[i][0] < intervals[i - 1][1]:\n                return False\n\n        return True",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the meeting times `intervals` and answers whether one person can attend them all.",
+  "3": "Are there no meetings at all?",
+  "4": "Then nothing can clash.",
+  "6": "Sort the meetings by start time. `key=lambda x: x[0]` means \"compare them by their first number\", the start.",
+  "8": "Go through the meetings from the second one on, comparing each with the one before it.",
+  "9": "Does this meeting start before the previous one ends?",
+  "10": "Then they clash: answer `False`.",
+  "12": "No meeting clashed with the one before it, so none clash at all: answer `True`."
+ },
+ "key": [
+  {
+   "tone": "bad",
+   "label": "clash"
+  }
+ ],
  "complexity": {
   "time": "O(n log n)",
   "timeWhy": "Sorting; the check itself is one pass.",

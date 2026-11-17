@@ -31,12 +31,23 @@
    "output": "12701"
   }
  ],
+ "picture": "Picture a row of boxes, one per amount, each counting the ways to make that amount. There is one way to make 0: use no coins. Bring in the coin kinds one at a time. Once coins worth 2 are allowed, every way of making `i − 2` becomes a way of making `i` by adding a 2. Taking the coin kinds one at a time counts every mix once, in one fixed order, so 1 + 2 and 2 + 1 are not counted twice.",
  "idea": [
   "Let `dp[a]` be the number of ways to make amount `a` using the coin types allowed so far. With no coins, only amount 0 can be made — in exactly one way.",
   "Introduce the coins **one type at a time**. With a new coin `c`, every way to make `a − c` gives one more way to make `a` (append one `c`): `dp[a] += dp[a − c]`.",
   "Because a coin type is finished before the next one starts, each combination is built in one fixed order of coin types — so `1 + 2` and `2 + 1` are not counted twice."
  ],
  "code": "class Solution:\n    def change(self, amount: int, coins: List[int]) -> int:\n        # Initialize a 1D array dp to store the number of combinations for each amount from 0 to amount.\n        dp = [0] * (amount + 1)\n\n        # There is one way to make amount 0 (by not using any coins).\n        dp[0] = 1\n\n        # Iterate through each coin denomination.\n        for coin in coins:\n            # Update the dp array for each amount from coin to amount.\n            for i in range(coin, amount + 1):\n                dp[i] += dp[i - coin]\n\n        # The dp[amount] contains the number of combinations to make the target amount.\n        return dp[amount]",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the `amount` and the `coins`, and returns how many different mixes of coins make the amount.",
+  "4": "One box per amount from 0 to `amount`: how many ways make it.",
+  "7": "There is exactly one way to make 0: use no coins.",
+  "10": "Bring in the coin kinds one at a time. This is what stops the same mix from being counted in two different orders.",
+  "12": "Go through every amount this coin fits into.",
+  "13": "Every way of making `i − coin`, plus one of this coin, is a way of making `i`: add those ways.",
+  "16": "The number of ways to make the full amount."
+ },
  "complexity": {
   "time": "O(amount × coins)",
   "timeWhy": "Every amount is updated once per coin type.",

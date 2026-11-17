@@ -31,12 +31,32 @@
    "output": "[]"
   }
  ],
+ "picture": "Picture the same list of courses as in Course Schedule, but now you also write down the order you take them in. Start with every course that needs nothing first. Each course you take crosses one item off the waiting list of every course that depends on it, and a course whose list is empty can be taken next. If every course ends up in your order, that order works; if not, some courses are stuck in a circle.",
  "idea": [
   "Draw each rule as an arrow `prerequisite → course`. A valid order lists every course after all the courses pointing at it — a **topological order**.",
   "A course whose in-degree (number of unmet prerequisites) is 0 can be taken now. Take it, append it to the order, and remove its outgoing arrows — that may free other courses.",
   "If the order ends up containing every course, return it. If some courses are left over they sit on a **cycle**, so no order exists → `[]`."
  ],
  "code": "class Solution:\n    def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:\n        graph = {i: [] for i in range(numCourses)}\n        in_degree = [0] * numCourses\n        order = []\n\n        # Construct the graph and count in-degrees\n        for course, prereq in prerequisites:\n            graph[prereq].append(course)\n            in_degree[course] += 1\n\n        # Initialize a queue with nodes having in-degree zero\n        queue = collections.deque(\n            [course for course, degree in enumerate(in_degree) if degree == 0]\n        )\n\n        # Perform topological sorting and update in-degrees\n        while queue:\n            node = queue.popleft()\n            order.append(node)\n            for neighbor in graph[node]:\n                in_degree[neighbor] -= 1\n                if in_degree[neighbor] == 0:\n                    queue.append(neighbor)\n\n        # If the order doesn't contain all courses, there's a cycle\n        return order if len(order) == numCourses else []",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the number of courses and the pairs, and returns an order to take them all in, or an empty list.",
+  "3": "For each course, a list of the courses that depend on it. All empty at first.",
+  "4": "For each course, how many prerequisites it is still waiting for.",
+  "5": "The order in which the courses are taken.",
+  "8": "Go through each pair: `prereq` must come before `course`.",
+  "9": "Record that `course` depends on `prereq`.",
+  "10": "`course` now waits for one more prerequisite.",
+  "13": "Start a queue with every course that waits for nothing: these can be taken right away.",
+  "18": "Repeat while some course is ready to be taken.",
+  "19": "Take the next ready course.",
+  "20": "Take it now: add it to the order.",
+  "21": "Go through the courses that depend on it.",
+  "22": "Each of them now waits for one prerequisite fewer.",
+  "23": "Is that course now waiting for nothing?",
+  "24": "Then it is ready: add it to the queue.",
+  "27": "If every course made it into the order, return it. Otherwise some courses are stuck in a circle: return an empty list."
+ },
  "complexity": {
   "time": "O(V + E)",
   "timeWhy": "Every course is queued once and every prerequisite arrow is followed once.",

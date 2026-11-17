@@ -27,12 +27,49 @@
    "output": "[[0,0],[0,1],[1,0],[1,1]]"
   }
  ],
+ "picture": "Picture pouring water *backwards*, uphill from each ocean. Start at every cell along the Pacific edges and spread to any neighbour that is at least as high: water could flow from there down to the Pacific. Do the same from the Atlantic edges. The cells reached from both oceans are the ones whose rain can flow to both.",
  "idea": [
   "Testing every cell with its own search (*can I flow down to each ocean?*) repeats a huge amount of work.",
   "Turn it around: start **at the ocean** and walk **uphill** (to neighbours that are equal or higher). Every cell reached this way can send water back down the same path into that ocean.",
   "Do this once from all Pacific border cells and once from all Atlantic border cells. The answer is the cells reached by **both** walks."
  ],
  "code": "class Solution:\n    def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:\n        if not heights:\n            return []\n\n        rows, cols = len(heights), len(heights[0])\n        pacific_reachable = set()\n        atlantic_reachable = set()\n\n        def dfs(r, c, reachable):\n            reachable.add((r, c))\n            for dr, dc in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                nr, nc = r + dr, c + dc\n                if (\n                    0 <= nr < rows\n                    and 0 <= nc < cols\n                    and (nr, nc) not in reachable\n                    and heights[nr][nc] >= heights[r][c]\n                ):\n                    dfs(nr, nc, reachable)\n\n        for r in range(rows):\n            dfs(r, 0, pacific_reachable)\n            dfs(r, cols - 1, atlantic_reachable)\n\n        for c in range(cols):\n            dfs(0, c, pacific_reachable)\n            dfs(rows - 1, c, atlantic_reachable)\n\n        return list(pacific_reachable & atlantic_reachable)",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the `heights` grid and returns every cell from which rain can reach both oceans.",
+  "3": "Is the grid empty?",
+  "4": "Then there are no such cells.",
+  "6": "The grid's size.",
+  "7": "The cells whose water can reach the Pacific.",
+  "8": "The cells whose water can reach the Atlantic.",
+  "10": "A helper that spreads *uphill* from this cell, adding every cell it reaches to `reachable`.",
+  "11": "Water from this cell can reach the ocean: record it.",
+  "12": "Try the four neighbours: down, up, right and left.",
+  "13": "The neighbour's row and column.",
+  "14": "Is the neighbour inside the grid, not recorded yet, and at least as high as this cell? Then water could flow from it down to here.",
+  "20": "Then spread on from the neighbour (the helper calls itself).",
+  "22": "Go down the rows.",
+  "23": "The left edge touches the Pacific: spread from there.",
+  "24": "The right edge touches the Atlantic: spread from there.",
+  "26": "Go along the columns.",
+  "27": "The top edge touches the Pacific: spread from there.",
+  "28": "The bottom edge touches the Atlantic: spread from there.",
+  "30": "The cells in both sets can reach both oceans (`&` keeps what two sets share)."
+ },
+ "key": [
+  {
+   "tone": "#4c8dff",
+   "label": "water reaches the Pacific"
+  },
+  {
+   "tone": "#ff9f45",
+   "label": "water reaches the Atlantic"
+  },
+  {
+   "tone": "good",
+   "label": "reaches both oceans"
+  }
+ ],
  "complexity": {
   "time": "O(rows × cols)",
   "timeWhy": "Each cell is visited at most once per ocean.",

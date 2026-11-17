@@ -27,12 +27,30 @@
    "output": "True"
   }
  ],
+ "picture": "Picture cutting the rows off the table and taping them end to end into one long strip. Each row starts where the row above ended, so the strip is sorted, and you can search it like a single list by halving. Nothing is really cut: a position on the strip is turned back into a row and a column with a little arithmetic.",
  "idea": [
   "Read row after row and the whole matrix is **one long sorted list**: each row continues where the previous one ended.",
   "So do an ordinary binary search over positions 0 … rows·cols − 1 of that imaginary list.",
   "Position `p` of the list lives at row `p // cols` and column `p % cols`. No copying into a real list is needed."
  ],
  "code": "class Solution:\n    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:\n        if not matrix or not matrix[0]:\n            return False\n\n        rows, cols = len(matrix), len(matrix[0])\n        left, right = 0, rows * cols - 1\n\n        while left <= right:\n            mid = left + (right - left) // 2\n            num = matrix[mid // cols][mid % cols]\n\n            if num == target:\n                return True\n            elif num < target:\n                left = mid + 1\n            else:\n                right = mid - 1\n\n        return False",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the table `matrix` and the `target`, and answers `True` or `False`.",
+  "3": "Is the table empty, or is its first row empty?",
+  "4": "Then the target cannot be in it.",
+  "6": "Count the rows and the columns.",
+  "7": "Search positions 0 to `rows × cols − 1` of the imaginary strip that holds every number in order.",
+  "9": "Repeat while some positions are still left to search.",
+  "10": "The middle position of the part still being searched.",
+  "11": "Turn that strip position into a row and a column: the row is `mid // cols` (how many full rows come before it) and the column is `mid % cols` (the remainder).",
+  "13": "Is this the target?",
+  "14": "Yes: answer `True`.",
+  "15": "Is it too small?",
+  "16": "Then search only the positions after it.",
+  "18": "It is too big: search only the positions before it.",
+  "20": "Nothing is left to search, so the target is not there: answer `False`."
+ },
  "complexity": {
   "time": "O(log(m · n))",
   "timeWhy": "A binary search over all m · n cells.",

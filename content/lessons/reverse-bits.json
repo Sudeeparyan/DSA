@@ -31,12 +31,22 @@
    "output": "2147483648"
   }
  ],
+ "picture": "Picture a string of 32 beads, each black (1) or white (0). Take beads off its right end one at a time and thread each onto the right end of a second string, first pushing the beads already there one place to the left. The bead taken first gets pushed left 31 times and ends up at the far left. After all 32 beads, the second string holds them in reverse order.",
  "idea": [
   "Build the result one bit at a time. `n & 1` reads the **lowest** bit of `n`.",
   "Shift the result **left** by one to make room, and put that bit into the free lowest place. Then shift `n` **right** so its next bit becomes the lowest.",
   "Do this exactly 32 times. The bit read first is pushed left 31 more times and ends up highest — the order is reversed."
  ],
  "code": "class Solution:\n    def reverseBits(self, n: int) -> int:\n        reversed_num = 0\n        for _ in range(32):\n            reversed_num = (reversed_num << 1) | (n & 1)\n            n = n >> 1\n        return reversed_num",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets a 32-bit number `n` and returns it with its bits in reverse order.",
+  "3": "The answer, built one bit at a time. It starts as all zeros.",
+  "4": "Repeat 32 times, once per bit. `_` is the name for a counter we never use.",
+  "5": "`<< 1` shifts the answer left, making room at its right end. `n & 1` is the last bit of `n`, and `|` drops it into that free place.",
+  "6": "Shift `n` right: the bit just used drops off and the next one becomes the last.",
+  "7": "The bits are now in reverse order: return the number."
+ },
  "complexity": {
   "time": "O(1)",
   "timeWhy": "Always exactly 32 rounds.",

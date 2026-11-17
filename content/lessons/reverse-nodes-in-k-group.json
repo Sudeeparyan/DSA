@@ -27,12 +27,34 @@
    "output": "[1]"
   }
  ],
+ "picture": "Picture a line of people split into teams of `k`, where each team turns around on its own: the first team reverses, then the next, and so on. A team at the end with fewer than `k` people stays as it is. Once a team has turned around, its old first person is now its last, so that person holds hands with whatever the rest of the line becomes.",
  "idea": [
   "Handle one group at a time: check that at least `k` nodes are left, then reverse exactly those `k` with the usual prev / current / next technique.",
   "After reversing, the group's old first node has become its **last** node — the right place to attach whatever comes next.",
   "What comes next is the same problem on the rest of the list, so solve it recursively and attach the result. A leftover of fewer than `k` nodes is returned unchanged."
  ],
  "code": "class Solution:\n    def reverseKGroup(self, head: ListNode, k: int) -> ListNode:\n        if not head or k == 1:\n            return head\n\n        # Are at least k nodes left?  Look only k nodes ahead.\n        count = 0\n        current = head\n        while current and count < k:\n            count += 1\n            current = current.next\n\n        if count < k:\n            return head\n\n        # Reverse the first k nodes\n        prev, current = None, head\n        for _ in range(k):\n            next_node = current.next\n            current.next = prev\n            prev = current\n            current = next_node\n\n        # Recursively reverse the remaining part of the list\n        head.next = self.reverseKGroup(current, k)\n\n        return prev",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the first node and `k`, and returns the first node after reversing every full group of `k`.",
+  "3": "An empty list, or groups of just one node, need no change.",
+  "4": "So return the list as it is.",
+  "7": "Count how many nodes are left, but only up to `k`.",
+  "8": "Start counting from the first node.",
+  "9": "Repeat while there is a node and fewer than `k` have been counted.",
+  "10": "Count this node.",
+  "11": "Move on to the next node.",
+  "13": "Are there fewer than `k` nodes left?",
+  "14": "Then this last group is too short: leave it as it is.",
+  "17": "Get ready to reverse this group of `k` nodes.",
+  "18": "Repeat `k` times, once for each node of the group.",
+  "19": "Remember the node after `current` before its arrow changes, or the rest of the list would be lost.",
+  "20": "Turn `current`'s arrow around: it now points back at `prev`.",
+  "21": "Move `prev` forward onto `current`.",
+  "22": "Move `current` on to the node we remembered.",
+  "25": "The group's old first node (`head`) is now its last. Point it at the result of doing the same to the rest of the list: the function calls itself.",
+  "27": "`prev` is the group's new first node: return it."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "Every node is counted once (the count stops after k nodes) and has its arrow flipped once.",

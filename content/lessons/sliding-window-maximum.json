@@ -27,12 +27,31 @@
    "output": "[9,8,7]"
   }
  ],
+ "picture": "Picture a line of candidates for *the biggest number in the window*. When a new number arrives, every smaller number at the back of the line leaves: the newcomer is bigger *and* will stay in the window longer, so they can never be the biggest again. That keeps the line in order, biggest at the front. The front of the line answers each window, and it leaves only once the window has slid past it.",
  "idea": [
   "Scanning each window for its maximum costs O(n · k). Most of that work is repeated.",
   "When a new number arrives, every **smaller number before it** can never be a maximum again — the new one is bigger *and* will stay in the window longer. Throw those away.",
   "What is left is a deque of indexes whose values decrease from front to back. The front is always the maximum; it only has to be removed when it slides out of the window."
  ],
  "code": "from collections import deque\n\nclass Solution:\n    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:\n        if not nums or k <= 0:\n            return []\n\n        result = []\n        window = deque()\n\n        for i, num in enumerate(nums):\n            while window and nums[window[-1]] < num:\n                window.pop()\n\n            window.append(i)\n\n            if i - window[0] >= k:\n                window.popleft()\n\n            if i >= k - 1:\n                result.append(nums[window[0]])\n\n        return result",
+ "say": {
+  "1": "Load `deque`, Python's double-ended queue: a list that can add or remove items quickly at *both* ends.",
+  "3": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "4": "The function we must write. It gets the list `nums` and the window size `k`, and returns the biggest number of every window.",
+  "5": "Nothing to do if the list is empty or the window has no size.",
+  "6": "So return an empty list.",
+  "8": "The answers: one biggest number per window.",
+  "9": "The line of candidates. It holds *positions* (not values), with the biggest value at the front.",
+  "11": "Go through the list: `i` is the position and `num` the value there.",
+  "12": "Is the value at the back of the line smaller than the new number? (`window[-1]` is the last item.)",
+  "13": "Then it can never be the biggest again: remove it from the back.",
+  "15": "Add the new number's position to the back of the line.",
+  "17": "Has the front candidate (`window[0]`) slid out of the window? It has once it is `k` or more positions behind `i`.",
+  "18": "Then remove it from the front.",
+  "20": "Is the first full window complete yet? From position `k − 1` on, every step completes a window.",
+  "21": "The front of the line is this window's biggest number: add its value to the answers.",
+  "23": "Return the biggest number of every window."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "Every index is added to the deque once and removed at most once.",

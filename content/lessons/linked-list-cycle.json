@@ -27,12 +27,27 @@
    "output": "False"
   }
  ],
+ "picture": "Picture two runners, one twice as fast as the other. If the path is a straight road, the fast runner simply reaches its end. If the path loops, the fast runner keeps going around and must eventually catch the slow one from behind. So a catch-up means there is a loop, and reaching the end means there is none.",
  "idea": [
   "We could remember every visited node in a set and stop when one repeats, but that costs O(n) memory.",
   "Instead, send two runners down the list: `slow` moves one node per step, `fast` moves two.",
   "With no cycle, `fast` simply reaches the end. With a cycle, `fast` can never leave it and closes the gap to `slow` by one node per step — so they are guaranteed to meet."
  ],
  "code": "class Solution:\n    def hasCycle(self, head: ListNode) -> bool:\n        if not head or not head.next:\n            return False\n\n        slow = head\n        fast = head.next\n\n        while slow != fast:\n            if not fast or not fast.next:\n                return False\n            slow = slow.next\n            fast = fast.next.next\n\n        return True",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the first node and answers `True` if following the arrows ever loops back.",
+  "3": "With no node, or one node with nothing after it, there can be no loop.",
+  "4": "So answer `False`.",
+  "6": "The slow runner starts on the first node.",
+  "7": "The fast runner starts one node ahead.",
+  "9": "Repeat until the two runners are on the same node.",
+  "10": "Has the fast runner reached the end of the list?",
+  "11": "Then the list has an end, so there is no loop: answer `False`.",
+  "12": "The slow runner moves one node.",
+  "13": "The fast runner moves two.",
+  "15": "They met, which can only happen on a loop: answer `True`."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "Once both runners are in the cycle, the gap shrinks by one every step.",

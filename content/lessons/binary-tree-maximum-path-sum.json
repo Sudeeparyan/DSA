@@ -27,12 +27,27 @@
    "output": "2"
   }
  ],
+ "picture": "Picture each node as a town whose value you collect when you pass through; some values are negative. Any trip climbs up to a highest town and comes down again. Working from the bottom up, each town asks its two sides how much the best one-way trip down from them is worth, and ignores a side worth less than 0. A trip turning at this town collects its own value plus both sides. But a trip coming up from below can only use one side, because it cannot split in two.",
  "idea": [
   "Every path has one highest node where it *bends*: it may come up one branch, pass through the node, and go down the other branch.",
   "For each node compute the best sum of a **single branch** going downward from it. A branch with a negative sum is simply not taken (count it as 0).",
   "At each node, `left branch + node + right branch` is the best path bending there — compare it with the best so far. But to its parent a node can offer only **one** branch, because a path cannot fork."
  ],
  "code": "class Solution:\n    def maxPathSum(self, root: TreeNode) -> int:\n        def maxPathSumHelper(node):\n            if not node:\n                return 0\n\n            left_sum = max(0, maxPathSumHelper(node.left))\n            right_sum = max(0, maxPathSumHelper(node.right))\n\n            self.max_sum = max(self.max_sum, left_sum + right_sum + node.val)\n\n            return max(left_sum, right_sum) + node.val\n\n        self.max_sum = float(\"-inf\")\n        maxPathSumHelper(root)\n\n        return self.max_sum",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the top node and returns the biggest total of any path.",
+  "3": "A helper that returns the best total of a path going *down* from `node` in one direction. On the way it also checks the path that turns at `node`.",
+  "4": "Is this an empty spot?",
+  "5": "Then it adds nothing.",
+  "7": "The best one-way path down the left side, but never below 0: a side that would lower the total is simply not used.",
+  "8": "The same for the right side.",
+  "10": "A path that turns here collects the left side, this node and the right side. Keep it if it is the best so far.",
+  "12": "Going up to the parent, a path can use only one side: this node plus its better side.",
+  "14": "The best total found so far. Minus infinity means none yet, since every real total is bigger.",
+  "15": "Visit the whole tree from the top; the helper records the best path.",
+  "17": "Return the best total found."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "Every node is visited once.",

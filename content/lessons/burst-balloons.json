@@ -31,12 +31,26 @@
    "output": "116718"
   }
  ],
+ "picture": "Picture choosing which balloon in a stretch to burst *last*. If balloon `k` goes last between two fixed walls, its neighbours at that moment are the walls themselves, and the balloons to its left and to its right become two separate, smaller puzzles. So a grid of boxes answers *the most coins from the balloons strictly between `left` and `right`*, solving short stretches first and building longer ones from them. Padding the row with a 1 at each end gives the outer walls.",
  "idea": [
   "Choosing which balloon to burst **first** is messy: its two neighbours become adjacent, so the remaining parts influence each other.",
   "Think backwards — choose which balloon in an interval is burst **last**. When it finally bursts, everything else between the interval's two borders is already gone, so its neighbours are exactly those two borders. And the parts to its left and right were solved independently.",
   "`dp[left][right]` = best coins from bursting everything **strictly between** `left` and `right`. Try every `k` in between as the last balloon: `nums[left]·nums[k]·nums[right] + dp[left][k] + dp[k][right]`. Solve short intervals first."
  ],
  "code": "class Solution:\n    def maxCoins(self, nums: List[int]) -> int:\n        n = len(nums)\n\n        # Add virtual balloons at the beginning and end with a value of 1.\n        nums = [1] + nums + [1]\n\n        # Create a 2D table dp to store the maximum coins.\n        dp = [[0] * (n + 2) for _ in range(n + 2)]\n\n        # Iterate through different balloon ranges.\n        for length in range(2, n + 2):\n            for left in range(0, n + 2 - length):\n                right = left + length\n                for k in range(left + 1, right):\n                    # Choose the best order to burst balloons in the range [left, right].\n                    dp[left][right] = max(\n                        dp[left][right],\n                        nums[left] * nums[k] * nums[right] + dp[left][k] + dp[k][right],\n                    )\n\n        return dp[0][n + 1]",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the balloon numbers and returns the most coins possible.",
+  "3": "The number of balloons.",
+  "6": "Add a balloon worth 1 at each end. These are the walls: they are never burst, and multiplying by 1 changes nothing.",
+  "9": "A grid of boxes: `dp[left][right]` is the most coins from bursting every balloon strictly between `left` and `right`.",
+  "12": "Solve short stretches first, then longer ones built from them.",
+  "13": "Try every left wall for a stretch of this length.",
+  "14": "Its right wall.",
+  "15": "Try each balloon between the walls as the one burst *last*.",
+  "17": "Bursting `k` last earns `nums[left] × nums[k] × nums[right]`, plus the best for each side of it. Keep the best choice of `k`.",
+  "22": "The box for the whole row, between the two added walls."
+ },
  "complexity": {
   "time": "O(n³)",
   "timeWhy": "O(n²) intervals, and up to n choices for the last balloon in each.",

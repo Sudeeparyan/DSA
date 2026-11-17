@@ -13,6 +13,10 @@ lesson(
     args='grid=[["1","1","0","0","0"],["1","1","0","0","0"],["0","0","1","0","0"],["0","0","0","1","1"]]',
     expected=3,
     why="Top-left block of four cells, the single cell in the middle, and the pair at the bottom right.",
+    picture="""Picture a map with patches of land in the sea. Scan the map cell by cell. Each time you step on
+    land that nobody has visited yet, you have found a new island: count it, then flood the whole
+    island (every land cell joined to it up, down, left or right), so that none of its cells is
+    counted again. When the scan ends, the count is the number of islands.""",
     idea=[
         "Scan the grid cell by cell. The first time we touch a piece of land that nobody has visited, we have discovered a new island — count it.",
         "The danger is counting the same island again from another of its cells. So as soon as an island is discovered, visit **all** of it and mark every cell as visited.",
@@ -24,6 +28,7 @@ lesson(
         Calls("dfs", "dfs({row}, {col})"),
         Vars("count"),
     ],
+    key={LAND: "land (1)", WATER: "water (0)", "seen": "just flooded"},
     notes=[
         ("count = 0",
          "The grid has {rows} rows and {cols} columns: green is land (`1`), dark blue is water (`0`). "
@@ -45,6 +50,38 @@ lesson(
         ("return count",
          "Every cell has been scanned. A flood-fill was started {count} times, so there are **{count} islands**."),
     ],
+    say={
+        "def numIslands": (
+            'The function we must write. It gets the `grid` of `"1"` (land) and `"0"` (water) and'
+            " returns how many islands there are."
+        ),
+        "if not grid": "Is the grid empty?",
+        "return 0": "Then there are no islands.",
+        "rows, cols = len(grid), len(grid[0])": "The grid's size.",
+        "count = 0": "The number of islands found so far.",
+        "def dfs(row, col)": (
+            "A helper that floods one island from this cell: it turns every connected land cell "
+            "into water, so it is not counted again."
+        ),
+        "if (": 'Is this cell outside the grid, or is it water (`"0"`)?',
+        "return@2": "Then there is nothing to flood here.",
+        'grid[row][col] = "0"': (
+            "Flood this land cell: turn it into water, so it is never visited or counted again."
+        ),
+        "directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]": (
+            "The four moves, down, up, right and left, written as (row change, column change)."
+        ),
+        "for dr, dc in directions": "Try each of the four moves.",
+        "dfs(row + dr, col + dc)": (
+            "Flood onward from that neighbouring cell (the helper calls itself)."
+        ),
+        "for i in range(rows)": "Scan every row of the grid…",
+        "for j in range(cols)": "…and every column in it.",
+        'if grid[i][j] == "1"': "Is this cell land that has not been flooded yet?",
+        "count += 1": "Then it belongs to a new island: count it.",
+        "dfs(i, j)": "And flood the whole island, so none of its other cells is counted.",
+        "return count": "Return the number of islands.",
+    },
     time=("O(rows × cols)", "Each cell is scanned once, and each land cell is sunk at most once."),
     space=("O(rows × cols)", "If the whole grid is land, the recursion can go as deep as the number of cells."),
     tests=[
@@ -63,6 +100,11 @@ lesson(
     args="numCourses=4, prerequisites=[[1, 0], [2, 0], [3, 1], [3, 2]]",
     expected=True,
     why="One valid order is 0 → 1 → 2 → 3.",
+    picture="""Picture a list of courses where some must be taken before others. Start with every course that
+    needs nothing first, and take those. Finishing a course crosses one item off the waiting list of
+    every course that depends on it; when a course's list is empty, it can be taken next. If some
+    course still has prerequisites left at the end, those courses form a circle (A needs B, B needs
+    A), so not everything can be finished.""",
     idea=[
         "Draw every rule as an arrow `b → a`. Finishing everything is impossible only when the arrows form a **cycle** (A needs B and B needs A).",
         "A course with no unmet prerequisites (in-degree 0) can be taken right now. Taking it removes its outgoing arrows, which may free other courses.",
@@ -101,6 +143,37 @@ lesson(
          "Every course reached in-degree 0, so all {numCourses} can be taken → **{_ret}**. "
          "(Had there been a cycle, its courses would be stuck above 0.)"),
     ],
+    say={
+        "def canFinish": (
+            "The function we must write. It gets the number of courses and the `prerequisites` "
+            "pairs, and answers whether every course can be finished."
+        ),
+        "graph = {i: [] for i in range(numCourses)}": (
+            "For each course, a list of the courses that depend on it. All empty at first."
+        ),
+        "in_degree = [0] * numCourses": (
+            "For each course, how many prerequisites it is still waiting for."
+        ),
+        "for course, prereq in prerequisites": (
+            "Go through each pair: `prereq` must come before `course`."
+        ),
+        "graph[prereq].append(course)": "Record that `course` depends on `prereq`.",
+        "in_degree[course] += 1": "`course` now waits for one more prerequisite.",
+        "queue = collections.deque(": (
+            "Start a queue with every course that waits for nothing: these can be taken right "
+            "away."
+        ),
+        "while queue": "Repeat while some course is ready to be taken.",
+        "node = queue.popleft()": "Take the next ready course.",
+        "for neighbor in graph[node]": "Go through the courses that depend on it.",
+        "in_degree[neighbor] -= 1": "Each of them now waits for one prerequisite fewer.",
+        "if in_degree[neighbor] == 0": "Is that course now waiting for nothing?",
+        "queue.append(neighbor)": "Then it is ready: add it to the queue.",
+        "return all(degree == 0 for degree in in_degree)": (
+            "Every course could be taken only if none is still waiting (`all` checks that every "
+            "count is 0). Anything left over is stuck in a circle."
+        ),
+    },
     time=("O(V + E)", "Every course (V) is queued once and every prerequisite arrow (E) is followed once."),
     space=("O(V + E)", "The adjacency list stores all arrows; the in-degree list and queue store up to V courses."),
     tests=[
@@ -146,6 +219,10 @@ lesson(
     expected=[[2, 4], [1, 3], [2, 4], [1, 3]],
     show_output="a new graph with the same shape: [[2,4],[1,3],[2,4],[1,3]]",
     why="The copy has four new nodes wired exactly like the original, and shares no node with it.",
+    picture="""Picture copying a network of friends, where each person keeps a list of their friends. Visit the
+    people one by one, making a new copy of each person the first time you meet them. Keep a
+    register of *original → copy*: when you meet someone again you reuse their copy instead of
+    making a second one, and a circle of friends cannot send you round forever.""",
     idea=[
         "Walk the graph with DFS and create one new node for every original node.",
         "Graphs have cycles, so the walk will come back to nodes it has already seen. A hash map **original → copy** answers two questions at once: *have I copied this node?* and *where is its copy?*",
@@ -181,6 +258,38 @@ lesson(
         ("return new_node", "Every neighbour of node {original_node.val} is linked. Its copy is complete — return it."),
         ("return dfs(node)", "The copy of the start node is returned. The whole graph hangs on it."),
     ],
+    say={
+        "def cloneGraph": (
+            "The function we must write. It gets one node and returns the matching node of a "
+            "complete copy of the graph."
+        ),
+        "if not node": "Is there no graph at all?",
+        "return None": "Then there is nothing to copy.",
+        "visited = {}": (
+            "A dictionary from each original node to its copy: the register of copies already "
+            "made."
+        ),
+        "def dfs(original_node)": (
+            "A helper that returns the copy of `original_node`, making it (and copies of "
+            "everything it links to) if needed."
+        ),
+        "if original_node in visited": "Has this node been copied already?",
+        "return visited[original_node]": (
+            "Then reuse its copy. This also stops the copying from going round a circle forever."
+        ),
+        "new_node = Node(original_node.val)": "Make a new node with the same value.",
+        "visited[original_node] = new_node": (
+            "Record it in the register *before* copying the neighbours, so a neighbour that links"
+            " back finds it."
+        ),
+        "for neighbor in original_node.neighbors": "Go through the original's neighbours.",
+        "new_neighbor = dfs(neighbor)": (
+            "Get that neighbour's copy (the helper calls itself, making it if needed)."
+        ),
+        "new_node.neighbors.append(new_neighbor)": "Link the copy to the neighbour's copy.",
+        "return new_node": "Return the finished copy.",
+        "return dfs(node)": "Copy the whole graph, starting from the given node.",
+    },
     time=("O(V + E)", "Every node is copied once and every edge is followed once from each side."),
     space=("O(V)", "The map holds one entry per node, and the recursion can be V deep."),
     tests=[
@@ -200,6 +309,9 @@ lesson(
     args="grid=[[1, 1, 0, 0, 0], [1, 0, 0, 1, 1], [0, 0, 1, 1, 0], [1, 0, 0, 0, 0]]",
     expected=4,
     why="The islands have 3, 4 and 1 cells; the largest covers 4.",
+    picture="""Picture the same map of land and sea, but now you want the biggest island. Each time you step
+    onto land not visited yet, walk over its whole island, marking every cell as visited and
+    counting it. A cell counts 1, plus whatever its four neighbours add. Keep the biggest count.""",
     idea=[
         "Scan the grid. Each time unvisited land is found, flood-fill that island — exactly as in Number of Islands.",
         "This time the flood-fill **returns how many cells it visited**: 1 for the cell itself plus whatever its four neighbours report.",
@@ -210,6 +322,7 @@ lesson(
         Calls("dfs", "dfs({row}, {col})"),
         Vars("max_area"),
     ],
+    key={LAND: "land (1)", WATER: "water (0)", "seen": "just visited"},
     notes=[
         ("max_area = 0", "Green is land, dark blue is water. `max_area` remembers the largest island measured so far."),
         ("if grid[row][col] == 1", dict(
@@ -232,6 +345,37 @@ lesson(
         ])),
         ("return max_area", "Every cell has been scanned. The largest island covers **{max_area}** cells."),
     ],
+    say={
+        "def maxAreaOfIsland": (
+            "The function we must write. It gets the `grid` and returns the area of the biggest "
+            "island."
+        ),
+        "def dfs(row, col)": (
+            "A helper that returns how many land cells the island containing this cell has, "
+            "marking them as visited."
+        ),
+        "if (": "Is this cell outside the grid, or is it water (`0`)?",
+        "return 0": "Then it adds no area.",
+        "grid[row][col] = 0": (
+            "Mark this land cell as visited by turning it into water, so it is counted only once."
+        ),
+        "area = 1": "This cell counts as 1.",
+        "area += dfs(row + 1, col)": (
+            "Add the land reachable through the cell below (the helper calls itself)."
+        ),
+        "area += dfs(row - 1, col)": "Add the land reachable through the cell above.",
+        "area += dfs(row, col + 1)": "Add the land reachable through the cell to the right.",
+        "area += dfs(row, col - 1)": "Add the land reachable through the cell to the left.",
+        "return area": "Report the total area found from here.",
+        "max_area = 0": "The biggest area found so far.",
+        "for row in range(len(grid))": "Scan every row of the grid…",
+        "for col in range(len(grid[0]))": "…and every column in it.",
+        "if grid[row][col] == 1": "Is this land that has not been visited yet?",
+        "max_area = max(max_area, dfs(row, col))": (
+            "Measure its whole island, and keep the bigger of that and the best so far."
+        ),
+        "return max_area": "Return the biggest area.",
+    },
     time=("O(rows × cols)", "Each cell is scanned once and each land cell is sunk exactly once."),
     space=("O(rows × cols)", "In the worst case (all land) the recursion is as deep as the number of cells."),
     tests=[
@@ -257,6 +401,10 @@ lesson(
     expected=[[0, 2], [1, 1], [2, 0]],
     unordered=1,
     why="The two corners touch both oceans directly, and the peak (5) drains up or left into the Pacific and down or right into the Atlantic.",
+    picture="""Picture pouring water *backwards*, uphill from each ocean. Start at every cell along the Pacific
+    edges and spread to any neighbour that is at least as high: water could flow from there down to
+    the Pacific. Do the same from the Atlantic edges. The cells reached from both oceans are the
+    ones whose rain can flow to both.""",
     idea=[
         "Testing every cell with its own search (*can I flow down to each ocean?*) repeats a huge amount of work.",
         "Turn it around: start **at the ocean** and walk **uphill** (to neighbours that are equal or higher). Every cell reached this way can send water back down the same path into that ocean.",
@@ -271,6 +419,7 @@ lesson(
                     "cur": "(r, c) if _depth > 1 else None"}),
         Calls("dfs", "dfs({r}, {c})  {'Pacific' if reachable is pacific_reachable else 'Atlantic'}"),
     ],
+    key={PACIFIC: "water reaches the Pacific", ATLANTIC: "water reaches the Atlantic", "good": "reaches both oceans"},
     notes=[
         ("atlantic_reachable = set()",
          "Two sets: the cells that can drain into the Pacific, and the cells that can drain into the Atlantic. "
@@ -290,6 +439,44 @@ lesson(
          "Both walks are finished. The green cells were reached from **both** oceans: {sorted(_ret)}."),
     ],
     result="sorted(_ret)",
+    say={
+        "def pacificAtlantic": (
+            "The function we must write. It gets the `heights` grid and returns every cell from "
+            "which rain can reach both oceans."
+        ),
+        "if not heights": "Is the grid empty?",
+        "return []": "Then there are no such cells.",
+        "rows, cols = len(heights), len(heights[0])": "The grid's size.",
+        "pacific_reachable = set()": "The cells whose water can reach the Pacific.",
+        "atlantic_reachable = set()": "The cells whose water can reach the Atlantic.",
+        "def dfs(r, c, reachable)": (
+            "A helper that spreads *uphill* from this cell, adding every cell it reaches to "
+            "`reachable`."
+        ),
+        "reachable.add((r, c))": "Water from this cell can reach the ocean: record it.",
+        "for dr, dc in [(1, 0), (-1, 0), (0, 1), (0, -1)]": (
+            "Try the four neighbours: down, up, right and left."
+        ),
+        "nr, nc = r + dr, c + dc": "The neighbour's row and column.",
+        "if (": (
+            "Is the neighbour inside the grid, not recorded yet, and at least as high as this "
+            "cell? Then water could flow from it down to here."
+        ),
+        "dfs(nr, nc, reachable)": "Then spread on from the neighbour (the helper calls itself).",
+        "for r in range(rows)": "Go down the rows.",
+        "dfs(r, 0, pacific_reachable)": "The left edge touches the Pacific: spread from there.",
+        "dfs(r, cols - 1, atlantic_reachable)": (
+            "The right edge touches the Atlantic: spread from there."
+        ),
+        "for c in range(cols)": "Go along the columns.",
+        "dfs(0, c, pacific_reachable)": "The top edge touches the Pacific: spread from there.",
+        "dfs(rows - 1, c, atlantic_reachable)": (
+            "The bottom edge touches the Atlantic: spread from there."
+        ),
+        "return list(pacific_reachable & atlantic_reachable)": (
+            "The cells in both sets can reach both oceans (`&` keeps what two sets share)."
+        ),
+    },
     time=("O(rows × cols)", "Each cell is visited at most once per ocean."),
     space=("O(rows × cols)", "Two sets of cells plus the recursion stack."),
     tests=[
@@ -310,6 +497,10 @@ lesson(
     result="board",
     expected=[["X", "X", "X", "X"], ["X", "X", "X", "X"], ["X", "X", "X", "X"], ["X", "O", "X", "X"]],
     why="The three O's in the middle are enclosed and get flipped. The O in the bottom row touches the border, so it survives.",
+    picture="""Picture each region of `O`s as a puddle on the board. A puddle that touches the edge can drain
+    away, so it is safe; a puddle with no way to the edge gets filled in with `X`. So first walk
+    inward from every `O` on the edge and mark its whole safe puddle with `E`. Then sweep the board:
+    every `O` still unmarked is surrounded and becomes `X`, and every `E` turns back into `O`.""",
     idea=[
         "Deciding directly whether a region is surrounded is awkward. The opposite is easy: an `O` is **safe** exactly when it is connected to an `O` on the border.",
         "So start a flood-fill from every border `O` and mark everything it reaches with a temporary letter `E` (*escaped*).",
@@ -320,6 +511,7 @@ lesson(
              title="board  (orange = O, green = safe, connected to the border)"),
         Calls("dfs", "dfs({row}, {col})"),
     ],
+    key={"mark": "O, not known to be safe yet", "good": "safe: joined to the border", "dim": "X", "bad": "captured: flipped to X"},
     notes=[
         ('if board[row][0] == "O"', dict(
             yes="Left border: ({row}, 0) is an `O`. It touches the edge, so it — and every `O` connected to it — can never be captured. Mark them safe.")),
@@ -348,6 +540,49 @@ lesson(
     ],
     allow_unused=True,
     outro="Done. The enclosed region was captured and the `O` on the border survived. The board was changed in place, so nothing is returned.",
+    say={
+        "def solve": (
+            "The function we must write. It gets the `board` and changes it in place; it returns "
+            "nothing."
+        ),
+        '"""@1': (
+            "A note from LeetCode (a *docstring*): change the board itself, and do not return "
+            "anything."
+        ),
+        "def dfs(row, col)": (
+            "A helper that marks a whole safe region: it turns this `O`, and every `O` connected "
+            "to it, into `E`."
+        ),
+        "if (": "Is this cell outside the board, or anything other than an `O`?",
+        "return": "Then there is nothing to mark here.",
+        'board[row][col] = "E"': (
+            "Mark the cell `E`: it is connected to the edge, so it will not be captured."
+        ),
+        "dfs(row + 1, col)": "Mark onward through the cell below (the helper calls itself).",
+        "dfs(row - 1, col)": "And through the cell above.",
+        "dfs(row, col + 1)": "And through the cell to the right.",
+        "dfs(row, col - 1)": "And through the cell to the left.",
+        "for row in range(len(board)):@1": "Step 1: check the left and right edges, row by row.",
+        'if board[row][0] == "O"': "Is there an `O` on the left edge?",
+        "dfs(row, 0)": "Then mark its whole region as safe.",
+        'if board[row][len(board[0]) - 1] == "O"': "Is there an `O` on the right edge?",
+        "dfs(row, len(board[0]) - 1)": "Then mark its whole region as safe.",
+        "for col in range(len(board[0])):@1": (
+            "Then check the top and bottom edges, column by column."
+        ),
+        'if board[0][col] == "O"': "Is there an `O` on the top edge?",
+        "dfs(0, col)": "Then mark its whole region as safe.",
+        'if board[len(board) - 1][col] == "O"': "Is there an `O` on the bottom edge?",
+        "dfs(len(board) - 1, col)": "Then mark its whole region as safe.",
+        "for row in range(len(board)):@2": "Step 2: sweep the whole board, row by row…",
+        "for col in range(len(board[0])):@2": "…and column by column.",
+        'if board[row][col] == "O"': (
+            "An `O` that was never marked cannot reach the edge: it is surrounded."
+        ),
+        'board[row][col] = "X"': "So capture it: turn it into `X`.",
+        'elif board[row][col] == "E"': "Is this cell marked safe?",
+        'board[row][col] = "O"': "Then turn it back into `O`.",
+    },
     time=("O(rows × cols)", "Each cell is visited a constant number of times."),
     space=("O(rows × cols)", "Recursion depth in the worst case (a board full of connected O's)."),
     tests=[
@@ -371,6 +606,11 @@ lesson(
     args="grid=[[2, 1, 1], [1, 1, 0], [0, 1, 1]]",
     expected=4,
     why="The rot spreads one step per minute; the orange in the bottom-right corner is 4 steps away from the rotten one.",
+    picture="""Picture rot spreading through a crate of oranges, minute by minute. Every rotten orange spoils
+    its fresh neighbours (up, down, left, right) in the next minute, and they spoil theirs the
+    minute after, like ripples on a pond. A queue holds the oranges that rotted most recently, one
+    minute's worth at a time. When the rot stops spreading, either every orange is rotten, and the
+    answer is the minutes passed, or some fresh orange could never be reached, and the answer is -1.""",
     idea=[
         "Rot spreads outward from **all** rotten oranges at the same time, one step per minute. That is exactly a breadth-first search with several starting points.",
         "Put every rotten orange in a queue. Process the queue **one whole level at a time**: everything in the queue at the start of a round rots its fresh neighbours during the same minute.",
@@ -383,6 +623,7 @@ lesson(
         Queue("rotten", title="rotten  (queue: will spread next)"),
         Vars("minutes", "fresh_count"),
     ],
+    key={FRESH: "fresh orange (1)", ROTTEN: "rotten orange (2)", "mark": "in the queue: spreads rot next", "bad": "has just rotted"},
     notes=[
         ("rotten.append((row, col))",
          "({row}, {col}) is rotten from the start. Put it in the queue — the rot spreads from here."),
@@ -407,6 +648,49 @@ lesson(
             (None, "{fresh_count} fresh orange(s) could never be reached by the rot → **-1**."),
         ]),
     ],
+    say={
+        "def orangesRotting": (
+            "The function we must write. It gets the `grid` and returns how many minutes pass "
+            "until no fresh orange is left, or -1."
+        ),
+        "if not grid": "Is the grid empty?",
+        "return -1": "Then the code gives up straight away: -1.",
+        "rows, cols = len(grid), len(grid[0])": "The grid's size.",
+        "fresh_count = 0": "How many fresh oranges are left.",
+        "rotten = deque()": (
+            "A queue of the oranges that have just turned rotten and will spread the rot next."
+        ),
+        "directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]": (
+            "The four neighbours: down, up, right and left."
+        ),
+        "for row in range(rows)": "Scan every row…",
+        "for col in range(cols)": "…and every column in it.",
+        "if grid[row][col] == 2": "Is this orange already rotten (`2`)?",
+        "rotten.append((row, col))": "Then it spreads rot from minute 0: put it in the queue.",
+        "elif grid[row][col] == 1": "Is it fresh (`1`)?",
+        "fresh_count += 1": "Then count it.",
+        "minutes = 0": "The minutes passed so far.",
+        "while rotten": "Repeat while some orange can still spread rot.",
+        "level_size = len(rotten)": (
+            "The queue now holds exactly the oranges that rotted in the last minute. Count them."
+        ),
+        "for _ in range(level_size)": "Let each of them spread rot during this minute.",
+        "row, col = rotten.popleft()": "Take one of them from the front of the queue.",
+        "for dr, dc in directions": "Look at its four neighbours.",
+        "new_row, new_col = row + dr, col + dc": "The neighbour's row and column.",
+        "if (": "Is the neighbour inside the grid, and a fresh orange?",
+        "grid[new_row][new_col] = 2": "Then it turns rotten.",
+        "fresh_count -= 1": "One fresh orange fewer.",
+        "rotten.append((new_row, new_col))": (
+            "It will spread the rot next minute: add it to the queue."
+        ),
+        "if rotten": "Did any orange turn rotten during this minute?",
+        "minutes += 1": "Then a whole minute has passed.",
+        "return minutes if fresh_count == 0 else -1": (
+            "If no fresh orange is left, return the minutes passed. Otherwise some could never be"
+            " reached: return -1."
+        ),
+    },
     time=("O(rows × cols)", "Each cell enters the queue at most once."),
     space=("O(rows × cols)", "The queue can hold a large part of the grid."),
     tests=[
@@ -449,6 +733,10 @@ lesson(
     result="rooms",
     expected=[[3, -1, 0, 1], [2, 2, 1, -1], [1, -1, 2, -1], [0, -1, 3, 4]],
     why="Every room now holds its distance to the closer of the two gates.",
+    picture="""Picture every gate sending out a wave at the same moment, one room per step. Each empty room is
+    reached first by the wave of its nearest gate, and that wave writes down how many steps it took.
+    A queue keeps the waves in step, so rooms closer to a gate are always reached before rooms
+    further away.""",
     idea=[
         "Running a separate search from every room (or from every gate) repeats work. Instead start a **single BFS from all gates at once**.",
         "BFS moves outward in rings: first all rooms 1 step from *some* gate, then all rooms 2 steps away, and so on.",
@@ -461,6 +749,7 @@ lesson(
              tones={"mark": "list(queue)", "cur": "(row, col)"}),
         Queue("queue", title="queue  (cells whose neighbours still need a look)"),
     ],
+    key={"dim": "wall (-1)", "good": "gate (0)", "mark": "in the queue", "seen": "distance just written in"},
     notes=[
         ("queue.append((r, c))", "({r}, {c}) is a **gate** (0). Every gate is a starting point of the search, so it goes into the queue."),
         ("row, col = queue.popleft()", [
@@ -476,6 +765,34 @@ lesson(
         ("while queue", dict(no="The queue is empty: every reachable room has received its distance.")),
     ],
     outro="Done. Each room holds the distance to its nearest gate. The grid was changed in place, so nothing is returned.",
+    say={
+        "def wallsAndGates": (
+            "The function we must write. It gets the `rooms` grid and writes each empty room's "
+            "distance to its nearest gate into it; it returns nothing."
+        ),
+        "INF = 2147483647": "The number that marks an empty room not reached yet.",
+        "rows, cols = len(rooms), len(rooms[0])": "The grid's size.",
+        "queue = deque()": (
+            "A queue of cells whose distance is known and whose neighbours still need a visit."
+        ),
+        "for r in range(rows)": "Scan every row…",
+        "for c in range(cols)": "…and every column in it.",
+        "if rooms[r][c] == 0": "Is this cell a gate?",
+        "queue.append((r, c))": (
+            "Then its wave starts now, together with every other gate's: add it to the queue."
+        ),
+        "while queue": "Repeat while some cell still has neighbours to reach.",
+        "row, col = queue.popleft()": "Take the next cell from the front of the queue.",
+        "for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1))": "Look at its four neighbours.",
+        "nr, nc = row + dr, col + dc": "The neighbour's row and column.",
+        "if 0 <= nr < rows and 0 <= nc < cols and rooms[nr][nc] == INF": (
+            "Is the neighbour inside the grid, and an empty room not reached yet?"
+        ),
+        "rooms[nr][nc] = rooms[row][col] + 1": (
+            "It is one step further than this cell: write that distance in."
+        ),
+        "queue.append((nr, nc))": "Its neighbours come later: add it to the queue.",
+    },
     time=("O(rows × cols)", "Every cell enters the queue at most once."),
     space=("O(rows × cols)", "The queue can hold a large part of the grid."),
     tests=[
@@ -495,6 +812,11 @@ lesson(
     args="numCourses=4, prerequisites=[[1, 0], [2, 0], [3, 1], [3, 2]]",
     expected=[0, 1, 2, 3],
     why="Course 0 unlocks 1 and 2, and both of them are needed for 3. ([0, 2, 1, 3] would be accepted as well.)",
+    picture="""Picture the same list of courses as in Course Schedule, but now you also write down the order
+    you take them in. Start with every course that needs nothing first. Each course you take crosses
+    one item off the waiting list of every course that depends on it, and a course whose list is
+    empty can be taken next. If every course ends up in your order, that order works; if not, some
+    courses are stuck in a circle.""",
     idea=[
         "Draw each rule as an arrow `prerequisite → course`. A valid order lists every course after all the courses pointing at it — a **topological order**.",
         "A course whose in-degree (number of unmet prerequisites) is 0 can be taken now. Take it, append it to the order, and remove its outgoing arrows — that may free other courses.",
@@ -530,6 +852,39 @@ lesson(
             (None, "Only {len(order)} of {numCourses} courses could be taken — the rest are stuck on a cycle → **[]**."),
         ]),
     ],
+    say={
+        "def findOrder": (
+            "The function we must write. It gets the number of courses and the pairs, and returns"
+            " an order to take them all in, or an empty list."
+        ),
+        "order = []": "The order in which the courses are taken.",
+        "graph = {i: [] for i in range(numCourses)}": (
+            "For each course, a list of the courses that depend on it. All empty at first."
+        ),
+        "in_degree = [0] * numCourses": (
+            "For each course, how many prerequisites it is still waiting for."
+        ),
+        "for course, prereq in prerequisites": (
+            "Go through each pair: `prereq` must come before `course`."
+        ),
+        "graph[prereq].append(course)": "Record that `course` depends on `prereq`.",
+        "in_degree[course] += 1": "`course` now waits for one more prerequisite.",
+        "queue = collections.deque(": (
+            "Start a queue with every course that waits for nothing: these can be taken right "
+            "away."
+        ),
+        "while queue": "Repeat while some course is ready to be taken.",
+        "node = queue.popleft()": "Take the next ready course.",
+        "for neighbor in graph[node]": "Go through the courses that depend on it.",
+        "in_degree[neighbor] -= 1": "Each of them now waits for one prerequisite fewer.",
+        "if in_degree[neighbor] == 0": "Is that course now waiting for nothing?",
+        "queue.append(neighbor)": "Then it is ready: add it to the queue.",
+        "order.append(node)": "Take it now: add it to the order.",
+        "return order if len(order) == numCourses else []": (
+            "If every course made it into the order, return it. Otherwise some courses are stuck "
+            "in a circle: return an empty list."
+        ),
+    },
     time=("O(V + E)", "Every course is queued once and every prerequisite arrow is followed once."),
     space=("O(V + E)", "The adjacency list stores all arrows; in-degrees, queue and order store up to V courses."),
     tests=[
@@ -555,6 +910,11 @@ lesson(
     args="edges=[[1, 2], [2, 3], [3, 4], [1, 4], [1, 5]]",
     expected=[1, 4],
     why="1–2, 2–3 and 3–4 already connect node 1 with node 4, so the edge 1–4 closes a cycle.",
+    picture="""Picture joining islands with bridges, one bridge at a time, while keeping track of which islands
+    are already connected. Every connected group has one leader. Before building a bridge, ask both
+    of its ends who their leader is. The same leader means the two islands are already connected, so
+    this bridge would make a loop: it is the extra one. Otherwise build it, and the two groups merge
+    under one leader.""",
     idea=[
         "Add the edges one at a time and keep track of which nodes are **already connected** to each other (which *group* each node is in).",
         "An edge between two nodes of **different** groups is useful: it merges the groups. An edge between two nodes of the **same** group adds a second route between them — a cycle. That is the redundant edge.",
@@ -593,6 +953,33 @@ lesson(
         ("return edge", "Return the edge that closed the cycle: **{edge}**.", {"graph_edges.bad": "(u, v)"}),
     ],
     allow_unused=True,
+    say={
+        "def findRedundantConnection": (
+            "The function we must write. It gets the `edges` and returns the one that closes a "
+            "loop."
+        ),
+        "n = len(edges)": "There are as many nodes as edges.",
+        "parent = list(range(n + 1))": (
+            "Every node starts as the leader of its own group: `parent[x]` is `x`."
+        ),
+        "def find(x)": "A helper that finds the leader of `x`'s group.",
+        "if parent[x] != x": "Is `x` not its own leader?",
+        "parent[x] = find(parent[x])": (
+            "Then follow its parent up to the top leader, and point `x` straight at that leader, "
+            "so the next search is quicker (the helper calls itself)."
+        ),
+        "return parent[x]": "Return the leader.",
+        "def union(x, y)": "A helper that merges the groups of `x` and `y`.",
+        "parent[find(x)] = find(y)": "Make `y`'s leader the leader of `x`'s whole group.",
+        "for edge in edges": "Go through the edges in order.",
+        "u, v = edge": "The edge joins `u` and `v`.",
+        "if find(u) == find(v)": (
+            "Do `u` and `v` already have the same leader, so are they already connected?"
+        ),
+        "return edge": "Then this edge would close a loop: it is the extra one.",
+        "union(u, v)": "Otherwise add it: merge the two groups.",
+        "return []": "Never reached for valid input, which always has one extra edge.",
+    },
     time=("O(n log n)", "One find/union pair per edge. With path compression alone each one costs O(log n) amortised — "
                         "in practice almost constant. (Adding union by rank brings the total down to O(n · α(n)).)"),
     space=("O(n)", "The parent array."),
@@ -612,6 +999,10 @@ lesson(
     args="n=5, edges=[[0, 1], [1, 2], [3, 4]]",
     expected=2,
     why="Nodes 0, 1, 2 form one group and nodes 3, 4 another.",
+    picture="""Picture people and the friendships between them. A *component* is a group of people linked by
+    friendships, directly or through others. Go through the people one by one. Whenever you meet
+    someone not visited yet, they start a new group: count it, then visit everyone reachable from
+    them through friendships, marking each one, so that nobody in that group starts another count.""",
     idea=[
         "Build an adjacency list so that every node knows its neighbours.",
         "Go through the nodes in order. A node that has **not been visited** yet belongs to a component nobody has seen — count one more.",
@@ -639,6 +1030,32 @@ lesson(
             marks={"graph_edges.cur": "(node, neighbor)"})),
         ("return components", "Every node has been checked. A DFS was started {components} times → **{components} components**."),
     ],
+    say={
+        "def countComponents": (
+            "The function we must write. It gets `n` and the `edges`, and returns how many "
+            "separate groups there are."
+        ),
+        "graph = defaultdict(list)": (
+            "For each node, the list of its neighbours (a new node gets an empty list by itself)."
+        ),
+        "for u, v in edges": "Go through the edges.",
+        "graph[u].append(v)": "Record `v` as a neighbour of `u`.",
+        "graph[v].append(u)": "And `u` as a neighbour of `v`: the edge goes both ways.",
+        "def dfs(node)": "A helper that visits every node reachable from `node`.",
+        "visited.add(node)": "Mark this node as visited.",
+        "for neighbor in graph[node]": "Look at each neighbour.",
+        "if neighbor not in visited": "Has it not been visited yet?",
+        "dfs(neighbor)": (
+            "Then visit it, and everything reachable from it (the helper calls itself)."
+        ),
+        "visited = set()": "The nodes visited so far.",
+        "components = 0": "The number of groups found so far.",
+        "for node in range(n)": "Go through every node.",
+        "if node not in visited": "Has this node not been reached from an earlier group?",
+        "components += 1": "Then it starts a new group: count it.",
+        "dfs(node)": "And visit its whole group, so no other member starts a count.",
+        "return components": "Return the number of groups.",
+    },
     time=("O(V + E)", "Every node is visited once and every edge is looked at from both ends."),
     space=("O(V + E)", "The adjacency list, the visited set and the recursion stack."),
     tests=[
@@ -657,6 +1074,10 @@ lesson(
     args="n=5, edges=[[0, 1], [0, 2], [0, 3], [1, 4]]",
     expected=True,
     why="4 edges for 5 nodes, every node can be reached from node 0, and there is no cycle.",
+    picture="""Picture towns joined by roads. They form a *tree* when every town can be reached and there is no
+    loop. Two facts decide it. A tree with `n` towns has exactly `n − 1` roads, so any other count
+    fails at once. With exactly `n − 1` roads, the towns form a tree as long as a walk from town 0
+    reaches all of them without finding a loop.""",
     idea=[
         "A tree on `n` nodes always has **exactly n − 1 edges**. Any other count can be rejected immediately.",
         "With the right number of edges, walk the graph by DFS from node 0. Seeing an already-visited node (other than the one we just came from) means there is a **cycle**.",
@@ -694,6 +1115,42 @@ lesson(
         ]),
     ],
     allow_unused=True,
+    say={
+        "def validTree": (
+            "The function we must write. It gets `n` and the `edges`, and answers whether they "
+            "form a tree."
+        ),
+        "if len(edges) != n - 1": (
+            "A tree on `n` nodes has exactly `n − 1` edges. Is the count different?"
+        ),
+        "return False@1": "Then it cannot be a tree.",
+        "graph = defaultdict(list)": (
+            "For each node, the list of its neighbours (a new node gets an empty list by itself)."
+        ),
+        "for u, v in edges": "Go through the edges.",
+        "graph[u].append(v)": "Record `v` as a neighbour of `u`.",
+        "graph[v].append(u)": "And `u` as a neighbour of `v`: the edge goes both ways.",
+        "visited = set()": "The nodes visited so far.",
+        "def dfs(node, parent)": (
+            "A helper that walks on from `node`, having come from `parent`. It answers `False` if"
+            " it finds a loop."
+        ),
+        "visited.add(node)": "Mark this node as visited.",
+        "for neighbor in graph[node]": "Look at each neighbour.",
+        "if neighbor != parent": (
+            "Skip the node we just came from: going straight back along the same edge is not a "
+            "loop."
+        ),
+        "if neighbor in visited or not dfs(neighbor, node)": (
+            "Have we already seen this neighbour (so there are two routes to it: a loop), or does"
+            " the walk on from it find a loop?"
+        ),
+        "return False@2": "Then there is a loop: not a tree.",
+        "return True": "No loop down this way.",
+        "if not dfs(0, -1)": "Walk from node 0 (it has no parent, so -1). Did it find a loop?",
+        "return False@3": "Then it is not a tree.",
+        "return len(visited) == n": "No loop. It is a tree if the walk reached every node.",
+    },
     time=("O(V + E)", "Every node and edge is handled a constant number of times."),
     space=("O(V + E)", "Adjacency list, visited set and recursion stack."),
     tests=[
@@ -723,6 +1180,10 @@ lesson(
     args='beginWord="hit", endWord="cog", wordList=["hot", "dot", "dog", "lot", "log", "cog"]',
     expected=5,
     why="hit → hot → dot → dog → cog is a shortest ladder: 5 words.",
+    picture="""Picture a word game in which you change one letter at a time and every step must be a real word,
+    for example `hit` → `hot` → `dot` → `dog` → `cog`. Explore like ripples on a pond: first every
+    word one change away, then every word two changes away, and so on. The first time a ripple
+    reaches the end word, you know the shortest ladder.""",
     idea=[
         "Picture every word as a node, with a line between two words that differ in exactly one letter. A ladder is a **path** in this graph.",
         "The shortest path in an unweighted graph is found by **BFS**: it visits all words 1 step away, then all words 2 steps away, and so on — so the first time `endWord` comes out of the queue, the ladder is as short as possible.",
@@ -762,6 +1223,46 @@ lesson(
         ("return 0@2", "The queue ran empty without reaching `{endWord}` → **0**."),
     ],
     allow_unused=True,
+    say={
+        "def ladderLength": (
+            "The function we must write. It gets the start word, the end word and the allowed "
+            "`wordList`, and returns how many words the shortest ladder has (0 if there is none)."
+        ),
+        "wordSet = set(wordList)": (
+            "Put the allowed words in a set, so *is this a real word?* is answered instantly."
+        ),
+        "if endWord not in wordSet": "Is the end word not even allowed?",
+        "return 0@1": "Then no ladder can reach it.",
+        "queue = deque([(beginWord, 1)])": (
+            "A queue of `(word, words in the ladder so far)`. It starts with the first word: a "
+            "ladder of 1."
+        ),
+        "visited = set()": "Words already put in the queue, so none is explored twice.",
+        "while queue": "Repeat while there are words left to explore.",
+        "word, level = queue.popleft()": (
+            "Take the next word, and its ladder length, from the front of the queue."
+        ),
+        "if word == endWord": "Is it the end word?",
+        "return level": (
+            "Then this ladder is the shortest: every word closer to the start was explored first."
+        ),
+        "for i in range(len(word))": "Try changing each position of the word.",
+        'for c in "abcdefghijklmnopqrstuvwxyz"': (
+            "Try every letter of the alphabet at that position."
+        ),
+        "new_word = word[:i] + c + word[i + 1 :]": (
+            "Build the new word: the part before position `i`, the new letter, then the part "
+            "after it."
+        ),
+        "if new_word in wordSet and new_word not in visited": (
+            "Is it an allowed word that has not been queued yet?"
+        ),
+        "visited.add(new_word)": "Mark it as queued.",
+        "queue.append((new_word, level + 1))": (
+            "Add it to the queue, one step further along the ladder."
+        ),
+        "return 0@2": "The queue ran out without reaching the end word: there is no ladder.",
+    },
     time=("O(N · L²)", "Each of the N words is expanded once: L positions × 26 letters, and building and looking up "
                        "each candidate word costs O(L)."),
     space=("O(N · L)", "The word set, the visited set and the queue."),

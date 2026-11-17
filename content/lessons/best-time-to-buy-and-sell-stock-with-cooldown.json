@@ -39,12 +39,28 @@
    "output": "0"
   }
  ],
+ "picture": "Picture keeping three running totals as the days go by, one for each situation you could be in at the end of a day: *holding a share*, *just sold* (so tomorrow is a rest day), or *resting* with no share. Each day's totals come from yesterday's. You are holding if you kept yesterday's share or bought after a rest; you have just sold only if you held a share yesterday; you are resting if you rested or sold yesterday. At the end, the better of the two situations without a share is the answer.",
  "idea": [
   "At the end of any day you are in exactly one of three situations: **holding** a share, having **just sold** today, or **resting** (no share, free to buy tomorrow).",
   "Track the best profit for each situation. Holding: keep holding, or buy today — but only coming from *resting*, never directly after a sale. Just sold: you were holding and sell today. Resting: you were already resting, or you sold yesterday.",
   "Each day's three values depend only on yesterday's three, so three variables are enough. At the end you should not be holding: the answer is the better of *just sold* and *resting*."
  ],
  "code": "class Solution:\n    def maxProfit(self, prices: List[int]) -> int:\n        if not prices:\n            return 0\n\n        # Initialize variables to represent the maximum profit after each action.\n        buy = -prices[\n            0\n        ]  # Maximum profit after buying on day 0 (negative because we spend money).\n        sell = 0  # Maximum profit after selling on day 0 (no profit yet).\n        cooldown = 0  # Maximum profit after cooldown on day 0 (no profit yet).\n\n        for i in range(1, len(prices)):\n            # To maximize profit on day 'i', we can either:\n\n            # 1. Buy on day 'i'. We subtract the price of the stock from the maximum profit after cooldown on day 'i-2'.\n            new_buy = max(buy, cooldown - prices[i])\n\n            # 2. Sell on day 'i'. We add the price of the stock to the maximum profit after buying on day 'i-1'.\n            new_sell = buy + prices[i]\n\n            # 3. Do nothing (cooldown) on day 'i'. We take the maximum of the maximum profit after cooldown on day 'i-1' and after selling on day 'i-1'.\n            new_cooldown = max(cooldown, sell)\n\n            # Update the variables for the next iteration.\n            buy, sell, cooldown = new_buy, new_sell, new_cooldown\n\n        # The maximum profit will be the maximum of the profit after selling on the last day and the profit after cooldown on the last day.\n        return max(sell, cooldown)",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the daily `prices` and returns the most profit possible under the cooldown rule.",
+  "3": "Is the price list empty?",
+  "4": "Then there is no profit.",
+  "7": "The best total if you end day 0 *holding* a share: you bought it, so you are down by its price.",
+  "10": "The best total if you *just sold*. Nothing has been sold yet, so it starts at 0.",
+  "11": "The best total if you end day 0 *resting*, holding nothing: 0.",
+  "13": "Go through the remaining days.",
+  "17": "Holding today: either keep yesterday's share, or buy today after a rest day.",
+  "20": "Just sold today: you must have held a share yesterday, and you get today's price for it.",
+  "23": "Resting today: either you were already resting, or you sold yesterday and must wait.",
+  "26": "Today's three totals become the starting point for tomorrow.",
+  "29": "At the end, still holding a share is never best: take the better of *just sold* and *resting*."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "One pass over the days.",

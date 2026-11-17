@@ -1,12 +1,15 @@
 "use client";
 
 import {
+  createContext,
   useCallback,
+  useContext,
   useEffect,
   useLayoutEffect,
   useMemo,
   useReducer,
   useRef,
+  useState,
   type ReactNode,
 } from "react";
 import { useFrame } from "@react-three/fiber";
@@ -171,6 +174,90 @@ export function Glide({
   return <group ref={group}>{children}</group>;
 }
 
+// ---- where a value came from --------------------------------------------------
+
+/**
+ * Every highlighted piece that shows a value registers itself here under that value.  When a new
+ * piece appears with the same value (a number written into a hash map, a bracket pushed onto a
+ * stack), it flies in from that piece, so the learner sees where it was copied from.
+ */
+type Sources = Map<string, Map<THREE.Object3D, number>>;
+
+const SourceContext = createContext<Sources | null>(null);
+
+export function SourceProvider({ children }: { children: ReactNode }) {
+  const sources = useMemo<Sources>(() => new Map(), []);
+  return <SourceContext.Provider value={sources}>{children}</SourceContext.Provider>;
+}
+
+/** The one piece (other than `self`) showing `text` that was highlighted before `bornAt`. */
+function sourceOf(sources: Sources | null, text: string, self: THREE.Object3D, bornAt: number) {
+  const found = [...(sources?.get(text) ?? [])].filter(([obj, since]) => obj !== self && since < bornAt);
+  return found.length === 1 ? found[0][0] : null;
+}
+
+const now = () => (typeof performance !== "undefined" ? performance.now() : 0);
+
+/** How long a piece takes to fly in from its source, in seconds. */
+const FLY_S = 0.6;
+
+/** How long the old value of a changed piece takes to drift away, in seconds. */
+const GHOST_S = 1.1;
+let ghostSeq = 0;
+
+/** The value a piece held a moment ago, rising off it and fading: a change reads as before → after. */
+function Ghost({
+  text,
+  size,
+  top,
+  z,
+  onDone,
+}: {
+  text: string;
+  size: number;
+  /** half the height of the piece: the ghost rises from its middle to just above its top */
+  top: number;
+  z: number;
+  onDone: () => void;
+}) {
+  const ref = useRef<THREE.Mesh & { fillOpacity: number; outlineOpacity: number }>(null);
+  const age = useRef(0);
+  const done = useRef(false);
+  useFrame((_, dt) => {
+    const m = ref.current;
+    if (!m || done.current) return;
+    age.current += Math.min(dt, 0.1);
+    const k = Math.min(1, age.current / GHOST_S);
+    const out = 1 - (1 - k) * (1 - k); // eases out: quick to lift off, slow to settle
+    // from the top edge of the piece to well above it, fading on the way
+    m.position.y = top * 0.55 + out * (top * 0.45 + size * 1.6);
+    m.fillOpacity = 0.95 * (1 - k * k);
+    m.outlineOpacity = 0.9 * (1 - k * k);
+    if (k >= 1) {
+      done.current = true;
+      onDone();
+    }
+  });
+  return (
+    <Text
+      ref={ref}
+      font={FONT}
+      fontSize={size}
+      color="#f1f5fb"
+      fillOpacity={0.95}
+      outlineWidth="9%"
+      outlineColor="#0b1019"
+      outlineOpacity={0.9}
+      position={[0, top * 0.55, z]}
+      anchorX="center"
+      anchorY="middle"
+      raycast={noRaycast}
+    >
+      {text}
+    </Text>
+  );
+}
+
 // ---- block: the basic solid piece (array cell, node, slab, tile) ----------
 
 export interface BlockProps {
@@ -219,6 +306,37 @@ export function Block({
   const pulse = useRef(0);
   const mounted = useRef(false);
   const hot = lift && isHot(tone);
+  const label = text === undefined ? "" : glyphs(text);
+  const sources = useContext(SourceContext);
+  const bornAt = useRef(now());
+  // on its first frame a new piece looks for the piece its value came from; if there is one, it
+  // flies over from there along a short arc (progress t from 0 to 1)
+  const look = useRef(motion.tau > 0 && label !== "");
+  const flight = useRef<{ from: THREE.Vector3; t: number } | null>(null);
+  const [ghosts, setGhosts] = useState<{ id: number; text: string }[]>([]);
+  const lastLabel = useRef(label);
+
+  // a highlighted piece offers its value as a source for new pieces
+  const offers = isHot(tone) && !exiting && label !== "" ? label : null;
+  useLayoutEffect(() => {
+    const g = group.current;
+    if (!sources || !offers || !g) return;
+    let set = sources.get(offers);
+    if (!set) sources.set(offers, (set = new Map()));
+    set.set(g, now());
+    return () => {
+      set.delete(g);
+    };
+  }, [sources, offers]);
+
+  // a highlighted value that changes leaves its old value drifting away
+  useEffect(() => {
+    const before = lastLabel.current;
+    lastLabel.current = label;
+    if (motion.tau <= 0 || exiting || !before || !label || before === label || !isHot(tone)) return;
+    setGhosts((list) => [...list.slice(-1), { id: ++ghostSeq, text: before }]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [label]);
 
   const material = useMemo(
     () =>
@@ -287,11 +405,34 @@ export function Block({
   useFrame((_, dt) => {
     const g = group.current;
     if (!g) return;
+    if (look.current) {
+      look.current = false;
+      const from = sourceOf(sources, label, g, bornAt.current);
+      if (from && g.parent) {
+        // start on top of the source piece (moved into this piece's own coordinates)
+        g.parent.updateWorldMatrix(true, false);
+        from.getWorldPosition(tmpA);
+        g.parent.worldToLocal(tmpA);
+        flight.current = { from: tmpA.clone(), t: 0 };
+      }
+    }
+    const goal = tmpB.set(x, y, z + (hot ? 0.3 : 0));
+    const f = flight.current;
+    if (f && motion.tau > 0) {
+      f.t = Math.min(1, f.t + Math.min(dt, 0.1) / FLY_S);
+      const k = f.t < 0.5 ? 4 * f.t ** 3 : 1 - (-2 * f.t + 2) ** 3 / 2; // ease in and out
+      g.position.lerpVectors(f.from, goal, k);
+      g.position.z += Math.sin(Math.PI * f.t) * 1.1; // lifted over whatever lies between
+      g.scale.setScalar(0.9 + 0.1 * k);
+      if (f.t >= 1) flight.current = null;
+    } else {
+      flight.current = null;
+      g.position.lerp(goal, ease(dt));
+    }
     const a = ease(dt);
-    g.position.lerp(tmpC.set(x, y, z + (hot ? 0.3 : 0)), a);
     pulse.current = Math.max(0, pulse.current - dt * 2.8);
     const s = exiting ? 0.001 : 1 + Math.sin(pulse.current * Math.PI) * 0.16;
-    g.scale.lerp(tmpC.set(s, s, s), ease(dt, exiting ? 0.6 : 0.8));
+    if (!flight.current) g.scale.lerp(tmpC.set(s, s, s), ease(dt, exiting ? 0.6 : 0.8));
     material.color.lerp(target.fill, a);
     material.emissive.lerp(target.emissive, a);
     material.emissiveIntensity += (style.glow * 0.5 - material.emissiveIntensity) * a;
@@ -304,7 +445,6 @@ export function Block({
   // the glow reaches the same distance on every side, set by the shorter side, so a long
   // slab (a call-stack frame, a wide label) does not throw light far outside its panel
   const haloPad = Math.min(w, h) * 1.2 + 0.5;
-  const label = text === undefined ? "" : glyphs(text);
   const size = label ? fitSize(label, (isBall ? w * 0.8 : w) - 0.16, textSize) : textSize;
 
   return (
@@ -337,6 +477,16 @@ export function Block({
           {label}
         </Text>
       )}
+      {ghosts.map((ghost) => (
+        <Ghost
+          key={ghost.id}
+          text={ghost.text}
+          size={fitSize(ghost.text, (isBall ? w * 0.8 : w) - 0.16, textSize)}
+          top={h / 2}
+          z={depth / 2 + 0.06}
+          onDone={() => setGhosts((list) => list.filter((g) => g.id !== ghost.id))}
+        />
+      ))}
       {children}
     </group>
   );

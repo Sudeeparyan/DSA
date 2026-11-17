@@ -27,12 +27,32 @@
    "output": "[]"
   }
  ],
+ "picture": "Picture `k` sorted queues and one gate. A small waiting area (a heap) holds only the person at the front of each queue, and it always shows the smallest one first. Wave that person through to the merged line, and let the next person from the same queue step into the waiting area. The waiting area never holds more than `k` people, so finding the smallest stays quick.",
  "idea": [
   "The next node of the merged list is always the smallest among the **current front nodes** of the k lists.",
   "Finding that smallest by scanning all k fronts costs O(k) every time. A **min-heap** holding one entry per list finds it in O(log k).",
   "Pop the smallest, append it to the result, and push the next node from the same list (if there is one). The heap never holds more than k entries."
  ],
  "code": "import heapq\n\nclass Solution:\n    def mergeKLists(self, lists: List[ListNode]) -> ListNode:\n        min_heap = []\n        for i, l in enumerate(lists):\n            if l:\n                heapq.heappush(min_heap, (l.val, i))\n\n        dummy = ListNode()\n        current = dummy\n\n        while min_heap:\n            val, idx = heapq.heappop(min_heap)\n            current.next = ListNode(val)\n            current = current.next\n            if lists[idx].next:\n                heapq.heappush(min_heap, (lists[idx].next.val, idx))\n                lists[idx] = lists[idx].next\n\n        return dummy.next",
+ "say": {
+  "1": "Load `heapq`, Python's ready-made **heap**: a list kept in an order where the smallest item is always at the front.",
+  "3": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "4": "The function we must write. It gets `k` sorted linked lists and returns one merged, sorted list.",
+  "5": "A heap of `(value, which list)` pairs, smallest value first: one entry for the front node of each list.",
+  "6": "Go through the lists: `i` is the list's number, `l` its first node.",
+  "7": "Is this list non-empty?",
+  "8": "Put its first value into the heap, together with the list's number, so we know where it came from.",
+  "10": "A placeholder node to hang the merged list on.",
+  "11": "`current` is the end of the merged list so far.",
+  "13": "Repeat while some list still has nodes waiting.",
+  "14": "Take the smallest value out of the heap, with the number of the list it came from.",
+  "15": "Add a node with that value to the end of the merged list.",
+  "16": "It is now the end of the merged list.",
+  "17": "Does that list have another node after the one just used?",
+  "18": "Then put that next value into the heap, ready to compete.",
+  "19": "And move that list's front on by one node.",
+  "21": "The merged list starts just after the placeholder: return it."
+ },
  "complexity": {
   "time": "O(N log k)",
   "timeWhy": "Each of the N nodes is pushed and popped once from a heap of at most k entries.",

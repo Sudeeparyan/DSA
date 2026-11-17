@@ -27,12 +27,25 @@
    "output": "0"
   }
  ],
+ "picture": "Picture walking along a price chart one day at a time, with a sticky note in your pocket that says *the cheapest price so far*. Each day you ask: if I had bought on that cheapest day and sold today, how much would I make? You keep the best answer. You never have to look back, because the sticky note already remembers the only buying day that matters.",
  "idea": [
   "Trying every (buy day, sell day) pair is O(n²).",
   "If we sell today, the best day to have bought is simply the **cheapest day before today**.",
   "So walk through the days once, remembering the lowest price seen so far. Each day, check the profit of selling today and keep the best."
  ],
  "code": "class Solution:\n    def maxProfit(self, prices: List[int]) -> int:\n        if not prices:\n            return 0\n\n        min_price = float(\"inf\")\n        max_profit = 0\n\n        for price in prices:\n            min_price = min(min_price, price)\n            max_profit = max(max_profit, price - min_price)\n\n        return max_profit",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the daily `prices` and returns the best possible profit.",
+  "3": "Is the list empty? (`not prices` is `True` for an empty list.)",
+  "4": "No days means no trade, so the profit is 0.",
+  "6": "The cheapest price seen so far. It starts at infinity (`float(\"inf\")`), so the first real price is sure to be cheaper.",
+  "7": "The best profit found so far. Not trading at all earns 0, so start there.",
+  "9": "Go through the days in order. `price` is that day's price.",
+  "10": "If today is cheaper than every day before, remember it as the best day to buy. (`min` picks the smaller.)",
+  "11": "Selling today, after buying at the cheapest price, earns `price − min_price`. Keep it if it beats the best so far.",
+  "13": "Return the best profit."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "One pass over the prices.",

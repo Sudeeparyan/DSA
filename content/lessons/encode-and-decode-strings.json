@@ -23,12 +23,32 @@
    "output": ""
   }
  ],
+ "picture": "Picture packing several notes into one long envelope. In front of each note you write how many characters it has, then a `#`: `3#lee4#code`. Whoever opens the envelope reads the number, then counts off exactly that many characters. So even a note full of `#` signs comes out whole.",
  "idea": [
   "Simply joining with a separator such as `,` breaks as soon as a string contains that separator.",
   "Instead write each string as **its length, then `#`, then the string**: `lee` becomes `3#lee`.",
   "To decode, read digits up to the next `#` to learn the length, then take exactly that many characters — no matter what they are. Repeat until the end."
  ],
  "code": "class Codec:\n    def encode(self, strs: List[str]) -> str:\n        parts = []\n        for s in strs:\n            parts.append(str(len(s)) + \"#\" + s)\n        return \"\".join(parts)\n\n    def decode(self, s: str) -> List[str]:\n        decoded = []\n        i = 0\n        while i < len(s):\n            delimiter_pos = s.find(\"#\", i)\n            size = int(s[i:delimiter_pos])\n            start_pos = delimiter_pos + 1\n            end_pos = start_pos + size\n            decoded.append(s[start_pos:end_pos])\n            i = end_pos\n        return decoded",
+ "say": {
+  "1": "The problem asks for a class called `Codec` that holds two functions, `encode` and `decode`.",
+  "2": "The first function: turn the list of strings `strs` into one single string.",
+  "3": "An empty list that will collect one piece for each string.",
+  "4": "Go through the strings one at a time.",
+  "5": "Make this string's piece: its length written as digits (`str(len(s))`), then a `#`, then the string itself. `append` adds the piece to the list.",
+  "6": "Glue all the pieces together with nothing in between, and return that one string.",
+  "8": "The second function: turn the one long string `s` back into the list.",
+  "9": "An empty list for the strings we read back.",
+  "10": "`i` marks where the next piece begins. The first piece begins at index 0.",
+  "11": "Repeat while `i` has not yet reached the end of the text.",
+  "12": "Find the first `#` at or after position `i`. The digits before it are the length.",
+  "13": "Cut out those digits (`s[i:delimiter_pos]` is the text from `i` up to the `#`) and turn them into a number with `int`.",
+  "14": "The string itself starts just after the `#`.",
+  "15": "It is `size` characters long, so `end_pos` is the position just past its last character.",
+  "16": "Cut out exactly those characters, whatever they are, and add them to the result.",
+  "17": "Move `i` to where the next piece begins.",
+  "18": "Every piece has been read: return the list."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "Both functions touch each character a constant number of times (n = total characters). The pieces are joined once at the end, so nothing is copied again and again.",

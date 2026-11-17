@@ -342,6 +342,67 @@ def _check_step(slug: str, index: int, step: dict) -> None:
                 stack.extend(item)
 
 
+# Readings for boilerplate lines that look the same in many lessons.  A lesson's own say= wins.
+COMMON_SAY = {
+    "class Solution:": "LeetCode puts every answer inside a class named `Solution`. It is only a "
+                       "wrapper: the real work happens in the function below it.",
+    "import heapq": "Load `heapq`, Python's ready-made **heap**: a list kept in an order where the "
+                    "smallest item is always at the front.",
+    "from collections import deque": "Load `deque`, Python's double-ended queue: a list that can "
+                                     "add or remove items quickly at *both* ends.",
+    "from collections import defaultdict": "Load `defaultdict`: a dictionary that creates a "
+                                           "starting value by itself the first time a key is used.",
+    "from collections import defaultdict, deque": "Load `defaultdict` (a dictionary that creates a "
+                                                  "starting value for a new key by itself) and "
+                                                  "`deque` (a queue that is quick at both ends).",
+    "from collections import Counter": "Load `Counter`: it counts how many times each item appears "
+                                       "in a list or a string.",
+    "from typing import List": "Lets the code write `List[int]` for *a list of whole numbers*. "
+                               "It only documents types; it changes nothing when the code runs.",
+}
+
+
+def legend_key(lesson: Lesson, steps: list[dict]) -> list[dict]:
+    """The lesson's own legend entries; each colour must be a tone the steps really use."""
+    used: set[str] = set()
+    todo: list = [s["views"] for s in steps]
+    while todo:
+        item = todo.pop()
+        if isinstance(item, dict):
+            if isinstance(item.get("tone"), str):
+                used.add(item["tone"])
+            todo.extend(item.values())
+        elif isinstance(item, list):
+            todo.extend(item)
+    out = []
+    for tone, label in lesson.key.items():
+        if tone not in TONES and not re.fullmatch(r"#[0-9a-fA-F]{6}", tone):
+            raise LessonError(f"key: {tone!r} is not a tone or a #rrggbb colour")
+        if not label:
+            raise LessonError(f"key: no label for {tone!r}")
+        if tone not in used:
+            raise LessonError(f"key: {tone!r} is never drawn, so it should not be in the legend")
+        out.append({"tone": tone, "label": label})
+    return out
+
+
+def read_aloud(lesson: Lesson, info: CodeInfo) -> dict[str, str]:
+    """The lesson's plain-words readings, keyed by code line number (as a string, for JSON)."""
+    out: dict[int, str] = {}
+    for anchor, text in lesson.say.items():
+        if not text:
+            raise LessonError(f"say {anchor!r} is empty")
+        line = info.find(anchor)
+        if line in out:
+            raise LessonError(f"two say= readings for line {line}: {anchor!r}")
+        out[line] = text
+    for n, raw in enumerate(info.lines, 1):
+        common = COMMON_SAY.get(raw.strip())
+        if common and n not in out:
+            out[n] = common
+    return {str(line): out[line] for line in sorted(out)}
+
+
 def build_lesson(lesson: Lesson, entry: dict) -> tuple[dict, list[str]]:
     warnings: list[str] = []
     if lesson.code:
@@ -406,6 +467,17 @@ def build_lesson(lesson: Lesson, entry: dict) -> tuple[dict, list[str]]:
     for a, b in zip(steps, steps[1:]):
         if a["text"] == b["text"] and a["views"] == b["views"]:
             warnings.append(f"duplicate consecutive step: {a['text'][:50]!r}")
+    key = legend_key(lesson, steps)
+    # every lesson is written for readers new to coding: an everyday picture, and every line
+    # the walkthrough stops on read out in plain words
+    if not lesson.picture:
+        raise LessonError("picture= is missing (an everyday picture of the idea, see docs/LESSONS.md)")
+    if not lesson.say:
+        raise LessonError("say= is missing (plain-words readings of the code lines, see docs/LESSONS.md)")
+    say = read_aloud(lesson, info)
+    unread = sorted({s["line"] for s in steps if s["line"] and str(s["line"]) not in say})
+    if unread:
+        raise LessonError(f"lines the walkthrough stops on with no say= reading: {unread}")
 
     doc = {
         "id": entry["id"],
@@ -424,8 +496,11 @@ def build_lesson(lesson: Lesson, entry: dict) -> tuple[dict, list[str]]:
             "why": lesson.why,
         },
         "more": more,
+        "picture": lesson.picture,
         "idea": lesson.idea,
         "code": code,
+        "say": say,
+        **({"key": key} if key else {}),
         "complexity": {
             "time": lesson.time[0],
             "timeWhy": lesson.time[1],

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { Lesson, LessonMeta } from "@/lib/lesson";
 import { loadUnderstood, setLastSlug, setUnderstood } from "@/lib/progress";
+import { CostHelp } from "./CostHelp";
 import { Rich } from "./Rich";
 import { Walkthrough } from "./Walkthrough";
 
@@ -113,6 +114,12 @@ export function LessonPage({
           <h2 id="idea-title" className="card-title">
             <span className="card-num">2</span> The idea
           </h2>
+          <div className="picture">
+            <div className="picture-label">Picture it</div>
+            <p>
+              <Rich text={lesson.picture} />
+            </p>
+          </div>
           <ol className="idea">
             {lesson.idea.map((point, i) => (
               <li key={i}>
@@ -150,6 +157,7 @@ export function LessonPage({
             </p>
           </div>
         </div>
+        <CostHelp time={lesson.complexity.time} space={lesson.complexity.space} />
       </section>
 
       <footer className="lesson-foot">

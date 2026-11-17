@@ -27,12 +27,47 @@
    "output": "6"
   }
  ],
+ "picture": "Picture the same map of land and sea, but now you want the biggest island. Each time you step onto land not visited yet, walk over its whole island, marking every cell as visited and counting it. A cell counts 1, plus whatever its four neighbours add. Keep the biggest count.",
  "idea": [
   "Scan the grid. Each time unvisited land is found, flood-fill that island — exactly as in Number of Islands.",
   "This time the flood-fill **returns how many cells it visited**: 1 for the cell itself plus whatever its four neighbours report.",
   "Sinking each visited cell to `0` guarantees no cell is counted twice. Keep the largest area seen."
  ],
  "code": "class Solution:\n    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:\n        def dfs(row, col):\n            if (\n                row < 0\n                or row >= len(grid)\n                or col < 0\n                or col >= len(grid[0])\n                or grid[row][col] == 0\n            ):\n                return 0\n\n            grid[row][col] = 0  # Mark as visited\n            area = 1\n\n            area += dfs(row + 1, col)  # Check down\n            area += dfs(row - 1, col)  # Check up\n            area += dfs(row, col + 1)  # Check right\n            area += dfs(row, col - 1)  # Check left\n\n            return area\n\n        max_area = 0\n        for row in range(len(grid)):\n            for col in range(len(grid[0])):\n                if grid[row][col] == 1:\n                    max_area = max(max_area, dfs(row, col))\n\n        return max_area",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the `grid` and returns the area of the biggest island.",
+  "3": "A helper that returns how many land cells the island containing this cell has, marking them as visited.",
+  "4": "Is this cell outside the grid, or is it water (`0`)?",
+  "11": "Then it adds no area.",
+  "13": "Mark this land cell as visited by turning it into water, so it is counted only once.",
+  "14": "This cell counts as 1.",
+  "16": "Add the land reachable through the cell below (the helper calls itself).",
+  "17": "Add the land reachable through the cell above.",
+  "18": "Add the land reachable through the cell to the right.",
+  "19": "Add the land reachable through the cell to the left.",
+  "21": "Report the total area found from here.",
+  "23": "The biggest area found so far.",
+  "24": "Scan every row of the grid…",
+  "25": "…and every column in it.",
+  "26": "Is this land that has not been visited yet?",
+  "27": "Measure its whole island, and keep the bigger of that and the best so far.",
+  "29": "Return the biggest area."
+ },
+ "key": [
+  {
+   "tone": "#3d9950",
+   "label": "land (1)"
+  },
+  {
+   "tone": "#1c3d5e",
+   "label": "water (0)"
+  },
+  {
+   "tone": "seen",
+   "label": "just visited"
+  }
+ ],
  "complexity": {
   "time": "O(rows × cols)",
   "timeWhy": "Each cell is scanned once and each land cell is sunk exactly once.",

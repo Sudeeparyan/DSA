@@ -106,6 +106,13 @@ def main() -> int:
         print(f"\n===== {doc['title']}  [{doc['difficulty']}]  {len(doc['steps'])} steps")
         print(f"Q: {doc['statement']}")
         print(f"example: {doc['example']['input']}  =>  {doc['example']['output']}   ({doc['example']['why']})")
+        if doc.get("picture"):
+            print(f"picture: {doc['picture']}")
+        say = doc.get("say", {})
+        if say:
+            print("in plain words:")
+            for n, text in say.items():
+                print(f"  {int(n):3d}  {lines[int(n) - 1].strip()}\n       = {text}")
         for i, step in enumerate(doc["steps"]):
             code = lines[step["line"] - 1].strip() if step["line"] else ""
             print(f"{i + 1:3d}. [{step['line']:>2}] {step['text']}")

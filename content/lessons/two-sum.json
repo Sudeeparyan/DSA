@@ -27,12 +27,23 @@
    "output": "[0,1]"
   }
  ],
+ "picture": "Picture a party where every guest wears a number, and you need the two guests whose numbers add up to the target. As each guest walks in, they ask one question: *has my partner (target minus my number) already arrived?* A guest book records every number seen and where that guest is standing, so the answer is one glance away.",
  "idea": [
   "Checking every pair works but costs O(n²): for each number we search the whole list for its partner.",
   "For a number `n` the partner is fixed: it must be `target − n`. So the only question is *have I already seen that value?*",
   "A hash map answers that instantly. Walk the list once: look up the partner, and if it is not there yet, store the current number with its index."
  ],
  "code": "class Solution:\n    def twoSum(self, nums: List[int], target: int) -> List[int]:\n        prevMap = {}  # val -> index\n\n        for i, n in enumerate(nums):\n            diff = target - n\n            if diff in prevMap:\n                return [prevMap[diff], i]\n            prevMap[n] = i",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the list `nums` and the number `target`, and must return two positions in the list.",
+  "3": "Make an empty **dictionary** (a hash map). It will pair each number we pass with its position. (After `#` is a note for people, not code.)",
+  "5": "Go through the list one number at a time. `enumerate` hands us both the position `i` and the number `n`.",
+  "6": "Work out the partner this number needs: `target` minus `n`. Call it `diff`.",
+  "7": "Have we already passed that partner? The dictionary can tell instantly.",
+  "8": "Yes: return the partner's position (looked up in the dictionary) and our own position `i`.",
+  "9": "No: write down this number and its position, so that a later number can find it."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "One pass over the list; every map lookup and insert is O(1) on average.",

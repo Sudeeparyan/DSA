@@ -35,12 +35,48 @@
    "output": "[1,2,4,6,8,7,5,3]"
   }
  ],
+ "picture": "Picture walking round a rectangular garden from the outside in. Walk along the top edge, down the right edge, back along the bottom and up the left. Each edge you finish is fenced off by moving a boundary one step inward, so the next lap is one ring smaller. Stop when the boundaries cross: nothing is left inside them.",
  "idea": [
   "Keep four boundaries — `top`, `bottom`, `left`, `right` — around the part of the matrix that has not been read yet.",
   "Read the **top row** left to right and move `top` down; read the **right column** top to bottom and move `right` left; read the **bottom row** right to left and move `bottom` up; read the **left column** bottom to top and move `left` right.",
   "Repeat while the boundaries have not crossed. Before the bottom row and the left column, check that a row / column is actually left — otherwise a single remaining row or column would be read twice."
  ],
  "code": "class Solution:\n    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:\n        if not matrix:\n            return []\n\n        rows, cols = len(matrix), len(matrix[0])\n        result = []\n\n        # Define the boundaries of the current layer\n        top, bottom, left, right = 0, rows - 1, 0, cols - 1\n\n        while top <= bottom and left <= right:\n            # Traverse the top row\n            for j in range(left, right + 1):\n                result.append(matrix[top][j])\n            top += 1\n\n            # Traverse the right column\n            for i in range(top, bottom + 1):\n                result.append(matrix[i][right])\n            right -= 1\n\n            # Traverse the bottom row\n            if top <= bottom:  # Avoid duplicate traversal\n                for j in range(right, left - 1, -1):\n                    result.append(matrix[bottom][j])\n                bottom -= 1\n\n            # Traverse the left column\n            if left <= right:  # Avoid duplicate traversal\n                for i in range(bottom, top - 1, -1):\n                    result.append(matrix[i][left])\n                left += 1\n\n        return result",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the `matrix` and returns its numbers in spiral order.",
+  "3": "Is the matrix empty?",
+  "4": "Then there is nothing to read.",
+  "6": "Count the rows and the columns.",
+  "7": "The numbers in the order we read them.",
+  "10": "Four boundaries around the part not read yet: its first and last row, its first and last column. At first that is the whole matrix.",
+  "12": "Keep going while something is left between the boundaries.",
+  "14": "Top edge: go along the columns from `left` to `right`. (`range` stops just before its end, hence `right + 1`.)",
+  "15": "Read the number in the top row, column `j`.",
+  "16": "The top row is done: move the top boundary down one row.",
+  "19": "Right edge: go down the rows from `top` to `bottom`.",
+  "20": "Read the number in row `i` of the right column.",
+  "21": "The right column is done: move the right boundary one column left.",
+  "24": "Is a row still left? If not, the bottom row would be one we have already read.",
+  "25": "Bottom edge: go along the columns backwards, from `right` to `left`. The last `-1` means \"count down\".",
+  "26": "Read the number in the bottom row, column `j`.",
+  "27": "The bottom row is done: move the bottom boundary up one row.",
+  "30": "Is a column still left?",
+  "31": "Left edge: go up the rows, from `bottom` to `top`.",
+  "32": "Read the number in row `i` of the left column.",
+  "33": "The left column is done: move the left boundary one column right. One lap is complete.",
+  "35": "Return the numbers in the order they were read."
+ },
+ "key": [
+  {
+   "tone": "win",
+   "label": "not read yet"
+  },
+  {
+   "tone": "seen",
+   "label": "already read"
+  }
+ ],
  "complexity": {
   "time": "O(m · n)",
   "timeWhy": "Every element is read exactly once.",

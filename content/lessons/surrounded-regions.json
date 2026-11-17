@@ -31,12 +31,60 @@
    "output": "[[\"X\",\"O\",\"X\",\"X\"],[\"X\",\"O\",\"O\",\"X\"],[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\"],[\"X\",\"X\",\"X\",\"X\"]]"
   }
  ],
+ "picture": "Picture each region of `O`s as a puddle on the board. A puddle that touches the edge can drain away, so it is safe; a puddle with no way to the edge gets filled in with `X`. So first walk inward from every `O` on the edge and mark its whole safe puddle with `E`. Then sweep the board: every `O` still unmarked is surrounded and becomes `X`, and every `E` turns back into `O`.",
  "idea": [
   "Deciding directly whether a region is surrounded is awkward. The opposite is easy: an `O` is **safe** exactly when it is connected to an `O` on the border.",
   "So start a flood-fill from every border `O` and mark everything it reaches with a temporary letter `E` (*escaped*).",
   "Afterwards every `O` that is still an `O` was never reached from the border — flip it to `X`. Turn the `E` marks back into `O`."
  ],
  "code": "class Solution:\n    def solve(self, board: List[List[str]]) -> None:\n        \"\"\"\n        Do not return anything, modify board in-place instead.\n        \"\"\"\n\n        def dfs(row, col):\n            if (\n                row < 0\n                or row >= len(board)\n                or col < 0\n                or col >= len(board[0])\n                or board[row][col] != \"O\"\n            ):\n                return\n\n            board[row][col] = \"E\"  # Mark as visited but not surrounded\n\n            # Check adjacent cells\n            dfs(row + 1, col)  # Check down\n            dfs(row - 1, col)  # Check up\n            dfs(row, col + 1)  # Check right\n            dfs(row, col - 1)  # Check left\n\n        # Traverse the boundary and mark connected 'O' cells as 'E'\n        for row in range(len(board)):\n            if board[row][0] == \"O\":\n                dfs(row, 0)\n            if board[row][len(board[0]) - 1] == \"O\":\n                dfs(row, len(board[0]) - 1)\n\n        for col in range(len(board[0])):\n            if board[0][col] == \"O\":\n                dfs(0, col)\n            if board[len(board) - 1][col] == \"O\":\n                dfs(len(board) - 1, col)\n\n        # Mark internal 'O' cells as 'X' and restore 'E' cells to 'O'\n        for row in range(len(board)):\n            for col in range(len(board[0])):\n                if board[row][col] == \"O\":\n                    board[row][col] = \"X\"\n                elif board[row][col] == \"E\":\n                    board[row][col] = \"O\"",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the `board` and changes it in place; it returns nothing.",
+  "3": "A note from LeetCode (a *docstring*): change the board itself, and do not return anything.",
+  "7": "A helper that marks a whole safe region: it turns this `O`, and every `O` connected to it, into `E`.",
+  "8": "Is this cell outside the board, or anything other than an `O`?",
+  "15": "Then there is nothing to mark here.",
+  "17": "Mark the cell `E`: it is connected to the edge, so it will not be captured.",
+  "20": "Mark onward through the cell below (the helper calls itself).",
+  "21": "And through the cell above.",
+  "22": "And through the cell to the right.",
+  "23": "And through the cell to the left.",
+  "26": "Step 1: check the left and right edges, row by row.",
+  "27": "Is there an `O` on the left edge?",
+  "28": "Then mark its whole region as safe.",
+  "29": "Is there an `O` on the right edge?",
+  "30": "Then mark its whole region as safe.",
+  "32": "Then check the top and bottom edges, column by column.",
+  "33": "Is there an `O` on the top edge?",
+  "34": "Then mark its whole region as safe.",
+  "35": "Is there an `O` on the bottom edge?",
+  "36": "Then mark its whole region as safe.",
+  "39": "Step 2: sweep the whole board, row by row…",
+  "40": "…and column by column.",
+  "41": "An `O` that was never marked cannot reach the edge: it is surrounded.",
+  "42": "So capture it: turn it into `X`.",
+  "43": "Is this cell marked safe?",
+  "44": "Then turn it back into `O`."
+ },
+ "key": [
+  {
+   "tone": "mark",
+   "label": "O, not known to be safe yet"
+  },
+  {
+   "tone": "good",
+   "label": "safe: joined to the border"
+  },
+  {
+   "tone": "dim",
+   "label": "X"
+  },
+  {
+   "tone": "bad",
+   "label": "captured: flipped to X"
+  }
+ ],
  "complexity": {
   "time": "O(rows × cols)",
   "timeWhy": "Each cell is visited a constant number of times.",

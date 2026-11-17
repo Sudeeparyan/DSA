@@ -20,7 +20,7 @@ import type {
 } from "@/lib/lesson";
 import { isSceneView } from "@/lib/lesson";
 import { STAGE_PAD_H, STAGE_PAD_W, planStage, type Slot, type StagePlan } from "./layout";
-import { Empty, Panel, motion } from "./primitives";
+import { Empty, Panel, SourceProvider, motion } from "./primitives";
 import { INK } from "./theme";
 import { ArrayView3D } from "./views/ArrayView3D";
 import { BitsView3D } from "./views/BitsView3D";
@@ -275,15 +275,17 @@ export function Stage({ steps, index, reduced = false }: { steps: Step[]; index:
             <planeGeometry args={[plan.w + 120, plan.h + 120]} />
             <meshLambertMaterial color={INK.wall} />
           </mesh>
-          {plan.slots.map((slot) => (
-            <SlotView
-              key={slot.id}
-              slot={slot}
-              view={current.get(slot.id)}
-              last={lasts.get(slot.id)}
-              idle={index < (firsts.get(slot.id) ?? 0) ? "not created yet" : "not in use right now"}
-            />
-          ))}
+          <SourceProvider>
+            {plan.slots.map((slot) => (
+              <SlotView
+                key={slot.id}
+                slot={slot}
+                view={current.get(slot.id)}
+                last={lasts.get(slot.id)}
+                idle={index < (firsts.get(slot.id) ?? 0) ? "not created yet" : "not in use right now"}
+              />
+            ))}
+          </SourceProvider>
           <CameraRig
             plan={plan}
             resetKey={resetKey}

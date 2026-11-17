@@ -23,12 +23,47 @@
    "output": ""
   }
  ],
+ "picture": "Picture pins stuck in a corkboard, some of them pinned more than once. A square with sides along the grid lines that has the query point as a corner needs another corner straight above or below it, and that pin fixes the side length. The other two corners must then be that far to the left or to the right. If those pins are there, the number of squares is the product of how many times each of the three corners was pinned.",
  "idea": [
   "Store how often each point was added: `points[x][y]` = count. Looking up whether a point exists is then O(1).",
   "An axis-aligned square through the query point `(x, y)` has another corner **straight above or below it**, at `(x, y2)`. That fixes the side length `|y2 − y|`.",
   "The remaining two corners must then be at `(x ± side, y)` and `(x ± side, y2)`. If they exist, the number of squares is the **product of the three corner counts** (duplicates give separate squares)."
  ],
  "code": "from collections import defaultdict\nfrom typing import List\n\nclass DetectSquares:\n    def __init__(self):\n        self.points = defaultdict(lambda: defaultdict(int))\n\n    def add(self, point: List[int]) -> None:\n        x, y = point\n        self.points[x][y] += 1\n\n    def count(self, point: List[int]) -> int:\n        x, y = point\n        count = 0\n\n        for y2 in self.points[x]:\n            if y2 != y:\n                side_length = abs(y2 - y)\n\n                for x2 in (x + side_length, x - side_length):\n                    if x2 in self.points and y in self.points[x2]:\n                        count += (\n                            self.points[x2][y]\n                            * self.points[x2][y2]\n                            * self.points[x][y2]\n                        )\n\n        return count",
+ "say": {
+  "1": "Load `defaultdict`: a dictionary that creates a starting value by itself the first time a key is used.",
+  "2": "Lets the code write `List[int]` for *a list of whole numbers*. It only documents types; it changes nothing when the code runs.",
+  "4": "The class we must write. It stores points and counts squares.",
+  "5": "Runs once, when a `DetectSquares` is created.",
+  "6": "`points[x][y]` counts how many times the point (x, y) was added. Both levels are `defaultdict`s, so a point never added simply counts as 0.",
+  "8": "Store one more point.",
+  "9": "Unpack the point into its `x` and `y`.",
+  "10": "Count it once more.",
+  "12": "Count the squares that have `point` as one corner.",
+  "13": "Unpack the query point.",
+  "14": "Squares found so far.",
+  "16": "Go through every stored point with the same `x`: each lies straight above or below the query point.",
+  "17": "Skip the query point's own height: a square needs a side longer than 0.",
+  "18": "The vertical side runs from `y` to `y2`. `abs` makes its length positive.",
+  "20": "The square can stick out to the right or to the left: try both.",
+  "21": "Is a corner stored at (`x2`, `y`)?",
+  "22": "Then add the number of squares: the three corner counts multiplied. A missing fourth corner counts 0, so it adds nothing.",
+  "28": "Return the number of squares."
+ },
+ "key": [
+  {
+   "tone": "cur",
+   "label": "point being added or asked about"
+  },
+  {
+   "tone": "alt",
+   "label": "corner straight above or below"
+  },
+  {
+   "tone": "good",
+   "label": "the other corners of a possible square"
+  }
+ ],
  "complexity": {
   "time": "O(1) add, O(n) count",
   "timeWhy": "`count` looks at every stored point that shares the query's x-coordinate.",

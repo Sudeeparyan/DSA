@@ -35,12 +35,28 @@
    "output": "2"
   }
  ],
+ "picture": "Picture a manager handing out rooms as meetings begin, earliest start first. On a board they keep, for every room in use, the time its meeting ends, with the soonest at the top. When a meeting starts they only look at the top: if that room is already free, the new meeting takes it over. If not, every room is busy and one more room is opened. The number of rooms on the board at the end is the answer.",
  "idea": [
   "Handle the meetings in order of **start time**. When a meeting starts, the only question is: has some room become free by now?",
   "Keep a **min-heap of end times**, one entry per room in use. Its top is the room that frees up first — if even that one is still busy, every room is.",
   "If the earliest-ending room is free (its end ≤ this start), reuse it: pop its end time. Either way push this meeting's end time. The heap's size at the end is the number of rooms."
  ],
  "code": "import heapq\n\nclass Solution:\n    def minMeetingRooms(self, intervals: List[List[int]]) -> int:\n        if not intervals:\n            return 0\n\n        intervals.sort(key=lambda x: x[0])\n        min_heap = []\n        heapq.heappush(min_heap, intervals[0][1])\n\n        for i in range(1, len(intervals)):\n            if intervals[i][0] >= min_heap[0]:\n                heapq.heappop(min_heap)\n            heapq.heappush(min_heap, intervals[i][1])\n\n        return len(min_heap)",
+ "say": {
+  "1": "Load `heapq`, Python's ready-made **heap**: a list kept in an order where the smallest item is always at the front.",
+  "3": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "4": "The function we must write. It gets the meeting times `intervals` and returns the fewest rooms needed.",
+  "5": "Are there no meetings at all?",
+  "6": "Then no rooms are needed.",
+  "8": "Sort the meetings by start time, so they are handled in the order they begin.",
+  "9": "A **min-heap**: a pile that always keeps its smallest number on top. It holds the end time of the meeting in each room in use.",
+  "10": "The first meeting takes a room: push its end time.",
+  "12": "Go through the other meetings in order of start time.",
+  "13": "`min_heap[0]` is the earliest end time: the room that frees up first. Is it free by the time this meeting starts?",
+  "14": "Then this meeting takes over that room: remove the old end time.",
+  "15": "Either way, this meeting holds a room until it ends: push its end time.",
+  "17": "One end time per room in use, so the heap's size is the number of rooms needed."
+ },
  "complexity": {
   "time": "O(n log n)",
   "timeWhy": "Sorting, plus one heap push/pop per meeting.",

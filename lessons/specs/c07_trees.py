@@ -10,6 +10,10 @@ lesson(
     args="root=T([4, 2, 7, 1, 3, 6, 9])",
     expected=[4, 7, 2, 9, 6, 3, 1],
     why="Every node's children are swapped, so each level reads right-to-left.",
+    picture="""Picture holding a family tree up to a mirror. In the mirror every person's left and right
+    children have swapped places, and so have their children's children, all the way down. The code
+    does exactly that: at each node it swaps the two children, then asks the same function to mirror
+    each child's own family below.""",
     idea=[
         "Mirroring a whole tree sounds big, but at one node it is tiny: just swap its left and right child.",
         "Do that swap at **every** node and the entire tree is mirrored. Recursion visits every node for us.",
@@ -40,6 +44,24 @@ lesson(
             post="Everything under node {root.val} is mirrored. Return to its parent.",
             when="(root.left or root.right) and _depth > 1")),
     ],
+    say={
+        "def invertTree": (
+            "The function we must write. It gets the top node (`root`) and returns it after "
+            "mirroring the whole tree."
+        ),
+        "if not root": "Is there no node here (an empty spot below a leaf)?",
+        "return None": "Then there is nothing to mirror: return nothing.",
+        "root.left, root.right = root.right, root.left": (
+            "Swap this node's two children in one move: the left becomes the right and the right "
+            "becomes the left."
+        ),
+        "self.invertTree(root.left)": (
+            "Now mirror everything below the new left child: the function calls itself on that "
+            "smaller tree."
+        ),
+        "self.invertTree(root.right)": "And the same below the new right child.",
+        "return root": "This node and everything below it are mirrored: hand it back.",
+    },
     time=("O(n)", "Every node is visited once and does a constant amount of work."),
     space=("O(h)", "The recursion stack is as deep as the tree's height h (log n if balanced, n if it is a chain)."),
     tests=[("root=T([2, 1, 3])", [2, 3, 1]), ("root=T([])", []), ("root=T([1, 2])", [1, None, 2])],
@@ -53,6 +75,10 @@ lesson(
     args="root=T([3, 9, 20, None, None, 15, 7])",
     expected=3,
     why="The longest path is 3 → 20 → 15 (or 3 → 20 → 7): three nodes.",
+    picture="""Picture asking everyone in a family tree: *how many generations are there from you down to the
+    youngest?* Someone with no children answers 1. Anyone else first asks both children, takes the
+    bigger answer and adds 1 for themselves. The answer that reaches the top person is the depth of
+    the whole tree.""",
     idea=[
         "The depth of a tree is 1 (for the root itself) plus the depth of its **deeper** subtree.",
         "The depth of each subtree is the same question on a smaller tree — so ask it recursively.",
@@ -77,6 +103,22 @@ lesson(
              "this node: max({left_depth}, {right_depth}) + 1 = **{_ret}**."),
         ]),
     ],
+    say={
+        "def maxDepth": (
+            "The function we must write. It gets a node and returns how many levels the tree "
+            "below it has."
+        ),
+        "if not root": "Is this an empty spot, with no node?",
+        "return 0": "Then it adds no levels: 0.",
+        "left_depth = self.maxDepth(root.left)": (
+            "Ask the same question of the left child: how deep is the tree below it? (The "
+            "function calls itself.)"
+        ),
+        "right_depth = self.maxDepth(root.right)": "And of the right child.",
+        "return max(left_depth, right_depth) + 1": (
+            "This node's depth is its deeper side plus 1 for the node itself."
+        ),
+    },
     time=("O(n)", "Every node is visited once."),
     space=("O(h)", "The recursion stack is as deep as the tree's height h."),
     tests=[("root=T([1, None, 2])", 2), ("root=T([])", 0), ("root=T([1])", 1)],
@@ -90,6 +132,10 @@ lesson(
     args="root=T([1, 2, 3, 4, 5])",
     expected=3,
     why="The path 4 → 2 → 1 → 3 has three edges (so does 5 → 2 → 1 → 3).",
+    picture="""Picture the tree as rooms joined by corridors. The longest walk between two rooms climbs up to
+    some highest room and then goes down again. At that top room, the walk is as long as the deepest
+    way down its left side plus the deepest way down its right side. So every node measures how far
+    down each side goes and adds the two; the biggest sum anywhere is the diameter.""",
     idea=[
         "Every path has one highest node where it *bends*: it comes up from the left subtree and goes down into the right subtree.",
         "The longest path bending at a node has `height(left) + height(right)` edges.",
@@ -111,6 +157,36 @@ lesson(
          "Node {node.val} reports its own height to its parent: max({left_height}, {right_height}) + 1 = **{_ret}**."),
         ("return self.diameter", "The longest path found anywhere in the tree has **{_ret}** edges."),
     ],
+    say={
+        "def diameterOfBinaryTree": (
+            "The function we must write. It gets the top node and returns the length of the "
+            "longest path, counted in edges."
+        ),
+        "def height(node)": (
+            "A helper: how many nodes lie on the longest way down from `node`? While it works, it"
+            " also checks the path that turns at `node`."
+        ),
+        "if not node": "Is this an empty spot?",
+        "return 0": "Then its height is 0.",
+        "left_height = height(node.left)": (
+            "The height of the left side (the helper calls itself)."
+        ),
+        "right_height = height(node.right)": "The height of the right side.",
+        "self.diameter = max(self.diameter, left_height + right_height)": (
+            "A path that turns at this node uses `left_height + right_height` edges. Keep it if "
+            "it is the longest so far."
+        ),
+        "return max(left_height, right_height) + 1": (
+            "This node's own height: its taller side, plus 1 for itself."
+        ),
+        "self.diameter = 0": (
+            "The longest path found so far. (`self.` lets the helper change it.)"
+        ),
+        "height(root)": (
+            "Measure the whole tree from the top; the helper records the longest path on the way."
+        ),
+        "return self.diameter": "Return the longest path found.",
+    },
     time=("O(n)", "Each node's height is computed once."),
     space=("O(h)", "The recursion stack is as deep as the tree's height h."),
     tests=[("root=T([1, 2])", 1), ("root=T([1])", 0),
@@ -125,6 +201,10 @@ lesson(
     args="root=T([1, 2, 2, 3, 3, None, None, 4, 4])",
     expected=False,
     why="At the root the left subtree has height 3 and the right subtree height 1 — a difference of 2.",
+    picture="""Picture checking a hanging mobile, joint by joint, from the bottom up. At every joint the two
+    sides may differ in height by at most one level. Each joint asks its two sides how tall they
+    are. If they differ by more, it reports *broken* (here, infinity), and that report travels all
+    the way up to the top.""",
     idea=[
         "Balance is a statement about heights, so compute heights bottom-up with recursion.",
         "At each node compare the two subtree heights. If they differ by more than 1, the tree is unbalanced.",
@@ -152,6 +232,36 @@ lesson(
         ("return height(root) != float(",
          "The root came back with infinity, so somewhere two sides differed by more than 1 → **{_ret}**."),
     ],
+    say={
+        "def isBalanced": (
+            "The function we must write. It gets the top node and answers `True` if, at every "
+            "node, the two sides differ in height by at most 1."
+        ),
+        "def height(node)": (
+            "A helper that returns a node's height, or infinity if anything below it is "
+            "unbalanced."
+        ),
+        "if not node": "Is this an empty spot?",
+        "return 0": "Then its height is 0.",
+        "left_height = height(node.left)": (
+            "The height of the left side (the helper calls itself)."
+        ),
+        "right_height = height(node.right)": "The height of the right side.",
+        "if abs(left_height - right_height) > 1": (
+            "Do the two sides differ by more than 1? (`abs` drops the minus sign.) This is also "
+            "true when either side has already reported infinity."
+        ),
+        'return float("inf")': (
+            "Then this part is unbalanced: report infinity, a warning sign that passes all the "
+            "way up."
+        ),
+        "return max(left_height, right_height) + 1": (
+            "Balanced here: report the taller side plus 1."
+        ),
+        'return height(root) != float("inf")': (
+            "The tree is balanced exactly when the top did not report infinity."
+        ),
+    },
     time=("O(n)", "Each node is visited once; the balance check reuses the heights already computed."),
     space=("O(h)", "The recursion stack is as deep as the tree's height h."),
     tests=[("root=T([3, 9, 20, None, None, 15, 7])", True), ("root=T([])", True),
@@ -166,6 +276,10 @@ lesson(
     args="p=T([1, 2, 3]), q=T([1, 2, 4])",
     expected=False,
     why="The right children differ: 3 in one tree, 4 in the other.",
+    picture="""Picture two people walking through two buildings at the same time, room by room, comparing as
+    they go. If one finds a room where the other finds none, or the two rooms have different numbers
+    on the door, the buildings differ. If every pair of rooms matches all the way down, they are the
+    same.""",
     idea=[
         "Two trees are the same when their roots match, their left subtrees are the same, **and** their right subtrees are the same.",
         "That definition is recursive, so the code is too: compare one pair of nodes, then recurse into both pairs of children.",
@@ -188,6 +302,23 @@ lesson(
         ("return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)",
          "Below the pair of {p.val}s: {'both sides matched' if _ret else 'not everything matched'}, so return **{_ret}**."),
     ],
+    say={
+        "def isSameTree": (
+            "The function we must write. It gets two nodes, `p` and `q`, and answers whether the "
+            "trees below them are identical."
+        ),
+        "if not p and not q": "Are both spots empty?",
+        "return True": "Two empty trees are the same.",
+        "if not p or not q or p.val != q.val": (
+            "Is only one of them empty, or do their values (`.val`) differ?"
+        ),
+        "return False": "Then the trees differ.",
+        "return self.isSameTree(p.left, q.left) and": (
+            "They match here, so check below: the left sides must match *and* the right sides "
+            "must match. The function checks each by calling itself, and `and` stops early if the"
+            " left sides already differ."
+        ),
+    },
     time=("O(n)", "Each pair of nodes is compared once (n = size of the smaller tree)."),
     space=("O(h)", "The recursion stack is as deep as the tree's height h."),
     tests=[("p=T([1, 2, 3]), q=T([1, 2, 3])", True), ("p=T([1, 2]), q=T([1, None, 2])", False),
@@ -202,6 +333,9 @@ lesson(
     args="s=T([3, 4, 5, 1, 2]), t=T([4, 1, 2])",
     expected=True,
     why="The node 4 in s, with its children 1 and 2, is exactly the tree t.",
+    picture="""Picture looking for a small pattern inside a big tree. Stand on each node of the big tree in
+    turn and ask: if I start comparing here, does everything below match the small tree exactly? The
+    first time the answer is yes, the small tree is a subtree.""",
     idea=[
         "If `t` is inside `s`, it must start at **some node** of `s`.",
         "So visit every node of `s` and ask: is the tree starting here identical to `t`? That check is the *Same Tree* problem.",
@@ -222,6 +356,32 @@ lesson(
         ("return True@1", "A matching subtree was found → **True**.",
          {"tree.good": "subtree(s) + subtree(t)"}),
     ],
+    say={
+        "def isSubtree": (
+            "The function we must write. It gets the big tree `s` and the small tree `t`, and "
+            "answers whether `t` appears inside `s`."
+        ),
+        "if not s": "Has the search gone past the bottom of the big tree?",
+        "return False@1": "Then `t` was not found down this way.",
+        "if self.isSameTree(s, t)": (
+            "Starting from this node, is the tree below it identical to `t`?"
+        ),
+        "return True@1": "Yes: found it.",
+        "return self.isSubtree(s.left, t) or": (
+            "No: look for `t` in the left side, or else in the right side (the function calls "
+            "itself on each)."
+        ),
+        "def isSameTree": "A helper: are the trees below `p` and `q` identical?",
+        "if not p and not q": "Are both spots empty?",
+        "return True@2": "Then they match.",
+        "if not p or not q or p.val != q.val": (
+            "Is only one of them empty, or are the values different?"
+        ),
+        "return False@2": "Then they differ.",
+        "return self.isSameTree(p.left, q.left) and": (
+            "Otherwise both sides below must match too."
+        ),
+    },
     time=("O(m · n)", "In the worst case, each of the m nodes of s starts a comparison that visits up to n nodes of t."),
     space=("O(h)", "The recursion stack is as deep as the height of s."),
     tests=[("s=T([3, 4, 5, 1, 2, None, None, None, None, 0]), t=T([4, 1, 2])", False),
@@ -239,6 +399,10 @@ lesson(
     result="_ret.val",
     expected=4,
     why="Nodes 3 and 5 are the two children of node 4, so 4 is the deepest node above both.",
+    picture="""Picture a sorted family tree where everyone smaller lives to the left and everyone bigger to the
+    right. Walk down from the top looking for two people. While both are smaller than where you
+    stand, go left; while both are bigger, go right. The first place where they would go different
+    ways, or where you meet one of them, is the lowest node above both.""",
     idea=[
         "In a BST everything in a node's left subtree is smaller than the node, and everything in its right subtree is larger.",
         "Start at the root. If **both** targets are smaller, their common ancestor must be in the left subtree; if both are larger, in the right subtree.",
@@ -257,6 +421,29 @@ lesson(
         ("return root", "Return node **{root.val}**.", {"tree.good": "root"}),
     ],
     final={"tree.good": "_ret"},
+    say={
+        "def lowestCommonAncestor(": (
+            "The function we must write. It gets the tree's top node and two nodes, `p` and `q`, "
+            "and returns their lowest common ancestor."
+        ),
+        "if root.val > p.val and root.val > q.val": (
+            "Are both values smaller than this node's? In a search tree, smaller values live on "
+            "the left."
+        ),
+        "return self.lowestCommonAncestor(root.left, p, q)": (
+            "Then both are on the left: carry on from the left child."
+        ),
+        "elif root.val < p.val and root.val < q.val": (
+            "Are both bigger? Bigger values live on the right."
+        ),
+        "return self.lowestCommonAncestor(root.right, p, q)": (
+            "Then carry on from the right child."
+        ),
+        "return root": (
+            "Otherwise they split here, or this node is one of them: it is the lowest common "
+            "ancestor."
+        ),
+    },
     time=("O(h)", "One step down the tree per comparison, so at most the height h."),
     space=("O(h)", "This recursive version uses one stack frame per level."),
     tests=[("root=T([6, 2, 8, 0, 4, 7, 9, None, None, 3, 5]), p=find(root, 2), q=find(root, 8)", 6),
@@ -271,6 +458,9 @@ lesson(
     args="root=T([3, 9, 20, None, None, 15, 7])",
     expected=[[3], [9, 20], [15, 7]],
     why="Level 0 is the root 3, level 1 holds 9 and 20, and level 2 holds 15 and 7.",
+    picture="""Picture a building whose floors are the levels of the tree. Visit it one floor at a time: write
+    down everyone on the current floor from left to right, and meanwhile list who lives on the floor
+    below. Then move down to that list and repeat, until there are no more floors.""",
     idea=[
         "Depth-first search dives down one branch. Here we need to finish a whole level before going deeper — that is **breadth-first search**.",
         "Keep a list of all nodes on the current level. Read their values, and while doing so collect their children: those are exactly the next level.",
@@ -296,6 +486,28 @@ lesson(
         ]),
         ("return result", "Every level has been read: **{_ret}**."),
     ],
+    say={
+        "def levelOrder": (
+            "The function we must write. It gets the top node and returns the values level by "
+            "level."
+        ),
+        "if not root": "Is the tree empty?",
+        "return []": "Then there are no levels.",
+        "result = []": "The answer: one list of values per level.",
+        "queue = [root]": "The nodes of the current level. The first level is just the top node.",
+        "while queue": "Repeat while the current level has nodes.",
+        "level = []": "The values of this level.",
+        "next_level = []": "The nodes of the level below, collected as we go.",
+        "for node in queue": "Go through this level's nodes, from left to right.",
+        "level.append(node.val)": "Write down this node's value.",
+        "if node.left": "Does it have a left child?",
+        "next_level.append(node.left)": "Then that child belongs to the next level.",
+        "if node.right": "Does it have a right child?",
+        "next_level.append(node.right)": "Then that child belongs to the next level too.",
+        "result.append(level)": "This level is complete: add its values to the answer.",
+        "queue = next_level": "Move down one level.",
+        "return result": "Return all the levels.",
+    },
     time=("O(n)", "Every node is read once."),
     space=("O(n)", "A level can hold up to about half of all nodes."),
     tests=[("root=T([1])", [[1]]), ("root=T([])", []), ("root=T([1, 2, None, 3])", [[1], [2], [3]])],
@@ -334,6 +546,9 @@ lesson(
     args="root=T([1, 2, 3, 4])",
     expected=[1, 3, 4],
     why="Node 3 hides node 2, but nothing stands to the right of node 4 on the bottom level.",
+    picture="""Picture standing to the right of the tree and looking at it side-on: on every level you see only
+    the node furthest to the right. So visit the tree level by level, from left to right, and from
+    each level keep just its last node.""",
     idea=[
         "From the right you see exactly one node per level: the **rightmost** one.",
         "It is not enough to follow right children — a deeper node in the *left* subtree is visible when the right side is shorter.",
@@ -359,6 +574,34 @@ lesson(
         ("queue.append(node.right)", "Queue its right child {node.right.val} for the next level."),
         ("return result", "One visible node per level: **{_ret}**."),
     ],
+    say={
+        "def rightSideView": (
+            "The function we must write. It gets the top node and returns the values you can see "
+            "from the right, from top to bottom."
+        ),
+        "if not root": "Is the tree empty?",
+        "return []": "Then nothing is visible.",
+        "result = []": "The visible values, from top to bottom.",
+        "queue = deque([root])": (
+            "A queue of nodes still to visit, starting with the top node. (A `deque` is quick to "
+            "take from at the front.)"
+        ),
+        "while queue": "Repeat while there are nodes left to visit.",
+        "level_size = len(queue)": (
+            "Right now the queue holds exactly one whole level. Count its nodes."
+        ),
+        "for i in range(level_size)": (
+            "Visit that many nodes: this level's nodes, from left to right."
+        ),
+        "node = queue.popleft()": "Take the next node from the front of the queue.",
+        "if i == level_size - 1": "Is it the last node of this level, the rightmost one?",
+        "result.append(node.val)": "Then it is the one seen from the right: keep its value.",
+        "if node.left": "Does it have a left child?",
+        "queue.append(node.left)": "Queue it for the next level.",
+        "if node.right": "Does it have a right child?",
+        "queue.append(node.right)": "Queue it too.",
+        "return result": "Return the values seen from the right.",
+    },
     time=("O(n)", "Every node passes through the queue once, and a deque removes its front item in O(1)."),
     space=("O(n)", "The queue holds up to one full level."),
     tests=[("root=T([1, 2, 3, None, 5, None, 4])", [1, 3, 4]), ("root=T([1, None, 3])", [1, 3]),
@@ -373,6 +616,9 @@ lesson(
     args="root=T([3, 1, 4, 3, None, 1, 5])",
     expected=4,
     why="Good nodes: the root 3, the node 4, the node 5, and the lower 3 (path 3 → 1 → 3 has nothing above 3).",
+    picture="""Picture walking down from the top of the tree carrying a note of the biggest value seen on the
+    way so far. A node is *good* if its value is at least as big as the note, so nothing above it
+    beats it. A good node updates the note before you walk on to its children.""",
     idea=[
         "Whether a node is good depends only on the **largest value above it** on its own path from the root.",
         "So walk down with DFS and pass that maximum along as an argument.",
@@ -398,6 +644,32 @@ lesson(
             post="The subtree of node {node.val} contains **{plural(_ret, 'good node')}**. (The small labels are these counts.)",
             when="node.left or node.right")),
     ],
+    say={
+        "def goodNodes": (
+            "The function we must write. It gets the top node and returns how many good nodes "
+            "there are."
+        ),
+        "def dfs(node, max_val)": (
+            "A helper that counts the good nodes from `node` down. `max_val` is the biggest value"
+            " on the path from the top to here."
+        ),
+        "if not node": "Is this an empty spot?",
+        "return 0": "Then it has no good nodes.",
+        "if node.val >= max_val": "Is this node at least as big as everything above it?",
+        "max_val = node.val": "Yes: it is good, and it is now the biggest on the path.",
+        "count = 1": "Count this node.",
+        "count = 0": "No: something above is bigger, so it does not count.",
+        "count += dfs(node.left, max_val)": (
+            "Add the good nodes on the left side (the helper calls itself and passes the note "
+            "down)."
+        ),
+        "count += dfs(node.right, max_val)": "And those on the right side.",
+        "return count": "Report the total for this part of the tree.",
+        'return dfs(root, float("-inf"))': (
+            "Start at the top with minus infinity as the biggest value seen, so the top node "
+            "always counts."
+        ),
+    },
     time=("O(n)", "Every node is visited once."),
     space=("O(h)", "The recursion stack is as deep as the tree's height h."),
     tests=[("root=T([3, 3, None, 4, 2])", 3), ("root=T([1])", 1), ("root=T([2, None, 1])", 1)],
@@ -411,6 +683,10 @@ lesson(
     args="root=T([5, 3, 8, 1, 6])",
     expected=False,
     why="6 sits in the left subtree of 5 but is larger than 5 — even though it is correctly to the right of 3.",
+    picture="""Picture reading a sorted bookshelf from left to right: every book must come after the one before
+    it. A binary search tree read in order (left side, then the node, then the right side) is
+    exactly such a shelf. So read the tree in that order, remembering the last value read. If a
+    value is ever not bigger than the one before it, the tree is not a valid search tree.""",
     idea=[
         "Checking each node only against its own children is **not enough**: a node deep in the left subtree must still be smaller than the root far above it.",
         "Key fact: reading a BST *in order* (left subtree, then the node, then right subtree) produces the values in strictly increasing order.",
@@ -443,6 +719,36 @@ lesson(
             when="node.right is not None")),
         ("return False@2", "Return **False** — every caller above passes it straight on.", {"tree.bad": "node"}),
     ],
+    say={
+        "def isValidBST": (
+            "The function we must write. It gets the top node and answers whether the tree is a "
+            "valid binary search tree."
+        ),
+        "def inorder_traversal(node, prev)": (
+            "A helper that reads the tree below `node` in order: left side, then the node, then "
+            "the right side. `prev[0]` is the last value read."
+        ),
+        "if not node": "Is this an empty spot?",
+        "return True": "There is nothing to read, so nothing is out of order.",
+        "if not inorder_traversal(node.left, prev)": (
+            "First read the left side. Was something out of order there?"
+        ),
+        "return False@1": "Then the whole tree is invalid.",
+        "if prev[0] is not None and node.val <= prev[0]": (
+            "Now this node. Is its value not bigger than the last value read? (`None` means "
+            "nothing has been read yet.)"
+        ),
+        "return False@2": "Then the values are out of order: invalid.",
+        "prev[0] = node.val": (
+            "Remember this value as the last one read. (It is kept in a one-item list so that "
+            "every call shares it.)"
+        ),
+        "return inorder_traversal(node.right, prev)": (
+            "Finally read the right side; its answer is the answer for this part."
+        ),
+        "prev = [None]": "Nothing has been read yet.",
+        "return inorder_traversal(root, prev)": "Read the whole tree, starting from the top.",
+    },
     time=("O(n)", "Each node is read at most once."),
     space=("O(h)", "The recursion stack is as deep as the tree's height h."),
     tests=[("root=T([2, 1, 3])", True), ("root=T([5, 1, 4, None, None, 3, 6])", False),
@@ -478,6 +784,10 @@ lesson(
     args="root=T([5, 3, 6, 2, 4, None, None, 1]), k=3",
     expected=3,
     why="In sorted order the values are 1, 2, 3, 4, 5, 6, and the third is 3.",
+    picture="""Picture a binary search tree as a sorted shelf folded into the shape of a tree: reading it left
+    side, node, right side gives the values from the smallest up. So read it in that order and
+    count, and the `k`-th value read is the answer. A stack remembers the nodes passed on the way
+    down, so you can come back up to them.""",
     idea=[
         "In a BST, everything left of a node is smaller and everything right of it is larger.",
         "So reading the tree **in order** — left subtree, the node, right subtree — lists the values from smallest to largest.",
@@ -520,6 +830,27 @@ lesson(
         ("return current.val", "k has reached 0, so the answer is **{_ret}**. The rest of the tree is never visited.",
          {"tree.good": "current"}),
     ],
+    say={
+        "def kthSmallest": (
+            "The function we must write. It gets the top node and `k`, and returns the `k`-th "
+            "smallest value."
+        ),
+        "stack = []": "The nodes we have passed on the way down and must come back to.",
+        "current = root": "Start at the top.",
+        "while stack or current": "Repeat while there is still somewhere to go.",
+        "while current": "Keep going left for as long as there is a node.",
+        "stack.append(current)": "Remember this node on the stack, to come back to it.",
+        "current = current.left": "Step to the left child: smaller values come first.",
+        "current = stack.pop()": (
+            "No further left: the node on top of the stack holds the next smallest value."
+        ),
+        "k -= 1": "Count it: one fewer to go.",
+        "if k == 0": "Was that the `k`-th one?",
+        "return current.val": "Yes: return its value.",
+        "current = current.right": (
+            "No: the next values in order are in its right side, so go there."
+        ),
+    },
     time=("O(h + k)", "The walk first goes down the height h of the tree, then stops after k values instead of visiting all n nodes."),
     space=("O(h)", "The stack holds at most one node per level of the tree."),
     tests=[("root=T([3, 1, 4, None, 2]), k=1", 1), ("root=T([1]), k=1", 1),
@@ -559,6 +890,11 @@ lesson(
     args="preorder=[3, 9, 20, 15, 7], inorder=[9, 3, 15, 20, 7]",
     expected=[3, 9, 20, None, None, 15, 7],
     why="3 is the root; 9 is everything to its left; 20 (with children 15 and 7) is its right subtree.",
+    picture="""Picture two lists of the same family. One names every parent before their children (preorder);
+    the other lists everyone from left to right (inorder). The next unused name in the preorder list
+    is always the root of the part being built. Find that name in the inorder list: everyone to its
+    left belongs to its left side, everyone to its right to its right side. Then build each side the
+    same way.""",
     idea=[
         "**Preorder** visits a node *before* its subtrees, so its first value is always the root.",
         "**Inorder** visits the left subtree, then the node, then the right subtree. So once the root is located in `inorder`, everything left of it is the left subtree and everything right of it is the right subtree.",
@@ -600,6 +936,45 @@ lesson(
             ("root.right is not None", "The right part produced node {root.right.val}. Attach it as the right child of {root.val}."),
         ]),
     ],
+    say={
+        "def buildTree": (
+            "The function we must write. It gets the two lists and returns the top node of the "
+            "rebuilt tree."
+        ),
+        "index_of = {value: i for i, value in enumerate(inorder)}": (
+            "A dictionary from each value to its position in `inorder`, so finding a value needs "
+            "no searching."
+        ),
+        "next_root = 0": "The position in `preorder` of the next value to use as a root.",
+        "def build(left, right)": (
+            "A helper that builds the subtree made of `inorder[left]` to `inorder[right]` and "
+            "returns its top node."
+        ),
+        "nonlocal next_root": (
+            "Let the helper change `next_root`, which belongs to the outer function."
+        ),
+        "if left > right": "Is that range empty?",
+        "return None": "Then there is no subtree here.",
+        "root_val = preorder[next_root]": (
+            "In preorder a parent comes before its children, so the next unused value is this "
+            "subtree's root."
+        ),
+        "next_root += 1": "Mark it as used.",
+        "root = TreeNode(root_val)": "Make the node.",
+        "root_index = index_of[root_val]": (
+            "Find where it sits in `inorder`. The values to its left form its left side; the "
+            "values to its right, its right side."
+        ),
+        "root.left = build(left, root_index - 1)": (
+            "Build the left side from the values to its left (the helper calls itself). This must"
+            " come first, because in preorder the whole left side comes before the right."
+        ),
+        "root.right = build(root_index + 1, right)": (
+            "Then build the right side from the values to its right."
+        ),
+        "return root": "This subtree is finished: return its top node.",
+        "return build(0, len(inorder) - 1)": "Build the whole tree from all the values.",
+    },
     time=("O(n)", "Every value becomes a node exactly once, and finding it in `inorder` is a single map lookup."),
     space=("O(n)", "The value → index map, plus a recursion as deep as the tree's height."),
     tests=[("preorder=[-1], inorder=[-1]", [-1]), ("preorder=[1, 2], inorder=[2, 1]", [1, 2]),
@@ -615,6 +990,11 @@ lesson(
     args="root=T([-10, 9, 20, None, None, 15, 7])",
     expected=42,
     why="The best path is 15 → 20 → 7, with sum 42. Going up through −10 would only lower it.",
+    picture="""Picture each node as a town whose value you collect when you pass through; some values are
+    negative. Any trip climbs up to a highest town and comes down again. Working from the bottom up,
+    each town asks its two sides how much the best one-way trip down from them is worth, and ignores
+    a side worth less than 0. A trip turning at this town collects its own value plus both sides.
+    But a trip coming up from below can only use one side, because it cannot split in two.""",
     idea=[
         "Every path has one highest node where it *bends*: it may come up one branch, pass through the node, and go down the other branch.",
         "For each node compute the best sum of a **single branch** going downward from it. A branch with a negative sum is simply not taken (count it as 0).",
@@ -638,6 +1018,39 @@ lesson(
          "max({left_sum}, {right_sum}) + {node.val} = **{_ret}**."),
         ("return self.max_sum", "The best path anywhere in the tree sums to **{_ret}**."),
     ],
+    say={
+        "def maxPathSum(self": (
+            "The function we must write. It gets the top node and returns the biggest total of "
+            "any path."
+        ),
+        "def maxPathSumHelper(node)": (
+            "A helper that returns the best total of a path going *down* from `node` in one "
+            "direction. On the way it also checks the path that turns at `node`."
+        ),
+        "if not node": "Is this an empty spot?",
+        "return 0": "Then it adds nothing.",
+        "left_sum = max(0, maxPathSumHelper(node.left))": (
+            "The best one-way path down the left side, but never below 0: a side that would lower"
+            " the total is simply not used."
+        ),
+        "right_sum = max(0, maxPathSumHelper(node.right))": "The same for the right side.",
+        "self.max_sum = max(self.max_sum, left_sum + right_sum + node.val)": (
+            "A path that turns here collects the left side, this node and the right side. Keep it"
+            " if it is the best so far."
+        ),
+        "return max(left_sum, right_sum) + node.val": (
+            "Going up to the parent, a path can use only one side: this node plus its better "
+            "side."
+        ),
+        'self.max_sum = float("-inf")': (
+            "The best total found so far. Minus infinity means none yet, since every real total "
+            "is bigger."
+        ),
+        "maxPathSumHelper(root)": (
+            "Visit the whole tree from the top; the helper records the best path."
+        ),
+        "return self.max_sum": "Return the best total found.",
+    },
     time=("O(n)", "Every node is visited once."),
     space=("O(h)", "The recursion stack is as deep as the tree's height h."),
     tests=[("root=T([1, 2, 3])", 6), ("root=T([-3])", -3), ("root=T([2, -1])", 2)],
@@ -685,6 +1098,11 @@ lesson(
     ops=["Codec()", "serialize(T([1, 2, 3, None, None, 4]))", "deserialize(_out[1])"],
     expected=[None, "1,2,None,None,3,4,None,None,None", [1, 2, 3, None, None, 4]],
     why="Writing None for every empty spot records the shape, so the string can be read back without guessing.",
+    picture="""Picture writing a tree down as a list of instructions for rebuilding it, top first: each node's
+    value, then its whole left side, then its whole right side, with *None* wherever a child is
+    missing. Rebuilding just reads the list in the same order: each value makes a node, and a *None*
+    says *nothing here, go back up*. Because the empty spots are written down too, the shape comes
+    back exactly.""",
     idea=[
         "A plain list of values is not enough — many different trees contain the same values. The **shape** has to be stored too.",
         "Write the tree in preorder (node, then left subtree, then right subtree) and write `None` for every empty spot. With those markers the text describes exactly one tree.",
@@ -719,6 +1137,43 @@ lesson(
             ("root.right is not None", "Attach node {root.right.val} as the right child of {root.val}."),
         ]),
     ],
+    say={
+        "class Codec": (
+            "The problem asks for a class called `Codec` with two functions, `serialize` and "
+            "`deserialize`."
+        ),
+        "def serialize": "The first function: turn the tree under `root` into one string.",
+        "parts = []": "The pieces of the string, in order.",
+        "def preorder(node)": (
+            "A helper that writes a node, then its left side, then its right side."
+        ),
+        "if not node": "Is this an empty spot?",
+        'parts.append("None")': "Write `None`, so the rebuild knows a child is missing here.",
+        "return@1": "And go back up.",
+        "parts.append(str(node.val))": "Write this node's value as text.",
+        "preorder(node.left)": "Then write its whole left side (the helper calls itself).",
+        "preorder(node.right)": "Then its whole right side.",
+        "preorder(root)": "Write the whole tree, starting from the top.",
+        'return ",".join(parts)': "Join the pieces with commas into one string.",
+        "def deserialize": "The second function: turn such a string back into a tree.",
+        'values = data.split(",")': "Cut the string at the commas, back into its pieces.",
+        "pos = 0": "The position of the next piece to read.",
+        "def build_tree()": (
+            "A helper that reads the next pieces and builds the subtree they describe."
+        ),
+        "nonlocal pos": "Let the helper move `pos`, which belongs to the outer function.",
+        "value = values[pos]": "Read the next piece.",
+        "pos += 1": "Move past it.",
+        'if value == "None"': "Is it `None`?",
+        "return None": "Then there is no node here.",
+        "root = TreeNode(int(value))": "Otherwise make a node holding that number.",
+        "root.left = build_tree()": (
+            "The pieces that follow describe its left side: build it (the helper calls itself)."
+        ),
+        "root.right = build_tree()": "Then the pieces after those describe its right side.",
+        "return root": "This node and both its sides are rebuilt: return it.",
+        "return build_tree()": "Rebuild the whole tree, starting from the first piece.",
+    },
     time=("O(n)", "Each node (and each empty spot) is written once and read once; the tokens are joined in a single pass."),
     space=("O(n)", "The string and the token list are proportional to the size of the tree."),
     tests=[

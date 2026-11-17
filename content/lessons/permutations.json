@@ -27,12 +27,30 @@
    "output": "[[5,4,6],[5,6,4],[4,5,6],[4,6,5],[6,5,4],[6,4,5]]"
   }
  ],
+ "picture": "Picture filling a row of empty seats, one seat at a time, with people who are not seated yet. For the first seat, try each person in turn; for each choice, fill the remaining seats the same way. When every seat is taken, that is one ordering. Then the last person stands up again (*backtracking*) so that someone else can try that seat.",
  "idea": [
   "Fill the ordering one position at a time. For each position, try **every number that is not used yet**.",
   "When the ordering is as long as `nums`, every number has been placed: it is a complete permutation — save it.",
   "After exploring everything that starts with a choice, **undo** it (pop) so a different number can take that position."
  ],
  "code": "class Solution:\n    def permute(self, nums: List[int]) -> List[List[int]]:\n        def backtrack(path):\n            if len(path) == len(nums):\n                result.append(path[:])  # a full ordering: save a copy\n                return\n\n            for num in nums:\n                if num in path:\n                    continue  # already used in this ordering\n                path.append(num)\n                backtrack(path)\n                path.pop()  # undo, so another number can take this place\n\n        result = []\n        backtrack([])\n        return result",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the list `nums` and returns every ordering of it.",
+  "3": "A helper. `path` is the ordering built so far: the seats already filled.",
+  "4": "Is every seat filled?",
+  "5": "Then this is a complete ordering: save a copy.",
+  "6": "And go back to try other choices.",
+  "8": "Try each number for the next seat.",
+  "9": "Is it already seated in this ordering?",
+  "10": "Then skip it: each number is used once.",
+  "11": "**Choose** it: seat it next.",
+  "12": "**Explore**: fill the remaining seats the same way (the helper calls itself).",
+  "13": "**Undo**: the number stands up again, so another one can take this seat.",
+  "15": "The list of all orderings found.",
+  "16": "Start with every seat empty.",
+  "17": "Return every ordering."
+ },
  "complexity": {
   "time": "O(n · n!)",
   "timeWhy": "There are n! permutations and copying each one costs O(n). (A `used` set would make the `in` check O(1); the overall bound stays the same.)",

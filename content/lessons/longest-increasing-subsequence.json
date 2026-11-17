@@ -35,12 +35,25 @@
    "output": "0"
   }
  ],
+ "picture": "Picture each number asking: *what is the longest rising chain that ends with me?* A number can join the end of any chain that finishes with a smaller number before it, making that chain one longer. So each number looks back at every earlier, smaller number and extends the best chain it can. The longest chain anywhere is the answer.",
  "idea": [
   "Let `dp[i]` be the length of the longest increasing subsequence that **ends exactly at index i**. Alone, every element is a subsequence of length 1.",
   "The element before `nums[i]` in such a subsequence must be an earlier, **smaller** number `nums[j]`. Then `nums[i]` extends the best subsequence ending at `j`: length `dp[j] + 1`.",
   "Try every earlier `j` and keep the best. The answer is the largest value in `dp` — the subsequence may end anywhere."
  ],
  "code": "class Solution:\n    def lengthOfLIS(self, nums: List[int]) -> int:\n        if not nums:\n            return 0\n\n        # Initialize a dynamic programming array dp with all values set to 1.\n        dp = [1] * len(nums)\n\n        # Iterate through the array to find the longest increasing subsequence.\n        for i in range(len(nums)):\n            for j in range(i):\n                if nums[i] > nums[j]:\n                    dp[i] = max(dp[i], dp[j] + 1)\n\n        # Return the maximum value in dp, which represents the length of the longest increasing subsequence.\n        return max(dp)",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the list `nums` and returns the length of the longest rising subsequence.",
+  "3": "Is the list empty?",
+  "4": "Then the longest one has length 0.",
+  "7": "One box per number: `dp[i]` is the longest rising chain that ends with `nums[i]`. Each number alone is a chain of 1.",
+  "10": "Go through the numbers, one by one.",
+  "11": "Look back at every number before it.",
+  "12": "Is this number bigger than that earlier one? Then it can join the end of that one's chain.",
+  "13": "Joining makes a chain one longer than `dp[j]`. Keep it if it is the best for `nums[i]` so far.",
+  "16": "The longest chain ending anywhere is the answer."
+ },
  "complexity": {
   "time": "O(n²)",
   "timeWhy": "Every pair (j, i) is compared once. (A patience-sorting variant with binary search reaches O(n log n).)",

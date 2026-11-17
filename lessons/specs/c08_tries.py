@@ -12,6 +12,11 @@ lesson(
          "startsWith('ca')"],
     expected=[None, None, None, True, False, False, True],
     why="'car' was inserted. 'ca' is only the beginning of stored words, and 'cab' leaves the tree at b.",
+    picture="""Picture a tree of letters that branches one letter at a time: from the start you can go to `a`,
+    from `a` to `ap`, from `ap` to `app`. Words that begin the same way share their first branches.
+    Storing a word walks down its letters, adds any branch that is missing, and puts a flag on the
+    last letter. Looking a word up walks the same way: a missing branch means *no*, and at the end
+    the flag says whether a whole word ends there.""",
     idea=[
         "Store words letter by letter in a tree: each node has one child per next letter. Words with the same beginning **share** the same path.",
         "To find a word, start at the root and follow its letters one at a time. If a letter has no branch, the word is not there.",
@@ -41,6 +46,43 @@ lesson(
         ("node = node.children[char]@3", "`{char}`: the branch exists, follow it."),
         ("return True", "The whole prefix could be followed. `startsWith` does not need an end mark → **True**."),
     ],
+    say={
+        "class TrieNode": "One node of the trie: a point where the next letter can branch off.",
+        "self.children = {}": (
+            "Its branches: a dictionary from the next letter to the node it leads to."
+        ),
+        "def __init__(self):@1": "A new node starts with no branches and no end-of-word flag.",
+        "self.is_end = False": "The flag: does a stored word end exactly here? Not yet.",
+        "class Trie:": "The trie itself, as the problem asks.",
+        "def __init__(self):@2": "Runs once, when the trie is created (`Trie()`).",
+        "self.root = TrieNode()": "An empty starting node. Every word begins from here.",
+        "def insert": "Called for `insert(word)`: store a word.",
+        "node = self.root@1": "Start at the root.",
+        "for char in word@1": "Walk through the word, one letter at a time.",
+        "if char not in node.children@1": "Is there no branch for this letter yet?",
+        "node.children[char] = TrieNode()": "Then add one, leading to a new empty node.",
+        "node = node.children[char]@1": "Follow the branch to the next node.",
+        "node.is_end = True": "The last letter is reached: raise the flag, *a word ends here*.",
+        "def search": "Called for `search(word)`: was exactly this word stored?",
+        "node = self.root@2": "Start at the root.",
+        "for char in word@2": "Walk through the word, one letter at a time.",
+        "if char not in node.children@2": "Is there no branch for this letter?",
+        "return False@1": "Then no stored word continues this way: answer `False`.",
+        "node = node.children[char]@2": "Follow the branch.",
+        "return node.is_end": (
+            "Every letter was found. But was a whole word stored, or is this only the start of a "
+            "longer one? The flag says."
+        ),
+        "def startsWith": (
+            "Called for `startsWith(prefix)`: does any stored word begin like this?"
+        ),
+        "node = self.root@3": "Start at the root.",
+        "for char in prefix": "Walk through the prefix, one letter at a time.",
+        "if char not in node.children@3": "Is there no branch for this letter?",
+        "return False@2": "Then no word begins like this: answer `False`.",
+        "node = node.children[char]@3": "Follow the branch.",
+        "return True": "Every letter had a branch, so some stored word begins with this prefix.",
+    },
     time=("O(L) per operation", "Each operation follows one node per letter of the word (length L)."),
     space=("O(total letters)", "In the worst case every letter of every inserted word gets its own node."),
     tests=[
@@ -93,6 +135,10 @@ lesson(
     ops=["WordDictionary()", "addWord('bad')", "addWord('dad')", "search('pad')", "search('.ad')", "search('b..')"],
     expected=[None, None, None, False, True, True],
     why="'.ad' matches bad (and dad); 'b..' matches bad; nothing stored starts with p.",
+    picture="""Picture the same letter tree as a plain trie, except that a search pattern may now contain a
+    dot, meaning *any letter*. For an ordinary letter there is just one branch to follow. At a dot
+    you have to try every branch in turn, and the search succeeds if any one of them leads to a
+    stored word.""",
     idea=[
         "Without dots this is exactly a trie: follow one branch per letter.",
         "A `.` can be any letter, so at that position we cannot know which branch to take — **try them all**.",
@@ -121,6 +167,47 @@ lesson(
             (None, "The pattern is used up, but no stored word ends at this node → **False**."),
         ]),
     ],
+    say={
+        "class TrieNode": "One node of the trie: a point where the next letter can branch off.",
+        "self.children = {}": (
+            "Its branches: a dictionary from the next letter to the node it leads to."
+        ),
+        "def __init__(self):@1": "A new node starts with no branches and no end-of-word flag.",
+        "self.is_end = False": "Does a stored word end exactly here? Not yet.",
+        "class WordDictionary": "The dictionary the problem asks for, built on a trie.",
+        "def __init__(self):@2": "Runs once, when the dictionary is created.",
+        "self.root = TrieNode()": "An empty starting node. Every word begins here.",
+        "def addWord": "Called for `addWord(word)`: store a word.",
+        "node = self.root": "Start at the root.",
+        "for char in word": "Walk through the word, one letter at a time.",
+        "if char not in node.children@1": "Is there no branch for this letter yet?",
+        "node.children[char] = TrieNode()": "Then add one.",
+        "node = node.children[char]@1": "Follow the branch.",
+        "node.is_end = True": "Mark the last node: *a word ends here*.",
+        "def search": "Called for `search(word)`, where a `.` may stand for any letter.",
+        "def dfs(start, node)": (
+            "A helper: does the rest of the pattern, from position `start` on, match some path "
+            "that begins at `node`?"
+        ),
+        "for i in range(start, len(word))": (
+            "Go through the rest of the pattern, one character at a time."
+        ),
+        "char = word[i]": "The pattern character at position `i`.",
+        'if char == "."': "Is it a dot, standing for any letter?",
+        "for letter in node.children": "Then try every branch from this node.",
+        "if dfs(i + 1, node.children[letter])": (
+            "Does the rest of the pattern match down this branch? (The helper calls itself.)"
+        ),
+        "return True": "Yes: the pattern matches a stored word.",
+        "return False@1": "No branch worked: no match.",
+        "if char not in node.children@2": "An ordinary letter. Is there no branch for it?",
+        "return False@2": "Then this path cannot match.",
+        "node = node.children[char]@2": "Follow its branch.",
+        "return node.is_end": (
+            "The pattern is used up. It matches only if a whole word ends exactly here."
+        ),
+        "return dfs(0, self.root)": "Match the whole pattern, starting from the root.",
+    },
     time=("O(L) to add, up to O(26ᴸ) to search", "Adding follows one branch per letter. Each dot in a search can fan out to every child, though real dictionaries cut that down quickly."),
     space=("O(total letters)", "The trie stores each distinct prefix once; the search recursion is at most L deep."),
     tests=[
@@ -179,6 +266,11 @@ lesson(
     expected=["oat", "tan"],
     unordered=1,
     why="o→a→t and t→a→n can be traced through neighbouring cells. For eat, no a is next to the e.",
+    picture="""Picture putting all the words into one letter tree first, so that words with the same beginning
+    share branches. Then start a walk from every cell of the grid. Each step onto a neighbouring
+    cell must also be a step down the letter tree. The moment the tree has no branch for the next
+    letter, the walk stops, because no word continues that way. When the walk reaches a node where a
+    word ends, that word is on the board.""",
     idea=[
         "Searching the grid separately for each word repeats a lot of work when words share beginnings.",
         "Put all the words in a **trie** and walk the grid and the trie *together*: from a cell, only continue while the trie has a branch for the next letter.",
@@ -189,6 +281,7 @@ lesson(
         Trie("root", end="word", tones={"cur": "node"}, title="trie of the words  (a ring = a word ends here)"),
         Items("found", title="found"),
     ],
+    key={"win": "in use on the current path"},
     notes=[
         ("node.word = word",
          "Insert `{word}` into the trie: one node per letter, and the last node remembers the whole word."),
@@ -211,6 +304,57 @@ lesson(
             post="Every direction from ({r}, {c}) has been tried. Free the cell again so that other paths may use it.")),
         ("return found", "Every cell has served as a starting point. Words found: **{_ret}**."),
     ],
+    say={
+        "class TrieNode": "One node of the letter tree.",
+        "def __init__": "A new node starts with no branches and no word.",
+        "self.children = {}": (
+            "Its branches: a dictionary from the next letter to the node it leads to."
+        ),
+        "self.word = None": (
+            "The whole word that ends at this node, if one does (`None` means none)."
+        ),
+        "def findWords": (
+            "The function we must write. It gets the grid `board` and the list of `words`, and "
+            "returns the words found on the grid."
+        ),
+        "root = TrieNode()": "The letter tree's starting node.",
+        "for word in words": "Put each word into the tree.",
+        "node = root": "Start at the root.",
+        "for ch in word": "Walk through the word's letters.",
+        "if ch not in node.children@1": "Is there no branch for this letter yet?",
+        "node.children[ch] = TrieNode()": "Then add one.",
+        "node = node.children[ch]@1": "Follow the branch.",
+        "node.word = word": (
+            "At the last letter, store the whole word, so a walk that gets here knows which word "
+            "it has found."
+        ),
+        "rows, cols = len(board), len(board[0])": "The grid's size.",
+        "found = []": "The words found so far.",
+        "def dfs(r, c, node)": (
+            "A helper: step onto the cell at row `r`, column `c`, while standing on `node` in the"
+            " letter tree."
+        ),
+        "ch = board[r][c]": "The letter in this cell.",
+        "if ch not in node.children@2": (
+            "Does the letter tree have no branch for this letter here?"
+        ),
+        "return@1": "Then no word continues this way: give up on this cell.",
+        "node = node.children[ch]@2": "Step down the letter tree as well.",
+        "if node.word": "Does a whole word end at this node?",
+        "found.append(node.word)": "Then it is on the board: add it to the answer.",
+        "node.word = None": "Clear it, so the same word is never reported twice.",
+        'board[r][c] = "#"': "Mark this cell as in use, so this walk cannot step on it twice.",
+        "for nr, nc in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1))": (
+            "Look at the four neighbours: down, up, right and left."
+        ),
+        "if 0 <= nr < rows": "Is that neighbour inside the grid, and not already in use?",
+        "dfs(nr, nc, node)": "Then continue the walk there (the helper calls itself).",
+        "board[r][c] = ch": "On the way back, free the cell again by putting its letter back.",
+        "for r in range(rows)": "Go through every row of the grid…",
+        "for c in range(cols)": "…and every column in it.",
+        "dfs(r, c, root)": "Start a walk from this cell, at the top of the letter tree.",
+        "return found": "Return every word found.",
+    },
     time=("O(m · n · 4ᴸ)", "A walk starts at each of the m · n cells and branches up to 4 ways for up to L letters; the trie cuts most branches early."),
     space=("O(total letters)", "The trie, plus a recursion depth of at most L."),
     tests=[

@@ -43,12 +43,32 @@
    "output": "0"
   }
  ],
+ "picture": "Picture adding two binary numbers on paper in two separate passes. Pass one writes each column's digit but ignores carries: 0 + 1 is 1, and 1 + 1 is 0. That is XOR. Pass two writes only the carries, each moved one column left; a carry appears where both digits are 1. That is AND, then a shift. The answer is these two numbers added together, which is another addition, so repeat until no carries are left.",
  "idea": [
   "Look at one binary column: `0 + 0 = 0`, `0 + 1 = 1`, `1 + 1 = 0 carry 1`. Ignoring the carry, that is exactly **XOR**. So `a ^ b` adds every column without carries.",
   "A carry arises precisely where **both** bits are 1 — that is `a & b`. A carry belongs one column to the left, so shift it: `(a & b) << 1`.",
   "The true sum is *(sum without carries) + (carries)* — another addition. Repeat with those two numbers until there are no carries left. (The mask keeps the numbers within 32 bits, because Python integers never overflow.)"
  ],
  "code": "class Solution:\n    def getSum(self, a: int, b: int) -> int:\n        MASK = 0xFFFFFFFF\n        MAX_INT = 0x7FFFFFFF\n\n        while b != 0:\n            a, b = (a ^ b) & MASK, ((a & b) << 1) & MASK\n\n        return a if a <= MAX_INT else ~(a ^ MASK)",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets two numbers `a` and `b` and returns their sum, without using `+` or `-`.",
+  "3": "A number made of 32 ones in binary (`0x` means it is written in hexadecimal). `& MASK` keeps only the lowest 32 bits, the way a 32-bit number would.",
+  "4": "The largest positive 32-bit number: a 0 followed by 31 ones.",
+  "6": "Keep going while there are carries left to add.",
+  "7": "Both at once: `a` becomes the sum without carries (`a ^ b`), and `b` the carries (`a & b`, where both bits are 1) moved one column left (`<< 1`).",
+  "9": "If `a` fits as a positive number, return it. Otherwise its top bit marks it as negative in 32-bit form, and `~(a ^ MASK)` turns it into the same negative number in Python."
+ },
+ "key": [
+  {
+   "tone": "good",
+   "label": "sum without carries (a ^ b)"
+  },
+  {
+   "tone": "mark",
+   "label": "the carries ((a & b) << 1)"
+  }
+ ],
  "complexity": {
   "time": "O(1)",
   "timeWhy": "At most 32 rounds, because every round moves the carries one bit to the left.",

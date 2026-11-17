@@ -31,12 +31,21 @@
    "output": "0"
   }
  ],
+ "picture": "Picture a row of light switches, all off. Each number says which switches to flip: the ones where its binary form has a 1. Flipping a switch twice puts it back, so a number that comes twice undoes itself. Once every number has had its turn, the switches show exactly the number that came only once. Flipping like this is what XOR (`^`) does.",
  "idea": [
   "XOR (`^`) compares two numbers bit by bit: equal bits give 0, different bits give 1.",
   "Two facts follow: `a ^ a = 0` (a number cancels itself) and `a ^ 0 = a`. And the order of XOR operations does not matter.",
   "So XOR **all** numbers together: every pair cancels to 0, and what is left is the number without a partner."
  ],
  "code": "class Solution:\n    def singleNumber(self, nums: List[int]) -> int:\n        result = 0\n        for num in nums:\n            result ^= num\n        return result",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the list `nums` and returns the number that appears only once.",
+  "3": "Start at 0: all switches off.",
+  "4": "Go through the numbers one at a time.",
+  "5": "XOR it in: `^` flips the bits of `result` wherever `num` has a 1. A number seen twice flips the same bits back.",
+  "6": "Every pair has cancelled out. What is left is the single number."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "One XOR per number.",

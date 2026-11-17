@@ -27,12 +27,32 @@
    "output": "7"
   }
  ],
+ "picture": "Picture a pile of number cards. Read the tokens from left to right. A number goes on top of the pile. An operator such as `+` takes the top two cards, combines them, and puts the result back on top as a new card. Because an operator always comes right after its two numbers, the cards it needs are always the two on top. When the tokens run out, the one card left is the answer.",
  "idea": [
   "In this notation an operator always applies to the **two most recent values** — either numbers just read, or results just computed.",
   "*Most recent first* is exactly what a stack gives. Number → push it. Operator → pop two values, combine them, and push the result back.",
   "The first value popped is the **right-hand** operand. That matters for `−` and `/`. At the end, the one value left on the stack is the answer."
  ],
  "code": "class Solution:\n    def evalRPN(self, tokens: List[str]) -> int:\n        stack = []\n\n        for token in tokens:\n            if token.isdigit() or (token[0] == \"-\" and token[1:].isdigit()):\n                stack.append(int(token))\n            else:\n                num2 = stack.pop()\n                num1 = stack.pop()\n                if token == \"+\":\n                    stack.append(num1 + num2)\n                elif token == \"-\":\n                    stack.append(num1 - num2)\n                elif token == \"*\":\n                    stack.append(num1 * num2)\n                elif token == \"/\":\n                    stack.append(int(num1 / num2))\n\n        return stack[0]",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the `tokens` (numbers and operators, written as text) and returns the result.",
+  "3": "An empty stack for the numbers that are waiting to be used.",
+  "5": "Go through the tokens from left to right.",
+  "6": "Is this token a number? `.isdigit()` checks that it is made of digits; the second part also accepts a minus sign in front, as in `-3`.",
+  "7": "Yes: turn the text into a number (`int`) and put it on the stack.",
+  "9": "No, it is an operator: take the top number off the stack. It is the **right-hand** number.",
+  "10": "Take the next number off: it is the **left-hand** number.",
+  "11": "Is the operator `+`?",
+  "12": "Add the two and put the result back on the stack.",
+  "13": "Is it `-`?",
+  "14": "Subtract, left minus right, and put the result back.",
+  "15": "Is it `*` (multiply)?",
+  "16": "Multiply the two and put the result back.",
+  "17": "Is it `/` (divide)?",
+  "18": "Divide, then cut off any fraction toward zero with `int`, as the problem asks, and put the result back.",
+  "20": "One number is left on the stack: that is the answer."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "Each token is handled once with O(1) stack work.",

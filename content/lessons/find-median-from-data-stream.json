@@ -19,12 +19,32 @@
    "output": ""
   }
  ],
+ "picture": "Picture the numbers split into two piles: a *small* pile and a *big* pile, with every small number at most every big number. Keep the piles the same size, or the small pile one bigger. Then the middle is always on top: the largest number of the small pile, or the average of that and the smallest number of the big pile. Each pile is a heap, so its top number is always ready.",
  "idea": [
   "Re-sorting after every insertion is too slow. But the median only depends on the **middle** of the sorted order.",
   "Split the numbers into a smaller half and a larger half. Keep the smaller half in a max-heap (its largest on top) and the larger half in a min-heap (its smallest on top). The middle values are then always at the two tops.",
   "After every insertion, rebalance so the halves differ in size by at most one (the smaller half may hold the extra number). The median is that extra top, or the average of both tops."
  ],
  "code": "import heapq\n\nclass MedianFinder:\n    def __init__(self):\n        self.min_heap = []  # To store larger elements\n        self.max_heap = []  # To store smaller elements\n\n    def addNum(self, num: int) -> None:\n        if not self.max_heap or num <= -self.max_heap[0]:\n            heapq.heappush(self.max_heap, -num)\n        else:\n            heapq.heappush(self.min_heap, num)\n\n        # Balance the heaps\n        if len(self.max_heap) > len(self.min_heap) + 1:\n            heapq.heappush(self.min_heap, -heapq.heappop(self.max_heap))\n        elif len(self.min_heap) > len(self.max_heap):\n            heapq.heappush(self.max_heap, -heapq.heappop(self.min_heap))\n\n    def findMedian(self) -> float:\n        if len(self.max_heap) == len(self.min_heap):\n            return (-self.max_heap[0] + self.min_heap[0]) / 2\n        else:\n            return -self.max_heap[0]",
+ "say": {
+  "1": "Load `heapq`, Python's ready-made **heap**: a list kept in an order where the smallest item is always at the front.",
+  "3": "The problem asks for a class called `MedianFinder`.",
+  "4": "Runs once, when it is created.",
+  "5": "The pile of *bigger* numbers. As a min-heap it shows its smallest number at the front.",
+  "6": "The pile of *smaller* numbers, stored with minus signs so that the heap shows its biggest number at the front.",
+  "8": "Called for `addNum(num)`.",
+  "9": "Is the small pile empty, or is the new number no bigger than the small pile's biggest (`-self.max_heap[0]`)?",
+  "10": "Then it belongs in the small pile (stored with a minus sign).",
+  "12": "Otherwise it belongs in the big pile.",
+  "15": "Is the small pile now more than one bigger than the big pile?",
+  "16": "Then move its biggest number over to the big pile.",
+  "17": "Or is the big pile now bigger than the small pile?",
+  "18": "Then move its smallest number over to the small pile.",
+  "20": "Called for `findMedian()`.",
+  "21": "Are the two piles the same size (an even count)?",
+  "22": "Then the median is the average of the two middle numbers: the small pile's biggest and the big pile's smallest.",
+  "24": "Otherwise the small pile holds the one extra number, and its biggest is the median."
+ },
  "complexity": {
   "time": "O(log n) per add, O(1) per median",
   "timeWhy": "Adding does a constant number of heap pushes and pops; the median just reads the tops.",

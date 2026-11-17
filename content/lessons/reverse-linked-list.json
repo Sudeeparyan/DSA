@@ -27,12 +27,25 @@
    "output": "[5,4,3,2,1]"
   }
  ],
+ "picture": "Picture a conga line where everyone has a hand on the shoulder of the person in front. To reverse the line, walk along it and turn each person around, so that their hand points at the person who was behind them. Before you turn someone, note who was in front of them, or you would lose track of the rest of the line.",
  "idea": [
   "Each node only knows its `next`. Reversing the list means making every arrow point the other way.",
   "Walk the list once with three pointers: `prev` (head of the part already reversed), `current` (the node being flipped) and `next_node` (a saved copy of the way forward).",
   "For each node: **save** its next → **flip** its arrow back to `prev` → **slide** `prev` and `current` one step forward."
  ],
  "code": "class Solution:\n    def reverseList(self, head: ListNode) -> ListNode:\n        prev = None\n        current = head\n\n        while current:\n            next_node = current.next\n            current.next = prev\n            prev = current\n            current = next_node\n\n        return prev",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the first node of the list (`head`) and returns the first node of the reversed list.",
+  "3": "`prev` is the node just behind the one we are fixing. Behind the first node there is nothing (`None`), and that is what the new last node will point to.",
+  "4": "`current` is the node we are fixing now. Start at the front.",
+  "6": "Repeat until we have walked off the end of the list (`current` is `None`).",
+  "7": "Remember the node after `current` before its arrow changes, or the rest of the list would be lost.",
+  "8": "Turn `current`'s arrow around: it now points back at `prev`.",
+  "9": "Move `prev` forward onto `current`.",
+  "10": "Move `current` on to the node we remembered.",
+  "12": "`prev` is on the old last node, which is now the first node: return it."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "Each node is visited exactly once.",

@@ -31,6 +31,7 @@
    "output": "False"
   }
  ],
+ "picture": "Picture stacking plates. Each opening bracket is a plate put on top of the pile. A closing bracket may only take the **top** plate, and only if it is its partner: `)` takes `(`, `]` takes `[`. If the top plate is the wrong kind, or there is no plate at all, the string is broken. At the end the pile must be empty, because a plate left over was never closed.",
  "idea": [
   "The bracket opened **last** must be the one closed **first**. That is exactly how a stack behaves: last in, first out.",
   "See an opening bracket → push it. It waits on the stack for its partner.",
@@ -38,6 +39,21 @@
   "At the end the stack must be empty — anything left was never closed."
  ],
  "code": "class Solution:\n    def isValid(self, s: str) -> bool:\n        stack = []\n        parentheses_map = {\")\": \"(\", \"}\": \"{\", \"]\": \"[\"}\n\n        for char in s:\n            if char in parentheses_map.values():\n                stack.append(char)\n            elif char in parentheses_map:\n                if not stack or stack[-1] != parentheses_map[char]:\n                    return False\n                stack.pop()\n            else:\n                return False\n\n        return not stack",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the text `s` of brackets and answers `True` or `False`.",
+  "3": "An empty list used as a **stack**: we only ever add to, look at, or take from its end, which we call the top.",
+  "4": "A dictionary that pairs each closing bracket with the opening bracket it must match.",
+  "6": "Go through the brackets one at a time.",
+  "7": "Is it an opening bracket? (The dictionary's *values* are the opening brackets.)",
+  "8": "Yes: put it on top of the stack, where it waits for its partner.",
+  "9": "Otherwise, is it a closing bracket? (The dictionary's *keys* are the closing ones.)",
+  "10": "Is the stack empty, or is the top (`stack[-1]`, the last item) not the partner this bracket needs?",
+  "11": "Then this closing bracket has nothing it can close: answer `False`.",
+  "12": "The top is its partner: take it off the stack. That pair is closed.",
+  "14": "Any other character is not a bracket at all: answer `False`.",
+  "16": "Answer `True` only if the stack is now empty (`not stack`), which means every bracket was closed."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "Each character is pushed and popped at most once.",

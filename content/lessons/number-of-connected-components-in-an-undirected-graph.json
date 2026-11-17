@@ -31,12 +31,34 @@
    "output": "2"
   }
  ],
+ "picture": "Picture people and the friendships between them. A *component* is a group of people linked by friendships, directly or through others. Go through the people one by one. Whenever you meet someone not visited yet, they start a new group: count it, then visit everyone reachable from them through friendships, marking each one, so that nobody in that group starts another count.",
  "idea": [
   "Build an adjacency list so that every node knows its neighbours.",
   "Go through the nodes in order. A node that has **not been visited** yet belongs to a component nobody has seen — count one more.",
   "Then run a DFS from it to mark its **whole** component as visited, so none of its nodes is counted again."
  ],
  "code": "from collections import defaultdict, deque\n\nclass Solution:\n    def countComponents(self, n: int, edges: List[List[int]]) -> int:\n        graph = defaultdict(list)\n        for u, v in edges:\n            graph[u].append(v)\n            graph[v].append(u)\n\n        def dfs(node):\n            visited.add(node)\n            for neighbor in graph[node]:\n                if neighbor not in visited:\n                    dfs(neighbor)\n\n        visited = set()\n        components = 0\n\n        for node in range(n):\n            if node not in visited:\n                components += 1\n                dfs(node)\n\n        return components",
+ "say": {
+  "1": "Load `defaultdict` (a dictionary that creates a starting value for a new key by itself) and `deque` (a queue that is quick at both ends).",
+  "3": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "4": "The function we must write. It gets `n` and the `edges`, and returns how many separate groups there are.",
+  "5": "For each node, the list of its neighbours (a new node gets an empty list by itself).",
+  "6": "Go through the edges.",
+  "7": "Record `v` as a neighbour of `u`.",
+  "8": "And `u` as a neighbour of `v`: the edge goes both ways.",
+  "10": "A helper that visits every node reachable from `node`.",
+  "11": "Mark this node as visited.",
+  "12": "Look at each neighbour.",
+  "13": "Has it not been visited yet?",
+  "14": "Then visit it, and everything reachable from it (the helper calls itself).",
+  "16": "The nodes visited so far.",
+  "17": "The number of groups found so far.",
+  "19": "Go through every node.",
+  "20": "Has this node not been reached from an earlier group?",
+  "21": "Then it starts a new group: count it.",
+  "22": "And visit its whole group, so no other member starts a count.",
+  "24": "Return the number of groups."
+ },
  "complexity": {
   "time": "O(V + E)",
   "timeWhy": "Every node is visited once and every edge is looked at from both ends.",

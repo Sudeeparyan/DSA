@@ -27,12 +27,38 @@
    "output": "[[-2,0,2]]"
   }
  ],
+ "picture": "Picture picking teams of three whose scores add up to exactly zero. First line everyone up by score. Then let each person in turn be the team's first member, and find the other two among the people to their right, with one finger at each end of that part of the line: move the left finger to raise the total, the right finger to lower it. Because equal scores now stand side by side, it is easy to avoid picking the same team twice.",
  "idea": [
   "Trying all triples is O(n³). Fix **one** number instead; what remains is *find two numbers that sum to its negative* — the Two Sum II problem.",
   "Sort the array once. Then for each first number, run two pointers over the part to its right, steering the sum toward 0.",
   "Sorting also puts equal values side by side, so duplicates are easy to skip: never start from the same first value twice."
  ],
  "code": "class Solution:\n    def threeSum(self, nums: List[int]) -> List[List[int]]:\n        nums.sort()\n        result = []\n        n = len(nums)\n\n        for i in range(n - 2):\n            if i > 0 and nums[i] == nums[i - 1]:\n                continue\n\n            left, right = i + 1, n - 1\n\n            while left < right:\n                current_sum = nums[i] + nums[left] + nums[right]\n\n                if current_sum == 0:\n                    result.append([nums[i], nums[left], nums[right]])\n\n                    # Skip duplicates\n                    while left < right and nums[left] == nums[left + 1]:\n                        left += 1\n                    while left < right and nums[right] == nums[right - 1]:\n                        right -= 1\n\n                    left += 1\n                    right -= 1\n                elif current_sum < 0:\n                    left += 1\n                else:\n                    right -= 1\n\n        return result",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the list `nums` and returns every group of three numbers that adds up to 0.",
+  "3": "Sort the numbers from smallest to largest.",
+  "4": "An empty list for the triplets we find.",
+  "5": "`n` is how many numbers there are.",
+  "7": "Let each position `i` in turn hold the first number of a triplet. (`range(n - 2)` stops early, because two more numbers are needed to its right.)",
+  "8": "Is this first number the same as the one just before it? It would only find the same triplets again.",
+  "9": "So skip it: `continue` jumps straight to the next `i`.",
+  "11": "Put `left` just after `i`, and `right` on the last number.",
+  "13": "Repeat while those two pointers have not met.",
+  "14": "Add up the three numbers.",
+  "16": "Is the total exactly 0?",
+  "17": "Yes: add this triplet to the end of `result`.",
+  "20": "Is the next number on the left a copy of this one? Using it would rebuild the same triplet.",
+  "21": "So step `left` past the copy.",
+  "22": "Is the next number on the right a copy of this one?",
+  "23": "So step `right` past the copy.",
+  "25": "Now move `left` inward, onto a new number.",
+  "26": "And move `right` inward too, to look for another pair.",
+  "27": "Otherwise, is the total below 0?",
+  "28": "Too small: move `left` right, to a bigger number.",
+  "30": "Too big (above 0): move `right` left, to a smaller number.",
+  "32": "Return every triplet found."
+ },
  "complexity": {
   "time": "O(n²)",
   "timeWhy": "Sorting is O(n log n); then each of the n first numbers gets one O(n) two-pointer sweep.",

@@ -31,12 +31,30 @@
    "output": "12"
   }
  ],
+ "picture": "Picture each bar trying to be the height of a rectangle that stretches sideways until it bumps into a shorter bar. Walk from left to right with a stack of bars that are still stretching to the right. When a shorter bar arrives, every taller bar on the stack is blocked: its rectangle reaches from just after the bar below it on the stack to just before the new bar. Measure it, keep the best, and take it off the stack.",
  "idea": [
   "Every candidate rectangle has the full height of some bar and stretches left and right until it hits a **shorter** bar.",
   "Scan left to right with a stack of bars whose rectangle is still *open* (it has not met a shorter bar on its right yet). Their heights increase up the stack.",
   "When a shorter bar arrives, it closes every taller bar on the stack. Pop each one: its right edge is the current bar, its left edge is the bar now below it on the stack. Compute the area and keep the best."
  ],
  "code": "class Solution:\n    def largestRectangleArea(self, heights: List[int]) -> int:\n        stack = []\n        max_area = 0\n\n        for i in range(len(heights)):\n            while stack and heights[i] < heights[stack[-1]]:\n                height = heights[stack.pop()]\n                width = i if not stack else i - stack[-1] - 1\n                max_area = max(max_area, height * width)\n            stack.append(i)\n\n        while stack:\n            height = heights[stack.pop()]\n            width = len(heights) if not stack else len(heights) - stack[-1] - 1\n            max_area = max(max_area, height * width)\n\n        return max_area",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the bar `heights` and returns the area of the largest rectangle.",
+  "3": "A stack of bar *positions* whose rectangles are still open on the right. Their heights rise from bottom to top.",
+  "4": "The largest area found so far.",
+  "6": "Visit the bars from left to right. `i` is the position.",
+  "7": "Is the new bar shorter than the bar on top of the stack? Then that taller bar cannot stretch any further right.",
+  "8": "Take that bar off the stack. Its height is the rectangle's height.",
+  "9": "Its width runs from just after the bar now on top of the stack up to just before `i`. If the stack is empty, it stretches all the way from the left edge, so the width is `i`.",
+  "10": "The area is height × width. Keep it if it is the biggest so far.",
+  "11": "Put the new bar on the stack: its rectangle is still open.",
+  "13": "The bars still on the stack never met a shorter bar, so their rectangles reach the right edge. Close them one by one.",
+  "14": "Take the next bar off the stack. Its height is the rectangle's height.",
+  "15": "It stretches to the right edge (`len(heights)`), and on the left to just after the bar below it, or to the left edge if none is left.",
+  "16": "Keep the area if it is the biggest so far.",
+  "18": "Return the largest area."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "Each bar is pushed once and popped once.",

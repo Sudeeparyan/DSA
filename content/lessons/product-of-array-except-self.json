@@ -23,12 +23,28 @@
    "output": "[3,2]"
   }
  ],
+ "picture": "Picture a row of people, each holding a number, where each person wants the product of everyone else's numbers. Walk along the row from the left, carrying a running product: it tells each person the product of everyone before them. Walk back from the right with a second running product for everyone after them. Each person multiplies the two, and nobody ever divides.",
  "idea": [
   "The product of everything except `nums[i]` splits into two parts: (everything to the **left** of i) × (everything to the **right** of i).",
   "A running product gives all the left parts in one left-to-right pass.",
   "A second pass from right to left carries the running product of the right parts and multiplies it in. Two passes, no division."
  ],
  "code": "class Solution:\n    def productExceptSelf(self, nums: List[int]) -> List[int]:\n        n = len(nums)\n        result = [1] * n\n\n        # Calculate the left product of each element\n        left_product = 1\n        for i in range(n):\n            result[i] *= left_product\n            left_product *= nums[i]\n\n        # Calculate the right product of each element and update the result list\n        right_product = 1\n        for i in range(n - 1, -1, -1):\n            result[i] *= right_product\n            right_product *= nums[i]\n\n        return result",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the list `nums` and returns a new list of products.",
+  "3": "`n` is how many numbers there are.",
+  "4": "Make the answer list: `n` ones in a row (`[1] * n` repeats `1` `n` times).",
+  "7": "The product of every number to the left of where we are. Before the first number there is nothing, and a product of nothing is 1.",
+  "8": "Visit the positions from left to right: `range(n)` counts 0, 1, 2, … up to `n − 1`.",
+  "9": "Multiply this slot by the product of everything to its left. (`*=` means *multiply and keep the result*.)",
+  "10": "Fold this number into the running product, ready for the next position.",
+  "13": "Now the product of every number to the right. Past the last number there is nothing, so it also starts at 1.",
+  "14": "Visit the positions from right to left: `range(n - 1, -1, -1)` counts down from `n − 1` to 0.",
+  "15": "Multiply this slot by the product of everything to its right. It now holds *left × right*: everyone but itself.",
+  "16": "Fold this number into the running product, ready for the next position to the left.",
+  "18": "Every slot holds the product of all the other numbers: return the list."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "Two passes over the array.",

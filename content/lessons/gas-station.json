@@ -35,12 +35,27 @@
    "output": "1"
   }
  ],
+ "picture": "Picture driving round the circuit with a fuel gauge that starts at empty. At each station you gain its gas and spend what the next stretch costs. If the gauge would drop below empty, no station from your start up to here can be the start, since each of them would arrive here with even less. So try again from the next station. One more fact settles it: if the total gas is at least the total cost, a start exists, and it is the last one you tried.",
  "idea": [
   "If the total gas is less than the total cost, no start can work. If it is at least the total cost, some start **always** works.",
   "Try a start and keep the tank level. If the tank goes negative at station `i`, this start fails — and so does **every station between the start and i**: each of them would arrive at `i` with even less gas (we reached them with a non-negative tank).",
   "So skip them all: the next candidate is station `i + 1`, with an empty tank. The last candidate left after one pass is the answer (if the totals allow one)."
  ],
  "code": "class Solution:\n    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:\n        total_gas = 0\n        current_gas = 0\n        start_station = 0\n\n        for i in range(len(gas)):\n            total_gas += gas[i] - cost[i]\n            current_gas += gas[i] - cost[i]\n\n            if current_gas < 0:\n                start_station = i + 1\n                current_gas = 0\n\n        return start_station if total_gas >= 0 else -1",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets each station's `gas` and the `cost` of the stretch after it, and returns a station to start from, or -1.",
+  "3": "Gas gained minus gas spent, over the whole circuit.",
+  "4": "The fuel in the tank since the current starting station.",
+  "5": "The station we are trying as the start.",
+  "7": "Visit the stations in order.",
+  "8": "Add this station's gas and take away the next stretch's cost, in the total for the whole circuit.",
+  "9": "And in the tank since the current start.",
+  "11": "Did the tank run dry on the way to the next station?",
+  "12": "Then none of the stations tried so far can be the start: try the next one.",
+  "13": "Start again with an empty tank.",
+  "15": "If there is enough gas in total, the last start tried works. Otherwise no start can: return -1."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "One pass over the stations.",

@@ -43,12 +43,31 @@
    "output": "True"
   }
  ],
+ "picture": "Picture not yet knowing what each `*` will turn into, so you keep a *range* for the number of unclosed `(`: the fewest possible and the most possible. A `(` raises both, a `)` lowers both, and a `*` could go either way, so it lowers the fewest and raises the most. If even the most possible count drops below zero, too many `)` have come. At the end the string can be valid if the fewest possible count is zero.",
  "idea": [
   "Without stars, one counter of currently open brackets is enough. A star makes that count **uncertain** — so track the whole **range** of possible counts: `lower` (fewest open brackets possible) and `upper` (most possible).",
   "`(` raises both ends, `)` lowers both. A `*` lowers `lower` (if used as `)`) and raises `upper` (if used as `(`). `lower` is kept at 0 or above, because scenarios with a negative count are simply invalid.",
   "If `upper` drops below 0, even the most generous reading has too many `)` → `False`. At the end the string is valid exactly when 0 is in the range, i.e. `lower == 0`."
  ],
  "code": "class Solution:\n    def checkValidString(self, s: str) -> bool:\n        lower = upper = 0\n\n        for char in s:\n            if char == \"(\":\n                lower += 1\n                upper += 1\n            elif char == \")\":\n                lower = max(lower - 1, 0)\n                upper -= 1\n            else:  # char == '*'\n                lower = max(lower - 1, 0)\n                upper += 1\n\n            if upper < 0:\n                return False\n\n        return lower == 0",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the text `s` and answers whether its `*`s can be chosen to make it valid.",
+  "3": "The fewest (`lower`) and the most (`upper`) unclosed `(` there could be so far.",
+  "5": "Go through the characters one at a time.",
+  "6": "Is it an opening bracket?",
+  "7": "Then the fewest possible open count goes up by one.",
+  "8": "And so does the most possible.",
+  "9": "Is it a closing bracket?",
+  "10": "Then the fewest goes down by one, but never below zero: we would simply have counted fewer `*` as `(`.",
+  "11": "And the most goes down by one.",
+  "12": "Otherwise the character is a `*`.",
+  "13": "A `*` might be a `)`: the fewest possible count goes down by one, but never below zero.",
+  "14": "Or it might be a `(`: the most possible count goes up by one.",
+  "16": "Even counting every `*` as `(`, are there now more `)` than `(`?",
+  "17": "Then the string can never be valid.",
+  "19": "It can be valid if some choice closes every bracket, that is if the fewest possible open count is 0."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "One pass over the string, with O(1) work per character.",

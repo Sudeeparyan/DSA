@@ -27,12 +27,28 @@
    "output": "6"
   }
  ],
+ "picture": "Picture a binary search tree as a sorted shelf folded into the shape of a tree: reading it left side, node, right side gives the values from the smallest up. So read it in that order and count, and the `k`-th value read is the answer. A stack remembers the nodes passed on the way down, so you can come back up to them.",
  "idea": [
   "In a BST, everything left of a node is smaller and everything right of it is larger.",
   "So reading the tree **in order** — left subtree, the node, right subtree — lists the values from smallest to largest.",
   "The whole list is not needed. Walk the tree in order with a stack, count the values as they come out, and **stop at the k-th one**."
  ],
  "code": "class Solution:\n    def kthSmallest(self, root: TreeNode, k: int) -> int:\n        stack = []\n        current = root\n\n        while stack or current:\n            # Go left as far as possible: smaller values come first\n            while current:\n                stack.append(current)\n                current = current.left\n\n            # The node on top of the stack is the next value in sorted order\n            current = stack.pop()\n            k -= 1\n            if k == 0:\n                return current.val\n\n            # Everything in its right subtree comes next\n            current = current.right",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the top node and `k`, and returns the `k`-th smallest value.",
+  "3": "The nodes we have passed on the way down and must come back to.",
+  "4": "Start at the top.",
+  "6": "Repeat while there is still somewhere to go.",
+  "8": "Keep going left for as long as there is a node.",
+  "9": "Remember this node on the stack, to come back to it.",
+  "10": "Step to the left child: smaller values come first.",
+  "13": "No further left: the node on top of the stack holds the next smallest value.",
+  "14": "Count it: one fewer to go.",
+  "15": "Was that the `k`-th one?",
+  "16": "Yes: return its value.",
+  "19": "No: the next values in order are in its right side, so go there."
+ },
  "complexity": {
   "time": "O(h + k)",
   "timeWhy": "The walk first goes down the height h of the tree, then stops after k values instead of visiting all n nodes.",

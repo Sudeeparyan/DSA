@@ -40,6 +40,7 @@ Overview of the code: [README.md](./README.md) · how it fits together:
 | To change… | Edit | Then run |
 | --- | --- | --- |
 | A question, idea, caption, example or complexity text | `lessons/specs/cNN_<topic>.py` | `npm run lessons -- <slug>` |
+| The everyday picture (`picture=`) or a line's plain-words reading (`say=`) | `lessons/specs/cNN_<topic>.py` (see docs/LESSONS.md) | `npm run lessons -- <slug>`, then `python lessons/trace.py <slug>` |
 | The code a lesson shows and runs | `solutions/…/<slug>.py`, or `code=` in the spec | `npm run lessons -- <slug>` and `npm run lessons:verify -- <slug>` |
 | The brute-force reference | `lessons/checks/cNN_to_cMM.py` | `npm run lessons:verify -- <slug>` |
 | How a data structure is captured | `lessons/engine/views.py` | `npm run lessons` (all 150) |

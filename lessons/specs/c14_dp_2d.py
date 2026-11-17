@@ -11,6 +11,12 @@ lesson(
     args="text1='abcde', text2='ace'",
     expected=3,
     why='The longest common subsequence is "ace".',
+    picture="""Picture a grid of boxes with one word's letters down the side and the other's across the top.
+    Each box answers a smaller question: *how long is the common subsequence of these two
+    beginnings?* Fill it row by row. If the two newest letters match, the box is one more than the
+    box diagonally up-left (both words one letter shorter). If not, one of the letters is not used,
+    so take the better of the box above and the box to the left. The bottom-right box answers the
+    whole question.""",
     idea=[
         "Solve it for short prefixes first and build up: `dp[i][j]` = answer for the first `i` letters of text1 and the first `j` letters of text2.",
         "If the two current letters **match**, that letter extends the best answer of both shorter prefixes: `1 + diagonal`.",
@@ -37,6 +43,34 @@ lesson(
          "The bottom-right cell covers **all** of both strings: the longest common subsequence has length **{_ret}**.",
          {"dp.good": "(m, n)"}),
     ],
+    say={
+        "def longestCommonSubsequence": (
+            "The function we must write. It gets two texts and returns the length of their "
+            "longest common subsequence."
+        ),
+        "m, n = len(text1), len(text2)": "The two lengths.",
+        "dp = [[0] * (n + 1) for _ in range(m + 1)]": (
+            "A grid of boxes, `m + 1` rows by `n + 1` columns, all 0. Box `dp[i][j]` answers the "
+            "question for the first `i` letters of `text1` and the first `j` of `text2`; row and "
+            "column 0 stand for an empty beginning."
+        ),
+        "for i in range(1, m + 1)": "Go down the rows, one more letter of `text1` each time.",
+        "for j in range(1, n + 1)": (
+            "In each row, go across the columns, one more letter of `text2` each time."
+        ),
+        "if text1[i - 1] == text2[j - 1]": (
+            "Do the two newest letters match? (Box `i` covers the letters up to position `i − "
+            "1`.)"
+        ),
+        "dp[i][j] = dp[i - 1][j - 1] + 1": (
+            "Then use this letter in both words: one more than the box diagonally up-left."
+        ),
+        "dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])": (
+            "They differ, so one of them is not used: take the better of the box above and the "
+            "box to the left."
+        ),
+        "return dp[m][n]": "The bottom-right box answers the question for the two whole words.",
+    },
     time=("O(m · n)", "One table cell per pair of prefixes, each filled in O(1)."),
     space=("O(m · n)", "The table has (m + 1) × (n + 1) cells."),
     tests=[("text1='abc', text2='abc'", 3), ("text1='abc', text2='def'", 0), ("text1='bl', text2='yby'", 1)],
@@ -50,6 +84,10 @@ lesson(
     args="m=3, n=4",
     expected=10,
     why="Every path consists of 2 moves down and 3 moves right in some order: 5! / (2! · 3!) = 10.",
+    picture="""Picture the robot's grid as boxes, each saying *how many paths reach this cell*. The top row and
+    the left column can each be reached in only one way, by going straight right or straight down.
+    Every other cell is entered from the cell above or the cell to its left, so its count is the sum
+    of those two. Fill the boxes row by row; the bottom-right box is the answer.""",
     idea=[
         "Let `dp[i][j]` be the number of paths from the start to cell `(i, j)`.",
         "The robot can enter a cell only **from above** or **from the left**. Every path to either of those cells extends to exactly one path into this cell, so `dp[i][j] = dp[i − 1][j] + dp[i][j − 1]`.",
@@ -71,6 +109,22 @@ lesson(
         ("return dp[m - 1][n - 1]", "The bottom-right cell holds the answer: **{_ret}** paths.",
          {"dp.good": "(m - 1, n - 1)"}),
     ],
+    say={
+        "def uniquePaths": (
+            "The function we must write. It gets the grid size `m × n` and returns how many paths"
+            " reach the bottom-right corner."
+        ),
+        "dp = [[1] * n for _ in range(m)]": (
+            "A grid of boxes, every one starting at 1. That is already right for the top row and "
+            "the left column, which can only be reached in a straight line."
+        ),
+        "for i in range(1, m)": "Go down the rows, skipping the first.",
+        "for j in range(1, n)": "In each row, go across the columns, skipping the first.",
+        "dp[i][j] = dp[i - 1][j] + dp[i][j - 1]": (
+            "Paths into this cell come from above or from the left: add those two counts."
+        ),
+        "return dp[m - 1][n - 1]": "The bottom-right box holds the number of paths.",
+    },
     time=("O(m · n)", "Each cell is filled once with one addition."),
     space=("O(m · n)", "The table (a single row would be enough, since only the row above is read)."),
     tests=[("m=3, n=7", 28), ("m=3, n=2", 3), ("m=1, n=1", 1), ("m=1, n=9", 1), ("m=7, n=3", 28)],
@@ -85,6 +139,12 @@ lesson(
     args="prices=[1, 2, 3, 0, 2]",
     expected=3,
     why="Buy at 1, sell at 2, cooldown, buy at 0, sell at 2: (2 − 1) + (2 − 0) = 3.",
+    picture="""Picture keeping three running totals as the days go by, one for each situation you could be in
+    at the end of a day: *holding a share*, *just sold* (so tomorrow is a rest day), or *resting*
+    with no share. Each day's totals come from yesterday's. You are holding if you kept yesterday's
+    share or bought after a rest; you have just sold only if you held a share yesterday; you are
+    resting if you rested or sold yesterday. At the end, the better of the two situations without a
+    share is the answer.""",
     idea=[
         "At the end of any day you are in exactly one of three situations: **holding** a share, having **just sold** today, or **resting** (no share, free to buy tomorrow).",
         "Track the best profit for each situation. Holding: keep holding, or buy today — but only coming from *resting*, never directly after a sale. Just sold: you were holding and sell today. Resting: you were already resting, or you sold yesterday.",
@@ -123,6 +183,40 @@ lesson(
          "At the end, holding an unsold share is never best. Take the better of *just sold* ({sell}) and "
          "*resting* ({cooldown}): **{_ret}**."),
     ],
+    say={
+        "def maxProfit": (
+            "The function we must write. It gets the daily `prices` and returns the most profit "
+            "possible under the cooldown rule."
+        ),
+        "if not prices": "Is the price list empty?",
+        "return 0": "Then there is no profit.",
+        "buy = -prices[": (
+            "The best total if you end day 0 *holding* a share: you bought it, so you are down by"
+            " its price."
+        ),
+        "sell = 0": (
+            "The best total if you *just sold*. Nothing has been sold yet, so it starts at 0."
+        ),
+        "cooldown = 0": "The best total if you end day 0 *resting*, holding nothing: 0.",
+        "for i in range(1, len(prices))": "Go through the remaining days.",
+        "new_buy = max(buy, cooldown - prices[i])": (
+            "Holding today: either keep yesterday's share, or buy today after a rest day."
+        ),
+        "new_sell = buy + prices[i]": (
+            "Just sold today: you must have held a share yesterday, and you get today's price for"
+            " it."
+        ),
+        "new_cooldown = max(cooldown, sell)": (
+            "Resting today: either you were already resting, or you sold yesterday and must wait."
+        ),
+        "buy, sell, cooldown = new_buy, new_sell, new_cooldown": (
+            "Today's three totals become the starting point for tomorrow."
+        ),
+        "return max(sell, cooldown)": (
+            "At the end, still holding a share is never best: take the better of *just sold* and "
+            "*resting*."
+        ),
+    },
     time=("O(n)", "One pass over the days."),
     space=("O(1)", "Three numbers carried from day to day."),
     tests=[("prices=[1]", 0), ("prices=[1, 2]", 1), ("prices=[5, 4, 3]", 0), ("prices=[1, 2, 4]", 3),
@@ -138,6 +232,11 @@ lesson(
     args="amount=5, coins=[1, 2, 5]",
     expected=4,
     why="5 = 5 = 2+2+1 = 2+1+1+1 = 1+1+1+1+1.",
+    picture="""Picture a row of boxes, one per amount, each counting the ways to make that amount. There is one
+    way to make 0: use no coins. Bring in the coin kinds one at a time. Once coins worth 2 are
+    allowed, every way of making `i − 2` becomes a way of making `i` by adding a 2. Taking the coin
+    kinds one at a time counts every mix once, in one fixed order, so 1 + 2 and 2 + 1 are not
+    counted twice.""",
     idea=[
         "Let `dp[a]` be the number of ways to make amount `a` using the coin types allowed so far. With no coins, only amount 0 can be made — in exactly one way.",
         "Introduce the coins **one type at a time**. With a new coin `c`, every way to make `a − c` gives one more way to make `a` (append one `c`): `dp[a] += dp[a − c]`.",
@@ -159,6 +258,26 @@ lesson(
          {"dp.alt": "i - coin", "dp.good": "i"}),
         ("return dp[amount]", "`dp[{amount}]` = **{_ret}** combinations.", {"dp.good": "amount"}),
     ],
+    say={
+        "def change": (
+            "The function we must write. It gets the `amount` and the `coins`, and returns how "
+            "many different mixes of coins make the amount."
+        ),
+        "dp = [0] * (amount + 1)": (
+            "One box per amount from 0 to `amount`: how many ways make it."
+        ),
+        "dp[0] = 1": "There is exactly one way to make 0: use no coins.",
+        "for coin in coins": (
+            "Bring in the coin kinds one at a time. This is what stops the same mix from being "
+            "counted in two different orders."
+        ),
+        "for i in range(coin, amount + 1)": "Go through every amount this coin fits into.",
+        "dp[i] += dp[i - coin]": (
+            "Every way of making `i − coin`, plus one of this coin, is a way of making `i`: add "
+            "those ways."
+        ),
+        "return dp[amount]": "The number of ways to make the full amount.",
+    },
     time=("O(amount × coins)", "Every amount is updated once per coin type."),
     space=("O(amount)", "One counter per amount."),
     tests=[("amount=3, coins=[2]", 0), ("amount=10, coins=[10]", 1), ("amount=0, coins=[7]", 1),
@@ -173,6 +292,10 @@ lesson(
     args="nums=[1, 2, 1], S=2",
     expected=2,
     why="+1 +2 −1 = 2 and −1 +2 +1 = 2.",
+    picture="""Picture splitting the numbers into a *plus* group and a *minus* group. If the plus group adds up
+    to P, the result is P − (total − P), so hitting the target means P = (total + target) / 2. The
+    question becomes: in how many ways can some of the numbers add up to that P? Count it with a row
+    of boxes, one per sum, going through the sums from the top down so that no number is used twice.""",
     idea=[
         "Trying all sign patterns costs 2ⁿ. Look at it differently: the numbers with `+` have some sum P, those with `−` some sum N.",
         "We need `P − N = S`, and we know `P + N = total`. Adding the two equations: `P = (total + S) / 2`. So the task is: **count the subsets of `nums` that sum to P** (everything else gets a minus).",
@@ -202,6 +325,36 @@ lesson(
          "`dp[{target}]` = **{_ret}**: that many subsets can take the `+` sign so that the total comes out as {S}.",
          {"dp.good": "target"}),
     ],
+    say={
+        "def findTargetSumWays": (
+            "The function we must write. It gets the list `nums` and the target `S`, and returns "
+            "how many choices of signs give exactly `S`."
+        ),
+        "total_sum = sum(nums)": "Add up all the numbers.",
+        "if (total_sum + S) % 2 != 0 or total_sum < abs(S)": (
+            "The plus group must add up to `(total + S) / 2`. If that is not a whole number, or "
+            "`S` is further from 0 than the total itself, no choice of signs works."
+        ),
+        "return 0": "So there are 0 ways.",
+        "target = (total_sum + S) // 2": "The sum the plus group needs.",
+        "dp = [0] * (target + 1)": (
+            "One box per sum from 0 to `target`: in how many ways can some of the numbers make "
+            "it?"
+        ),
+        "dp[0] = 1": "A sum of 0 can be made in one way: take nothing.",
+        "for num in nums": "Bring in the numbers one at a time.",
+        "for i in range(target, num - 1, -1)": (
+            "Go through the sums from the top down to `num`, so this number is used at most once "
+            "in each way."
+        ),
+        "dp[i] += dp[i - num]": (
+            "Every way of making `i − num`, plus this number, is a way of making `i`."
+        ),
+        "return dp[target]": (
+            "The number of ways the plus group can reach its sum: the number of sign choices that"
+            " give `S`."
+        ),
+    },
     time=("O(n × sum)", "For each number, every sum up to P is updated once."),
     space=("O(sum)", "One counter per sum."),
     tests=[("nums=[1, 1, 1, 1, 1], S=3", 5), ("nums=[1], S=1", 1), ("nums=[1], S=2", 0),
@@ -216,6 +369,11 @@ lesson(
     args='s1="ab", s2="ac", s3="aacb"',
     expected=True,
     why="Take `a` from s2, `a` from s1, `c` from s2 and `b` from s1: together they spell `aacb`.",
+    picture="""Picture dealing out the letters of `s3` one by one, each taken from the front of either `s1` or
+    `s2`. A grid of boxes answers: *can the first `i` letters of `s1` and the first `j` of `s2` make
+    the first `i + j` letters of `s3`?* A box is ticked if the box above was ticked and the newest
+    letter of `s1` fits, or the box to the left was ticked and the newest letter of `s2` fits. The
+    bottom-right box answers the whole question.""",
     idea=[
         "Let `dp[i][j]` say whether the first `i` letters of `s1` and the first `j` letters of `s2` can be interleaved into the first `i + j` letters of `s3`.",
         "The last letter of that prefix of `s3` came either from `s1` or from `s2`. From `s1`: then `s1[i − 1]` must equal it and `dp[i − 1][j]` must be True. From `s2`: `s2[j − 1]` must equal it and `dp[i][j − 1]` must be True.",
@@ -226,6 +384,7 @@ lesson(
              rows="['∅'] + list(s1)", cols="['∅'] + list(s2)", vals={"T": "seen"}),
         Arr("s3", title="s3"),
     ],
+    key={"seen": "ticked: True (this much matches)"},
     notes=[
         ("if m + n != p", dict(
             yes="The lengths do not add up ({m} + {n} ≠ {p}), so `s3` cannot be an interleaving → **False**.",
@@ -254,6 +413,35 @@ lesson(
         ], {"dp.alt": "[(i - 1, j), (i, j - 1)]", "dp.cur": "(i, j)", "s3.cur": "i + j - 1"}),
         ("return dp[m][n]", "The bottom-right cell uses all of `s1`, `s2` and `s3` → **{_ret}**.", {"dp.good": "(m, n)"}),
     ],
+    say={
+        "def isInterleave": (
+            "The function we must write. It gets three texts and answers whether `s3` is `s1` and"
+            " `s2` merged, each keeping its own order."
+        ),
+        "m, n, p = len(s1), len(s2), len(s3)": "The three lengths.",
+        "if m + n != p": "Do the lengths not add up?",
+        "return False": "Then `s3` cannot be made from exactly those letters.",
+        "dp = [[False] * (n + 1) for _ in range(m + 1)]": (
+            "A grid of boxes: `dp[i][j]` says whether the first `i` letters of `s1` and the first"
+            " `j` of `s2` can make the first `i + j` letters of `s3`."
+        ),
+        "dp[0][0] = True": "Nothing from either text makes the empty start of `s3`: ticked.",
+        "for j in range(1, n + 1)@1": "The top row uses letters of `s2` only.",
+        "dp[0][j] = dp[0][j - 1] and s2[j - 1] == s3[j - 1]": (
+            "Ticked if the box to its left is ticked and the newest letter of `s2` matches `s3`."
+        ),
+        "for i in range(1, m + 1)@1": "The left column uses letters of `s1` only.",
+        "dp[i][0] = dp[i - 1][0] and s1[i - 1] == s3[i - 1]": (
+            "Ticked if the box above is ticked and the newest letter of `s1` matches `s3`."
+        ),
+        "for i in range(1, m + 1)@2": "Now fill in all the other boxes, row by row.",
+        "for j in range(1, n + 1)@2": "And across each row.",
+        "dp[i][j] = (dp[i - 1][j] and s1[i - 1] == s3[i + j - 1]) or (": (
+            "Ticked if the box above is ticked and the newest letter of `s1` is the next letter "
+            "of `s3`, or if the box to the left is ticked and the newest letter of `s2` is."
+        ),
+        "return dp[m][n]": "The bottom-right box: can all of `s1` and `s2` make all of `s3`?",
+    },
     time=("O(m · n)", "One cell per pair of prefix lengths."),
     space=("O(m · n)", "The table has (m + 1) × (n + 1) cells; one row would be enough, since only the row above is read."),
     tests=[
@@ -273,6 +461,10 @@ lesson(
     args="matrix=[[9, 9, 4], [6, 6, 8], [2, 1, 1]]",
     expected=4,
     why="1 → 2 → 6 → 9 (bottom middle, bottom left, middle left, top left).",
+    picture="""Picture each cell asking: *how long is the longest climb that starts at me?* The answer is 1 for
+    the cell itself, plus the best climb from any higher neighbour. Climbs only go up, so they can
+    never loop back. Each cell works its answer out once and writes it into a table, a *memo*; any
+    later question about that cell is answered from the table instead of climbing again.""",
     idea=[
         "For a single cell, the longest increasing path **starting there** is 1 plus the best path starting at any larger neighbour.",
         "Paths only climb to larger values, so they can never loop — the recursion always ends.",
@@ -302,6 +494,42 @@ lesson(
             when="max_path > was.max_path", marks={"dp.good": "(i, j)"})),
         ("return max_path", "Every cell has been solved. The longest increasing path has **{max_path}** cells."),
     ],
+    say={
+        "def longestIncreasingPath": (
+            "The function we must write. It gets the `matrix` and returns the length of the "
+            "longest path that keeps climbing."
+        ),
+        "if not matrix": "Is the matrix empty?",
+        "return 0": "Then there is no path.",
+        "directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]": (
+            "The four moves: up, down, left and right."
+        ),
+        "def dfs(i, j)": "A helper: the longest climb that starts at cell `(i, j)`.",
+        "if dp[i][j] != -1": (
+            "Has this cell's answer been worked out already? (-1 means *not yet*.)"
+        ),
+        "return dp[i][j]@1": "Then reuse it from the table.",
+        "dp[i][j] = 1": "The climb includes at least the cell itself.",
+        "for dx, dy in directions": "Try each of the four neighbours.",
+        "x, y = i + dx, j + dy": "The neighbour's row and column.",
+        "if 0 <= x < m and 0 <= y < n and matrix[x][y] > matrix[i][j]": (
+            "Is the neighbour inside the matrix, and higher than this cell?"
+        ),
+        "dp[i][j] = max(dp[i][j], 1 + dfs(x, y))": (
+            "Then this cell plus the best climb from that neighbour is a candidate: keep the "
+            "longest (the helper calls itself)."
+        ),
+        "return dp[i][j]@2": "Report this cell's answer. It stays in the table for next time.",
+        "m, n = len(matrix), len(matrix[0])": "The matrix's size.",
+        "dp = [[-1] * n for _ in range(m)]": (
+            "The table of answers, one per cell, all *not worked out yet* (-1)."
+        ),
+        "max_path = 0": "The longest climb found so far.",
+        "for i in range(m)": "Try every row…",
+        "for j in range(n)": "…and every column: a climb may start at any cell.",
+        "max_path = max(max_path, dfs(i, j))": "Keep the longest climb found.",
+        "return max_path": "Return the longest climb.",
+    },
     time=("O(m · n)", "Thanks to the memo table every cell is solved once, looking at four neighbours."),
     space=("O(m · n)", "The memo table and, at worst, a recursion as deep as the number of cells."),
     tests=[
@@ -343,6 +571,11 @@ lesson(
     args='s="babag", t="bag"',
     expected=3,
     why="b(0) a(1) g(4),  b(0) a(3) g(4)  and  b(2) a(3) g(4).",
+    picture="""Picture a grid of boxes: *in how many ways can the first `j` letters of `t` be picked out of the
+    first `i` letters of `s`?* An empty `t` can always be picked out in exactly one way: pick
+    nothing. For any other box, look at the newest letter of `s`. You can always skip it, keeping
+    the count from the box above. If it matches the newest letter of `t`, you can also use it,
+    adding the count from the box diagonally up-left.""",
     idea=[
         "Let `dp[i][j]` be the number of ways to form the first `j` letters of `t` from the first `i` letters of `s`.",
         "Look at the last letter of that prefix of `s`. It can always be **skipped**: `dp[i − 1][j]` ways. If it equals the last needed letter of `t`, it can also be **used** for it: then the earlier letters must form the rest, `dp[i − 1][j − 1]` ways.",
@@ -368,6 +601,34 @@ lesson(
         ("return dp[m][n]", "The bottom-right cell uses all of `s` and all of `t`: **{_ret}** ways.", {"dp.good": "(m, n)"}),
     ],
     max_steps=140,
+    say={
+        "def numDistinct": (
+            "The function we must write. It gets `s` and `t`, and returns in how many ways `t` "
+            "can be picked out of `s`, keeping the order."
+        ),
+        "m, n = len(s), len(t)": "The two lengths.",
+        "dp = [[0] * (n + 1) for _ in range(m + 1)]": (
+            "A grid of boxes: `dp[i][j]` is the number of ways to pick the first `j` letters of "
+            "`t` out of the first `i` letters of `s`."
+        ),
+        "for i in range(m + 1)": "Go through every row.",
+        "dp[i][0] = 1": "Picking out an empty `t` works in exactly one way: pick nothing.",
+        "for i in range(1, m + 1)": (
+            "Fill in the other boxes, row by row: one more letter of `s` in each row."
+        ),
+        "for j in range(1, n + 1)": "And across each row: one more letter of `t` in each column.",
+        "if s[i - 1] == t[j - 1]": (
+            "Does the newest letter of `s` match the newest letter of `t`?"
+        ),
+        "dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j]": (
+            "Then either use it (the ways in the box diagonally up-left) or skip it (the ways in "
+            "the box above). Add both."
+        ),
+        "dp[i][j] = dp[i - 1][j]": (
+            "Otherwise it cannot be used here: skip it, keeping the count from the box above."
+        ),
+        "return dp[m][n]": "The bottom-right box: the ways to pick all of `t` out of all of `s`.",
+    },
     time=("O(m · n)", "One cell per pair of prefix lengths."),
     space=("O(m · n)", "The table (one row would be enough)."),
     tests=[
@@ -388,6 +649,12 @@ lesson(
     args='word1="horse", word2="ros"',
     expected=3,
     why="horse → rorse (replace h by r) → rose (delete r) → ros (delete e).",
+    picture="""Picture a grid of boxes: *how many edits turn the first `i` letters of `word1` into the first
+    `j` letters of `word2`?* Turning a word into nothing takes one delete per letter, and nothing
+    into a word one insert per letter: that fills the first row and column. For any other box, if
+    the newest letters match, no edit is needed, so copy the box diagonally up-left. If not, make
+    the cheapest of three edits, each one more than a neighbouring box: insert (left), delete
+    (above) or replace (diagonal).""",
     idea=[
         "Let `dp[i][j]` be the cheapest way to turn the first `i` letters of `word1` into the first `j` letters of `word2`.",
         "If the two last letters are **equal**, nothing has to be done for them: `dp[i][j] = dp[i − 1][j − 1]`.",
@@ -416,6 +683,30 @@ lesson(
         ("return dp[m][n]", "The bottom-right cell turns all of `{word1}` into all of `{word2}`: **{_ret}** operations.",
          {"dp.good": "(m, n)"}),
     ],
+    say={
+        "def minDistance": (
+            "The function we must write. It gets two words and returns the fewest edits that turn"
+            " the first into the second."
+        ),
+        "m, n = len(word1), len(word2)": "The two lengths.",
+        "dp = [[0] * (n + 1) for _ in range(m + 1)]": (
+            "A grid of boxes: `dp[i][j]` is the fewest edits turning the first `i` letters of "
+            "`word1` into the first `j` letters of `word2`."
+        ),
+        "for i in range(m + 1)": "Go down the first column.",
+        "dp[i][0] = i": "Turning `i` letters into nothing takes `i` deletes.",
+        "for j in range(n + 1)": "Go along the first row.",
+        "dp[0][j] = j": "Turning nothing into `j` letters takes `j` inserts.",
+        "for i in range(1, m + 1)": "Fill in the other boxes, row by row.",
+        "for j in range(1, n + 1)": "And across each row.",
+        "if word1[i - 1] == word2[j - 1]": "Do the newest letters of the two words match?",
+        "dp[i][j] = dp[i - 1][j - 1]": "Then they need no edit: copy the box diagonally up-left.",
+        "dp[i][j] = min(dp[i][j - 1], dp[i - 1][j], dp[i - 1][j - 1]) + 1": (
+            "Otherwise make one edit: insert (from the box to the left), delete (from above) or "
+            "replace (from the diagonal). Take the cheapest, plus 1 for the edit itself."
+        ),
+        "return dp[m][n]": "The bottom-right box: the fewest edits for the two whole words.",
+    },
     time=("O(m · n)", "One cell per pair of prefix lengths, each in O(1)."),
     space=("O(m · n)", "The table (two rows would be enough)."),
     tests=[
@@ -437,6 +728,11 @@ lesson(
     args="nums=[3, 1, 5]",
     expected=35,
     why="Burst 1 first (3·1·5 = 15), then 3 (1·3·5 = 15), then 5 (1·5·1 = 5): 35 coins.",
+    picture="""Picture choosing which balloon in a stretch to burst *last*. If balloon `k` goes last between
+    two fixed walls, its neighbours at that moment are the walls themselves, and the balloons to its
+    left and to its right become two separate, smaller puzzles. So a grid of boxes answers *the most
+    coins from the balloons strictly between `left` and `right`*, solving short stretches first and
+    building longer ones from them. Padding the row with a 1 at each end gives the outer walls.""",
     idea=[
         "Choosing which balloon to burst **first** is messy: its two neighbours become adjacent, so the remaining parts influence each other.",
         "Think backwards — choose which balloon in an interval is burst **last**. When it finally bursts, everything else between the interval's two borders is already gone, so its neighbours are exactly those two borders. And the parts to its left and right were solved independently.",
@@ -466,6 +762,36 @@ lesson(
          "`dp[0][{n + 1}]` covers every real balloon (between the two virtual ones): **{_ret}** coins.",
          {"dp.good": "(0, n + 1)"}),
     ],
+    say={
+        "def maxCoins": (
+            "The function we must write. It gets the balloon numbers and returns the most coins "
+            "possible."
+        ),
+        "n = len(nums)": "The number of balloons.",
+        "nums = [1] + nums + [1]": (
+            "Add a balloon worth 1 at each end. These are the walls: they are never burst, and "
+            "multiplying by 1 changes nothing."
+        ),
+        "dp = [[0] * (n + 2) for _ in range(n + 2)]": (
+            "A grid of boxes: `dp[left][right]` is the most coins from bursting every balloon "
+            "strictly between `left` and `right`."
+        ),
+        "for length in range(2, n + 2)": (
+            "Solve short stretches first, then longer ones built from them."
+        ),
+        "for left in range(0, n + 2 - length)": (
+            "Try every left wall for a stretch of this length."
+        ),
+        "right = left + length": "Its right wall.",
+        "for k in range(left + 1, right)": (
+            "Try each balloon between the walls as the one burst *last*."
+        ),
+        "dp[left][right] = max(": (
+            "Bursting `k` last earns `nums[left] × nums[k] × nums[right]`, plus the best for each"
+            " side of it. Keep the best choice of `k`."
+        ),
+        "return dp[0][n + 1]": "The box for the whole row, between the two added walls.",
+    },
     time=("O(n³)", "O(n²) intervals, and up to n choices for the last balloon in each."),
     space=("O(n²)", "The table has one cell for every pair (left, right)."),
     tests=[("nums=[3, 1, 5, 8]", 167), ("nums=[1, 5]", 10), ("nums=[7]", 7), ("nums=[9, 76, 64, 21]", 116718)],
@@ -480,6 +806,12 @@ lesson(
     args='s="aab", p="c*a*b"',
     expected=True,
     why="`c*` stands for zero c's, `a*` for two a's, and `b` matches b.",
+    picture="""Picture a grid of boxes: *do the first `i` letters of the text match the first `j` characters of
+    the pattern?* An ordinary letter, or `.`, must match exactly one letter, so the box copies the
+    one diagonally up-left. A `*` is more flexible. It can mean *zero copies*, ignoring the letter
+    before it (the box two columns to the left), or, if the text's newest letter matches that
+    letter, it can swallow one more copy (the box above). The bottom-right box answers the whole
+    question.""",
     idea=[
         "Let `dp[i][j]` say whether the first `i` characters of `s` match the first `j` symbols of `p`.",
         "A letter or a `.` in the pattern must match the current character of `s`; both are then consumed: `dp[i][j] = dp[i − 1][j − 1]`.",
@@ -489,6 +821,7 @@ lesson(
         Grid("dp", title="dp[i][j]: do the first i characters of s match the first j symbols of p?",
              rows="['∅'] + list(s)", cols="['∅'] + list(p)", vals={"T": "seen"}, ptrs={"i, j": "(i, j)"}),
     ],
+    key={"seen": "ticked: True (this much matches)"},
     notes=[
         ("dp[0][0] = True", "The empty string matches the empty pattern: **True**.", {"dp.good": "(0, 0)"}),
         ("dp[0][j] = dp[0][j - 2]",
@@ -520,6 +853,44 @@ lesson(
         ("return dp[m][n]", "The bottom-right cell covers the whole string and the whole pattern → **{_ret}**.",
          {"dp.good": "(m, n)"}),
     ],
+    say={
+        "def isMatch": (
+            "The function we must write. It gets the text `s` and the pattern `p`, and answers "
+            "whether the whole text matches the whole pattern."
+        ),
+        "m, n = len(s), len(p)": "The two lengths.",
+        "dp = [[False] * (n + 1) for _ in range(m + 1)]": (
+            "A grid of boxes: `dp[i][j]` says whether the first `i` letters of `s` match the "
+            "first `j` characters of `p`."
+        ),
+        "dp[0][0] = True": "An empty text matches an empty pattern.",
+        "for j in range(2, n + 1)": (
+            "First row: which beginnings of the pattern can match an empty text?"
+        ),
+        'if p[j - 1] == "*"': (
+            "Only those where each letter is followed by a `*`. Is this character a `*`?"
+        ),
+        "dp[0][j] = dp[0][j - 2]": (
+            "Then `*` can mean zero copies: it matches whatever the pattern two characters back "
+            "matched."
+        ),
+        "for i in range(1, m + 1)": "Fill in the other boxes, row by row.",
+        "for j in range(1, n + 1)": "And across each row.",
+        'if p[j - 1] == s[i - 1] or p[j - 1] == "."': (
+            "Does this pattern character match the text's letter exactly, or is it `.` (any "
+            "letter)?"
+        ),
+        "dp[i][j] = dp[i - 1][j - 1]": (
+            "Then both use up one character: copy the box diagonally up-left."
+        ),
+        'elif p[j - 1] == "*"': "Is it a `*`?",
+        "dp[i][j] = dp[i][j - 2] or (": (
+            "Either `*` means zero copies (the box two columns to the left), or the text's letter"
+            " matches the letter before the `*` and the `*` swallows it as one more copy (the box"
+            " above)."
+        ),
+        "return dp[m][n]": "The bottom-right box: does the whole text match the whole pattern?",
+    },
     time=("O(m · n)", "One cell per pair of prefix lengths, each in O(1)."),
     space=("O(m · n)", "The table has (m + 1) × (n + 1) cells."),
     tests=[

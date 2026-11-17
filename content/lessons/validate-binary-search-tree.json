@@ -31,12 +31,28 @@
    "output": "True"
   }
  ],
+ "picture": "Picture reading a sorted bookshelf from left to right: every book must come after the one before it. A binary search tree read in order (left side, then the node, then the right side) is exactly such a shelf. So read the tree in that order, remembering the last value read. If a value is ever not bigger than the one before it, the tree is not a valid search tree.",
  "idea": [
   "Checking each node only against its own children is **not enough**: a node deep in the left subtree must still be smaller than the root far above it.",
   "Key fact: reading a BST *in order* (left subtree, then the node, then right subtree) produces the values in strictly increasing order.",
   "So do an in-order walk and remember the previous value. The moment a value is not larger than the one before it, the tree is not a BST."
  ],
  "code": "class Solution:\n    def isValidBST(self, root: TreeNode) -> bool:\n        def inorder_traversal(node, prev):\n            if not node:\n                return True\n\n            if not inorder_traversal(node.left, prev):\n                return False\n\n            if prev[0] is not None and node.val <= prev[0]:\n                return False\n            prev[0] = node.val\n\n            return inorder_traversal(node.right, prev)\n\n        prev = [None]\n        return inorder_traversal(root, prev)",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the top node and answers whether the tree is a valid binary search tree.",
+  "3": "A helper that reads the tree below `node` in order: left side, then the node, then the right side. `prev[0]` is the last value read.",
+  "4": "Is this an empty spot?",
+  "5": "There is nothing to read, so nothing is out of order.",
+  "7": "First read the left side. Was something out of order there?",
+  "8": "Then the whole tree is invalid.",
+  "10": "Now this node. Is its value not bigger than the last value read? (`None` means nothing has been read yet.)",
+  "11": "Then the values are out of order: invalid.",
+  "12": "Remember this value as the last one read. (It is kept in a one-item list so that every call shares it.)",
+  "14": "Finally read the right side; its answer is the answer for this part.",
+  "16": "Nothing has been read yet.",
+  "17": "Read the whole tree, starting from the top."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "Each node is read at most once.",

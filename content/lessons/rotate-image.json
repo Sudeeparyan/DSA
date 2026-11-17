@@ -27,12 +27,34 @@
    "output": "[[3,1],[4,2]]"
   }
  ],
+ "picture": "Picture the numbers printed on a square card. A quarter turn clockwise can be done with two flips. First flip the card over the diagonal that runs from the top-left corner to the bottom-right one, so every row becomes a column. Then flip each row left to right. Together the two flips put every number exactly where a quarter turn would.",
  "idea": [
   "Moving every element straight to its rotated position needs careful four-way swaps. Two simple mirror operations give the same result.",
   "**Transpose** the matrix: swap `matrix[i][j]` with `matrix[j][i]`, mirroring it across the main diagonal. Rows become columns.",
   "Then **reverse every row**. Together: element `(i, j)` goes to `(j, i)` and then to `(j, n − 1 − i)` — exactly a clockwise quarter turn."
  ],
  "code": "class Solution:\n    def rotate(self, matrix: List[List[int]]) -> None:\n        \"\"\"\n        Do not return anything, modify matrix in-place instead.\n        \"\"\"\n        n = len(matrix)\n\n        # Transpose the matrix\n        for i in range(n):\n            for j in range(i, n):\n                matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]\n\n        # Reverse each row\n        for i in range(n):\n            matrix[i].reverse()",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the square `matrix` and turns it in place; it returns nothing.",
+  "3": "A note from LeetCode (a *docstring*): change the matrix itself, and do not return anything.",
+  "6": "`n` is the number of rows, and also of columns, since the matrix is square.",
+  "9": "Flip 1, over the diagonal: go through every row `i`,",
+  "10": "and every column `j` from the diagonal onwards. Starting at `i` swaps each pair only once; a second swap would undo the first.",
+  "11": "Swap the cell in row `i`, column `j` with its mirror cell in row `j`, column `i`. Python can swap two things in one line like this.",
+  "14": "Flip 2: go through every row,",
+  "15": "and reverse it, so its last number comes first."
+ },
+ "key": [
+  {
+   "tone": "alt",
+   "label": "its mirror cell"
+  },
+  {
+   "tone": "good",
+   "label": "row just reversed"
+  }
+ ],
  "complexity": {
   "time": "O(n²)",
   "timeWhy": "Every cell is touched a constant number of times.",

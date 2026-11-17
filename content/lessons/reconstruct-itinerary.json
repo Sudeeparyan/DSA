@@ -27,12 +27,27 @@
    "output": "[\"JFK\",\"AAA\",\"JFK\",\"AAA\"]"
   }
  ],
+ "picture": "Picture a traveller with a pile of tickets who must use every one. From each airport, always take the alphabetically smallest ticket that is left. Sometimes that leads to a dead end before every ticket is used, and the traveller has to back up. The trick is to write an airport down only once you are *stuck* there, with no tickets left from it. That list comes out back to front, so reversing it at the end gives the route.",
  "idea": [
   "Always taking the alphabetically smallest ticket can run into a **dead end** while tickets are still unused (here: JFK → KUL).",
   "Key insight: an airport where we get **stuck** (no unused ticket left) must be the **last** stop of whatever is still unplaced. So record airports at the moment we get stuck, and the route is built **from the end backwards**.",
   "That is a DFS that appends an airport *after* all its tickets are used (post-order). Reversing the list at the end gives the itinerary."
  ],
  "code": "class Solution:\n    def findItinerary(self, tickets: List[List[str]]) -> List[str]:\n        graph = collections.defaultdict(list)\n\n        for start, end in sorted(tickets, reverse=True):\n            graph[start].append(end)\n\n        route = []\n\n        def dfs(node):\n            while graph[node]:\n                dfs(graph[node].pop())\n            route.append(node)\n\n        dfs(\"JFK\")\n\n        return route[::-1]",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the `tickets` and returns the route that uses every ticket, starting at JFK.",
+  "3": "For each airport, the list of places its tickets go to (a new airport gets an empty list by itself).",
+  "5": "Go through the tickets sorted *backwards*, Z to A, so that each airport's list ends with its alphabetically smallest destination.",
+  "6": "Record the ticket from `start` to `end`.",
+  "8": "The airports, written down as we get stuck at them. This list comes out back to front.",
+  "10": "A helper: fly on from airport `node` while it still has tickets.",
+  "11": "Is there a ticket left from this airport?",
+  "12": "Use the alphabetically smallest one: `.pop()` takes it off the end of the list. Then fly on from there (the helper calls itself).",
+  "13": "No tickets are left from here, so this airport's place is fixed: write it down.",
+  "15": "Start at JFK.",
+  "17": "The airports were written down from the end of the trip backwards, so reverse the list (`[::-1]`) to get the route."
+ },
  "complexity": {
   "time": "O(E log E)",
   "timeWhy": "Sorting the E tickets dominates; the DFS itself uses every ticket exactly once.",

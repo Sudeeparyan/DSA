@@ -33,6 +33,11 @@ function load(slug: string): Lesson {
   return LessonSchema.parse(raw);
 }
 
+/** Lesson text without its `code` spans: a `**` inside code (Python's power sign) is not bold. */
+function outsideCode(text: string): string {
+  return text.replace(/`[^`]+`/g, "");
+}
+
 function toneOk(tone: string | undefined): boolean {
   return tone === undefined || TONES.has(tone) || /^#[0-9a-fA-F]{6}$/.test(tone);
 }
@@ -188,7 +193,7 @@ describe("lesson files", () => {
         if (/object at 0x|<function |<lessons\.|Traceback/.test(step.text)) {
           problems.push(`${where}: leaked object in caption`);
         }
-        if ((step.text.match(/\*\*/g) ?? []).length % 2 !== 0) problems.push(`${where}: unbalanced **`);
+        if ((outsideCode(step.text).match(/\*\*/g) ?? []).length % 2 !== 0) problems.push(`${where}: unbalanced **`);
         if ((step.text.match(/`/g) ?? []).length % 2 !== 0) problems.push(`${where}: unbalanced backtick`);
 
         const ids = step.views.map((v) => v.id);
@@ -202,6 +207,19 @@ describe("lesson files", () => {
           for (const issue of viewProblems(view)) problems.push(`${where}: ${issue}`);
         }
       });
+
+      // plain-words readings point at real, non-blank code lines, and use balanced marks
+      const codeText = lesson.code.split("\n");
+      for (const [n, text] of Object.entries(lesson.say)) {
+        const line = Number(n);
+        if (line > codeLines || !codeText[line - 1]?.trim()) problems.push(`say: line ${n} is not a code line`);
+        if ((text.match(/`/g) ?? []).length % 2 !== 0) problems.push(`say ${n}: unbalanced backtick`);
+        if ((outsideCode(text).match(/\*\*/g) ?? []).length % 2 !== 0) problems.push(`say ${n}: unbalanced **`);
+      }
+      // a reader new to coding can have every line the walkthrough stops on read out to them
+      const unread = [...new Set(lesson.steps.map((s) => s.line))].filter((n) => n > 0 && !lesson.say[String(n)]);
+      if (unread.length) problems.push(`no plain-words reading for line(s) ${unread.join(", ")}`);
+      if ((lesson.picture.match(/`/g) ?? []).length % 2 !== 0) problems.push("picture: unbalanced backtick");
 
       expect(problems).toEqual([]);
 

@@ -31,12 +31,23 @@
    "output": "True"
   }
  ],
+ "picture": "Picture walking along a row of stepping stones while tracking the farthest stone you could possibly reach so far. Every stone you stand on may push that limit further. If you ever arrive at a stone beyond the limit, there is a gap you cannot cross. If you never do, the last stone is reachable.",
  "idea": [
   "It does not matter *how* we get somewhere, only **how far we can get at all**. Keep one number: `max_reachable`, the farthest index reachable so far.",
   "Walk through the indexes in order. If index `i` is within reach, then everything up to `i + nums[i]` is within reach too — update `max_reachable`.",
   "If we ever arrive at an index **beyond** `max_reachable`, there is a gap nobody can jump over → `False`. If the loop finishes, every index (including the last) was reachable → `True`."
  ],
  "code": "class Solution:\n    def canJump(self, nums: List[int]) -> bool:\n        max_reachable = 0\n\n        for i, jump_length in enumerate(nums):\n            if i > max_reachable:\n                return False\n            max_reachable = max(max_reachable, i + jump_length)\n\n        return True",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the jump lengths `nums` and answers whether the last position can be reached.",
+  "3": "The farthest position we know we can reach. At first, only the start.",
+  "5": "Go through the positions: `i` is the position, `jump_length` its longest jump.",
+  "6": "Is this position beyond anything we can reach?",
+  "7": "Then there is a gap we cannot cross: answer `False`.",
+  "8": "From here we can reach as far as `i + jump_length`. Push the limit out if that is further.",
+  "10": "Every position was reachable, the last one included: answer `True`."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "One pass over the array; each index is looked at once.",

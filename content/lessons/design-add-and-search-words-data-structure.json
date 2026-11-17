@@ -19,12 +19,43 @@
    "output": ""
   }
  ],
+ "picture": "Picture the same letter tree as a plain trie, except that a search pattern may now contain a dot, meaning *any letter*. For an ordinary letter there is just one branch to follow. At a dot you have to try every branch in turn, and the search succeeds if any one of them leads to a stored word.",
  "idea": [
   "Without dots this is exactly a trie: follow one branch per letter.",
   "A `.` can be any letter, so at that position we cannot know which branch to take — **try them all**.",
   "That is a depth-first search: for each child branch, recursively match the rest of the pattern. One success is enough; if every branch fails, the pattern does not match."
  ],
  "code": "class TrieNode:\n    def __init__(self):\n        self.children = {}\n        self.is_end = False\n\nclass WordDictionary:\n    def __init__(self):\n        self.root = TrieNode()\n\n    def addWord(self, word: str) -> None:\n        node = self.root\n        for char in word:\n            if char not in node.children:\n                node.children[char] = TrieNode()\n            node = node.children[char]\n        node.is_end = True\n\n    def search(self, word: str) -> bool:\n        def dfs(start, node):\n            # Does word[start:] match some path that begins at `node`?\n            for i in range(start, len(word)):\n                char = word[i]\n                if char == \".\":\n                    for letter in node.children:\n                        if dfs(i + 1, node.children[letter]):\n                            return True\n                    return False\n                if char not in node.children:\n                    return False\n                node = node.children[char]\n            return node.is_end\n\n        return dfs(0, self.root)",
+ "say": {
+  "1": "One node of the trie: a point where the next letter can branch off.",
+  "2": "A new node starts with no branches and no end-of-word flag.",
+  "3": "Its branches: a dictionary from the next letter to the node it leads to.",
+  "4": "Does a stored word end exactly here? Not yet.",
+  "6": "The dictionary the problem asks for, built on a trie.",
+  "7": "Runs once, when the dictionary is created.",
+  "8": "An empty starting node. Every word begins here.",
+  "10": "Called for `addWord(word)`: store a word.",
+  "11": "Start at the root.",
+  "12": "Walk through the word, one letter at a time.",
+  "13": "Is there no branch for this letter yet?",
+  "14": "Then add one.",
+  "15": "Follow the branch.",
+  "16": "Mark the last node: *a word ends here*.",
+  "18": "Called for `search(word)`, where a `.` may stand for any letter.",
+  "19": "A helper: does the rest of the pattern, from position `start` on, match some path that begins at `node`?",
+  "21": "Go through the rest of the pattern, one character at a time.",
+  "22": "The pattern character at position `i`.",
+  "23": "Is it a dot, standing for any letter?",
+  "24": "Then try every branch from this node.",
+  "25": "Does the rest of the pattern match down this branch? (The helper calls itself.)",
+  "26": "Yes: the pattern matches a stored word.",
+  "27": "No branch worked: no match.",
+  "28": "An ordinary letter. Is there no branch for it?",
+  "29": "Then this path cannot match.",
+  "30": "Follow its branch.",
+  "31": "The pattern is used up. It matches only if a whole word ends exactly here.",
+  "33": "Match the whole pattern, starting from the root."
+ },
  "complexity": {
   "time": "O(L) to add, up to O(26ᴸ) to search",
   "timeWhy": "Adding follows one branch per letter. Each dot in a search can fan out to every child, though real dictionaries cut that down quickly.",

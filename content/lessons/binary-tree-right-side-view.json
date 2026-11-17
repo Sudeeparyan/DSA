@@ -27,12 +27,33 @@
    "output": "[]"
   }
  ],
+ "picture": "Picture standing to the right of the tree and looking at it side-on: on every level you see only the node furthest to the right. So visit the tree level by level, from left to right, and from each level keep just its last node.",
  "idea": [
   "From the right you see exactly one node per level: the **rightmost** one.",
   "It is not enough to follow right children — a deeper node in the *left* subtree is visible when the right side is shorter.",
   "So walk the tree level by level with a queue, and for each level record the **last** node taken out."
  ],
  "code": "from collections import deque\n\nclass Solution:\n    def rightSideView(self, root: TreeNode) -> List[int]:\n        if not root:\n            return []\n\n        result = []\n        queue = deque([root])\n\n        while queue:\n            level_size = len(queue)\n\n            for i in range(level_size):\n                node = queue.popleft()\n                if i == level_size - 1:\n                    result.append(node.val)\n                if node.left:\n                    queue.append(node.left)\n                if node.right:\n                    queue.append(node.right)\n\n        return result",
+ "say": {
+  "1": "Load `deque`, Python's double-ended queue: a list that can add or remove items quickly at *both* ends.",
+  "3": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "4": "The function we must write. It gets the top node and returns the values you can see from the right, from top to bottom.",
+  "5": "Is the tree empty?",
+  "6": "Then nothing is visible.",
+  "8": "The visible values, from top to bottom.",
+  "9": "A queue of nodes still to visit, starting with the top node. (A `deque` is quick to take from at the front.)",
+  "11": "Repeat while there are nodes left to visit.",
+  "12": "Right now the queue holds exactly one whole level. Count its nodes.",
+  "14": "Visit that many nodes: this level's nodes, from left to right.",
+  "15": "Take the next node from the front of the queue.",
+  "16": "Is it the last node of this level, the rightmost one?",
+  "17": "Then it is the one seen from the right: keep its value.",
+  "18": "Does it have a left child?",
+  "19": "Queue it for the next level.",
+  "20": "Does it have a right child?",
+  "21": "Queue it too.",
+  "23": "Return the values seen from the right."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "Every node passes through the queue once, and a deque removes its front item in O(1).",

@@ -23,12 +23,27 @@
    "output": ""
   }
  ],
+ "picture": "Picture a club with only `k` seats that always holds the `k` biggest numbers seen so far, and its doorkeeper knows the smallest member at a glance. Each new number takes a seat; if that makes one too many, the smallest member leaves. The smallest member still inside is exactly the `k`-th biggest number.",
  "idea": [
   "Only the **k largest** numbers matter. Anything smaller than all of them can never become the k-th largest later, because numbers are only ever added.",
   "Keep exactly those k numbers in a **min-heap**. Its top is the smallest of the k largest — which is precisely the k-th largest overall.",
   "To add a number: push it, and if the heap now holds k + 1 numbers, pop the smallest. The answer is the new top."
  ],
  "code": "import heapq\n\nclass KthLargest:\n    def __init__(self, k: int, nums: List[int]):\n        self.min_heap = []\n        self.k = k\n\n        for num in nums:\n            self.add(num)\n\n    def add(self, val: int) -> int:\n        heapq.heappush(self.min_heap, val)\n\n        if len(self.min_heap) > self.k:\n            heapq.heappop(self.min_heap)\n\n        return self.min_heap[0]",
+ "say": {
+  "1": "Load `heapq`, Python's ready-made **heap**: a list kept in an order where the smallest item is always at the front.",
+  "3": "The problem asks for a class called `KthLargest`.",
+  "4": "Runs once, when it is created with `k` and the starting numbers.",
+  "5": "A heap holding the `k` biggest numbers seen so far, the smallest of them at the front.",
+  "6": "Remember `k`.",
+  "8": "Feed in the starting numbers one by one.",
+  "9": "Each goes through the same `add` as every later number.",
+  "11": "Called for `add(val)`: take in a number and report the `k`-th biggest so far.",
+  "12": "Put the new number into the heap.",
+  "14": "Does the heap now hold more than `k` numbers?",
+  "15": "Then remove the smallest: it cannot be among the `k` biggest.",
+  "17": "The front of the heap (`[0]`) is the smallest of the `k` biggest numbers, which is the `k`-th biggest overall."
+ },
  "complexity": {
   "time": "O(log k) per add",
   "timeWhy": "One push and at most one pop on a heap of size k.",

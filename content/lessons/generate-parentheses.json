@@ -23,12 +23,28 @@
    "output": "[\"(())\",\"()()\"]"
   }
  ],
+ "picture": "Picture writing the string one bracket at a time, following two rules: you may write `(` while you have used fewer than `n` of them, and you may write `)` only while some `(` is still waiting to be closed. Wherever both moves are allowed, try one, finish that string, then come back and try the other. Every string that reaches length `2n` this way is well formed.",
  "idea": [
   "Build the string one character at a time, and only ever make moves that keep it valid — then every finished string is automatically well-formed.",
   "Rule 1: a `(` may be added while fewer than `n` have been used.",
   "Rule 2: a `)` may be added only while there are more `(` than `)` so far, so it has something to close. Try both moves wherever they are allowed (backtracking)."
  ],
  "code": "class Solution:\n    def generateParenthesis(self, n: int) -> List[str]:\n        def backtrack(s, open_count, close_count):\n            if len(s) == 2 * n:\n                result.append(s)\n                return\n\n            if open_count < n:\n                backtrack(s + \"(\", open_count + 1, close_count)\n            if close_count < open_count:\n                backtrack(s + \")\", open_count, close_count + 1)\n\n        result = []\n        backtrack(\"\", 0, 0)\n        return result",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets `n` and returns every well-formed string of `n` pairs.",
+  "3": "A helper function inside it. `s` is the string built so far; `open_count` and `close_count` say how many `(` and `)` it holds.",
+  "4": "Is the string complete? `n` pairs make `2 * n` characters.",
+  "5": "Yes: save it.",
+  "6": "And go back to the call that made it, to try the other choices there.",
+  "8": "Have fewer than `n` opening brackets been used? Then another `(` is allowed.",
+  "9": "Try adding `(`: call the helper again with the longer string and one more opening bracket counted.",
+  "10": "Are there more `(` than `)` so far? Then a `)` has something to close.",
+  "11": "Try adding `)`: call the helper again with one more closing bracket counted.",
+  "13": "The list of finished strings.",
+  "14": "Start with an empty string and no brackets used.",
+  "15": "Return every string found."
+ },
  "complexity": {
   "time": "O(4ⁿ / √n)",
   "timeWhy": "There are about 4ⁿ / (n · √n) valid strings (the Catalan numbers), and each one takes O(n) to build.",

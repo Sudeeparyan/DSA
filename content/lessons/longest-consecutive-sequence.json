@@ -27,12 +27,28 @@
    "output": "3"
   }
  ],
+ "picture": "Picture numbered cards scattered on a table. A card can only *start* a run when the card one below it is missing, like a 1 when there is no 0. From each such start, count upward, 2, 3, 4, for as long as the next card is on the table. Cards in the middle of a run never start a count of their own, so every card is counted only once.",
  "idea": [
   "Sorting would line the runs up, but sorting costs O(n log n). We need O(n).",
   "Put all numbers in a hash set. A number `x` **starts** a run exactly when `x − 1` is *not* in the set.",
   "Only from such a start, count upward: x + 1, x + 2, … while they are in the set. Numbers in the middle of a run are skipped, so every number is counted just once."
  ],
  "code": "class Solution:\n    def longestConsecutive(self, nums: List[int]) -> int:\n        num_set = set(nums)\n        max_length = 0\n\n        for num in num_set:\n            if num - 1 not in num_set:\n                current_num = num\n                current_length = 1\n\n                while current_num + 1 in num_set:\n                    current_num += 1\n                    current_length += 1\n\n                max_length = max(max_length, current_length)\n\n        return max_length",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the list `nums` and returns the length of the longest run.",
+  "3": "Put all the numbers into a set, so *is x here?* is answered instantly. Repeated numbers keep just one copy.",
+  "4": "The longest run found so far. We have found none yet.",
+  "6": "Go through each different number once.",
+  "7": "Is the number just below `num` missing? Then `num` is where a run starts.",
+  "8": "Start walking up the run at `num`.",
+  "9": "So far the run is just one number long.",
+  "11": "Is the next number up in the set too? Keep walking for as long as it is.",
+  "12": "Step up to that next number (`+= 1` adds one).",
+  "13": "The run is now one number longer.",
+  "15": "Keep whichever is bigger: the best run so far, or this one.",
+  "17": "Return the length of the longest run."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "The inner loop only runs from the start of a run, so each number is visited at most twice in total.",

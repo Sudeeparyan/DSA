@@ -27,12 +27,28 @@
    "output": "True"
   }
  ],
+ "picture": "Picture looking for a small pattern inside a big tree. Stand on each node of the big tree in turn and ask: if I start comparing here, does everything below match the small tree exactly? The first time the answer is yes, the small tree is a subtree.",
  "idea": [
   "If `t` is inside `s`, it must start at **some node** of `s`.",
   "So visit every node of `s` and ask: is the tree starting here identical to `t`? That check is the *Same Tree* problem.",
   "If it is not identical here, the answer may still be in the left or the right subtree — recurse into both."
  ],
  "code": "class Solution:\n    def isSubtree(self, s: TreeNode, t: TreeNode) -> bool:\n        if not s:\n            return False\n        if self.isSameTree(s, t):\n            return True\n        return self.isSubtree(s.left, t) or self.isSubtree(s.right, t)\n\n    def isSameTree(self, p, q):\n        if not p and not q:\n            return True\n        if not p or not q or p.val != q.val:\n            return False\n        return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the big tree `s` and the small tree `t`, and answers whether `t` appears inside `s`.",
+  "3": "Has the search gone past the bottom of the big tree?",
+  "4": "Then `t` was not found down this way.",
+  "5": "Starting from this node, is the tree below it identical to `t`?",
+  "6": "Yes: found it.",
+  "7": "No: look for `t` in the left side, or else in the right side (the function calls itself on each).",
+  "9": "A helper: are the trees below `p` and `q` identical?",
+  "10": "Are both spots empty?",
+  "11": "Then they match.",
+  "12": "Is only one of them empty, or are the values different?",
+  "13": "Then they differ.",
+  "14": "Otherwise both sides below must match too."
+ },
  "complexity": {
   "time": "O(m · n)",
   "timeWhy": "In the worst case, each of the m nodes of s starts a comparison that visits up to n nodes of t.",

@@ -11,6 +11,11 @@ lesson(
     args='tickets=[["JFK", "KUL"], ["JFK", "NRT"], ["NRT", "JFK"]]',
     expected=["JFK", "NRT", "JFK", "KUL"],
     why="Flying to KUL first would be alphabetically smaller, but KUL is a dead end: the other two tickets could never be used.",
+    picture="""Picture a traveller with a pile of tickets who must use every one. From each airport, always
+    take the alphabetically smallest ticket that is left. Sometimes that leads to a dead end before
+    every ticket is used, and the traveller has to back up. The trick is to write an airport down
+    only once you are *stuck* there, with no tickets left from it. That list comes out back to
+    front, so reversing it at the end gives the route.""",
     idea=[
         "Always taking the alphabetically smallest ticket can run into a **dead end** while tickets are still unused (here: JFK → KUL).",
         "Key insight: an airport where we get **stuck** (no unused ticket left) must be the **last** stop of whatever is still unplaced. So record airports at the moment we get stuck, and the route is built **from the end backwards**.",
@@ -43,6 +48,39 @@ lesson(
         ("return route[::-1]",
          "Every ticket has been used. `route` was built from the end, so reverse it: **{_ret}**."),
     ],
+    say={
+        "def findItinerary": (
+            "The function we must write. It gets the `tickets` and returns the route that uses "
+            "every ticket, starting at JFK."
+        ),
+        "graph = collections.defaultdict(list)": (
+            "For each airport, the list of places its tickets go to (a new airport gets an empty "
+            "list by itself)."
+        ),
+        "for start, end in sorted(tickets, reverse=True)": (
+            "Go through the tickets sorted *backwards*, Z to A, so that each airport's list ends "
+            "with its alphabetically smallest destination."
+        ),
+        "graph[start].append(end)": "Record the ticket from `start` to `end`.",
+        "route = []": (
+            "The airports, written down as we get stuck at them. This list comes out back to "
+            "front."
+        ),
+        "def dfs(node)": "A helper: fly on from airport `node` while it still has tickets.",
+        "while graph[node]": "Is there a ticket left from this airport?",
+        "dfs(graph[node].pop())": (
+            "Use the alphabetically smallest one: `.pop()` takes it off the end of the list. Then"
+            " fly on from there (the helper calls itself)."
+        ),
+        "route.append(node)": (
+            "No tickets are left from here, so this airport's place is fixed: write it down."
+        ),
+        'dfs("JFK")': "Start at JFK.",
+        "return route[::-1]": (
+            "The airports were written down from the end of the trip backwards, so reverse the "
+            "list (`[::-1]`) to get the route."
+        ),
+    },
     time=("O(E log E)", "Sorting the E tickets dominates; the DFS itself uses every ticket exactly once."),
     space=("O(E)", "The adjacency lists, the route and the recursion stack."),
     tests=[
@@ -68,6 +106,11 @@ lesson(
     args="points=[[0, 0], [2, 2], [3, 10], [5, 2], [7, 0]]",
     expected=20,
     why="The cheapest connections are 1–3 (3), 0–1 (4), 3–4 (4) and 1–2 (9): 3 + 4 + 4 + 9 = 20.",
+    picture="""Picture connecting houses with cables, where a cable costs its length along the streets. List
+    every possible cable from cheapest to dearest. Go down the list and lay each cable, unless its
+    two houses are already connected some other way, because then it would be wasted. When you reach
+    the end, every house is connected for the lowest total cost. (This is known as Kruskal's
+    method.)""",
     idea=[
         "Connecting n points with the least total cost never needs a cycle, so the answer is a tree with n − 1 edges — a **minimum spanning tree**.",
         "Kruskal's rule: list every possible edge, sort by cost, and go from cheapest to most expensive.",
@@ -105,6 +148,55 @@ lesson(
         ("return mst_cost",
          "Every edge has been considered. The {len(mst)} chosen edges connect all {n} points for a total of **{mst_cost}**."),
     ],
+    say={
+        "def minCostConnectPoints": (
+            "The function we must write. It gets the `points` and returns the cheapest total cost"
+            " to connect them all."
+        ),
+        "def distance(p1, p2)": "A helper: the cost of joining two points.",
+        "return abs(p1[0] - p2[0]) + abs(p1[1] - p2[1])": (
+            "The Manhattan distance: how far apart the points are left to right, plus up and down"
+            " (`abs` drops any minus sign)."
+        ),
+        "n = len(points)": "`n` is the number of points.",
+        "distances = []": "Every possible connection, as `(cost, point i, point j)`.",
+        "for i in range(n)": "Go through every point.",
+        "for j in range(i + 1, n)": (
+            "Pair it with every later point, so each pair is listed only once."
+        ),
+        "distances.append((distance(points[i], points[j]), i, j))": (
+            "Record that connection with its cost."
+        ),
+        "distances.sort()": "Sort the connections from cheapest to dearest.",
+        "parent = list(range(n))": (
+            "Every point starts as the leader of its own group of connected points."
+        ),
+        "rank = [0] * n": (
+            "A rough size for each group, used to keep the chains of leaders short."
+        ),
+        "mst_cost = 0": "The total cost of the connections laid so far.",
+        "def find(node)": "A helper that finds the leader of a point's group.",
+        "if parent[node] != node": "Is this point not its own leader?",
+        "parent[node] = find(parent[node])": (
+            "Then follow its parent up to the top leader and point straight at it, so later "
+            "searches are quicker."
+        ),
+        "return parent[node]": "Return the leader.",
+        "def union(node1, node2)": "A helper that merges the groups of two points.",
+        "root1 = find(node1)": "The leader of the first point's group.",
+        "root2 = find(node2)": "The leader of the second point's group.",
+        "if root1 != root2": "Are they in different groups?",
+        "if rank[root1] > rank[root2]": "Is the first group the bigger one?",
+        "parent[root2] = root1": "Then hang the smaller group under the bigger one's leader.",
+        "parent[root1] = root2": "Otherwise hang the first group under the second one's leader.",
+        "if rank[root1] == rank[root2]": "Were the two groups the same size?",
+        "rank[root2] += 1": "Then the merged group is bigger: raise its rank.",
+        "for distance, u, v in distances": "Go through the connections, cheapest first.",
+        "if find(u) != find(v)": "Are the two points not connected yet?",
+        "union(u, v)": "Then lay this connection: merge their groups.",
+        "mst_cost += distance": "And add its cost.",
+        "return mst_cost": "Return the total cost.",
+    },
     time=("O(n² log n)", "There are about n²/2 possible edges, and sorting them dominates."),
     space=("O(n²)", "The list of all edges."),
     tests=[
@@ -124,6 +216,11 @@ lesson(
     args="times=[[1, 2, 4], [1, 3, 1], [3, 2, 2], [2, 4, 1]], n=4, k=1",
     expected=4,
     why="Node 3 gets the signal at time 1, node 2 at time 3 (through node 3, not the slow direct link) and node 4 at time 4.",
+    picture="""Picture news spreading from one town along one-way roads that take different times to travel.
+    Always deal next with the town the news reaches *earliest* among those not dealt with yet; a
+    heap keeps that town on top. From it, check whether its roads bring the news to a neighbour
+    sooner than any route found before. When every reachable town is done, the answer is when the
+    last town hears the news, or -1 if some town never does. (This is known as Dijkstra's method.)""",
     idea=[
         "The signal reaches each node along its **shortest path** from `k`. The answer is the largest of these shortest times.",
         "Dijkstra's algorithm: keep the best known time for every node, and always process the unfinished node with the **smallest** time next (a min-heap hands it over).",
@@ -169,6 +266,49 @@ lesson(
             (None, "Some node is still at ∞: the signal never gets there → **-1**."),
         ]),
     ],
+    say={
+        "def networkDelayTime": (
+            "The function we must write. It gets the travel `times`, the number of nodes `n` and "
+            "the start node `k`, and returns how long until every node has the signal."
+        ),
+        "graph = defaultdict(list)": (
+            "For each node, the list of `(neighbour, travel time)` pairs leaving it."
+        ),
+        "for u, v, w in times": "Go through the connections: from `u` to `v`, taking time `w`.",
+        "graph[u].append((v, w))": "Record it (one direction only).",
+        'distances = [float("inf")] * (n + 1)': (
+            "The earliest time the signal is known to reach each node; infinity means *not "
+            "reached yet*. (Position 0 is unused, since nodes are numbered from 1.)"
+        ),
+        "distances[k] = 0": "The signal starts at node `k`, at time 0.",
+        "pq = [(0, k)]": (
+            "A heap of `(arrival time, node)`, earliest first. It starts with the start node."
+        ),
+        "while pq": "Repeat while there are arrivals to deal with.",
+        "distance, node = heapq.heappop(pq)": "Take the earliest arrival.",
+        "if distance > distances[node]": (
+            "Is it out of date, because a quicker route to this node has been found since it was "
+            "added?"
+        ),
+        "continue": "Then skip it.",
+        "for neighbor, weight in graph[node]": "Look at each connection leaving this node.",
+        "if distance + weight < distances[neighbor]": (
+            "Would the signal reach that neighbour sooner this way than by any route found so "
+            "far?"
+        ),
+        "distances[neighbor] = distance + weight": "Then record the new, earlier time.",
+        "heapq.heappush(pq, (distances[neighbor], neighbor))": (
+            "And add the arrival to the heap, so that the neighbour's own connections are looked "
+            "at later."
+        ),
+        "max_distance = max(distances[1:])": (
+            "The last node to get the signal decides the answer: take the largest time (`[1:]` "
+            "skips the unused position 0)."
+        ),
+        'return max_distance if max_distance < float("inf") else -1': (
+            "If every node was reached, return that time; if some node never was, return -1."
+        ),
+    },
     time=("O(E log V)", "Each link can push one heap entry, and every push or pop costs O(log) of the heap size."),
     space=("O(V + E)", "Adjacency list, distance array and heap."),
     tests=[
@@ -207,6 +347,11 @@ lesson(
     args="grid=[[0, 1, 2], [5, 8, 3], [7, 6, 4]]",
     expected=4,
     why="The path 0 → 1 → 2 → 3 → 4 along the top and right edge never climbs above 4; every other route passes a higher cell.",
+    picture="""Picture a pool of uneven tiles with the water slowly rising. You can step onto a tile once the
+    water covers it, so a route needs a water level as high as its highest tile. Explore from the
+    corner, always taking next the reachable tile that needs the *lowest* water level; a heap keeps
+    that tile on top. Carry along the highest level the route has needed so far. The first time you
+    reach the far corner, that level is the answer.""",
     idea=[
         "A path is usable as soon as the water covers its **highest** cell. So we want the path from the top-left to the bottom-right whose highest cell is as low as possible.",
         "Explore like Dijkstra: keep all reachable-but-unexplored cells in a min-heap, keyed by the water level needed to get there = the highest cell on the way.",
@@ -235,6 +380,37 @@ lesson(
          {"grid.alt": "(nr, nc)", "heap.cur": "sorted(min_heap).index((max(time, grid[nr][nc]), nr, nc))"}),
         ("return time", "The earliest time to swim across is **{time}**."),
     ],
+    say={
+        "def swimInWater": (
+            "The function we must write. It gets the `grid` of heights and returns the lowest "
+            "water level that lets you swim from one corner to the other."
+        ),
+        "n = len(grid)": "The grid is `n × n`.",
+        "visited = {(0, 0)}": "The cells already added to the heap. The start cell is the first.",
+        "min_heap = [(grid[0][0], 0, 0)]": (
+            "A heap of `(water level needed, row, column)`, lowest level first. It starts with "
+            "the top-left cell."
+        ),
+        "while min_heap": "Repeat while there are cells to explore.",
+        "time, r, c = heapq.heappop(min_heap)": (
+            "Take the cell that needs the lowest water level to reach."
+        ),
+        "if r == n - 1 and c == n - 1": "Is it the bottom-right corner?",
+        "return time": (
+            "Then this is the lowest level that works, because cells are taken in order of the "
+            "level they need."
+        ),
+        "for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1))": "Look at its four neighbours.",
+        "nr, nc = r + dr, c + dc": "The neighbour's row and column.",
+        "if 0 <= nr < n and 0 <= nc < n and (nr, nc) not in visited": (
+            "Is it inside the grid and not added yet?"
+        ),
+        "visited.add((nr, nc))": "Mark it as added.",
+        "heapq.heappush(min_heap, (max(time, grid[nr][nc]), nr, nc))": (
+            "Reaching it needs the route's level so far or the neighbour's own height, whichever "
+            "is higher. Add it to the heap with that level."
+        ),
+    },
     time=("O(n² log n)", "Each of the n² cells is pushed and popped at most once, at O(log n²) each."),
     space=("O(n²)", "The visited set and the heap."),
     tests=[
@@ -286,6 +462,11 @@ lesson(
     args='words=["wrt", "wrf", "er", "ett", "rftt"]',
     expected="wertf",
     why="wrt < wrf gives t → f, wrf < er gives w → e, er < ett gives r → t, and ett < rftt gives e → r.",
+    picture="""Picture a dictionary written in an unknown alphabet. Compare each word with the next one: the
+    first place where they differ gives one rule, *this letter comes before that one*. Collect all
+    such rules. Then build the alphabet like a course timetable: start with the letters that need
+    nothing before them, and every letter placed frees the letters waiting for it. If letters are
+    left over, the rules go round in a circle and there is no valid order.""",
     idea=[
         "Two **neighbouring** words in a sorted list reveal exactly one fact: at the first position where they differ, the letter of the earlier word comes before the letter of the later word.",
         "Collect these facts as arrows `a → b` (*a before b*) between letters. A valid alphabet is an ordering of the letters that respects every arrow — a **topological order**.",
@@ -326,6 +507,53 @@ lesson(
         ('return "".join(result)', "The alien alphabet order is **{_ret}**."),
     ],
     allow_unused=True,
+    say={
+        "def alienOrder": (
+            "The function we must write. It gets the `words`, sorted in the alien alphabet, and "
+            "returns that alphabet's order (or an empty string if there is none)."
+        ),
+        "graph = {char: [] for word in words for char in word}": (
+            "For every letter that appears, a list of the letters that must come after it. All "
+            "empty at first."
+        ),
+        "in_degree = {char: 0 for char in graph}": (
+            "For every letter, how many letters must come before it."
+        ),
+        "for i in range(len(words) - 1)": "Compare each word with the word after it.",
+        "word1, word2 = words[i], words[i + 1]": "The two neighbouring words.",
+        "if len(word1) > len(word2) and word1.startswith(word2)": (
+            "Is the first word longer and does it *start with* the second (like `abc` before "
+            "`ab`)? No alphabet can put a word before its own beginning."
+        ),
+        'return ""@1': "Then the order is impossible: return an empty string.",
+        "for a, b in zip(word1, word2)": (
+            "Walk through both words side by side, letter by letter (`zip` pairs them up)."
+        ),
+        "if a != b": "Is this the first place where they differ?",
+        "if b not in graph[a]": "Is the rule *`a` comes before `b`* new?",
+        "graph[a].append(b)": "Then record it.",
+        "in_degree[b] += 1": "`b` now has one more letter that must come before it.",
+        "break": (
+            "Only the first difference tells us anything, so stop comparing these two words."
+        ),
+        "queue = deque(char for char in in_degree if in_degree[char] == 0)": (
+            "Start a queue with the letters that need nothing before them."
+        ),
+        "result = []": "The alphabet, built in order.",
+        "while queue": "Repeat while some letter is ready to be placed.",
+        "char = queue.popleft()": "Take the next ready letter.",
+        "result.append(char)": "Place it next in the alphabet.",
+        "for neighbor in graph[char]": "Look at each letter that had to come after it.",
+        "in_degree[neighbor] -= 1": "One fewer letter is still in its way.",
+        "if in_degree[neighbor] == 0": "Is nothing in its way any more?",
+        "queue.append(neighbor)": "Then it is ready: add it to the queue.",
+        "if len(result) < len(in_degree)": "Were some letters never placed?",
+        'return ""@2': (
+            "Then the rules contradict each other (they go round in a circle): return an empty "
+            "string."
+        ),
+        'return "".join(result)': "Join the letters into one string: the alien alphabet.",
+    },
     time=("O(C)", "C is the total number of characters: every pair of neighbouring words is compared once, and the graph has at most 26 nodes."),
     space=("O(1)", "At most 26 letters and 26 × 26 arrows, independent of the input size."),
     tests=[
@@ -362,6 +590,12 @@ lesson(
     args="n=4, flights=[[0, 1, 100], [1, 2, 100], [2, 0, 100], [1, 3, 600], [2, 3, 200]], src=0, dst=3, k=1",
     expected=700,
     why="With one stop the only route is 0 → 1 → 3 for 100 + 600. The cheaper 0 → 1 → 2 → 3 (400) needs two stops.",
+    picture="""Picture planning trips in rounds, where each round allows one more flight. At first only the
+    start city has a known price, 0. In each round, try every flight once: if getting to `u` and
+    then flying on to `v` is cheaper than what you knew for `v`, write the new price down. After `k
+    + 1` rounds you know the cheapest price with at most `k + 1` flights, which means at most `k`
+    stops. Each round reads only the previous round's prices, so no trip can sneak in an extra
+    flight.""",
     idea=[
         "Plain shortest-path search ignores the stop limit: the cheapest route may simply use too many flights.",
         "So build the answer by **number of flights**. Start with only `src` reachable (cost 0). Each round allows **one more flight**: every flight `u → v` may extend a route that reached `u` in the previous round.",
@@ -406,6 +640,33 @@ lesson(
             (None, "After {k + 1} rounds the cheapest price to city {dst} is **{prices[dst]}**."),
         ]),
     ],
+    say={
+        "def findCheapestPrice": (
+            "The function we must write. It gets the cities, the `flights`, the start `src`, the "
+            "destination `dst` and `k`, and returns the cheapest price with at most `k` stops, or"
+            " -1."
+        ),
+        'prices = [float("inf")] * n': (
+            "The cheapest known price to reach each city. Infinity means *not reachable yet*."
+        ),
+        "prices[src] = 0": "Being at the start costs nothing.",
+        "for _ in range(k + 1)": "One round per flight: `k` stops means at most `k + 1` flights.",
+        "tmp = prices[:]": (
+            "A copy of the prices, to hold this round's improvements. Reading from the old list "
+            "stops one round from chaining two flights."
+        ),
+        "for u, v, w in flights": "Try every flight: from `u` to `v` for price `w`.",
+        "if prices[u] + w < tmp[v]": (
+            "Is reaching `u` (as of the last round) and then taking this flight cheaper than the "
+            "best price for `v` so far?"
+        ),
+        "tmp[v] = prices[u] + w": "Then write down the cheaper price.",
+        "prices = tmp": "The round is done: its prices are the ones the next round builds on.",
+        'return -1 if prices[dst] == float("inf") else prices[dst]': (
+            "If the destination was never reached, return -1; otherwise return its cheapest "
+            "price."
+        ),
+    },
     time=("O(k · (n + E))", "k + 1 rounds; each one copies the n prices and looks at all E flights once."),
     space=("O(n)", "Two price arrays."),
     tests=[

@@ -27,12 +27,27 @@
    "output": "[[5,6]]"
   }
  ],
+ "picture": "Picture each interval as a strip of tape stuck along a ruler. Lay the strips out in order of where they start. Then walk along them: if the next strip starts before the current one ends, the two overlap, so join them into one longer strip. If it starts later, the current strip is finished and the next one begins a new strip.",
  "idea": [
   "Unsorted, any interval might overlap any other one. **Sort by start time** and overlapping intervals end up next to each other.",
   "Keep the last merged interval. The next interval overlaps it exactly when it **starts no later than the last one ends**.",
   "Overlap → stretch the last interval's end to the larger of the two ends. No overlap → the next interval starts a new group."
  ],
  "code": "class Solution:\n    def merge(self, intervals: List[List[int]]) -> List[List[int]]:\n        if not intervals:\n            return []\n\n        intervals.sort(key=lambda x: x[0])\n        result = [intervals[0]]\n\n        for interval in intervals[1:]:\n            if interval[0] <= result[-1][1]:\n                result[-1][1] = max(result[-1][1], interval[1])\n            else:\n                result.append(interval)\n\n        return result",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the `intervals` and returns them with every overlapping group joined into one.",
+  "3": "Is the list empty?",
+  "4": "Then there is nothing to merge.",
+  "6": "Sort by start. `key=lambda x: x[0]` means \"compare the intervals by their first number\", the start.",
+  "7": "The answer starts with the first interval. `result[-1]` (the last one) is the group we are still growing.",
+  "9": "Go through the other intervals in order. `intervals[1:]` means \"all but the first\".",
+  "10": "Does this interval start before (or just as) the last group ends? Then they overlap.",
+  "11": "Join them: the group now ends at whichever end is later.",
+  "12": "Otherwise it starts after the group ends: no overlap.",
+  "13": "It begins a new group: add it to the answer.",
+  "15": "Return the merged intervals."
+ },
  "complexity": {
   "time": "O(n log n)",
   "timeWhy": "Sorting dominates; the merge pass afterwards is a single O(n) sweep.",

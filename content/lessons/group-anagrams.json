@@ -27,12 +27,24 @@
    "output": "[[\"ab\",\"ba\"],[\"abc\"]]"
   }
  ],
+ "picture": "Picture a wall of pigeonholes, each with a label. For every word, write its letters in alphabetical order (`eat`, `tea` and `ate` all become `aet`) and drop the word into the pigeonhole with that label, making a new one if needed. When all the words are sorted, each pigeonhole holds one group of anagrams.",
  "idea": [
   "Anagrams contain exactly the same letters. We need a *label* that is identical for all anagrams and different for everything else.",
   "**Sort the letters** of a word: `eat`, `tea` and `ate` all become `aet`. That sorted string is the label.",
   "Use the label as a hash-map key and append each word to its key's list. Each list in the map is one group."
  ],
  "code": "class Solution:\n    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:\n        anagrams_map = {}\n\n        for word in strs:\n            sorted_word = \"\".join(sorted(word))\n            if sorted_word in anagrams_map:\n                anagrams_map[sorted_word].append(word)\n            else:\n                anagrams_map[sorted_word] = [word]\n\n        return list(anagrams_map.values())",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets a list of words `strs` and returns them in groups.",
+  "3": "Make an empty dictionary. Each key will be a word's letters in sorted order; its value, the list of words with those letters.",
+  "5": "Go through the words one at a time.",
+  "6": "`sorted(word)` puts the letters in alphabetical order, and `\"\".join(...)` glues them back into one string: `eat` becomes `aet`.",
+  "7": "Is there already a group with this label?",
+  "8": "Yes: add the word to the end of that group's list.",
+  "10": "No: start a new group, a list holding just this word.",
+  "12": "Hand back every group: the dictionary's values are the lists of words."
+ },
  "complexity": {
   "time": "O(n · k log k)",
   "timeWhy": "n words, and sorting a word of length k costs k log k.",

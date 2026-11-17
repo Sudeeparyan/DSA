@@ -27,12 +27,27 @@
    "output": "4"
   }
  ],
+ "picture": "Picture the tree as rooms joined by corridors. The longest walk between two rooms climbs up to some highest room and then goes down again. At that top room, the walk is as long as the deepest way down its left side plus the deepest way down its right side. So every node measures how far down each side goes and adds the two; the biggest sum anywhere is the diameter.",
  "idea": [
   "Every path has one highest node where it *bends*: it comes up from the left subtree and goes down into the right subtree.",
   "The longest path bending at a node has `height(left) + height(right)` edges.",
   "So compute every node's height recursively, and at each node also check `left height + right height` against the best diameter seen so far."
  ],
  "code": "class Solution:\n    def diameterOfBinaryTree(self, root: TreeNode) -> int:\n        def height(node):\n            if not node:\n                return 0\n            left_height = height(node.left)\n            right_height = height(node.right)\n            self.diameter = max(self.diameter, left_height + right_height)\n            return max(left_height, right_height) + 1\n\n        self.diameter = 0\n        height(root)\n        return self.diameter",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the top node and returns the length of the longest path, counted in edges.",
+  "3": "A helper: how many nodes lie on the longest way down from `node`? While it works, it also checks the path that turns at `node`.",
+  "4": "Is this an empty spot?",
+  "5": "Then its height is 0.",
+  "6": "The height of the left side (the helper calls itself).",
+  "7": "The height of the right side.",
+  "8": "A path that turns at this node uses `left_height + right_height` edges. Keep it if it is the longest so far.",
+  "9": "This node's own height: its taller side, plus 1 for itself.",
+  "11": "The longest path found so far. (`self.` lets the helper change it.)",
+  "12": "Measure the whole tree from the top; the helper records the longest path on the way.",
+  "13": "Return the longest path found."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "Each node's height is computed once.",

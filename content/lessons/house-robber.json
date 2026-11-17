@@ -35,12 +35,28 @@
    "output": "0"
   }
  ],
+ "picture": "Picture walking down the street, deciding house by house. At each house there are two choices: rob it and add the best total from two houses back (the house just before must be skipped), or skip it and keep the best total up to the house just before. A row of boxes remembers the best total up to each house, and each new box needs only the two before it.",
  "idea": [
   "Go along the street and let `dp[i]` be the most money obtainable from houses `0 … i`.",
   "For house `i` there are only two choices. **Rob it**: house `i − 1` is then forbidden, so add the best of houses `0 … i − 2`. **Skip it**: keep the best of houses `0 … i − 1`.",
   "`dp[i] = max(dp[i − 2] + nums[i], dp[i − 1])`. The last entry is the answer."
  ],
  "code": "class Solution:\n    def rob(self, nums: List[int]) -> int:\n        n = len(nums)\n        if n == 0:\n            return 0\n        if n == 1:\n            return nums[0]\n\n        dp = [0] * n\n        dp[0] = nums[0]\n        dp[1] = max(nums[0], nums[1])\n\n        for i in range(2, n):\n            dp[i] = max(dp[i - 2] + nums[i], dp[i - 1])\n\n        return dp[-1]",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the money in each house, `nums`, and returns the most that can be robbed.",
+  "3": "The number of houses.",
+  "4": "Are there no houses?",
+  "5": "Then nothing can be robbed.",
+  "6": "Is there only one house?",
+  "7": "Then rob it.",
+  "9": "A row of boxes: `dp[i]` will be the most money from houses 0 to `i`.",
+  "10": "With only the first house, rob it.",
+  "11": "With the first two, rob whichever has more (not both: they are neighbours).",
+  "13": "Fill in the rest of the boxes, house by house.",
+  "14": "Either rob this house and add the best from two houses back, or skip it and keep the best up to the house before. Take the better.",
+  "16": "The last box (`[-1]`) holds the best total for the whole street."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "One pass over the houses.",

@@ -27,12 +27,26 @@
    "output": "2"
   }
  ],
+ "picture": "Picture cars on a one-lane road where nobody can overtake. Look at them starting with the car closest to the finish, and work out when each would arrive if the road were empty. A car that would arrive no later than the group in front catches up and gets stuck behind it, joining that group. A car that would arrive later never catches up, so it leads a new group, a new fleet.",
  "idea": [
   "A car can only be held up by cars **ahead** of it. So handle the cars from the one nearest the target back to the farthest.",
   "For each car compute the time it would need to reach the target *if the road were empty*: `(target − position) / speed`.",
   "If that time is not longer than the fleet in front needs, the car catches up and joins it. If it is longer, it never catches up — it leads a new fleet."
  ],
  "code": "class Solution:\n    def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:\n        cars = sorted(zip(position, speed), reverse=True)\n        fleets = 0\n        prev_time = -1.0\n\n        for pos, spd in cars:\n            time = (target - pos) / spd\n            if time > prev_time:\n                fleets += 1\n                prev_time = time\n\n        return fleets",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the `target`, each car's `position` and `speed`, and returns how many fleets arrive.",
+  "3": "Pair each car's position with its speed (`zip`), then sort the pairs from the car nearest the target to the farthest (`reverse=True` puts the biggest position first).",
+  "4": "No fleets counted yet.",
+  "5": "The arrival time of the fleet just in front. -1 means *no fleet yet*, so the first car always starts one.",
+  "7": "Go through the cars, nearest the target first: `pos` is its position, `spd` its speed.",
+  "8": "How long this car needs on an empty road: the distance left divided by its speed.",
+  "9": "Would it arrive later than the fleet in front? Then it can never catch up.",
+  "10": "So it leads a new fleet: count it.",
+  "11": "This new fleet's arrival time is the one the cars behind it must beat.",
+  "13": "Return the number of fleets."
+ },
  "complexity": {
   "time": "O(n log n)",
   "timeWhy": "Sorting the cars dominates; the scan afterwards is O(n).",

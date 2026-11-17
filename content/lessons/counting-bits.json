@@ -27,12 +27,31 @@
    "output": "[0,1,1,2,1,2,2,3,1]"
   }
  ],
+ "picture": "Picture the numbers written in binary. Dropping the last digit of a number is the same as halving it and rounding down: 5 is `101`, and without its last digit it is `10`, which is 2. So the 1s in 5 are the 1s in 2, which we already counted, plus 1 if the dropped digit was a 1. Filling the table from small to large, every answer is one look-up and one addition.",
  "idea": [
   "Counting the bits of each number separately works, but the numbers are closely related — reuse earlier answers.",
   "Dropping the last binary digit of `i` gives `i // 2`, a **smaller** number whose bit count is already known.",
   "The dropped digit is `i % 2`. So `bits(i) = bits(i // 2) + (i % 2)` — one lookup and one addition per number."
  ],
  "code": "class Solution:\n    def countBits(self, num: int) -> List[int]:\n        bits_count = [0] * (num + 1)\n\n        for i in range(1, num + 1):\n            bits_count[i] = bits_count[i // 2] + (i % 2)\n\n        return bits_count",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets `num` and returns, for every number from 0 to `num`, how many 1s its binary form has.",
+  "3": "A table with one box per number from 0 to `num`, all 0. 0 has no 1s, so its box is already right.",
+  "5": "Fill the boxes from 1 up to `num`, small numbers first.",
+  "6": "`i // 2` is `i` with its last binary digit dropped: a smaller number, already in the table. `i % 2` is the dropped digit. Together they give the count for `i`.",
+  "8": "Return the filled table."
+ },
+ "key": [
+  {
+   "tone": "alt",
+   "label": "i // 2: i without its last bit"
+  },
+  {
+   "tone": "good",
+   "label": "box just filled in"
+  }
+ ],
  "complexity": {
   "time": "O(n)",
   "timeWhy": "One table lookup per number.",

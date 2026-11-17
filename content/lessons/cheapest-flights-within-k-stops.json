@@ -35,12 +35,26 @@
    "output": "-1"
   }
  ],
+ "picture": "Picture planning trips in rounds, where each round allows one more flight. At first only the start city has a known price, 0. In each round, try every flight once: if getting to `u` and then flying on to `v` is cheaper than what you knew for `v`, write the new price down. After `k + 1` rounds you know the cheapest price with at most `k + 1` flights, which means at most `k` stops. Each round reads only the previous round's prices, so no trip can sneak in an extra flight.",
  "idea": [
   "Plain shortest-path search ignores the stop limit: the cheapest route may simply use too many flights.",
   "So build the answer by **number of flights**. Start with only `src` reachable (cost 0). Each round allows **one more flight**: every flight `u → v` may extend a route that reached `u` in the previous round.",
   "Run `k + 1` rounds. The updates of a round are written to a **copy**, so a route cannot chain two new flights within the same round."
  ],
  "code": "class Solution:\n    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:\n        prices = [float(\"inf\")] * n\n        prices[src] = 0\n\n        for _ in range(k + 1):  # k stops = at most k + 1 flights\n            tmp = prices[:]  # the prices once one more flight is allowed\n            for u, v, w in flights:\n                if prices[u] + w < tmp[v]:\n                    tmp[v] = prices[u] + w\n            prices = tmp\n\n        return -1 if prices[dst] == float(\"inf\") else prices[dst]",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the cities, the `flights`, the start `src`, the destination `dst` and `k`, and returns the cheapest price with at most `k` stops, or -1.",
+  "3": "The cheapest known price to reach each city. Infinity means *not reachable yet*.",
+  "4": "Being at the start costs nothing.",
+  "6": "One round per flight: `k` stops means at most `k + 1` flights.",
+  "7": "A copy of the prices, to hold this round's improvements. Reading from the old list stops one round from chaining two flights.",
+  "8": "Try every flight: from `u` to `v` for price `w`.",
+  "9": "Is reaching `u` (as of the last round) and then taking this flight cheaper than the best price for `v` so far?",
+  "10": "Then write down the cheaper price.",
+  "11": "The round is done: its prices are the ones the next round builds on.",
+  "13": "If the destination was never reached, return -1; otherwise return its cheapest price."
+ },
  "complexity": {
   "time": "O(k · (n + E))",
   "timeWhy": "k + 1 rounds; each one copies the n prices and looks at all E flights once.",

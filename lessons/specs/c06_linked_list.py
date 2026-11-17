@@ -10,6 +10,10 @@ lesson(
     args="head=L([1, 2, 3])",
     expected=[3, 2, 1],
     why="Every arrow now points the other way, so the old tail (3) is the new head.",
+    picture="""Picture a conga line where everyone has a hand on the shoulder of the person in front. To
+    reverse the line, walk along it and turn each person around, so that their hand points at the
+    person who was behind them. Before you turn someone, note who was in front of them, or you would
+    lose track of the rest of the line.""",
     idea=[
         "Each node only knows its `next`. Reversing the list means making every arrow point the other way.",
         "Walk the list once with three pointers: `prev` (head of the part already reversed), `current` (the node being flipped) and `next_node` (a saved copy of the way forward).",
@@ -35,6 +39,28 @@ lesson(
             no="`current` is None — we walked off the end, so every arrow has been flipped.")),
         ("return prev", "`prev` is on node {prev.val}, the new head. Return it."),
     ],
+    say={
+        "def reverseList": (
+            "The function we must write. It gets the first node of the list (`head`) and returns "
+            "the first node of the reversed list."
+        ),
+        "prev = None": (
+            "`prev` is the node just behind the one we are fixing. Behind the first node there is"
+            " nothing (`None`), and that is what the new last node will point to."
+        ),
+        "current = head": "`current` is the node we are fixing now. Start at the front.",
+        "while current": (
+            "Repeat until we have walked off the end of the list (`current` is `None`)."
+        ),
+        "next_node = current.next": (
+            "Remember the node after `current` before its arrow changes, or the rest of the list "
+            "would be lost."
+        ),
+        "current.next = prev": "Turn `current`'s arrow around: it now points back at `prev`.",
+        "prev = current": "Move `prev` forward onto `current`.",
+        "current = next_node": "Move `current` on to the node we remembered.",
+        "return prev": "`prev` is on the old last node, which is now the first node: return it.",
+    },
     time=("O(n)", "Each node is visited exactly once."),
     space=("O(1)", "Only three pointers are used, no matter how long the list is."),
     tests=[("head=L([1, 2])", [2, 1]), ("head=L([])", []), ("head=L([1, 2, 3, 4, 5])", [5, 4, 3, 2, 1])],
@@ -48,13 +74,18 @@ lesson(
     args="l1=L([1, 4, 5]), l2=L([2, 3, 6])",
     expected=[1, 2, 3, 4, 5, 6],
     why="Repeatedly taking the smaller front node gives 1, 2, 3, 4, 5, 6.",
+    picture="""Picture two sorted queues of people merging into one at a gate. At each step the gatekeeper
+    compares the two people at the front and waves the smaller one through to the end of the new
+    line. When one queue is empty, the rest of the other walks through just as it is, already in
+    order. A placeholder (the *dummy*) stands at the very start of the new line, so there is always
+    someone to join on behind.""",
     idea=[
         "Both lists are sorted, so the smallest node not yet used is always at the **front** of one of them.",
         "Compare the two fronts, link the smaller one onto the end of the merged list, and move that list's pointer forward.",
         "A **dummy** node at the start means the first real node needs no special case. When one list runs out, the rest of the other is already sorted — attach it in one go.",
     ],
     views=[
-        LinkedList(ptrs=["l1", "l2", "current"], rows=["l1", "l2"],
+        LinkedList(ptrs=["l1", "l2", "current"], rows=["l1 · first list", "l2 · second list"],
                    place={"dummy": (0.5, -1)}, names={"dummy": "dummy"},
                    tones={"good": "span(dummy.next, current)", "cur": "current"}),
     ],
@@ -76,6 +107,33 @@ lesson(
         ("return dummy.next",
          "The merged list starts right after the dummy, at node {dummy.next.val}. Return it."),
     ],
+    say={
+        "def mergeTwoLists": (
+            "The function we must write. It gets the first nodes of two sorted lists, `l1` and "
+            "`l2`, and returns the first node of the merged list."
+        ),
+        "dummy = ListNode()": (
+            "A placeholder node to start the new list from. It is not part of the answer; it just"
+            " gives the first real node something to hang on."
+        ),
+        "current = dummy": "`current` is the last node of the merged list so far.",
+        "while l1 and l2": "Repeat while both lists still have nodes.",
+        "if l1.val < l2.val": "Which front node holds the smaller value (`.val`)?",
+        "current.next = l1@1": "`l1`'s is smaller: hang that node on the end of the merged list.",
+        "l1 = l1.next": "And move `l1` on to its next node.",
+        "current.next = l2@1": (
+            "Otherwise `l2`'s is smaller (or they are equal): hang that node on the end."
+        ),
+        "l2 = l2.next": "And move `l2` on to its next node.",
+        "current = current.next": "The node just attached is now the end of the merged list.",
+        "if l1:": "One list has run out. Does `l1` still have nodes?",
+        "current.next = l1@2": "Then attach all of them at once: they are already in order.",
+        "elif l2": "Otherwise, does `l2` still have nodes?",
+        "current.next = l2@2": "Then attach all of them at once.",
+        "return dummy.next": (
+            "The merged list starts just after the placeholder: return that node."
+        ),
+    },
     time=("O(n + m)", "Each step links one node, and there are n + m nodes."),
     space=("O(1)", "The existing nodes are re-linked; only a dummy node is created."),
     tests=[("l1=L([1, 2, 4]), l2=L([1, 3, 4])", [1, 1, 2, 3, 4, 4]), ("l1=L([]), l2=L([])", []),
@@ -92,6 +150,11 @@ lesson(
     expected=[1, 5, 2, 4, 3],
     result="head",
     why="Take alternately from the front and from the back: 1, 5, 2, 4, 3.",
+    picture="""Picture a row of cards that you want to deal first, last, second, second-to-last, and so on. Do
+    it in three moves. Find the middle: one finger moves two cards for every one card the other
+    moves, so when the fast finger reaches the end, the slow one is halfway. Turn the back half
+    around, so its last card comes first. Then weave the two halves together, one card from each in
+    turn.""",
     idea=[
         "We need nodes from the back, but a singly linked list cannot be walked backwards.",
         "So split it in the middle and **reverse the second half**. Now the back nodes are available in exactly the order we need them.",
@@ -127,6 +190,42 @@ lesson(
         ("p1, p2 = next_p1, next_p2", "Move both pointers on: `p1` = {nv(p1)}, `p2` = {nv(p2)}."),
         ("while p2", dict(no="`p2` is None: the reversed half is used up, so the list is fully reordered.")),
     ],
+    say={
+        "def reorderList": (
+            "The function we must write. It gets the first node and rearranges the list in place;"
+            " it returns nothing."
+        ),
+        "if not head or not head.next or not head.next.next": (
+            "With fewer than three nodes the order cannot change."
+        ),
+        "return": "So stop here.",
+        "slow, fast = head, head": (
+            "Two pointers at the front. `fast` will move two nodes for every one `slow` moves."
+        ),
+        "while fast.next and fast.next.next": "Repeat while `fast` can still take two steps.",
+        "slow = slow.next": "`slow` moves one node.",
+        "fast = fast.next.next": (
+            "`fast` moves two. When it can go no further, `slow` is at the middle."
+        ),
+        "prev, current = None, slow.next": (
+            "The second half starts right after the middle. Get ready to reverse it."
+        ),
+        "slow.next = None": "Cut the list in two: the first half now ends at the middle.",
+        "while current": "Reverse the second half, one node at a time.",
+        "next_node = current.next": "Remember the next node before its arrow changes.",
+        "current.next = prev": "Turn this node's arrow around, to point back.",
+        "prev = current": "Move `prev` forward.",
+        "current = next_node": "Move `current` on to the remembered node.",
+        "p1, p2 = head, prev": (
+            "`p1` walks the first half from the front; `p2` walks the reversed second half, which"
+            " now starts with the old last node."
+        ),
+        "while p2": "Repeat while the second half still has nodes to weave in.",
+        "next_p1, next_p2 = p1.next, p2.next": "Remember where each half continues.",
+        "p1.next = p2": "After `p1` comes `p2`, a node from the back half.",
+        "p2.next = next_p1": "After that comes the next node of the front half.",
+        "p1, p2 = next_p1, next_p2": "Move both pointers on to the next pair.",
+    },
     time=("O(n)", "Each of the three steps is one pass over (part of) the list."),
     space=("O(1)", "Only a handful of pointers; the nodes are re-linked in place."),
     tests=[("head=L([1, 2, 3, 4])", [1, 4, 2, 3]), ("head=L([1])", [1]), ("head=L([1, 2])", [1, 2])],
@@ -140,6 +239,10 @@ lesson(
     args="head=L([1, 2, 3, 4, 5]), n=2",
     expected=[1, 2, 3, 5],
     why="The 2nd node from the end is 4, so it is removed.",
+    picture="""Picture two people walking along the list with exactly `n` nodes between them. When the one in
+    front reaches the last node, the one behind is standing just before the node that must go, so it
+    can step over it. A placeholder node in front of the head gives the one behind somewhere to
+    stand even when the very first node is the one to remove.""",
     idea=[
         "We cannot walk backwards from the end, and we do not know the length without a first pass.",
         "Trick: use two pointers that stay **n nodes apart**. Move both forward together; when the front one reaches the last node, the back one is exactly before the node to delete.",
@@ -165,6 +268,27 @@ lesson(
          "Skip over it: node {slow.val} now points straight to {nv(slow.next)}. The skipped node is out of the list."),
         ("return dummy.next", "Return the node after the dummy: the head of the updated list."),
     ],
+    say={
+        "def removeNthFromEnd": (
+            "The function we must write. It gets the first node and `n`, and returns the first "
+            "node after removing the `n`-th node from the end."
+        ),
+        "dummy = ListNode(0)": "A placeholder node to put in front of the list.",
+        "dummy.next = head": "Point it at the real first node.",
+        "fast = slow = dummy": "Both pointers start on the placeholder.",
+        "for _ in range(n)": "Repeat `n` times. (`_` is the name for a counter we do not need.)",
+        "fast = fast.next@1": (
+            "Move `fast` one node ahead. After this loop it is `n` nodes ahead of `slow`."
+        ),
+        "while fast.next": "Repeat until `fast` is on the last node.",
+        "fast = fast.next@2": "Move `fast` one node on.",
+        "slow = slow.next": "Move `slow` one node on too, so the gap stays the same.",
+        "slow.next = slow.next.next": (
+            "`slow` is just before the node to remove. Skip over it: point `slow` at the node "
+            "after it."
+        ),
+        "return dummy.next": "Return the node after the placeholder: the first node of the list.",
+    },
     time=("O(n)", "One pass: `fast` walks the list once."),
     space=("O(1)", "Two pointers and one dummy node."),
     tests=[("head=L([1]), n=1", []), ("head=L([1, 2]), n=1", [1]), ("head=L([1, 2]), n=2", [2])],
@@ -185,6 +309,11 @@ lesson(
     why="The copy has the same values and the same shape, but every pointer leads to a copied node.",
     outro="Done. The bottom row is a complete, independent copy: same values, same `next` order and the same "
           "random links, all pointing at copied nodes.",
+    picture="""Picture copying a treasure hunt in which every clue also has a secret note pointing to some
+    other clue. First, slip a blank copy in right after each original clue. Now every copy sits just
+    behind its original, so a copy's secret note is easy to fill in: it points to the copy sitting
+    just behind the original's target. Finally, pull the copies out into a line of their own and put
+    the originals back as they were.""",
     idea=[
         "Copying `next` is easy. The hard part is `random`: when we copy a node, the copy of the node its random points to may not exist yet — and afterwards, how do we find it?",
         "Trick: put each copy **right after its original** (A → A′ → B → B′ …). Then the copy of any node `x` is simply `x.next`.",
@@ -215,6 +344,51 @@ lesson(
         ("return duplicate_head",
          "The two lists share nothing any more. Return the head of the copy."),
     ],
+    say={
+        "def copyRandomList": (
+            "The function we must write. It gets the first node and returns the first node of a "
+            "complete copy."
+        ),
+        "if not head": "An empty list has nothing to copy.",
+        "return None": "So return nothing (`None`).",
+        "current = head@1": "Step 1: walk the original list from the front.",
+        "while current@1": "Repeat for every original node.",
+        "duplicate = Node(current.val)": "Make a new node with the same value.",
+        "duplicate.next = current.next": (
+            "Point the copy at the node that came after the original."
+        ),
+        "current.next = duplicate": (
+            "Then point the original at its copy. The copy now sits right after its original."
+        ),
+        "current = duplicate.next": "Jump to the next original node, just past the copy.",
+        "current = head@2": "Step 2: walk the combined list again, from the front.",
+        "while current@2": "Repeat for every original node.",
+        "if current.random": "Does this original have a random pointer?",
+        "current.next.random = current.random.next": (
+            "Its copy (`current.next`) must point to the *copy* of the random target, and that "
+            "copy sits right after the target: `current.random.next`."
+        ),
+        "current = current.next.next": "Jump two nodes: past the copy, to the next original.",
+        "original = head": (
+            "Step 3: pull the two lists apart. `original` walks along the original nodes."
+        ),
+        "duplicate_head = head.next": (
+            "The first copy sits right after the first original. It will be the head of the "
+            "answer."
+        ),
+        "current = duplicate_head": "`current` walks along the copies.",
+        "while original": "Repeat for every original node.",
+        "original.next = original.next.next": (
+            "Point the original past its copy, back to the next original."
+        ),
+        "if current.next": "Is there another copy after this one?",
+        "current.next = current.next.next": (
+            "Then point this copy past the next original, to the next copy."
+        ),
+        "original = original.next": "Move on to the next original.",
+        "current = current.next@2": "Move on to the next copy.",
+        "return duplicate_head": "Return the first node of the copy.",
+    },
     time=("O(n)", "Three passes over the list."),
     space=("O(1)", "No hash map is needed — the weaving itself remembers which copy belongs to which node."),
     tests=[("head=LR([[1, 1], [2, 1]])", [[1, 2], [2, 2]]), ("head=LR([])", [])],
@@ -229,13 +403,17 @@ lesson(
     args="l1=L([5, 6]), l2=L([7, 8, 9])",
     expected=[2, 5, 0, 1],
     why="The lists mean 65 and 987. 65 + 987 = 1052, which is stored as 2 → 5 → 0 → 1.",
+    picture="""Picture adding two long numbers on paper, column by column, starting with the ones. You write
+    down the last digit of each column's sum and carry the 1, if there is one, into the next column.
+    Here the digits are stored ones first, which is exactly the order you add them in, so you simply
+    walk along both lists side by side.""",
     idea=[
         "The digits come lowest first — exactly the order in which we add by hand: ones, then tens, then hundreds.",
         "Walk both lists together. At each position add the two digits and the **carry** from the previous position. Write down `total % 10` and carry `total // 10`.",
         "If one list is shorter, treat its missing digits as 0. If a carry is left at the very end, it becomes one more digit.",
     ],
     views=[
-        LinkedList(ptrs=["l1", "l2", "current"], rows=["l1", "l2", "sum"], names={"dummy": "dummy"},
+        LinkedList(ptrs=["l1", "l2", "current"], rows=["l1 · first number", "l2 · second number", "the sum"], names={"dummy": "dummy"},
                    tones={"good": "chain(dummy.next)"}),
         Vars("val1", "val2", "carry", "total", "digit"),
     ],
@@ -252,6 +430,40 @@ lesson(
          "Both lists are finished, but a carry of {carry} is still left. It becomes one more digit."),
         ("return dummy.next", "The sum starts right after the dummy. Return it."),
     ],
+    say={
+        "def addTwoNumbers": (
+            "The function we must write. It gets two numbers stored as lists of digits (ones "
+            "first) and returns their sum, stored the same way."
+        ),
+        "dummy = ListNode()": "A placeholder node to hang the answer's digits on.",
+        "current = dummy": "`current` is the last digit written so far.",
+        "carry = 0": "What carries into the next column. Nothing at first.",
+        "while l1 or l2": "Repeat while either number still has digits.",
+        "val1 = l1.val if l1 else 0": (
+            "This column's digit from the first number, or 0 if it has run out."
+        ),
+        "val2 = l2.val if l2 else 0": "The same for the second number.",
+        "total = val1 + val2 + carry": "Add the two digits and the carry.",
+        "carry = total // 10": (
+            "The tens part carries into the next column: `total // 10` is 1 when the total is 10 "
+            "or more, and 0 otherwise."
+        ),
+        "digit = total % 10": (
+            "The ones part is this column's digit: `total % 10` is the remainder after dividing "
+            "by 10."
+        ),
+        "current.next = ListNode(digit)": (
+            "Write that digit as a new node at the end of the answer."
+        ),
+        "current = current.next": "The new node is now the end of the answer.",
+        "if l1": "Does the first number have more digits?",
+        "l1 = l1.next": "Then move on to its next digit.",
+        "if l2": "Does the second number have more digits?",
+        "l2 = l2.next": "Then move on to its next digit.",
+        "if carry": "Is there a carry left after the last column?",
+        "current.next = ListNode(carry)": "Then it becomes one more digit at the end.",
+        "return dummy.next": "The answer starts just after the placeholder: return that node.",
+    },
     time=("O(max(n, m))", "One step per digit of the longer number."),
     space=("O(max(n, m))", "The result list has one node per digit (plus possibly one for the last carry)."),
     tests=[("l1=L([2, 4, 3]), l2=L([5, 6, 4])", [7, 0, 8]), ("l1=L([0]), l2=L([0])", [0]),
@@ -267,6 +479,10 @@ lesson(
     show_input="head = [3,2,0,-4], where the last node links back to the node at index 1",
     expected=True,
     why="After −4 the list goes back to 2, so walking it never ends.",
+    picture="""Picture two runners, one twice as fast as the other. If the path is a straight road, the fast
+    runner simply reaches its end. If the path loops, the fast runner keeps going around and must
+    eventually catch the slow one from behind. So a catch-up means there is a loop, and reaching the
+    end means there is none.""",
     idea=[
         "We could remember every visited node in a set and stop when one repeats, but that costs O(n) memory.",
         "Instead, send two runners down the list: `slow` moves one node per step, `fast` moves two.",
@@ -286,6 +502,24 @@ lesson(
             no_marks={"list.good": "slow"})),
         ("return True", "The runners met, so the list has a cycle → **True**.", {"list.good": "slow"}),
     ],
+    say={
+        "def hasCycle": (
+            "The function we must write. It gets the first node and answers `True` if following "
+            "the arrows ever loops back."
+        ),
+        "if not head or not head.next": (
+            "With no node, or one node with nothing after it, there can be no loop."
+        ),
+        "return False@1": "So answer `False`.",
+        "slow = head": "The slow runner starts on the first node.",
+        "fast = head.next": "The fast runner starts one node ahead.",
+        "while slow != fast": "Repeat until the two runners are on the same node.",
+        "if not fast or not fast.next": "Has the fast runner reached the end of the list?",
+        "return False@2": "Then the list has an end, so there is no loop: answer `False`.",
+        "slow = slow.next": "The slow runner moves one node.",
+        "fast = fast.next.next": "The fast runner moves two.",
+        "return True": "They met, which can only happen on a loop: answer `True`.",
+    },
     time=("O(n)", "Once both runners are in the cycle, the gap shrinks by one every step."),
     space=("O(1)", "Just two pointers."),
     tests=[("head=L([1, 2], pos=0)", True), ("head=L([1])", False), ("head=L([1, 2, 3, 4])", False)],
@@ -300,6 +534,11 @@ lesson(
     args="nums=[1, 3, 4, 2, 2]",
     expected=2,
     why="The value 2 appears at index 3 and at index 4.",
+    picture="""Picture each position as a stepping stone with an arrow painted on it: the value at position `i`
+    says which stone to hop to next. One value repeats, so two arrows lead to the same stone, and
+    the path runs into a loop whose entrance is exactly that repeated value. First find the loop
+    with a slow runner and a fast one. Then send one runner back to the start and move both one hop
+    at a time: they meet at the entrance.""",
     idea=[
         "Read every value as a pointer: from index `i`, go to index `nums[i]`. Starting at index 0 this traces a path.",
         "Two indexes hold the duplicate value, so two arrows lead to the same place. That makes the path loop — and the **entrance of the loop is the duplicate**.",
@@ -326,6 +565,28 @@ lesson(
             no_marks={"graph.good": "slow"})),
         ("return slow", "The repeated number is **{_ret}**.", {"graph.good": "slow"}),
     ],
+    say={
+        "def findDuplicate": (
+            "The function we must write. It gets the list `nums` and returns the number that "
+            "repeats."
+        ),
+        "slow = nums[0]@1": (
+            "The slow runner takes its first hop: follow the arrow at position 0."
+        ),
+        "fast = nums[0]": "The fast runner takes the same first hop.",
+        "while True": "Repeat until `break` stops it.",
+        "slow = nums[slow]@1": "Slow runner: one hop (to the position its value names).",
+        "fast = nums[nums[fast]]": "Fast runner: two hops.",
+        "if slow == fast": "Are they on the same position? That can only happen inside the loop.",
+        "break": "Then leave this first loop.",
+        "slow = nums[0]@2": (
+            "Phase 2: send the slow runner back to the start (one hop from position 0 again)."
+        ),
+        "while slow != fast": "Repeat until the two runners meet.",
+        "slow = nums[slow]@2": "Move the slow runner one hop.",
+        "fast = nums[fast]": "Move the other runner one hop too, no longer two.",
+        "return slow": "They meet at the loop's entrance, which is the repeated number.",
+    },
     time=("O(n)", "Both phases walk at most a few times around the path."),
     space=("O(1)", "Two index variables; the array is never changed."),
     tests=[("nums=[3, 1, 3, 4, 2]", 3), ("nums=[1, 1]", 1), ("nums=[2, 2, 2, 2, 2]", 2)],
@@ -340,6 +601,11 @@ lesson(
     ops=["LRUCache(2)", "put(1, 10)", "put(2, 20)", "get(1)", "put(3, 30)", "get(2)", "get(3)"],
     expected=[None, None, None, 10, None, -1, 30],
     why="Reading key 1 made it recently used, so when key 3 arrived it was key 2 that got evicted.",
+    picture="""Picture a small shelf that holds only `capacity` books, and a list of those books in order of
+    use, the most recently used at the front. Reading or adding a book moves it to the front of the
+    list. When a new book needs room on a full shelf, the book at the back of the list, unused for
+    the longest, has to go. A dictionary finds any book instantly, and the linked list makes moving
+    a book to the front instant too.""",
     idea=[
         "A hash map gives O(1) lookup, but it has no idea which key was used longest ago.",
         "A **doubly linked list** can keep the keys ordered by use: most recent at the front, least recent at the back. Moving a node to the front or removing the last one is O(1) — if we can find the node instantly.",
@@ -376,6 +642,75 @@ lesson(
          "Put key {key} at the **front** of the order list: it is now the most recently used.",
          {"cache.cur": "key"}),
     ],
+    say={
+        "class LRUCache": "The problem asks for a class called `LRUCache`.",
+        "def __init__(self, capacity": (
+            "Runs once, when the cache is created with its `capacity`."
+        ),
+        "self.capacity = capacity": "Remember how many keys fit.",
+        "self.cache = {}": "A dictionary from each key to its value.",
+        "self.order = DoublyLinkedList()": (
+            "The keys in order of use, most recent first (the class below)."
+        ),
+        "def get": "Called for `get(key)`.",
+        "if key in self.cache@1": "Is the key in the cache?",
+        "self.order.move_to_front(key)@1": (
+            "Yes: it has just been used, so move it to the front of the order."
+        ),
+        "return self.cache[key]": "Return its value.",
+        "return -1": "Not in the cache: return -1.",
+        "def put": "Called for `put(key, value)`.",
+        "if key in self.cache@2": "Is the key already in the cache?",
+        "self.cache[key] = value@1": "Yes: store the new value.",
+        "self.order.move_to_front(key)@2": "And move it to the front: it has just been used.",
+        "if len(self.cache) >= self.capacity": "A new key. Is the cache already full?",
+        "removed_key = self.order.remove_last()": (
+            "Then take the key at the back of the order, the least recently used, out of the "
+            "list."
+        ),
+        "del self.cache[removed_key]": "And delete it from the dictionary too.",
+        "self.cache[key] = value@2": "Store the new key with its value.",
+        "self.order.add_to_front(key)": "Put the new key at the front of the order.",
+        "class DoublyLinkedList": (
+            "A linked list in which every node points both forward (`next`) and back (`prev`), so"
+            " a node can be unhooked from the middle instantly."
+        ),
+        "def __init__(self):": "Runs when the list is created.",
+        "self.head = ListNode()": "A placeholder node that always stays at the front.",
+        "self.tail = ListNode()": (
+            "And one that always stays at the back. Real nodes go between them."
+        ),
+        "self.head.next = self.tail": (
+            "Start empty: the front placeholder points straight to the back one."
+        ),
+        "self.tail.prev = self.head": "And the back one points back to the front one.",
+        "self.nodes = {}": "A dictionary from each key to its node, to find a node instantly.",
+        "def add_to_front": "Put a new node for `key` right after the front placeholder.",
+        "node = ListNode(key)": "Make a node holding the key.",
+        "node.next = self.head.next": "It points forward to the node that used to be first.",
+        "node.prev = self.head": "And back to the front placeholder.",
+        "self.head.next.prev = node": "The old first node now points back to it.",
+        "self.head.next = node": "And the placeholder points forward to it: it is first now.",
+        "self.nodes[key] = node": "Remember which node holds this key.",
+        "def move_to_front": "Move a key that is already in the list to the front.",
+        "node = self.nodes[key]": "Find its node instantly.",
+        "node.prev.next = node.next": "Unhook it: the node before it now points past it.",
+        "node.next.prev = node.prev": "And the node after it points back past it.",
+        "self.add_to_front(key)": "Then add the key at the front again, as a new node.",
+        "def remove_last": "Remove the least recently used key and report which one it was.",
+        "node = self.tail.prev": "The last real node sits just before the back placeholder.",
+        "node.prev.next = self.tail": (
+            "Unhook it: the node before it now points to the back placeholder."
+        ),
+        "self.tail.prev = node.prev": "And the placeholder points back to that node.",
+        "del self.nodes[node.key]": "Forget this key's node.",
+        "return node.key": "Report which key was removed.",
+        "class ListNode": "One node of that list: it holds a key and its two arrows.",
+        "def __init__(self, key=None)": "A new node starts with its key and no neighbours.",
+        "self.key = key": "The key it holds.",
+        "self.prev = None": "No node behind it yet.",
+        "self.next = None": "No node after it yet.",
+    },
     time=("O(1) per operation", "A map lookup plus a constant number of pointer changes in the list."),
     space=("O(capacity)", "One map entry and one list node per stored key."),
     tests=[
@@ -395,6 +730,10 @@ lesson(
     args="lists=[L([1, 4]), L([2, 5]), L([3])]",
     expected=[1, 2, 3, 4, 5],
     why="Taking the smallest front node again and again gives 1, 2, 3, 4, 5.",
+    picture="""Picture `k` sorted queues and one gate. A small waiting area (a heap) holds only the person at
+    the front of each queue, and it always shows the smallest one first. Wave that person through to
+    the merged line, and let the next person from the same queue step into the waiting area. The
+    waiting area never holds more than `k` people, so finding the smallest stays quick.""",
     idea=[
         "The next node of the merged list is always the smallest among the **current front nodes** of the k lists.",
         "Finding that smallest by scanning all k fronts costs O(k) every time. A **min-heap** holding one entry per list finds it in O(log k).",
@@ -422,6 +761,40 @@ lesson(
          "unfinished list."),
         ("return dummy.next", "The heap is empty: every node has been merged. Return the list after the dummy."),
     ],
+    say={
+        "def mergeKLists": (
+            "The function we must write. It gets `k` sorted linked lists and returns one merged, "
+            "sorted list."
+        ),
+        "min_heap = []": (
+            "A heap of `(value, which list)` pairs, smallest value first: one entry for the front"
+            " node of each list."
+        ),
+        "for i, l in enumerate(lists)": (
+            "Go through the lists: `i` is the list's number, `l` its first node."
+        ),
+        "if l:": "Is this list non-empty?",
+        "heapq.heappush(min_heap, (l.val, i))": (
+            "Put its first value into the heap, together with the list's number, so we know where"
+            " it came from."
+        ),
+        "dummy = ListNode()": "A placeholder node to hang the merged list on.",
+        "current = dummy": "`current` is the end of the merged list so far.",
+        "while min_heap": "Repeat while some list still has nodes waiting.",
+        "val, idx = heapq.heappop(min_heap)": (
+            "Take the smallest value out of the heap, with the number of the list it came from."
+        ),
+        "current.next = ListNode(val)": (
+            "Add a node with that value to the end of the merged list."
+        ),
+        "current = current.next": "It is now the end of the merged list.",
+        "if lists[idx].next": "Does that list have another node after the one just used?",
+        "heapq.heappush(min_heap, (lists[idx].next.val, idx))": (
+            "Then put that next value into the heap, ready to compete."
+        ),
+        "lists[idx] = lists[idx].next": "And move that list's front on by one node.",
+        "return dummy.next": "The merged list starts just after the placeholder: return it.",
+    },
     time=("O(N log k)", "Each of the N nodes is pushed and popped once from a heap of at most k entries."),
     space=("O(k)", "The heap holds one entry per list (this version also builds new nodes for the result)."),
     tests=[("lists=[L([1, 4, 5]), L([1, 3, 4]), L([2, 6])]", [1, 1, 2, 3, 4, 4, 5, 6]), ("lists=[]", []),
@@ -466,6 +839,10 @@ lesson(
     args="head=L([1, 2, 3, 4, 5]), k=2",
     expected=[2, 1, 4, 3, 5],
     why="1,2 becomes 2,1 and 3,4 becomes 4,3. The single node 5 is fewer than k, so it stays.",
+    picture="""Picture a line of people split into teams of `k`, where each team turns around on its own: the
+    first team reverses, then the next, and so on. A team at the end with fewer than `k` people
+    stays as it is. Once a team has turned around, its old first person is now its last, so that
+    person holds hands with whatever the rest of the line becomes.""",
     idea=[
         "Handle one group at a time: check that at least `k` nodes are left, then reverse exactly those `k` with the usual prev / current / next technique.",
         "After reversing, the group's old first node has become its **last** node — the right place to attach whatever comes next.",
@@ -491,6 +868,37 @@ lesson(
                  "of this group.")),
         ("return prev", "Return node {prev.val}, the new front of this group."),
     ],
+    say={
+        "def reverseKGroup": (
+            "The function we must write. It gets the first node and `k`, and returns the first "
+            "node after reversing every full group of `k`."
+        ),
+        "if not head or k == 1": "An empty list, or groups of just one node, need no change.",
+        "return head@1": "So return the list as it is.",
+        "count = 0": "Count how many nodes are left, but only up to `k`.",
+        "current = head": "Start counting from the first node.",
+        "while current and count < k": (
+            "Repeat while there is a node and fewer than `k` have been counted."
+        ),
+        "count += 1": "Count this node.",
+        "current = current.next": "Move on to the next node.",
+        "if count < k": "Are there fewer than `k` nodes left?",
+        "return head@2": "Then this last group is too short: leave it as it is.",
+        "prev, current = None, head": "Get ready to reverse this group of `k` nodes.",
+        "for _ in range(k)": "Repeat `k` times, once for each node of the group.",
+        "next_node = current.next": (
+            "Remember the node after `current` before its arrow changes, or the rest of the list "
+            "would be lost."
+        ),
+        "current.next = prev": "Turn `current`'s arrow around: it now points back at `prev`.",
+        "prev = current": "Move `prev` forward onto `current`.",
+        "current = next_node": "Move `current` on to the node we remembered.",
+        "head.next = self.reverseKGroup(current, k)": (
+            "The group's old first node (`head`) is now its last. Point it at the result of doing"
+            " the same to the rest of the list: the function calls itself."
+        ),
+        "return prev": "`prev` is the group's new first node: return it.",
+    },
     time=("O(n)", "Every node is counted once (the count stops after k nodes) and has its arrow flipped once."),
     space=("O(n / k)", "One recursive call per group waits on the call stack. (Doing the same group by group "
                        "in a loop, with a dummy node in front, needs only O(1).)"),

@@ -31,12 +31,37 @@
    "output": "2"
   }
  ],
+ "picture": "Picture booking one room for as many meetings as possible. Always take the meeting that finishes first: it frees the room soonest, so it leaves the most time for the others. Then take the next meeting that starts after it finishes, and so on. Every meeting you could not take is one that must be removed.",
  "idea": [
   "Removing as few as possible means **keeping as many as possible**.",
   "Sort by **end** time. The interval that ends earliest leaves the most room for everything after it, so keeping it is never a mistake.",
   "Then go through the rest: an interval that starts at or after the end of the last kept one fits — keep it. Otherwise it overlaps and is removed. The answer is the total minus the number kept."
  ],
  "code": "class Solution:\n    def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:\n        if not intervals:\n            return 0\n\n        intervals.sort(key=lambda x: x[1])\n        non_overlapping = 1  # Count of non-overlapping intervals\n        prev_end = intervals[0][1]\n\n        for i in range(1, len(intervals)):\n            if intervals[i][0] >= prev_end:\n                non_overlapping += 1\n                prev_end = intervals[i][1]\n\n        return len(intervals) - non_overlapping",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the `intervals` and returns the fewest that must be removed so the rest do not overlap.",
+  "3": "Are there no intervals at all?",
+  "4": "Then nothing needs removing.",
+  "6": "Sort by end. `key=lambda x: x[1]` means \"compare the intervals by their second number\", the end.",
+  "7": "How many intervals we keep. The first one, which ends earliest, is always kept.",
+  "8": "Where the last kept interval ends.",
+  "10": "Go through the other intervals, in order of end.",
+  "11": "Does this one start at or after the last kept one ends? Then it fits. If not, it is skipped, which means removed.",
+  "12": "Keep it: one more kept interval.",
+  "13": "It is now the last kept one: remember where it ends.",
+  "15": "Every interval not kept must be removed: return how many that is."
+ },
+ "key": [
+  {
+   "tone": "good",
+   "label": "kept"
+  },
+  {
+   "tone": "bad",
+   "label": "removed"
+  }
+ ],
  "complexity": {
   "time": "O(n log n)",
   "timeWhy": "Sorting dominates; the scan afterwards is a single pass.",

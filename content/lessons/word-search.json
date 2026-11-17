@@ -35,12 +35,38 @@
    "output": "False"
   }
  ],
+ "picture": "Picture tracing the word on the grid with your finger, letter by letter. From a cell that holds the right letter, try to carry on in each of the four directions. Cover every cell you use with a coin, so the trace cannot step on it twice. If a direction leads nowhere, lift the coin on the way back (*backtracking*) and try another direction.",
  "idea": [
   "Every cell that holds the word's first letter is a possible start. From there, try to match the rest letter by letter.",
   "`dfs(row, col, index)` asks: *can the word from letter `index` on be traced starting at this cell?* It fails when the cell is off the board, already used, or holds the wrong letter.",
   "On a match, mark the cell as used (`#`), try all four neighbours for the next letter, then **restore** the cell so other paths can use it."
  ],
  "code": "class Solution:\n    def exist(self, board: List[List[str]], word: str) -> bool:\n        def dfs(row, col, index):\n            if index == len(word):\n                return True\n\n            if (\n                row < 0\n                or row >= len(board)\n                or col < 0\n                or col >= len(board[0])\n                or board[row][col] != word[index]\n            ):\n                return False\n\n            original_char = board[row][col]\n            board[row][col] = \"#\"  # Mark the cell as visited\n\n            found = (\n                dfs(row + 1, col, index + 1)\n                or dfs(row - 1, col, index + 1)\n                or dfs(row, col + 1, index + 1)\n                or dfs(row, col - 1, index + 1)\n            )\n\n            board[row][col] = original_char  # Backtrack\n\n            return found\n\n        for row in range(len(board)):\n            for col in range(len(board[0])):\n                if board[row][col] == word[0] and dfs(row, col, 0):\n                    return True\n\n        return False",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the grid `board` and the `word`, and answers whether the word can be traced.",
+  "3": "A helper: can the rest of the word, from letter `index` on, be traced starting at this cell?",
+  "4": "Have all the letters been matched?",
+  "5": "Then the word is traced.",
+  "7": "Is this cell outside the grid, or does it hold the wrong letter?",
+  "14": "Then the trace cannot continue here.",
+  "16": "Remember the letter in this cell.",
+  "17": "**Choose** this cell: cover it with `#`, so this trace cannot use it twice.",
+  "19": "**Explore**: try to continue with the next letter in each of the four directions, down, up, right and left. `or` stops at the first direction that works.",
+  "26": "**Undo**: uncover the cell on the way back, so other traces can use it.",
+  "28": "Report whether any direction worked.",
+  "30": "Try every row of the grid…",
+  "31": "…and every column in it.",
+  "32": "Does this cell hold the first letter, and can the whole word be traced from here?",
+  "33": "Yes: answer `True`.",
+  "35": "No starting cell worked: answer `False`."
+ },
+ "key": [
+  {
+   "tone": "win",
+   "label": "in use on the current path"
+  }
+ ],
  "complexity": {
   "time": "O(m · n · 4ᴸ)",
   "timeWhy": "Each of the m · n cells can start a search that branches up to 4 ways for each of the L letters (really 3 after the first step).",

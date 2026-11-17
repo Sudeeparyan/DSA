@@ -19,12 +19,28 @@
    "output": "True"
   }
  ],
+ "picture": "Picture a checklist of *facts* such as \"row 0 has an 8\", \"column 4 has a 7\" and \"the top-left box has a 3\". Walk over the board once. Each digit adds three facts: one for its row, one for its column and one for its 3×3 box. If one of those facts is already on the list, the digit repeats somewhere it must not, and the board breaks the rules.",
  "idea": [
   "Each filled cell must be unique in three places at once: its row, its column and its 3×3 box.",
   "Turn that into three *facts* per digit — **row r has d**, **column c has d**, **box b has d** — and keep all facts in one hash set. The box of cell (r, c) is (r // 3, c // 3).",
   "Scan the board once. If any of a digit's three facts is already in the set, the board is invalid. Otherwise add the three facts and continue."
  ],
  "code": "class Solution:\n    def isValidSudoku(self, board: List[List[str]]) -> bool:\n        seen = set()\n\n        for i in range(9):\n            for j in range(9):\n                if board[i][j] != \".\":\n                    num = board[i][j]\n                    if (\n                        (i, num) in seen\n                        or (num, j) in seen\n                        or (i // 3, j // 3, num) in seen\n                    ):\n                        return False\n                    seen.add((i, num))\n                    seen.add((num, j))\n                    seen.add((i // 3, j // 3, num))\n\n        return True",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the 9×9 `board` and answers `True` or `False`.",
+  "3": "An empty set that will hold facts such as \"row 0 has an 8\".",
+  "5": "Go through the rows: `i` counts 0 to 8.",
+  "6": "In each row, go through the columns: `j` counts 0 to 8.",
+  "7": "Skip empty cells: a `.` means nothing is written there. (`board[i][j]` is the cell in row `i`, column `j`.)",
+  "8": "`num` is the digit written in this cell.",
+  "9": "Is any of this digit's three facts already in the set? `(i, num)` is its row, `(num, j)` its column and `(i // 3, j // 3, num)` its 3×3 box. (`//` divides and drops the remainder, so rows 0–2 give 0, rows 3–5 give 1, rows 6–8 give 2.)",
+  "14": "The digit repeats in a row, a column or a box: answer `False`.",
+  "15": "Record \"row `i` has `num`\". A row fact puts the row number first and a column fact puts the digit first, so the two kinds can never be mixed up.",
+  "16": "Record \"column `j` has `num`\".",
+  "17": "Record \"this 3×3 box has `num`\".",
+  "19": "Every filled cell passed, so no digit repeats: answer `True`."
+ },
  "complexity": {
   "time": "O(1)",
   "timeWhy": "The board is always 9×9 = 81 cells, each checked with three O(1) set lookups.",

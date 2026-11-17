@@ -31,12 +31,26 @@
    "output": "False"
   }
  ],
+ "picture": "Picture marking the points in the text where a cut could go, with every piece before it being a real word. The very start is such a point. A later point `i` is one too if, from some earlier marked point `j`, the text between `j` and `i` is a dictionary word. Mark the points from left to right: the text can be broken up exactly when the very end gets marked.",
  "idea": [
   "Let `dp[i]` say whether the **first i letters** can be cut into dictionary words. `dp[0]` is True: the empty prefix needs no words.",
   "The first `i` letters can be cut if there is some position `j` where the part before it works (`dp[j]` is True) **and** the remaining piece `s[j:i]` is a word.",
   "Fill `dp` from left to right. `dp[len(s)]` answers the question for the whole string."
  ],
  "code": "class Solution:\n    def wordBreak(self, s: str, wordDict: List[str]) -> bool:\n        # Create a set for faster word lookup.\n        wordSet = set(wordDict)\n\n        # Initialize a boolean array dp where dp[i] is True if s[0:i] can be broken into words.\n        dp = [False] * (len(s) + 1)\n        dp[0] = True  # An empty string can always be broken.\n\n        # Iterate through the string.\n        for i in range(1, len(s) + 1):\n            for j in range(i):\n                # Check if the substring s[j:i] is in the wordDict and if s[0:j] can be broken.\n                if dp[j] and s[j:i] in wordSet:\n                    dp[i] = True\n                    break  # No need to continue checking.\n\n        return dp[len(s)]",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the text `s` and the words `wordDict`, and answers whether the text can be cut into dictionary words.",
+  "4": "Put the words in a set, so *is this a word?* is answered instantly.",
+  "7": "One box per cutting point: `dp[i]` says whether the first `i` letters can be cut into words.",
+  "8": "Before any letters, nothing needs cutting: the start is marked.",
+  "11": "Look at each cutting point after the start.",
+  "12": "Try every earlier point `j` as the start of the last word.",
+  "14": "Can the letters before `j` be cut into words, and is the piece from `j` to `i` a word?",
+  "15": "Then the first `i` letters can be cut into words too.",
+  "16": "One way is enough: stop trying other values of `j`.",
+  "18": "Can the whole text be cut into words?"
+ },
  "complexity": {
   "time": "O(n³)",
   "timeWhy": "There are about n² pairs (j, i), and cutting out the piece `s[j:i]` and looking it up costs up to O(n) more.",

@@ -1,19 +1,33 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, type CSSProperties } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { tokenizeLine } from "./python";
+import { Rich } from "./Rich";
 
-/** The solution, with the line the current step is explaining lit up. */
+/** What a code line does, in plain words: line number → text (from the lesson's `say`). */
+export type Readings = Record<string, string> | undefined;
+
+/**
+ * The solution, with the line the current step is explaining lit up.  Under it, that line is
+ * read out in plain words; pointing at (or tapping) another line reads that one instead.
+ */
 export function CodePanel({
   code,
   line,
+  say,
   reduced = false,
 }: {
   code: string;
   line: number;
+  say?: Readings;
   /** the learner asked for less motion: jump to the line instead of gliding */
   reduced?: boolean;
 }) {
+  // a line the learner points at or taps; the next step goes back to the running line
+  const [peek, setPeek] = useState<number | null>(null);
+  useEffect(() => setPeek(null), [line]);
+  const shown = peek !== null && say?.[peek] ? peek : line;
+  const reading = say?.[shown];
   const lines = useMemo(
     () =>
       code.split("\n").map((raw) => {
@@ -64,55 +78,103 @@ export function CodePanel({
   }, [reveal]);
 
   return (
-    <div ref={box} className="code-panel" role="region" aria-label="Solution code" tabIndex={0}>
-      {lines.map(({ indent, tokens }, i) => {
-        const live = i + 1 === line;
-        return (
-          <div
-            key={i}
-            ref={(el) => {
-              rows.current[i] = el;
-            }}
-            className={live ? "code-line code-line-live" : "code-line"}
-            aria-current={live ? "step" : undefined}
-          >
-            <span className="code-no">{i + 1}</span>
-            {/* a long line wraps instead of running off the panel; the wrapped part hangs two
-                columns further in than the line itself, so it cannot be mistaken for a new line
-                (lesson.css narrows the indent on phones, and the indent itself never wraps) */}
-            <span className="code-text" style={{ "--n": indent.length } as CSSProperties}>
-              {indent && <span className="code-indent">{indent}</span>}
-              {tokens.length === 0
-                ? indent
-                  ? null
-                  : " "
-                : tokens.map((t, j) => (
-                    <span key={j} className={`tok-${t.kind}`}>
-                      {t.text}
-                    </span>
-                  ))}
-            </span>
-          </div>
-        );
-      })}
-    </div>
+    <>
+      <div
+        ref={box}
+        className="code-panel"
+        role="region"
+        aria-label="Solution code"
+        tabIndex={0}
+        onPointerLeave={(e) => {
+          if (e.pointerType === "mouse") setPeek(null);
+        }}
+      >
+        {lines.map(({ indent, tokens }, i) => {
+          const n = i + 1;
+          const live = n === line;
+          const readable = !!say?.[n];
+          const classes = ["code-line"];
+          if (live) classes.push("code-line-live");
+          if (readable) classes.push("code-line-says");
+          if (peek === n && !live) classes.push("code-line-peek");
+          return (
+            <div
+              key={i}
+              ref={(el) => {
+                rows.current[i] = el;
+              }}
+              className={classes.join(" ")}
+              aria-current={live ? "step" : undefined}
+              onPointerEnter={(e) => {
+                if (e.pointerType === "mouse" && readable) setPeek(n);
+              }}
+              onClick={() => {
+                if (readable) setPeek((p) => (p === n ? null : n));
+              }}
+            >
+              <span className="code-no">{i + 1}</span>
+              {/* a long line wraps instead of running off the panel; the wrapped part hangs two
+                  columns further in than the line itself, so it cannot be mistaken for a new line
+                  (lesson.css narrows the indent on phones, and the indent itself never wraps) */}
+              <span className="code-text" style={{ "--n": indent.length } as CSSProperties}>
+                {indent && <span className="code-indent">{indent}</span>}
+                {tokens.length === 0
+                  ? indent
+                    ? null
+                    : " "
+                  : tokens.map((t, j) => (
+                      <span key={j} className={`tok-${t.kind}`}>
+                        {t.text}
+                      </span>
+                    ))}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+      {say && (
+        <div className={reading ? "code-say" : "code-say code-say-none"}>
+          {reading ? (
+            <>
+              <div className="code-say-head">
+                Line {shown} in plain words
+                {shown !== line && <span className="code-say-off"> (not the running line)</span>}
+              </div>
+              <p>
+                <Rich text={reading} />
+              </p>
+            </>
+          ) : (
+            <p className="code-say-hint">Point at or tap a line of code to read it in plain words.</p>
+          )}
+        </div>
+      )}
+    </>
   );
 }
 
 /** One line of the solution, coloured like the code panel (used where the panel is out of sight). */
-export function CodeLine({ code, line }: { code: string; line: number }) {
+export function CodeLine({ code, line, say }: { code: string; line: number; say?: Readings }) {
   const tokens = useMemo(() => tokenizeLine((code.split("\n")[line - 1] ?? "").trim()), [code, line]);
   if (line < 1 || tokens.length === 0) return null;
+  const reading = say?.[line];
   return (
     <div className="caption-code" aria-hidden>
-      <span className="caption-code-no">line {line}</span>
-      <code>
-        {tokens.map((t, j) => (
-          <span key={j} className={`tok-${t.kind}`}>
-            {t.text}
-          </span>
-        ))}
-      </code>
+      <div className="caption-code-row">
+        <span className="caption-code-no">line {line}</span>
+        <code>
+          {tokens.map((t, j) => (
+            <span key={j} className={`tok-${t.kind}`}>
+              {t.text}
+            </span>
+          ))}
+        </code>
+      </div>
+      {reading && (
+        <p className="caption-say">
+          <Rich text={reading} />
+        </p>
+      )}
     </div>
   );
 }

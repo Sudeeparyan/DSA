@@ -27,12 +27,27 @@
    "output": "False"
   }
  ],
+ "picture": "Picture two bags of letter tiles. Tip out the first bag and count its tiles: two `p`s, one `a`, and so on. Then take the tiles of the second bag one by one and cross off a matching tile from your count. If you ever need a tile that is not left, the two words do not use the same letters.",
  "idea": [
   "Two words are anagrams when every letter appears the same number of times in both.",
   "Count the letters of `s` in a hash map: letter → how many.",
   "Then walk through `t` and *use up* one count per letter. If a letter is missing or already used up, it is not an anagram. Equal lengths guarantee nothing is left over at the end."
  ],
  "code": "class Solution:\n    def isAnagram(self, s: str, t: str) -> bool:\n        if len(s) != len(t):\n            return False\n\n        char_frequency = {}\n\n        # Build character frequency map for string s\n        for char in s:\n            char_frequency[char] = char_frequency.get(char, 0) + 1\n\n        # Compare with string t\n        for char in t:\n            if char not in char_frequency or char_frequency[char] == 0:\n                return False\n            char_frequency[char] -= 1\n\n        return True",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets two words, `s` and `t`, and answers `True` or `False`.",
+  "3": "`len` counts the letters of a word. If the two lengths are different (`!=`), the words cannot be made of the same letters.",
+  "4": "Different lengths: answer `False` straight away.",
+  "6": "Make an empty **dictionary** (a hash map). It will pair each letter with how many times it appears in `s`.",
+  "9": "Go through the first word, one letter at a time.",
+  "10": "Add one to this letter's count. `.get(char, 0)` means: the count so far, or 0 if the letter has not appeared yet.",
+  "13": "Now go through the second word, one letter at a time.",
+  "14": "Is this letter missing from the counts, or are its copies all used up (count 0)?",
+  "15": "Yes: `t` needs a letter that `s` has no copy of to spare, so answer `False`.",
+  "16": "Use up one copy of this letter: its count goes down by one (`-=` means *subtract and keep the result*).",
+  "18": "Every letter of `t` was matched and the lengths are equal, so nothing is left over: answer `True`."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "One pass over `s` to count and one pass over `t` to match.",

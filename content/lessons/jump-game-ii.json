@@ -35,12 +35,26 @@
    "output": "1"
   }
  ],
+ "picture": "Picture the jumps as rounds. With no jumps you can stand only on the first stone; with one jump, on any stone the first can reach; with two, on any stone those can reach; and so on. Walk along the stones, noting the farthest point the next jump could reach. When you come to the end of the current round's range, you must jump: count it, and the next round's range ends at that farthest point.",
  "idea": [
   "Group the indexes by **how many jumps** are needed to reach them: index 0 needs 0 jumps; the indexes it can jump to need 1; and so on. Each group is a contiguous window.",
   "While walking through the current window, record the farthest index any of its members can reach (`farthest_reachable`). That is where the **next** window ends.",
   "When the walk hits the end of the current window (`i == cur_end`), one more jump is unavoidable: count it and move the window end to `farthest_reachable`."
  ],
  "code": "class Solution:\n    def jump(self, nums: List[int]) -> int:\n        jumps = 0\n        cur_end = 0\n        farthest_reachable = 0\n\n        for i in range(len(nums) - 1):\n            farthest_reachable = max(farthest_reachable, i + nums[i])\n            if i == cur_end:\n                jumps += 1\n                cur_end = farthest_reachable\n\n        return jumps",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the jump lengths `nums` and returns the fewest jumps that reach the last position.",
+  "3": "Jumps made so far.",
+  "4": "The farthest position the jumps so far can reach: the end of the current round.",
+  "5": "The farthest position one more jump could reach, from any position seen so far.",
+  "7": "Go through every position except the last (once there, no more jumps are needed).",
+  "8": "Could a jump from here reach further than anything seen so far?",
+  "9": "Have we reached the end of the current round's range?",
+  "10": "Then one more jump is needed: count it.",
+  "11": "That jump can take us as far as `farthest_reachable`, so the next round ends there.",
+  "13": "Return the number of jumps."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "One pass over the array; no index is ever revisited.",

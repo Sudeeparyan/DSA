@@ -31,12 +31,22 @@
    "output": "False"
   }
  ],
+ "picture": "Picture building the target by merging triplets, where a merge keeps the larger value in each position. A triplet with any value *above* the target's can never be used: once merged in, that too-big value could never come down again. Merge all the other triplets together, since that can only help. If the result equals the target, it can be formed.",
  "idea": [
   "Merging only ever makes values **larger**. A triplet with any value above the target at that position would push it past the target for good — such a triplet can never be used.",
   "Every other triplet is harmless: all its values are ≤ the target, so merging it in can never overshoot. So simply **merge all harmless triplets**.",
   "If that merged result equals the target, the answer is `True`. Otherwise some target value is not supplied by any usable triplet → `False`."
  ],
  "code": "class Solution:\n    def mergeTriplets(self, triplets: List[List[int]], target: List[int]) -> bool:\n        max_values = [0, 0, 0]\n\n        for triplet in triplets:\n            if (\n                triplet[0] <= target[0]\n                and triplet[1] <= target[1]\n                and triplet[2] <= target[2]\n            ):\n                max_values = [max(max_values[i], triplet[i]) for i in range(3)]\n\n        return max_values == target",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the `triplets` and the `target`, and answers whether merging some of them gives exactly the target.",
+  "3": "The result of merging every usable triplet so far.",
+  "5": "Look at each triplet.",
+  "6": "Is each of its three values at most the target's value in that position? Only then can it be used safely.",
+  "11": "Merge it in: in each of the three positions keep the larger value.",
+  "13": "Did merging all the usable triplets give exactly the target?"
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "One pass over the triplets.",

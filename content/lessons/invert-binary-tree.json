@@ -27,12 +27,23 @@
    "output": "[1,None,2]"
   }
  ],
+ "picture": "Picture holding a family tree up to a mirror. In the mirror every person's left and right children have swapped places, and so have their children's children, all the way down. The code does exactly that: at each node it swaps the two children, then asks the same function to mirror each child's own family below.",
  "idea": [
   "Mirroring a whole tree sounds big, but at one node it is tiny: just swap its left and right child.",
   "Do that swap at **every** node and the entire tree is mirrored. Recursion visits every node for us.",
   "Recipe for a node: swap its children → invert the left subtree → invert the right subtree. An empty node (None) needs nothing."
  ],
  "code": "class Solution:\n    def invertTree(self, root: TreeNode) -> TreeNode:\n        if not root:\n            return None\n\n        # Swap left and right subtrees\n        root.left, root.right = root.right, root.left\n\n        # Recursively invert left and right subtrees\n        self.invertTree(root.left)\n        self.invertTree(root.right)\n\n        return root",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the top node (`root`) and returns it after mirroring the whole tree.",
+  "3": "Is there no node here (an empty spot below a leaf)?",
+  "4": "Then there is nothing to mirror: return nothing.",
+  "7": "Swap this node's two children in one move: the left becomes the right and the right becomes the left.",
+  "10": "Now mirror everything below the new left child: the function calls itself on that smaller tree.",
+  "11": "And the same below the new right child.",
+  "13": "This node and everything below it are mirrored: hand it back."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "Every node is visited once and does a constant amount of work.",

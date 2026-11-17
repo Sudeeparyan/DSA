@@ -19,12 +19,34 @@
    "output": ""
   }
  ],
+ "picture": "Picture a stack of plates with a second, smaller pile of sticky notes beside it. The top note always says *the smallest value on the plates right now*. When a plate goes on that is as small as the current minimum or smaller, a new note goes on top of the notes. When the plate holding that minimum is taken off, its note comes off too, and the note underneath, the previous minimum, is on top again.",
  "idea": [
   "A normal stack gives push, pop and top in O(1). The hard part is `getMin` — scanning the stack would be O(n).",
   "Trick: keep a **second stack** whose top is always the current minimum.",
   "Push onto it only when the new value is ≤ the current minimum. Pop from it only when the value leaving the main stack *is* that minimum. Then the old minimum is right underneath, ready to take over."
  ],
  "code": "class MinStack:\n    def __init__(self):\n        self.stack = []\n        self.min_stack = []\n\n    def push(self, val: int) -> None:\n        self.stack.append(val)\n        if not self.min_stack or val <= self.min_stack[-1]:\n            self.min_stack.append(val)\n\n    def pop(self) -> None:\n        if self.stack:\n            if self.stack[-1] == self.min_stack[-1]:\n                self.min_stack.pop()\n            self.stack.pop()\n\n    def top(self) -> int:\n        if self.stack:\n            return self.stack[-1]\n\n    def getMin(self) -> int:\n        if self.min_stack:\n            return self.min_stack[-1]",
+ "say": {
+  "1": "The problem asks for a class called `MinStack`: a stack that can also report its smallest value.",
+  "2": "Runs once, when the stack is created (`MinStack()`).",
+  "3": "The stack itself: a list whose end is the top. (`self.` means it belongs to this object and is kept between calls.)",
+  "4": "A second stack whose top is always the smallest value in the main stack.",
+  "6": "Called for `push(val)`: put `val` on top.",
+  "7": "Put the value on top of the main stack.",
+  "8": "Is the second stack empty, or is the new value as small as the current minimum or smaller?",
+  "9": "Then it is the new minimum: put it on top of the second stack too.",
+  "11": "Called for `pop()`: remove the top value.",
+  "12": "Is there anything to remove? (An empty list counts as *false*.)",
+  "13": "Is the value leaving the main stack the current minimum?",
+  "14": "Then take it off the second stack too, so the minimum underneath takes over.",
+  "15": "Remove the top value from the main stack.",
+  "17": "Called for `top()`: report the top value without removing it.",
+  "18": "Is the stack non-empty?",
+  "19": "Return the top value (`[-1]` is the last item of the list).",
+  "21": "Called for `getMin()`: report the smallest value.",
+  "22": "Is the second stack non-empty?",
+  "23": "Its top is the current minimum: return it."
+ },
  "complexity": {
   "time": "O(1)",
   "timeWhy": "Every operation only touches the tops of the two stacks.",

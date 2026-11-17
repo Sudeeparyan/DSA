@@ -31,12 +31,49 @@
    "output": "[[0,1,1,0]]"
   }
  ],
+ "picture": "Picture every gate sending out a wave at the same moment, one room per step. Each empty room is reached first by the wave of its nearest gate, and that wave writes down how many steps it took. A queue keeps the waves in step, so rooms closer to a gate are always reached before rooms further away.",
  "idea": [
   "Running a separate search from every room (or from every gate) repeats work. Instead start a **single BFS from all gates at once**.",
   "BFS moves outward in rings: first all rooms 1 step from *some* gate, then all rooms 2 steps away, and so on.",
   "So the **first** time the search reaches a room, it has arrived from the nearest gate by a shortest route. Write the distance there; a room that already has a number is never touched again."
  ],
  "code": "class Solution:\n    def wallsAndGates(self, rooms: List[List[int]]) -> None:\n        INF = 2147483647\n        rows, cols = len(rooms), len(rooms[0])\n        queue = deque()\n\n        for r in range(rows):\n            for c in range(cols):\n                if rooms[r][c] == 0:\n                    queue.append((r, c))  # every gate is a starting point\n\n        while queue:\n            row, col = queue.popleft()\n            for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):\n                nr, nc = row + dr, col + dc\n                if 0 <= nr < rows and 0 <= nc < cols and rooms[nr][nc] == INF:\n                    rooms[nr][nc] = rooms[row][col] + 1\n                    queue.append((nr, nc))",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the `rooms` grid and writes each empty room's distance to its nearest gate into it; it returns nothing.",
+  "3": "The number that marks an empty room not reached yet.",
+  "4": "The grid's size.",
+  "5": "A queue of cells whose distance is known and whose neighbours still need a visit.",
+  "7": "Scan every row…",
+  "8": "…and every column in it.",
+  "9": "Is this cell a gate?",
+  "10": "Then its wave starts now, together with every other gate's: add it to the queue.",
+  "12": "Repeat while some cell still has neighbours to reach.",
+  "13": "Take the next cell from the front of the queue.",
+  "14": "Look at its four neighbours.",
+  "15": "The neighbour's row and column.",
+  "16": "Is the neighbour inside the grid, and an empty room not reached yet?",
+  "17": "It is one step further than this cell: write that distance in.",
+  "18": "Its neighbours come later: add it to the queue."
+ },
+ "key": [
+  {
+   "tone": "dim",
+   "label": "wall (-1)"
+  },
+  {
+   "tone": "good",
+   "label": "gate (0)"
+  },
+  {
+   "tone": "mark",
+   "label": "in the queue"
+  },
+  {
+   "tone": "seen",
+   "label": "distance just written in"
+  }
+ ],
  "complexity": {
   "time": "O(rows × cols)",
   "timeWhy": "Every cell enters the queue at most once.",

@@ -31,12 +31,28 @@
    "output": "3"
   }
  ],
+ "picture": "Picture a stretchy frame sliding along the letters. It grows on the right as long as each new letter is not already inside it. When the next letter would appear twice, the frame lets go of letters on its left, one at a time, until the old copy is gone. The widest the frame ever gets is the answer.",
  "idea": [
   "Checking every substring is O(n²) or worse. Instead, keep one **window** `[left … right]` that never contains a repeated character.",
   "Grow the window on the right while the next character is new. A set of the characters inside the window makes that check O(1).",
   "When the next character is already inside, shrink from the left — removing characters one by one — until it is gone. The largest window ever seen is the answer."
  ],
  "code": "class Solution:\n    def lengthOfLongestSubstring(self, s: str) -> int:\n        left, right = 0, 0\n        max_length = 0\n        unique_chars = set()\n\n        while right < len(s):\n            if s[right] not in unique_chars:\n                unique_chars.add(s[right])\n                max_length = max(max_length, right - left + 1)\n                right += 1\n            else:\n                unique_chars.remove(s[left])\n                left += 1\n\n        return max_length",
+ "say": {
+  "1": "LeetCode puts every answer inside a class named `Solution`. It is only a wrapper: the real work happens in the function below it.",
+  "2": "The function we must write. It gets the text `s` and returns the length of the longest stretch with no repeated character.",
+  "3": "The window runs from `left` up to just before `right`. Both start at 0, so the window begins empty.",
+  "4": "The longest window found so far.",
+  "5": "A set of the characters inside the window, so *is this letter already inside?* is answered instantly.",
+  "7": "Repeat until `right` has gone past the last character.",
+  "8": "Is the next character, `s[right]`, new to the window?",
+  "9": "Yes: take it into the window.",
+  "10": "The window now holds `right − left + 1` characters. Keep the bigger of that and the best so far.",
+  "11": "Move `right` on to the next character.",
+  "13": "No, it is a repeat: let go of the leftmost character of the window.",
+  "14": "Move `left` one step right. The loop then tries the same `s[right]` again, until its old copy has left the window.",
+  "16": "Return the longest length seen."
+ },
  "complexity": {
   "time": "O(n)",
   "timeWhy": "`left` and `right` each move forward at most n times.",
